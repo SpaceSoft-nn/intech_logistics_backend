@@ -3,6 +3,8 @@
 
 set -e
 
+echo "Deploying..."
+
 #stop application
 git pull origin main
 
@@ -21,5 +23,7 @@ php8.3 artisan view:cache
 
 #start application
 php8.3 artisan up
+
+echo "Deploying Done!"
 
 

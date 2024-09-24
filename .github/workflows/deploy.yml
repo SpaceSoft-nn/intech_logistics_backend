@@ -1,0 +1,18 @@
+name: Deploy Laravel
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy to server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: cd /home/a/a92957ej/my-logistic && sh ./deploy.sh

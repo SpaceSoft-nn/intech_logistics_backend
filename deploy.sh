@@ -1,12 +1,11 @@
 #!/bin/bash
 
-
 set -e
 
 echo "Deploying..."
 
 #stop application
-git pull origin main
+git pull
 
 php8.3 artisan down
 

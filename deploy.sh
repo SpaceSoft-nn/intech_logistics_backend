@@ -5,7 +5,7 @@ set -e
 echo "Deploying..."
 
 #stop application
-# git pull
+git pull
 
 php8.3 artisan down
 

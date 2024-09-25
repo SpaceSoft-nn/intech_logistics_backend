@@ -8,8 +8,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
-
     steps:
+    - name: Test SSH connection
+      run: ssh -T git@github.com
+
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:

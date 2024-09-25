@@ -4,8 +4,13 @@ set -e
 
 echo "Deploying..."
 
+#Отслеживание ошибок
+echo "Current user: $(whoami)"
+echo "Current path: $(pwd)"
+echo "Listing directory:"
+ls -la
 
-git pull
+git pull origin master
 
 #stop application
 php8.3 artisan down

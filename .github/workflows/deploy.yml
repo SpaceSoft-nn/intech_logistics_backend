@@ -15,4 +15,4 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: cd /home/a/a92957ej/my-logistic && sh ./deploy.sh
+        script: cd /var/www/html/logistic_project && sh ./deploy.sh

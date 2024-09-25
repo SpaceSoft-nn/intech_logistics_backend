@@ -4,13 +4,10 @@ set -e
 
 echo "Deploying..."
 
+git pull
 
 #stop application
 php8.3 artisan down
-
-ssh -T git@github.com
-
-git pull
 
 # для установки на deploy надо указывать с --no-dev без использование swagger
 php8.3 composer.phar install --no-dev --optimize-autoloader

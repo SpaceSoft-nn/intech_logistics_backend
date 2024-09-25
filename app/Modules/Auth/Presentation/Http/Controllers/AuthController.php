@@ -49,10 +49,11 @@ class AuthController extends Controller
 
         $this->abort_unless($user, 401);
 
-        $userResource = new UserResource($user);
+        #TODO Сделать UserResource
+        // $userResource = new UserResource($user);
 
         #TODO Добавить ресурс возврата user (не полностью)
-        return response()->json(array_success( $userResource, 'Successfully return user'), 200);
+        return response()->json(array_success( $user, 'Successfully return user'), 200);
     }
 
     /**

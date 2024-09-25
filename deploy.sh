@@ -10,7 +10,7 @@ echo "Current path: $(pwd)"
 echo "Listing directory:"
 ls -la
 
-git pull origin master
+git pull https://github.com/SpaceSoft-nn/intech_logistics_backend.git
 
 #stop application
 php8.3 artisan down

@@ -8,6 +8,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+
     steps:
     - name: Deploy to server
       uses: appleboy/ssh-action@master
@@ -16,3 +17,8 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: cd /var/www/html/logistic_project && sh ./deploy.sh
+
+    - name: Execute Your Script
+      run: |
+        git fetch
+        git checkout master

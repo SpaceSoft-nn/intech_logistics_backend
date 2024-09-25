@@ -16,9 +16,13 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: cd /var/www/html/logistic_project && sh ./deploy.sh
+        # script: cd /var/www/html/logistic_project && sh ./deploy.sh
 
-    - name: Execute Your Script
+    - name: Create SSH config
       run: |
-        git fetch
-        git checkout master
+      mkdir -p ~/.ssh
+      echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+
+    - name: Run bash script
+      run: |
+        cd /var/www/html/logistic_project && sh ./deploy.sh

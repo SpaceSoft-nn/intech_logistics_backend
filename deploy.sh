@@ -4,10 +4,15 @@ set -e
 
 echo "Deploying..."
 
+
+
+
 #stop application
+php8.3 artisan down
+
+git remote add origin git@github.com:SpaceSoft-nn/intech_logistics_backend.git
 git pull
 
-php8.3 artisan down
 
 # для установки на deploy надо указывать с --no-dev без использование swagger
 php8.3 composer.phar install --no-dev --optimize-autoloader

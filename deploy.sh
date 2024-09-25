@@ -4,6 +4,7 @@ set -e
 
 echo "Deploying..."
 
+
 git pull
 
 #stop application

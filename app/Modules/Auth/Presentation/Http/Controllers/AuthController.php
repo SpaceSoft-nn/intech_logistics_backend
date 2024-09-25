@@ -1,7 +1,6 @@
 <?php
 namespace App\Modules\Auth\Presentation\HTTP\Controllers;
 
-use App\Http\Resources\UserResource;
 use App\Modules\Auth\App\Data\DTO\UserAttemptDTO;
 use App\Modules\Auth\Domain\Traits\TraitController;
 use Illuminate\Http\Request;
@@ -9,8 +8,6 @@ use Illuminate\Http\Request;
 use function App\Modules\Auth\Common\Helpers\array_success;
 
 //для преобразование массива с сообщением
-
-
 
 class AuthController extends Controller
 {

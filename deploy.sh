@@ -9,7 +9,7 @@ echo "Deploying..."
 
 php8.3 artisan down
 
-php8.3 composer.phar install --optimize-autoloader
+php8.3 composer.phar install --no-dev --optimize-autoloader
 
 php8.3 artisan migrate --force
 

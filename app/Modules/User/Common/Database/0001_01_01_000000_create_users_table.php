@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 return new class extends Migration
 {
     /**
@@ -12,13 +13,33 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->uuid('id')->primary(); // Используем UUID как первичный ключ
+
             $table->string('password');
+
+            $table->string('first_name')->comment('Имя');
+            $table->string('last_name')->comment('Фамилия');
+            $table->string('father_name')->comment('Отчество');
+
+
+            $table->string('role')->comment('Роль User');
+            $table->string('access_type')->comment('Тип доступа');
+
+            $table->boolean('active')->comment('Активен ли пользователь');
+            $table->boolean('auth')->unique()->comment('Прошёл ли пользователь нотификацию');
+
+            $table->uuid('personal_area_id')
+                ->constrained('personal_area', 'id')->nullable();
+
+            $table->uuid('email_id')
+                ->constrained('email_list', 'id');
+
+            $table->uuid('phone_id')
+                ->constrained('phone_list', 'id');
+
+
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
-            $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

@@ -42,9 +42,9 @@ class OrganizationTest extends TestCase
                     registration_number: "1234567890123",
                 )
             );
-            dd($organization);
-        }
 
+            $this->assertNotNull($organization);
+        }
     }
 
     #private

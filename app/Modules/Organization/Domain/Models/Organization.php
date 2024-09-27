@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 /**
  *
- *
  * @property string $id
  * @property string|null $owner_id
  * @property string $name
@@ -81,7 +80,6 @@ class Organization extends Model
         'registration_number_individual',
 
     ];
-
 
     protected $guarded = [
         'id',

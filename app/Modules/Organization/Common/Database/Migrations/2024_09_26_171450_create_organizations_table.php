@@ -21,15 +21,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
 
-            $table->string('phone_number')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email')->nullable();
 
             $table->boolean('remuved')->default(false)->comment('Статус Закрыт/Открыт');
             $table->string('website')->nullable();
             $table->string('type');
             $table->text('description')->nullable();
-            $table->string('industry')->nullable();
-            $table->dateTime('founded_date')->nullable();
+            $table->string('industry');
+            $table->dateTime('founded_date');
 
             $table->string('inn', 12)->unique()->comment('Инн у ООО/ИП');
             $table->string('kpp' , 9)->nullable()->comment('КПП - Только у организации');

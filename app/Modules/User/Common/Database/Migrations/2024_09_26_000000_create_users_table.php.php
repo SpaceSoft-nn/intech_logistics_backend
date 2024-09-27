@@ -23,7 +23,7 @@ return new class extends Migration
 
 
             $table->string('role')->comment('Роль User');
-            $table->unsignedInteger('access_type')->default(0)->comment('Тип доступа');
+            $table->unsignedInteger('permission')->default(0)->comment('Тип доступа');
 
             $table->boolean('active')->comment('Активен ли пользователь');
             $table->boolean('auth')->unique()->comment('Прошёл ли пользователь нотификацию');

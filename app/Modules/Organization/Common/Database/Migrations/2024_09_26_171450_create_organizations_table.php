@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->foreignId('owner_id')
+            $table->uuid('owner_id')
                 ->nullable()
-                ->constrained('users');
+                ->constrained('users')->noActionOnDelete();
 
             $table->string('name');
             $table->string('address');
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('type');
             $table->text('description')->nullable();
             $table->string('industry')->nullable();
-            $table->string('founded_date')->nullable();
+            $table->dateTime('founded_date')->nullable();
 
             $table->string('inn', 12)->unique()->comment('Инн у ООО/ИП');
             $table->string('kpp' , 9)->nullable()->comment('КПП - Только у организации');

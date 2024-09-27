@@ -23,22 +23,25 @@ return new class extends Migration
 
 
             $table->string('role')->comment('Роль User');
-            $table->string('access_type')->comment('Тип доступа');
+            $table->unsignedInteger('access_type')->default(0)->comment('Тип доступа');
 
             $table->boolean('active')->comment('Активен ли пользователь');
             $table->boolean('auth')->unique()->comment('Прошёл ли пользователь нотификацию');
 
             $table->uuid('personal_area_id')
-                ->constrained('personal_area', 'id')->nullable();
+                ->nullable()
+                ->constrained('personal_area', 'id')->noActionOnDelete();
 
             $table->uuid('email_id')
-                ->constrained('email_list', 'id');
+                ->nullable()
+                ->constrained('email_list', 'id')->noActionOnDelete();
 
             $table->uuid('phone_id')
-                ->constrained('phone_list', 'id');
+                ->nullable()
+                ->constrained('phone_list', 'id')->noActionOnDelete();
 
 
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamps();
             $table->rememberToken();
         });
 

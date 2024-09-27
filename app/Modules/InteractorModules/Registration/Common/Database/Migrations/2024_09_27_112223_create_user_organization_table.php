@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('personal_areas', function (Blueprint $table) {
+        Schema::create('user_organization', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('owner_id')
-                ->constrained('users', 'id');
+
+            $table->uuid('user_id')
+                ->constrained('users', 'id')->noActionOnDelete();
+
+            $table->uuid('organization_id')
+                ->constrained('organizations', 'id')->noActionOnDelete();
+
             $table->timestamps();
         });
     }
@@ -24,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('personal_area');
+        Schema::dropIfExists('user_organization');
     }
 };

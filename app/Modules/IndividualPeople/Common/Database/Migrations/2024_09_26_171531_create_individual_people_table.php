@@ -25,17 +25,13 @@ return new class extends Migration
             $table->string('email');
             $table->string('other_contact');
             $table->string('comment');
-            $table->string('remuved')->default(false);
+            $table->string('remuved')->default(false)->comment('Статус удаление');
 
             $table->uuid('personal_area_id')
-                ->constrained('personal_area', 'id');
+                ->constrained('personal_area', 'id')->noActionOnDelete();
 
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('individual_people');

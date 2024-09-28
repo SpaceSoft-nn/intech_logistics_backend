@@ -1,5 +1,5 @@
 <?php
-namespace App\Modules\Base;
+namespace App\Modules\Base\Repositories;
 
 
 

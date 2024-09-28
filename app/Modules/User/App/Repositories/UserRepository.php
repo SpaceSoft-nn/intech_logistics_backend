@@ -2,7 +2,7 @@
 
 namespace App\Modules\User\App\Repositories;
 
-use App\Modules\Base\CoreRepository;
+use App\Modules\Base\Repositories\CoreRepository;
 use App\Modules\User\App\Data\DTO\Base\BaseDTO;
 use App\Modules\User\App\Data\DTO\UserCreateDTO;
 use App\Modules\User\Domain\Actions\CreateUserAction;

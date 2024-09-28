@@ -2,12 +2,16 @@
 
 namespace App\Modules\Organization\App\Data\DTO;
 
+use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\Organization\App\Data\DTO\Base\BaseDTO;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
 use Illuminate\Contracts\Support\Arrayable;
 
 class OrganizationCreateDTO extends BaseDTO implements Arrayable
 {
+
+    use FilterArrayTrait;
+
     public function __construct(
 
         public readonly string $owner_id,
@@ -94,15 +98,5 @@ class OrganizationCreateDTO extends BaseDTO implements Arrayable
 
         ];
     }
-
-    public function toArrayNotNull() : array
-    {
-        $arrayFilter = array_filter($this->toArray(), function($value) {
-            return !is_null($value);
-        });
-
-        return $arrayFilter;
-    }
-
 
 }

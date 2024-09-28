@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('father_name')->comment('Отчество');
 
             $table->string('position');
-            $table->string('type');
             $table->string('phone');
             $table->string('email');
             $table->string('other_contact');

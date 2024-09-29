@@ -2,12 +2,15 @@
 
 namespace App\Modules\User\App\Data\DTO;
 
+use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\User\App\Data\DTO\Base\BaseDTO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
+use Illuminate\Contracts\Support\Arrayable;
 
-class UserCreateDTO extends BaseDTO
+class UserCreateDTO extends BaseDTO implements Arrayable
 {
 
+    use FilterArrayTrait;
 
     public function __construct(
         public readonly string $first_name,
@@ -47,5 +50,20 @@ class UserCreateDTO extends BaseDTO
             email_id: $email_id,
             phone_id: $phone_id,
         );
+    }
+
+    public function toArray() : array
+    {
+        return [
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'father_name' => $this->father_name,
+            'password' => $this->password,
+            'role' => $this->role,
+            'permission' => $this->permission,
+            'personal_area_id' => $this->personal_area_id,
+            'email_id' => $this->email_id,
+            'phone_id' => $this->phone_id,
+        ];
     }
 }

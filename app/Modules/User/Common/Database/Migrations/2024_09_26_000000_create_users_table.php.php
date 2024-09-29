@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('role')->comment('Роль User');
             $table->unsignedInteger('permission')->default(0)->comment('Тип доступа');
 
-            $table->boolean('active')->comment('Активен ли пользователь');
-            $table->boolean('auth')->unique()->comment('Прошёл ли пользователь нотификацию');
+            $table->boolean('active')->default(true)->comment('Активен ли пользователь');
+            $table->boolean('auth')->default(false)->comment('Прошёл ли пользователь нотификацию');
 
             $table->uuid('personal_area_id')
                 ->nullable()

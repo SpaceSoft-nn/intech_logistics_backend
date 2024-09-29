@@ -18,7 +18,7 @@ class MakeModules extends Command
     public const COMMONFOLDER = ['Config', 'Database', 'Helpers', 'Requests', 'Tests'];
 
     //В папке Domain
-    public const DOMAINFOLDER = ['Actions', 'Exceptions', 'Interactor', 'Interface', 'Models', 'Rule', 'Services'];
+    public const DOMAINFOLDER = ['Actions', 'Exceptions', 'Interactor', 'Interface', 'Models', 'Rule', 'Services', 'Factories'];
 
     //В папке Common
     public const PRESINTATIONFOLDER = ['CLI', 'API', 'HTTP'];

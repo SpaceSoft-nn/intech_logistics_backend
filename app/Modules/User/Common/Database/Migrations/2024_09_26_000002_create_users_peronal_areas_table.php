@@ -17,8 +17,6 @@ return new class extends Migration
 
             $table->uuid('personal_area_id')
                 ->constrained('personal_areas', 'id')->noActionOnDelete();
-
-            $table->timestamps();
         });
     }
 

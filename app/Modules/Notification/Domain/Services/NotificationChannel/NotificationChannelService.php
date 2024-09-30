@@ -5,11 +5,14 @@ namespace App\Modules\Notification\Domain\Services\NotificationChannel;
 use App\Modules\Notification\App\Data\DTO\Base\BaseDTO;
 use App\Modules\Notification\App\Data\DTO\Service\Notification\Confirm\ConfirmDTO;
 use App\Modules\Notification\App\Data\DTO\Service\SendNotificationDTO;
+use App\Modules\Notification\App\Repositories\Notification\List\EmailList\EmailListRepository;
+use App\Modules\Notification\App\Repositories\Notification\List\PhoneList\PhoneListRepository;
 use App\Modules\Notification\Domain\Interactor\Service\ConfirmCode\InteractorConfirmNotification;
 use App\Modules\Notification\Domain\Interactor\Service\InteractorSendNotification;
 use App\Modules\Notification\Domain\Interface\Service\INotificationChannel;
 use App\Modules\Notification\Domain\Services\NotificationSend\NotificationSendService;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -19,7 +22,19 @@ class NotificationChannelService implements INotificationChannel
     public function __construct(
         private NotificationSendService $serviceNotification,
         private InteractorConfirmNotification $interactorConfirm,
+        private EmailListRepository $emailRep,
+        private PhoneListRepository $phoneRep,
     ) { }
+
+    public function emailConfirmed(string $data) : ?Model
+    {
+        return $this->emailRep->getByEmailStatusTrue($data);
+    }
+
+    public function phoneConfirmed(string $data) : ?Model
+    {
+        return $this->phoneRep->getByPhoneStatusTrue($data);
+    }
 
 
      /**

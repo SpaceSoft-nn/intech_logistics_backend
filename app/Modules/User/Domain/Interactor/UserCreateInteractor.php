@@ -68,13 +68,13 @@ class UserCreateInteractor
 
             case UserRoleEnum::manager:
             {
-                return $this->createUser($dto);
+                return $this->createUserNotAdmin($dto);
                 break;
             }
 
             case UserRoleEnum::observed:
             {
-                return $this->createUser($dto);
+                return $this->createUserNotAdmin($dto);
                 break;
             }
 

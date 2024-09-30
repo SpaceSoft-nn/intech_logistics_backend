@@ -34,7 +34,7 @@ class EmailListRepository extends CoreRepository //implements IRepository
     }
 
     /**
-     * Вернуть true, если email существует и равен status:false, иначел вернуть false
+     * Вернуть true, если email существует и равен status:false, иначе вернуть false
      * @param string $data Телефон
      *
      * @return bool
@@ -47,6 +47,22 @@ class EmailListRepository extends CoreRepository //implements IRepository
             ->count();
 
         return $count ? true : false;
+    }
+
+     /**
+     * Вернуть true, если phone существует и равен status:true - авторизирован
+     * @param string $data
+     *
+     * @return ?Model
+     */
+    public function getByEmailStatusTrue(string $data) : ?Model
+    {
+        $model = $this->query()
+            ->where('value' , $data)
+            ->where('status' , true)
+            ->first();
+
+        return $model;
     }
 
 }

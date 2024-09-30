@@ -5,7 +5,8 @@ namespace App\Modules\Organization\Common\Tests\Feature;
 use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
 use App\Modules\Organization\App\Repositories\OrganizationRepository;
-use App\Modules\User\App\Data\DTO\UserCreateDTO;
+use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Interactor\UserCreateInteractor;
 use App\Modules\User\Domain\Models\User;
@@ -53,15 +54,16 @@ class OrganizationTest extends TestCase
         $interactor = app(UserCreateInteractor::class);
         $model = $interactor->run(
             UserCreateDTO::make(
-                first_name: $this->faker->firstName,
-                last_name: $this->faker->lastName,
-                father_name: $this->faker->firstName,
-                password: $this->faker->password,
-                role: UserRoleEnum::observed,
-                permission: null,
-                personal_area_id: null,
-                email_id: null,
-                phone_id: null,
+                UserVO::make(
+                    first_name: $this->faker->firstName,
+                    last_name: $this->faker->lastName,
+                    father_name: $this->faker->firstName,
+                    password: $this->faker->password,
+                    role: UserRoleEnum::observed,
+                    personal_area_id: null,
+                    email_id: null,
+                    phone_id: null,
+                )
             )
         );
 

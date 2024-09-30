@@ -6,12 +6,35 @@ use App\Modules\Notification\App\Data\DTO\Service\Notification\Confirm\ConfirmDT
 use App\Modules\Notification\App\Data\DTO\Service\SendNotificationDTO;
 use App\Modules\Notification\Domain\Interface\Service\INotification;
 use App\Modules\Notification\Domain\Services\NotificationChannel\NotificationChannelService;
+use Illuminate\Database\Eloquent\Model;
 
 class NotificationService implements INotification
 {
     public function __construct(
         private NotificationChannelService $serviceNotificationChannel,
     ) { }
+
+    /**
+     * Проверяем подтвреждён ли email
+     * @param string $data
+     *
+     * @return ?Model
+     */
+    public function emailConfirmed(string $data) : ?Model
+    {
+        return $this->serviceNotificationChannel->emailConfirmed($data);
+    }
+
+    /**
+     * Проверяем подтвреждён ли phone
+     * @param string $data
+     *
+     * @return ?Model
+     */
+    public function phoneConfirmed(string $data) : ?Model
+    {
+        return $this->serviceNotificationChannel->phoneConfirmed($data);
+    }
 
     /**
      * Запуск в работы нотификации

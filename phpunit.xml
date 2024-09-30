@@ -12,6 +12,7 @@
             <directory>App\Modules\User\Common\Tests\Feature</directory>
             <directory>App\Modules\Organization\Common\Tests\Feature</directory>
             <directory>App\Modules\IndividualPeople\Common\Tests\Feature</directory>
+            <directory>App\Modules\InteractorModules\Registration\Common\Tests\Feature</directory>
         </testsuite>
     </testsuites>
     <source>

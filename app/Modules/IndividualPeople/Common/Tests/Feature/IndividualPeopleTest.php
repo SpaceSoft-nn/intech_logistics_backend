@@ -4,6 +4,7 @@ namespace App\Modules\IndividualPeople\Common\Tests\Feature;
 
 use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
 use App\Modules\IndividualPeople\Domain\Actions\CreateIndividualPeople;
+use App\Modules\IndividualPeople\Domain\Services\IndividualPeopleService;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO as UserUserCreateDTO;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Data\DTO\UserCreateDTO;
@@ -29,7 +30,8 @@ class IndividualPeopleTest extends TestCase
     public function test_create_individual_people()
     {
         $interactor = app(UserCreateInteractor::class);
-        
+        $rep = app(IndividualPeopleService::class);
+
         $user = $interactor->run(
             UserUserCreateDTO::make(
                 UserVO::make(
@@ -38,7 +40,6 @@ class IndividualPeopleTest extends TestCase
                     father_name: $this->faker->name,
                     password: bcrypt('password'),
                     role: UserRoleEnum::admin,
-                    permission: 15,
                     personal_area_id: null,
                     email_id: null,
                     phone_id: null,
@@ -46,7 +47,7 @@ class IndividualPeopleTest extends TestCase
             )
         );
 
-        $invPeople = CreateIndividualPeople::make(
+        $invPeople = $rep->createIndividualPeople(
             CreateIndividualPeopleDTO::make(
                 first_name: $this->faker->name,
                 last_name: $this->faker->name,

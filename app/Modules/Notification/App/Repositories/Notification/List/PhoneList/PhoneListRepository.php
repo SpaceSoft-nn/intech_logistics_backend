@@ -33,7 +33,7 @@ class PhoneListRepository extends CoreRepository //implements IRepository
     }
 
     /**
-     * Вернуть true, если phone:value существует и равен status:false, иначел вернуть false
+     * Вернуть true, если phone:value существует и равен status:false, иначе вернуть false
      * @param string $data Телефон
      *
      * @return bool
@@ -48,5 +48,20 @@ class PhoneListRepository extends CoreRepository //implements IRepository
         return $count ? true : false;
     }
 
+    /**
+     * Вернуть true, если phone существует и равен status:true - авторизирован
+     * @param string $data
+     *
+     * @return ?Model
+     */
+    public function getByPhoneStatusTrue(string $data) : ?Model
+    {
+        $model = $this->query()
+            ->where('value' , $data)
+            ->where('status' , true)
+            ->first();
+
+        return $model;
+    }
 
 }

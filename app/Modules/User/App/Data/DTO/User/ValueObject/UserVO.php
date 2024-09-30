@@ -6,6 +6,7 @@ use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\User\App\Data\DTO\Base\BaseDTO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
 
 class UserVO extends BaseDTO implements Arrayable
 {
@@ -19,51 +20,88 @@ class UserVO extends BaseDTO implements Arrayable
         public readonly string $password,
 
         public readonly UserRoleEnum $role,
-        public readonly ?int $permission,
 
         public readonly ?string $personal_area_id,
-        public readonly ?string $email_id,
-        public readonly ?string $phone_id,
+        public ?string $email_id,
+        public ?string $phone_id,
     ) {}
+
+    public function setEmailId(string $id)
+    {
+        $this->email_id = $id;
+    }
+
+    public function setPhoneId(string $id)
+    {
+        $this->phone_id = $id;
+    }
 
 
     public static function make(
+
         string $first_name,
         string $last_name,
         string $father_name,
         string $password,
         UserRoleEnum $role,
-        ?int $permission,
-        ?string $personal_area_id,
-        ?string $email_id,
-        ?string $phone_id,
-    ) : self
-    {
+        ?string $personal_area_id = null,
+        ?string $email_id = null,
+        ?string $phone_id = null,
+
+    ) : self {
+
         return new self(
             first_name: $first_name,
             last_name: $last_name,
             father_name: $father_name,
             password: $password,
             role: $role,
-            permission: $permission,
             personal_area_id: $personal_area_id,
             email_id: $email_id,
             phone_id: $phone_id,
         );
+
     }
 
     public function toArray() : array
     {
         return [
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'father_name' => $this->father_name,
-            'password' => $this->password,
-            'role' => $this->role,
-            'permission' => $this->permission,
-            'personal_area_id' => $this->personal_area_id,
-            'email_id' => $this->email_id,
-            'phone_id' => $this->phone_id,
+            'first_name' => self::$first_name,
+            'last_name' => self::$last_name,
+            'father_name' => self::$father_name,
+            'password' => self::$password,
+            'role' => self::$role,
+            'personal_area_id' => self::$personal_area_id,
+            'email_id' => self::$email_id,
+            'phone_id' => self::$phone_id,
         ];
+    }
+
+    public static function fromArrayToObject(array $data): self
+    {
+
+        $first_name = Arr::get($data, 'first_name');
+        $last_name =  Arr::get($data, 'last_name');
+        $father_name =  Arr::get($data, 'father_name');
+        $password =  Arr::get($data, 'password');
+        $role =  UserRoleEnum::returnObjectByString(Arr::get($data, 'role'));
+        $personal_area_id = Arr::get($data, 'personal_area_id', null);
+        $email_id = Arr::get($data, 'email_id' , null);
+        $phone_id = Arr::get($data, 'phone_id' , null);
+
+        if ($first_name === '' || $last_name === '' || $father_name === '' || $password === '') {
+            throw new \InvalidArgumentException('Обязательные параметры не могут быть пустыми.', 500);
+        }
+
+        return new self(
+            first_name: $first_name,
+            last_name: $last_name,
+            father_name: $father_name,
+            password: $password,
+            role: $role,
+            personal_area_id: $personal_area_id,
+            email_id: $email_id,
+            phone_id: $phone_id,
+        );
     }
 }

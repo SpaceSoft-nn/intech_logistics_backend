@@ -2,7 +2,8 @@
 
 namespace App\Modules\User\Common\Tests\Feature;
 
-use App\Modules\User\App\Data\DTO\UserCreateDTO;
+use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Interactor\UserCreateInteractor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -26,17 +27,20 @@ class UserTest extends TestCase
         $interactor = app(UserCreateInteractor::class);
         $status = $interactor->run(
             UserCreateDTO::make(
-                first_name: $this->faker->firstName,
-                last_name: $this->faker->lastName,
-                father_name: $this->faker->firstName,
-                password: $this->faker->password,
-                role: UserRoleEnum::admin,
-                permission: null,
-                personal_area_id: null,
-                email_id: null,
-                phone_id: null,
+                UserVO::make(
+                    first_name: $this->faker->firstName,
+                    last_name: $this->faker->lastName,
+                    father_name: $this->faker->firstName,
+                    password: $this->faker->password,
+                    role: UserRoleEnum::admin,
+                    permission: null,
+                    personal_area_id: null,
+                    email_id: null,
+                    phone_id: null,
+                )
             )
         );
+        
         $this->assertNotNull($status);
     }
 }

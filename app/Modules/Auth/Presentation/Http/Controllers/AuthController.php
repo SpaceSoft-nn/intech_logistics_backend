@@ -3,9 +3,10 @@ namespace App\Modules\Auth\Presentation\HTTP\Controllers;
 
 use App\Modules\Auth\App\Data\DTO\UserAttemptDTO;
 use App\Modules\Auth\Domain\Traits\TraitController;
+use App\Modules\User\Domain\Resources\UserResource;
 use Illuminate\Http\Request;
 
-use function App\Modules\Auth\Common\Helpers\array_success;
+use function App\Helpers\array_success;
 
 //для преобразование массива с сообщением
 
@@ -46,11 +47,7 @@ class AuthController extends Controller
 
         $this->abort_unless($user, 401);
 
-        #TODO Сделать UserResource
-        // $userResource = new UserResource($user);
-
-        #TODO Добавить ресурс возврата user (не полностью)
-        return response()->json(array_success( $user, 'Successfully return user'), 200);
+        return response()->json(array_success( UserResource::make($user), 'Successfully return user'), 200);
     }
 
     /**

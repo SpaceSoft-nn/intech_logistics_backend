@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\User\Domain\Rules;
+namespace App\Modules\Notification\Domain\Rule;
 
-use App\Modules\User\Domain\Rules\Traits\TraitRule;
+use App\Modules\Notification\Domain\Rule\Traits\TraitRule;
 
 class EmailRule
 {

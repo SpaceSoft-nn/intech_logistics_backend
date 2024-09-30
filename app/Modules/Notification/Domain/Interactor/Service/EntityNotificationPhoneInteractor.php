@@ -44,7 +44,7 @@ class EntityNotificationPhoneInteractor
             return $model;
 
         } else {
-            throw new HttpException(409, "Данные: {$this->phone} уже существуют.");
+            throw new HttpException(409, "Данные: {$this->phone} уже зарегистрированы.");
         }
     }
 

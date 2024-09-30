@@ -33,7 +33,7 @@ use App\Modules\Auth\Presentation\Http\Controllers\Controller;
  *                  @OA\Property(property="token_type", type="number", example="Bearer"),
  *                  @OA\Property(property="expires_in", type="integer", example="3600"),
  *              ),
- *              @OA\Property(property="message", type="string", example="Successfully login"),
+ *              @OA\Property(property="message", type="string", example="Successfully login."),
  *          ),
  *      ),
  *
@@ -201,21 +201,28 @@ use App\Modules\Auth\Presentation\Http\Controllers\Controller;
  * ),
  *
  *
+ * @OA\Schema(
+ *    schema="BearerToken",
+ *    title="Bearer Token Object",
+ *    @OA\Property(property="access_token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MTQwMDMwNTcsImV4cCI6MTcxNDAwNjY1NywibmJmIjoxNzE0MDAzMDU3LCJqdGkiOiJaampTNWRmOHZtdHNZbWJ0Iiwic3ViIjoiMSIsInBydiI6IjRhNmUyNTJkNDljYzM1ZjlhNmQyODk3ZmRlNGY5MzE0NmU3YzgwMmMifQ.6J4NAHBKlRIG5ZAtgIwXHuToFnG1mCCXwgxrf6rL9DY"),
+ *    @OA\Property(property="token_type", type="number", example="Bearer"),
+ *    @OA\Property(property="expires_in", type="integer", example="3600"),
+ * ),
  *
  *
- *
- *
- *
- *@OA\Schema(
+ * @OA\Schema(
  *    schema="UserResource",
  *    title="User Resource",
- *    @OA\Property(property="id", type="integer"),
- *    @OA\Property(property="phone", type="string"),
- *    @OA\Property(property="email", type="string"),
+ *    @OA\Property(property="id", type="string", format="uuid"),
  *    @OA\Property(property="first_name", type="string"),
  *    @OA\Property(property="last_name", type="string"),
  *    @OA\Property(property="father_name", type="string"),
- *),
+ *    @OA\Property(property="role", type="string", enum={"admin", "manager", "observer"} ),
+ *    @OA\Property(property="auth", type="boolean"),
+ *    @OA\Property(property="personal_area_id", type="string", format="uuid"),
+ *    @OA\Property(property="email_id", type="string", format="uuid"),
+ *    @OA\Property(property="phone_id", type="string", format="uuid"),
+ * ),
  *
  */
 class AuthController extends Controller

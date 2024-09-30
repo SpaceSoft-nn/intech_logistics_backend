@@ -9,7 +9,6 @@ use App\Modules\InteractorModules\Registration\Domain\Services\RegistrationServi
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\Domain\Models\User;
-use App\Modules\User\Domain\Resources\UserResource;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
@@ -45,6 +44,9 @@ class RegistrationController
 
         $token = $auth->loginUser($model);
 
-        return response()->json( array_success($token, 'Successfully registration'), 201);
+        return $token ?
+            response()->json( array_success($token, 'Successfully registration.'), 201)
+            :
+            response()->json( array_error( null, 'Error receiving token.'), 401);
     }
 }

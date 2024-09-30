@@ -2,13 +2,12 @@
 
 namespace App\Modules\User\Domain\Requests;
 
-use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
-use App\Modules\User\Domain\Rules\EmailRule;
-use App\Modules\User\Domain\Rules\PhoneRule;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\Notification\Domain\Rule\EmailRule;
+use App\Modules\Notification\Domain\Rule\PhoneRule;
 use Illuminate\Validation\Rules\Password;
 
-class UserLoginRequest extends FormRequest
+class UserLoginRequest extends ApiRequest
 {
 
     protected $stopOnFirstFailure = true;

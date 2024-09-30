@@ -45,7 +45,7 @@ class EntityNotificationEmailInteractor
             return $model;
 
         } else {
-            throw new HttpException(409, "Данные: {$this->email} уже существуют.");
+            throw new HttpException(409, "Данные: {$this->email} уже зарегистрированы.");
         }
     }
 

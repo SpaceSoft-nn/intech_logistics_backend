@@ -37,7 +37,7 @@ class NotificationService implements INotification
     }
 
     /**
-     * Запуск в работы нотификации
+     * Запуск работы нотификации
      * @param SendNotificationDTO $dto
      *
      * @return array

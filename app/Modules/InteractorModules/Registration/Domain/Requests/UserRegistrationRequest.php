@@ -2,15 +2,15 @@
 
 namespace App\Modules\InteractorModules\Registration\Domain\Requests;
 
+use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\Notification\Domain\Rule\EmailRule;
+use App\Modules\Notification\Domain\Rule\PhoneRule;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
-use App\Modules\User\Domain\Rules\EmailRule;
-use App\Modules\User\Domain\Rules\PhoneRule;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
-class UserRegistrationRequest extends FormRequest
+class UserRegistrationRequest extends ApiRequest
 {
     protected $stopOnFirstFailure = true;
 
@@ -42,7 +42,7 @@ class UserRegistrationRequest extends FormRequest
             'first_name' => ['required', 'string', "max:130", 'min:2', 'alpha'],
             'last_name' => ['required', 'string' , "max:130", 'min:2', 'alpha'],
             'father_name' => ['required', 'string', "max:130", 'min:2', 'alpha'],
-            'role' => ['required', 'string', Rule::enum(UserRoleEnum::class)->only([UserRoleEnum::admin, UserRoleEnum::manager, UserRoleEnum::observed])],
+            'role' => ['required', 'string', Rule::enum(UserRoleEnum::class)->only([UserRoleEnum::admin])],
 
             'agreement' => ['required', 'boolean'],
         ];

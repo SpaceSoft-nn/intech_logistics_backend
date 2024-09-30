@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\User\Domain\Rules\Traits;
+namespace App\Modules\Notification\Domain\Rule\Traits;
 
 trait TraitRule
 {

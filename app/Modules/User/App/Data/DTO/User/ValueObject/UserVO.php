@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\User\App\Data\DTO;
+namespace App\Modules\User\App\Data\DTO\User\ValueObject;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\User\App\Data\DTO\Base\BaseDTO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use Illuminate\Contracts\Support\Arrayable;
 
-class UserCreateDTO extends BaseDTO implements Arrayable
+class UserVO extends BaseDTO implements Arrayable
 {
 
     use FilterArrayTrait;

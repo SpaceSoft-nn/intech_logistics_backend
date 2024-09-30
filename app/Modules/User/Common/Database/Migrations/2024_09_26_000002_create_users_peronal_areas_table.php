@@ -11,9 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users_peronal_areas', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-
+        Schema::create('user_personal_area', function (Blueprint $table) {
             $table->uuid('user_id')
                 ->constrained('users', 'id')->noActionOnDelete();
 

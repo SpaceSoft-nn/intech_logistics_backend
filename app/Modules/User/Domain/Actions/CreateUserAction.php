@@ -3,17 +3,18 @@
 namespace App\Modules\User\Domain\Actions;
 
 use App\Modules\Permission\Domain\Services\PermissionService;
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Data\DTO\UserCreateDTO;
 use App\Modules\User\Domain\Models\User as Model;
 
 class CreateUserAction
 {
-    public static function make(UserCreateDTO $dto) : Model
+    public static function make(UserVO $dto) : Model
     {
        return (new self())->run($dto);
     }
 
-    public function run(UserCreateDTO $dto) : Model
+    public function run(UserVO $dto) : Model
     {
         $model = Model::query()
             ->create(

@@ -27,7 +27,7 @@ class CreateIndividualPeopleDTO extends BaseDTO implements Arrayable
 
         public readonly ?bool $remuved,
 
-        public readonly int $personal_area_id,
+        public readonly string $personal_area_id,
 
     ) { }
 
@@ -39,9 +39,9 @@ class CreateIndividualPeopleDTO extends BaseDTO implements Arrayable
         string $other_contact,
         string $comment,
         string $personal_area_id,
-        ?string $phone,
-        ?string $email,
-        ?string $remuved,
+        ?string $phone = null,
+        ?string $email = null,
+        ?string $remuved = null,
     ) : self {
 
 

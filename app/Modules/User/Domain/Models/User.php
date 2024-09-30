@@ -93,6 +93,6 @@ class User extends Model
 
     public function personal_areas(): BelongsToMany
     {
-        return $this->belongsToMany(PersonalArea::class);
+        return $this->belongsToMany(PersonalArea::class, 'user_personal_area', 'personal_area_id', 'user_id');
     }
 }

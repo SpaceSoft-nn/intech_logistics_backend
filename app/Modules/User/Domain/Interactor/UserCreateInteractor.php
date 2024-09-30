@@ -2,9 +2,10 @@
 
 namespace App\Modules\User\Domain\Interactor;
 
-use App\Modules\User\App\Data\DTO\UserCreateDTO;
+use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\App\Repositories\UserRepository;
+use App\Modules\User\Domain\Actions\LinkUserToPersonalAreaAction;
 use App\Modules\User\Domain\Actions\PersonalArea\PersonalAreaCreateAction;
 use App\Modules\User\Domain\Models\PersonalArea;
 use App\Modules\User\Domain\Models\User;
@@ -27,6 +28,21 @@ class UserCreateInteractor
         return PersonalAreaCreateAction::make($uuid_owner);
     }
 
+    private function createUserNotAdmin(UserCreateDTO $dto) : ?User
+    {
+        #TODO Проверить
+        $userAuth = $dto->userAuth;
+        $user = $this->createUser($dto);
+
+        //устанавливаем к какому кабинету относится user
+        $user->personal_area_id = $userAuth->personal_areas()->first(); #TODO с first могут быть проблемы
+
+        //Сохраняем данные в бд.
+        $user->save();
+
+        return $user;
+    }
+
     private function createUserIsAdmin(UserCreateDTO $dto) : ?User
     {
         #TODO Здесь нужно добавить цепочку обязаностей
@@ -35,18 +51,14 @@ class UserCreateInteractor
         */
         $user = $this->createUser($dto);
         $area = $this->createPersonalArea($user->id);
-        {
-            $user->personal_area_id = $area->id;
-            $user->save();
-        }
+        LinkUserToPersonalAreaAction::run($user, $area);
 
         return $user;
     }
 
     public function run(UserCreateDTO $dto) : ?User
     {
-
-        switch ($dto->role) {
+        switch ($dto->userVO->role) {
 
             case UserRoleEnum::admin:
             {

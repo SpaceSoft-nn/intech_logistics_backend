@@ -2,10 +2,12 @@
 
 namespace App\Modules\User\Domain\Factories;
 
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Data\DTO\UserCreateDTO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Model>
@@ -25,7 +27,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
 
-        $user = UserCreateDTO::make(
+        $user = UserVO::make(
             first_name: $this->faker->name,
             last_name: $this->faker->name,
             father_name: $this->faker->name,

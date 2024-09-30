@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('father_name')->comment('Отчество');
 
             $table->string('position');
-            $table->string('phone');
-            $table->string('email');
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->string('other_contact');
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table->string('remuved')->default(false)->comment('Статус удаление');
 
             $table->uuid('personal_area_id')

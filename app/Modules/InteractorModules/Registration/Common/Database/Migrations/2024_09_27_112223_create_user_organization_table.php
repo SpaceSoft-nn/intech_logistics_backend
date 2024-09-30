@@ -9,11 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_organization', function (Blueprint $table) {
+
             $table->uuid('user_id')
                 ->constrained('users', 'id')->noActionOnDelete();
 
             $table->uuid('organization_id')
                 ->constrained('organizations', 'id')->noActionOnDelete();
+
+            $table->unique(['user_id', 'organization_id']);
+
         });
     }
 

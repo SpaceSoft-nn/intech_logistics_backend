@@ -11,4 +11,6 @@ return [
     App\Modules\InteractorModules\Registration\App\Providers\RegistrationServiceProvider::class, //сервес объединение User + Organization
     App\Modules\IndividualPeople\App\Providers\IndividualPeopleServiceProvider::class,
     App\Modules\Permission\App\Providers\PerrmissionServoceProvider::class, // Сервес прав по бинарной таблице
+        #Auth Service
+        App\Modules\Auth\App\Providers\AuthServiceProvider::class,
 ];

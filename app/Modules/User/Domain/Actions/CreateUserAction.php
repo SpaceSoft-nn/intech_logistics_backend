@@ -4,7 +4,6 @@ namespace App\Modules\User\Domain\Actions;
 
 use App\Modules\Permission\Domain\Services\PermissionService;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
-use App\Modules\User\App\Data\DTO\UserCreateDTO;
 use App\Modules\User\Domain\Models\User as Model;
 
 class CreateUserAction
@@ -17,7 +16,13 @@ class CreateUserAction
     public function run(UserVO $dto) : Model
     {
         $model = Model::query()
-            ->create(
+            ->createOrFirst(
+
+                [
+                    'email_id' => $dto->email_id,
+                    'phone_id' => $dto->phone_id,
+                ],
+
                 [
                     'first_name' => $dto->first_name,
                     'last_name' => $dto->last_name,

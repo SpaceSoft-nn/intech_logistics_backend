@@ -2,12 +2,15 @@
 
 namespace App\Modules\Notification\Domain\Models;
 
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $value Номер телефона
@@ -30,6 +33,12 @@ class PhoneList extends Model
 
     protected $table = 'phone_list';
 
-    protected $fillable = ['value'];
+    protected $fillable = ['value', 'status'];
+
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'phone_id');
+    }
 
 }

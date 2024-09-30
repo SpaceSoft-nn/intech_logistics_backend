@@ -65,7 +65,7 @@ class AuthService
 
     /**
      * Возваращет token по модели user (если модель существует в бд)
-     * @return null|array
+     * @return ?array
      */
     public function loginUser(Model $model) : ?array
     {

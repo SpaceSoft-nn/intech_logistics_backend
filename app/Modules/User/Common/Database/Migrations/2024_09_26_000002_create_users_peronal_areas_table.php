@@ -12,11 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_personal_area', function (Blueprint $table) {
+
             $table->uuid('user_id')
                 ->constrained('users', 'id')->noActionOnDelete();
 
             $table->uuid('personal_area_id')
                 ->constrained('personal_areas', 'id')->noActionOnDelete();
+
+            $table->unique(['user_id', 'personal_area_id']);
+
         });
     }
 

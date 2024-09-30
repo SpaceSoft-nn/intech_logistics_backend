@@ -1,8 +1,9 @@
 <?php
 namespace App\Modules\Auth\App\Data\DTO;
 
+use Illuminate\Contracts\Support\Arrayable;
 
-class UserAttemptDTO extends BaseDTO
+class UserAttemptDTO extends BaseDTO implements Arrayable
 {
     public function __construct(
 
@@ -38,4 +39,14 @@ class UserAttemptDTO extends BaseDTO
 
         return $data;
     }
+
+    public function toArrayNotNull() : array
+    {
+        $arrayFilter = array_filter($this->toArray(), function($value) {
+            return !is_null($value);
+        });
+
+        return $arrayFilter;
+    }
+
 }

@@ -2,11 +2,16 @@
 
 namespace App\Modules\User\Domain\Models;
 
+use App\Modules\Notification\Domain\Models\EmailList;
+use App\Modules\Notification\Domain\Models\PhoneList;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  *
@@ -46,9 +51,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends Model
+class User extends Authenticatable
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, HasApiTokens, Notifiable;
 
     protected $table = 'users';
 
@@ -94,5 +99,16 @@ class User extends Model
     public function personal_areas(): BelongsToMany
     {
         return $this->belongsToMany(PersonalArea::class, 'user_personal_area', 'personal_area_id', 'user_id');
+    }
+
+
+    public function phone(): BelongsTo
+    {
+        return $this->belongsTo(PhoneList::class);
+    }
+
+    public function email(): BelongsTo
+    {
+        return $this->belongsTo(EmailList::class);
     }
 }

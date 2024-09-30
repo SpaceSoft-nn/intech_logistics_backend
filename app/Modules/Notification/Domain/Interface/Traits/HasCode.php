@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Notification\Traits;
+namespace App\Modules\Notification\Domain\Interface\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 

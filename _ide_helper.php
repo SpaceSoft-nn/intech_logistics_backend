@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 11.23.5.
+ * Generated for Laravel 11.25.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1997,7 +1997,7 @@ namespace Illuminate\Support\Facades {
                     /**
          * Get the currently authenticated user.
          *
-         * @return \App\Models\User|null 
+         * @return \App\Modules\User\Domain\Models\User|null 
          * @static 
          */        public static function user()
         {
@@ -2029,7 +2029,7 @@ namespace Illuminate\Support\Facades {
          * Log the given user ID into the application without sessions or cookies.
          *
          * @param mixed $id
-         * @return \App\Models\User|false 
+         * @return \App\Modules\User\Domain\Models\User|false 
          * @static 
          */        public static function onceUsingId($id)
         {
@@ -2103,7 +2103,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \App\Models\User|false 
+         * @return \App\Modules\User\Domain\Models\User|false 
          * @static 
          */        public static function loginUsingId($id, $remember = false)
         {
@@ -2150,7 +2150,7 @@ namespace Illuminate\Support\Facades {
          * The application must be using the AuthenticateSession middleware.
          *
          * @param string $password
-         * @return \App\Models\User|null 
+         * @return \App\Modules\User\Domain\Models\User|null 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */        public static function logoutOtherDevices($password)
@@ -2172,7 +2172,7 @@ namespace Illuminate\Support\Facades {
                     /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \App\Models\User 
+         * @return \App\Modules\User\Domain\Models\User 
          * @static 
          */        public static function getLastAttempted()
         {
@@ -2276,7 +2276,7 @@ namespace Illuminate\Support\Facades {
                     /**
          * Return the currently cached user.
          *
-         * @return \App\Models\User|null 
+         * @return \App\Modules\User\Domain\Models\User|null 
          * @static 
          */        public static function getUser()
         {
@@ -2328,7 +2328,7 @@ namespace Illuminate\Support\Facades {
                     /**
          * Determine if the current user is authenticated. If not, throw an exception.
          *
-         * @return \App\Models\User 
+         * @return \App\Modules\User\Domain\Models\User 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */        public static function authenticate()
@@ -3952,7 +3952,7 @@ namespace Illuminate\Support\Facades {
          *
          * @template TCacheValue
          * @param string $key
-         * @param \Illuminate\Cache\array{  0: int, 1: int }  $ttl
+         * @param \Illuminate\Cache\array{  0: \DateTimeInterface|\DateInterval|int, 1: \DateTimeInterface|\DateInterval|int }  $ttl
          * @param \Illuminate\Cache\(callable():  TCacheValue)  $callback
          * @param \Illuminate\Cache\array{  seconds?: int, owner?: string }|null  $lock
          * @return \Illuminate\Cache\TCacheValue 
@@ -4292,7 +4292,7 @@ namespace Illuminate\Support\Facades {
      * 
      *
      * @method static array run(\Closure|array $tasks)
-     * @method static \Illuminate\Foundation\Defer\DeferredCallback defer(\Closure|array $tasks)
+     * @method static \Illuminate\Support\Defer\DeferredCallback defer(\Closure|array $tasks)
      * @see \Illuminate\Concurrency\ConcurrencyManager
      */        class Concurrency {
                     /**
@@ -4322,6 +4322,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param array $config
          * @return \Illuminate\Concurrency\ForkDriver 
+         * @throws \RuntimeException
          * @static 
          */        public static function createForkDriver($config)
         {
@@ -17443,6 +17444,17 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\View\Factory $instance */
                         $instance->addLocation($location);
+        }
+                    /**
+         * Prepend a location to the array of view locations.
+         *
+         * @param string $location
+         * @return void 
+         * @static 
+         */        public static function prependLocation($location)
+        {
+                        /** @var \Illuminate\View\Factory $instance */
+                        $instance->prependLocation($location);
         }
                     /**
          * Add a new namespace to the loader.

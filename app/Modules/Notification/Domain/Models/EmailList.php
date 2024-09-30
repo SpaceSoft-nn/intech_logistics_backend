@@ -2,12 +2,14 @@
 
 namespace App\Modules\Notification\Domain\Models;
 
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $value Почта
@@ -30,10 +32,10 @@ class EmailList extends Model
 
     protected $table = 'email_list';
 
-    protected $fillable = ['value'];
+    protected $fillable = ['value', 'status'];
 
-    // public function newUniqueId(): string
-    // {
-    //     return (string) Uuid::uuid4();
-    // }
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'email_id');
+    }
 }

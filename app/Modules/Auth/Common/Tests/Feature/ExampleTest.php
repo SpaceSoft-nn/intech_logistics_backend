@@ -2,13 +2,12 @@
 namespace App\Modules\Auth\Common\Tests\Feature;
 
 
-use App\Models\User;
 use App\Modules\Auth\App\Data\DTO\UserAttemptDTO;
 use App\Modules\Auth\Common\Tests\TestCase;
 use App\Modules\Auth\Domain\Services\AuthService;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Request;
 
 class ExampleTest extends TestCase
 {
@@ -140,7 +139,6 @@ class ExampleTest extends TestCase
                 'Authorization' => 'Bearer ' . ';12',
             ])->json('POST', '/api/auth/refresh');
 
-            dd($response);
 
             $response->assertStatus(401);
         }

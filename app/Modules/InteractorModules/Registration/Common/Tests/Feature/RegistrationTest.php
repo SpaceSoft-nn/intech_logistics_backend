@@ -23,7 +23,6 @@ class RegistrationTest extends TestCase
                     father_name: 'test',
                     password: 'test',
                     role: UserRoleEnum::admin,
-                    permission: 15,
                     personal_area_id: null,
                     email_id: null,
                     phone_id: null,
@@ -34,6 +33,5 @@ class RegistrationTest extends TestCase
 
         $model = $iterator->run($dto);
 
-        dd($model);
     }
 }

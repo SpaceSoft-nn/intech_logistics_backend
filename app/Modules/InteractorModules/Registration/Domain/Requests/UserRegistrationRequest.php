@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Modules\User\Requests\Entry;
+namespace App\Modules\InteractorModules\Registration\Domain\Requests;
 
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
+use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Rules\EmailRule;
 use App\Modules\User\Domain\Rules\PhoneRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Password;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class UserRegistrationRequest extends FormRequest
 {
@@ -33,15 +36,24 @@ class UserRegistrationRequest extends FormRequest
     {
         return [
             'email' => (new EmailRule)->toArray(),
-            'phone' => (new PhoneRule)->addRule('unique:App\Modules\User\Models\User')->toArray(),
+            'phone' => (new PhoneRule)->toArray(),
             'password' => ['required', 'string', Password::defaults(), 'confirmed'],
+
+            'first_name' => ['required', 'string', "max:130", 'min:2', 'alpha'],
+            'last_name' => ['required', 'string' , "max:130", 'min:2', 'alpha'],
+            'father_name' => ['required', 'string', "max:130", 'min:2', 'alpha'],
+            'role' => ['required', 'string', Rule::enum(UserRoleEnum::class)->only([UserRoleEnum::admin, UserRoleEnum::manager, UserRoleEnum::observed])],
+
             'agreement' => ['required', 'boolean'],
         ];
     }
 
-    // public function getValueObject(): UserVO
-    // {
-    //     return UserVO::fromArray($this->validated());
-    // }
+    /**
+    * @return UserVO
+    */
+    public function getValueObject(): UserVO
+    {
+        return UserVO::fromArrayToObject($this->validated());
+    }
 
 }

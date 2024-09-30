@@ -9,8 +9,17 @@ class LinkUserToPersonalAreaAction
 {
     public static function run(User $user, PersonalArea $personalArea) : bool
     {
-        $user->personal_areas()->attach($personalArea->id);
+        try {
 
-        return true;
+            $user->personal_areas()->syncWithoutDetaching([$personalArea->id]);
+            $user->save();
+            return true;
+
+        } catch (\Throwable $th) {
+            
+            return false;
+
+        }
+
     }
 }

@@ -4,6 +4,7 @@ namespace App\Modules\Auth\App\Data\Drivers;
 use App\Modules\Auth\App\Data\DTO\BaseDTO;
 use App\Modules\Auth\Common\Config\AuthConfig;
 use App\Modules\Auth\Domain\Interface\AuthInterface;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
 class AuthJwt implements AuthInterface

@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -34,12 +31,13 @@ return new class extends Migration
 
             $table->uuid('email_id')
                 ->nullable()
+                ->unique()
                 ->constrained('email_list', 'id')->noActionOnDelete();
 
             $table->uuid('phone_id')
                 ->nullable()
+                ->unique()
                 ->constrained('phone_list', 'id')->noActionOnDelete();
-
 
             $table->timestamps();
             $table->rememberToken();

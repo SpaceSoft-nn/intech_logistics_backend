@@ -2,16 +2,16 @@
 
 namespace App\Modules\Auth\App\Data\Drivers;
 
-use App\Models\User;
 use App\Modules\Auth\App\Data\DTO\BaseDTO;
+use App\Modules\Auth\App\Data\DTO\UserAttemptDTO;
 use App\Modules\Auth\Common\Config\AuthConfig;
 use App\Modules\Auth\Domain\Interface\AuthInterface;
+use App\Modules\Notification\Domain\Models\EmailList;
+use App\Modules\Notification\Domain\Models\PhoneList;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Request;
 use Laravel\Sanctum\PersonalAccessToken;
-use Laravel\Sanctum\TransientToken;
 
 #TODO ->addMinutes(360) - добавить время истечения
 class AuthSanctum implements AuthInterface
@@ -24,7 +24,7 @@ class AuthSanctum implements AuthInterface
 
     /**
      * Нахождение пользователя по password/email/phone и получение токена
-     * @param BaseDTO $data
+     * @param UserAttemptDTO $data
      *
      * @return [type]
      */
@@ -128,11 +128,15 @@ class AuthSanctum implements AuthInterface
      */
     private function checkUserAuth(BaseDTO $credentials) : bool|array
     {
-
-        $user = User::where('email', $credentials->email)
-                ->orWhere('phone', $credentials->phone)
-                ->first();
-
+        $user = null;
+        
+        if(!is_null($credentials->email)) {
+            $email = EmailList::where('value', $credentials->email)->first();
+            $user = $email->user;
+        } else {
+            $phone = PhoneList::where('value', $credentials->phone)->first();
+            $user = $phone->user;
+        }
 
         if (! $user || ! Hash::check($credentials->password, $user->password)) {
             return false;

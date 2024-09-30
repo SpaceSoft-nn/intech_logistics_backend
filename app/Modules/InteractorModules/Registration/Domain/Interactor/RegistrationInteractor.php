@@ -7,8 +7,8 @@ use App\Modules\Notification\Domain\Services\Notification\NotificationService;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\Domain\Models\User;
 use App\Modules\User\Domain\Services\UserService;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Exception;
 use RegistrationDTO;
 
 class RegistrationInteractor
@@ -77,6 +77,7 @@ class RegistrationInteractor
         * @var UserCreateDTO
         */
         $userDTO = $dto->userDTO;
+
 
         {
             //Проверяем подтверждён ли phone/email

@@ -3,6 +3,7 @@
 namespace App\Modules\Organization\Common\Tests\Feature;
 
 use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
+use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
 use App\Modules\Organization\App\Repositories\OrganizationRepository;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
@@ -33,14 +34,16 @@ class OrganizationTest extends TestCase
             $user = $this->create_user();
             $organization = $rep->save(
                 OrganizationCreateDTO::make(
-                    owner_id: $user->id,
-                    name: $this->faker->name,
-                    address: $this->faker->address,
-                    industry: $this->faker->text,
-                    founded_date: $this->faker->date,
-                    type: OrganizationEnum::ooo,
-                    inn: "123456789012",
-                    registration_number: "1234567890123",
+                    OrganizationVO::make(
+                        owner_id: $user->id,
+                        name: $this->faker->name,
+                        address: $this->faker->address,
+                        industry: $this->faker->text,
+                        founded_date: $this->faker->date,
+                        type: OrganizationEnum::ooo,
+                        inn: "123456789012",
+                        registration_number: "1234567890123",
+                    )
                 )
             );
 

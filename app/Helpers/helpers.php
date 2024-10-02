@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -50,6 +52,23 @@ if (!function_exists('Mylog'))
         $caller = $backtrace[1];
 
         Log::info($message . ' ' . now() . " ------> " . 'Debug backtrace: ' . 'Function called from file: ' . $caller['file'] . ' on line ' . $caller['line']);
+    }
+}
+
+if (!function_exists('isAuthorized'))
+{
+    function isAuthorized(AuthServiceInterface $authService) : User
+    {
+        /**
+        * получаем авторизированного user
+        * @var User
+        */
+
+        $user = $authService->getUserAuth();
+
+        abort_unless( (bool) $user, 401, "Не авторизован");
+
+        return $user;
     }
 }
 

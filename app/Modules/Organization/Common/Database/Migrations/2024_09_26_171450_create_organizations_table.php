@@ -15,7 +15,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->uuid('owner_id')
-                ->nullable()
                 ->constrained('users')->noActionOnDelete();
 
             $table->string('name');
@@ -31,7 +30,7 @@ return new class extends Migration
             $table->string('industry');
             $table->dateTime('founded_date');
 
-            $table->string('inn', 12)->unique()->comment('Инн у ООО/ИП');
+            $table->string('inn', 12)->comment('Инн у ООО/ИП');
             $table->string('kpp' , 9)->nullable()->comment('КПП - Только у организации');
             $table->string('registration_number', 13)->nullable()->unique()->comment('ОГРН - Только у организации');
             $table->string('registration_number_individual', 15)->nullable()->unique()->comment('ОГРНИП - Только у ИП');

@@ -53,14 +53,14 @@ class AuthSanctum implements AuthInterface
 
     /**
      * Вернуть пользователя по токену (обязательно должен быть middleware auth:sanctum)
-     * @return bool|Model
+     * @return ?Model
      */
-    public function user()
+    public function user() :  ?Model
     {
 
         $user = auth('sanctum')->user();
 
-        return $user ? $user : false;
+        return $user;
     }
 
     /**
@@ -129,7 +129,7 @@ class AuthSanctum implements AuthInterface
     private function checkUserAuth(BaseDTO $credentials) : bool|array
     {
         $user = null;
-        
+
         if(!is_null($credentials->email)) {
             $email = EmailList::where('value', $credentials->email)->first();
             $user = $email->user;

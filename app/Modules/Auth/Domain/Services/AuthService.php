@@ -6,12 +6,14 @@ use App\Modules\Auth\App\Action\GetUserAuthAction;
 use App\Modules\Auth\App\Action\loginUserAuthAction;
 use App\Modules\Auth\App\Action\LogoutUserAuthAction;
 use App\Modules\Auth\App\Action\RefreshUserAuthAction;
-use App\Modules\Auth\App\Data\DTO\BaseDTO;
 use App\Modules\Auth\App\Data\DTO\UserAttemptDTO;
 use App\Modules\Auth\Domain\Interface\AuthInterface;
+use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
+use App\Modules\User\App\Data\DTO\Base\BaseDTO;
 use Illuminate\Database\Eloquent\Model;
 
-class AuthService
+//P.S Могут быть проблемы с подключением BaseDTO классами
+class AuthService implements AuthServiceInterface
 {
 
     public function __construct(
@@ -40,7 +42,7 @@ class AuthService
      *
      * @return bool|array
      */
-    public function attemptUserAuth(BaseDTO $data) : bool|array
+    public function attemptUserAuth(BaseDTO $data) : ?array
     {
         return AttemptUserAuthAction::make($this->serviceAuth)->run($data);
     }
@@ -58,7 +60,7 @@ class AuthService
      * Удаляет актуальный Bearer, присылаем новый.
      * @return null|array
      */
-    public function refresh() : bool|array
+    public function refresh() : ?array
     {
         return RefreshUserAuthAction::make($this->serviceAuth)->run();
     }

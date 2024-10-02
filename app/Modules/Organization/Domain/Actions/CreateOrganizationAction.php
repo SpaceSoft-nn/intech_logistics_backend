@@ -15,7 +15,7 @@ class CreateOrganizationAction
     public function run(OrganizationCreateDTO $dto) : Model
     {
         $model = Model::query()
-            ->create($dto->toArrayNotNull());
+            ->create($dto->organizationVO->toArrayNotNull());
 
         return $model;
     }

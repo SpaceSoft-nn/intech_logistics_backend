@@ -19,4 +19,9 @@ enum UserRoleEnum : string
             "default" =>  null,
         };
     }
+
+    public static function onlyAdmin(UserRoleEnum $data) : bool
+    {
+        return ($data === self::admin) ? true : false;
+    }
 }

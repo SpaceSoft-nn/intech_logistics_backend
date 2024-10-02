@@ -78,7 +78,6 @@ class RegistrationInteractor
         */
         $userDTO = $dto->userDTO;
 
-
         {
             //Проверяем подтверждён ли phone/email
             $model_confirm = $this->isAccessNotification(email: $dto->email, phone: $dto->phone);

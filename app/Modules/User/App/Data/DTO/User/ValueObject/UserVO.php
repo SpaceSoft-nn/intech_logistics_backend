@@ -21,19 +21,30 @@ class UserVO extends BaseDTO implements Arrayable
 
         public readonly UserRoleEnum $role,
 
-        public readonly ?string $personal_area_id,
+        public ?string $personal_area_id,
         public ?string $email_id,
         public ?string $phone_id,
     ) {}
 
+    public function setPersonalArea(string $id) : self
+    {
+        $this->personal_area_id = $id;
+
+        return $this;
+    }
+
     public function setEmailId(string $id)
     {
         $this->email_id = $id;
+
+        return $this;
     }
 
     public function setPhoneId(string $id)
     {
         $this->phone_id = $id;
+
+        return $this;
     }
 
 

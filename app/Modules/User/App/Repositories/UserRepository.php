@@ -37,7 +37,7 @@ class UserRepository extends CoreRepository implements IRepository
         return $this->query()->find($uuid);
     }
 
-    #TODO Проверить
+    #TODO Проверить/ изменить
     public function isOwnerPersonalArea(Model $model, ?string $uuid ) : ?PersonalArea
     {
         if($uuid) {
@@ -52,6 +52,14 @@ class UserRepository extends CoreRepository implements IRepository
             }])
             ->find($uuid)
             ->personal_areas;
+
+            //РАБОТАЕМ
+        $model = $user->query()
+        ->with(['personal_areas' => function($query) use ($user) {
+            $query->where('owner_id', $user->id);
+        }])
+        ->find($user->id)
+        ->personal_areas->first();
     }
 
 }

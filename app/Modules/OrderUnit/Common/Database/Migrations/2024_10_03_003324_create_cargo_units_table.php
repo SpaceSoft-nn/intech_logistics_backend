@@ -11,9 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permissions', function (Blueprint $table) {
-            $table->id();
+        Schema::create('cargo_units', function (Blueprint $table) {
+
+            $table->uuid('id');
+
+            $table->uuid('pallets_space_id')
+                ->nullable()
+                ->constrained('pallets_space')->onDelete('cascade');
+
+            $table->string('customer_pallets_space')->nullable();
+            $table->text('description');
+
             $table->timestamps();
+
         });
     }
 
@@ -22,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('cargo_unit');
     }
 };

@@ -16,10 +16,11 @@ return new class extends Migration
 
             $table->uuid('order_unit_id')
                 ->unique()
-                ->constrained('order_units')->onDelete('cascade');
+                ->constrained('order_units')->noActionOnDelete();
+
             $table->uuid('cargo_unit_id')
                 ->unique()
-                ->constrained('cargo_units')->onDelete('cascade');
+                ->constrained('cargo_units')->noActionOnDelete();
 
             $table->decimal('factor', 10, 2);
 

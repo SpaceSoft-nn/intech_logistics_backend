@@ -106,10 +106,10 @@ class MakeModules extends Command
 
         $timestamp = date('Y_m_d_His', time());
         $migrationPath = $path . '\\' . $folder . '\\Database' . '\\Migrations';
-        $migrationName = $timestamp . '_create_' . Str::snake(Str::plural($nameModule)) . '_table.php';
+        $migrationName = 'create_' . Str::snake(Str::plural($nameModule)) . '_table';
 
         Artisan::call('make:migration', [
-            'name' => 'create_' . $migrationName . '_table',
+            'name' => $migrationName,
             '--path' => $migrationPath,
         ]);
 

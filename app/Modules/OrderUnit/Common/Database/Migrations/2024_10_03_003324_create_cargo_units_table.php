@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->uuid('pallets_space_id')
                 ->nullable()
-                ->constrained('pallets_space')->onDelete('cascade');
+                ->constrained('pallets_space')->noActionOnDelete();
 
             $table->string('customer_pallets_space')->nullable();
             $table->text('description');

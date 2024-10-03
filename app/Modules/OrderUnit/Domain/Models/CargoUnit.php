@@ -6,30 +6,17 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderUnits extends Model
+class CargoUnit extends Model
 {
-
     use HasFactory, HasUuids;
 
-    protected $table = 'order_units';
+    protected $table = 'cargo_units';
 
     protected $fillable = [
 
-        "delivery_start",
-        "delivery_end",
-        "adress_start_id",
-        "adresses",
-        "adress_end_id",
-        "adresses",
-        "body_volume",
-        "order_total",
+        "pallets_space_id",
+        "customer_pallets_space",
         "description",
-        "product_type",
-        "order_status",
-        "user_id",
-        "organization_id",
-        "mgx_id",
-        "body_volume",
 
     ];
 

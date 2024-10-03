@@ -1,34 +1,31 @@
 <?php
 
-namespace App\Modules\OrderUnit\Domain\Models;
+namespace App\Modules\Transfer\Domain\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderUnits extends Model
+class Transfer extends Model
 {
+    use HasFactory;
 
     use HasFactory, HasUuids;
 
-    protected $table = 'order_units';
+    protected $table = 'transfers';
 
     protected $fillable = [
 
+        "transport_id",
+        "transports",
         "delivery_start",
         "delivery_end",
         "adress_start_id",
         "adresses",
         "adress_end_id",
         "adresses",
-        "body_volume",
         "order_total",
         "description",
-        "product_type",
-        "order_status",
-        "user_id",
-        "organization_id",
-        "mgx_id",
         "body_volume",
 
     ];
@@ -46,7 +43,7 @@ class OrderUnits extends Model
     protected function casts(): array
     {
         return [
-
+            
         ];
     }
 }

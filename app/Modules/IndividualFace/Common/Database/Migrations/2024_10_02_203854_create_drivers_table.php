@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('drivers', function (Blueprint $table) {
-            $table->uuid('id');
+
+            $table->uuid('id')->primary();
 
             $table->uuid('personal_area_id')
                 ->constrained('personal_areas', 'id')->noActionOnDelete();
@@ -25,6 +26,7 @@ return new class extends Migration
                 ->constrained('organizations', 'id')->noActionOnDelete();
 
             $table->timestamps();
+
         });
     }
 

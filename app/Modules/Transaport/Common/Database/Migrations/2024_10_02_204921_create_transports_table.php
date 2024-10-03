@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transports', function (Blueprint $table) {
 
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             $table->string('type')->comment("Тип транспортного средства: грузовик, фуру, легковое, контейнерный ");
             $table->string('brand_model')->comment('Марка и модель - например: Volvo FH, MAN TGS');

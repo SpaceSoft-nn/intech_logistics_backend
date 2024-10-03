@@ -13,6 +13,8 @@
             <directory>App\Modules\Organization\Common\Tests\Feature</directory>
             <directory>App\Modules\IndividualPeople\Common\Tests\Feature</directory>
             <directory>App\Modules\InteractorModules\Registration\Common\Tests\Feature</directory>
+            <directory>App\Modules\IndividualFace\Common\Tests\Feature</directory>
+            <directory>App\Modules\Transaport\Common\Tests\Feature</directory>
         </testsuite>
     </testsuites>
     <source>

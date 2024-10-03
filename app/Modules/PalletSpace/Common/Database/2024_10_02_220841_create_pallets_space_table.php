@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pallets_space', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             $table->string('type_material')->default('wood');
             $table->string('type_size')->comment('тип паллета пример: EUR ширина:длина');

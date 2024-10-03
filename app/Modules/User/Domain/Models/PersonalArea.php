@@ -2,13 +2,13 @@
 
 namespace App\Modules\User\Domain\Models;
 
+use App\Modules\User\Domain\Factories\PersonalAreaFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- *
  *
  * @property string $id
  * @property string $owner_id
@@ -26,6 +26,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class PersonalArea extends Model
 {
     use HasFactory, HasUuids;
+
+    protected static function newFactory()
+    {
+        return PersonalAreaFactory::new();
+    }
 
     protected $table = 'personal_areas';
 
@@ -54,6 +59,6 @@ class PersonalArea extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_personal_area');
+        return $this->belongsToMany(User::class, 'user_personal_area', 'user_id', 'personal_area_id');
     }
 }

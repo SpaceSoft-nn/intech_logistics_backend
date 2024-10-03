@@ -16,13 +16,13 @@ class UserFactory extends Factory
 {
     protected $model = User::class;
 
-    /**
-     * Create a new factory instance for the model.
-    */
-    protected static function newFactory()
-    {
-        return User::new();
-    }
+    // /**
+    //  * Create a new factory instance for the model.
+    // */
+    // protected static function newFactory()
+    // {
+    //     return User::new();
+    // }
 
     public function definition(): array
     {
@@ -33,7 +33,6 @@ class UserFactory extends Factory
             father_name: $this->faker->name,
             password: bcrypt('password'),
             role: UserRoleEnum::admin,
-            permission: 15,
             personal_area_id: null,
             email_id: null,
             phone_id: null,

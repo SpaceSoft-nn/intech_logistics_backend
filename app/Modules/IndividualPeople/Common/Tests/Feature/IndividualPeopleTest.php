@@ -3,21 +3,19 @@
 namespace App\Modules\IndividualPeople\Common\Tests\Feature;
 
 use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
-use App\Modules\IndividualPeople\Domain\Actions\CreateIndividualPeople;
+use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 use App\Modules\IndividualPeople\Domain\Services\IndividualPeopleService;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO as UserUserCreateDTO;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
-use App\Modules\User\App\Data\DTO\UserCreateDTO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Interactor\UserCreateInteractor;
-use App\Modules\User\Domain\Models\PersonalArea;
 use Faker\Factory as Faker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class IndividualPeopleTest extends TestCase
 {
-    use RefreshDatabase;
+    // use RefreshDatabase;
 
     protected $faker;
 
@@ -60,5 +58,16 @@ class IndividualPeopleTest extends TestCase
         );
 
         $this->assertNotNull($invPeople);
+    }
+
+    /**
+     * Проверка работы фабрики
+     * @return [type]
+     */
+    public function test_create_factory_individual_people()
+    {
+        $model = IndividualPeople::factory()->create();
+
+        $this->assertNotNull($model);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Modules\User\Domain\Models;
 use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
+use App\Modules\User\Domain\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,8 +15,6 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
- *
- *
  * @property string $id
  * @property mixed $password
  * @property string $first_name Имя
@@ -54,6 +53,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use HasFactory, HasUuids, HasApiTokens, Notifiable;
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
+    }
 
     protected $table = 'users';
 

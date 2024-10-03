@@ -6,6 +6,7 @@ use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Interactor\UserCreateInteractor;
+use App\Modules\User\Domain\Models\PersonalArea;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Faker\Factory as Faker;
 use Tests\TestCase;
@@ -33,14 +34,20 @@ class UserTest extends TestCase
                     father_name: $this->faker->firstName,
                     password: $this->faker->password,
                     role: UserRoleEnum::admin,
-                    permission: null,
                     personal_area_id: null,
                     email_id: null,
                     phone_id: null,
                 )
             )
         );
-        
+
         $this->assertNotNull($status);
+    }
+
+    public function test_create_factory_personal_area()
+    {
+        $model = PersonalArea::factory()->create();
+
+        $this->assertNotNull($model);
     }
 }

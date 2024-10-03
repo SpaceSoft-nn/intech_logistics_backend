@@ -77,14 +77,14 @@ class UserVO extends BaseDTO implements Arrayable
     public function toArray() : array
     {
         return [
-            'first_name' => self::$first_name,
-            'last_name' => self::$last_name,
-            'father_name' => self::$father_name,
-            'password' => self::$password,
-            'role' => self::$role,
-            'personal_area_id' => self::$personal_area_id,
-            'email_id' => self::$email_id,
-            'phone_id' => self::$phone_id,
+            'first_name' => $this->first_name,
+            'last_name' =>  $this->last_name,
+            'father_name' =>  $this->father_name,
+            'password' =>  $this->password,
+            'role' =>  $this->role,
+            'personal_area_id' =>  $this->personal_area_id,
+            'email_id' =>  $this->email_id,
+            'phone_id' =>  $this->phone_id,
         ];
     }
 

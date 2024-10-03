@@ -2,12 +2,13 @@
 
 namespace App\Modules\IndividualPeople\Domain\Models;
 
+use App\Modules\IndividualPeople\Domain\Factories\IndividualPeopleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 /**
- * 
+ *
  *
  * @property string $id
  * @property string|null $owner_id
@@ -69,6 +70,11 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 class IndividualPeople extends Model
 {
     use HasFactory, HasUuids;
+
+    protected static function newFactory()
+    {
+        return IndividualPeopleFactory::new();
+    }
 
     protected $table = 'individual_peoples';
 

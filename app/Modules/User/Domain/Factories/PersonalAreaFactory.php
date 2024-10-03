@@ -3,7 +3,6 @@
 namespace App\Modules\User\Domain\Factories;
 
 use App\Modules\User\Domain\Actions\LinkUserToPersonalAreaAction;
-use App\Modules\User\Domain\Actions\PersonalArea\PersonalAreaCreateAction;
 use App\Modules\User\Domain\Models\PersonalArea;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -33,7 +32,7 @@ class PersonalAreaFactory extends Factory
         return $this->afterMaking(function (PersonalArea $personalArea) {
             // ...
         })->afterCreating(function (PersonalArea $personalArea) {
-            
+
             $user = User::find($personalArea->owner_id);
             LinkUserToPersonalAreaAction::run($user, $personalArea);
 

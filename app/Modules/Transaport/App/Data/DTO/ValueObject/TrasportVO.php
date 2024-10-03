@@ -3,6 +3,7 @@
 namespace App\Modules\Transaport\App\Data\DTO\ValueObject;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
+use App\Modules\Transaport\App\Data\Enums\TransportStatusEnum;
 use Illuminate\Contracts\Support\Arrayable;
 
 class TrasportVO implements Arrayable
@@ -11,15 +12,16 @@ class TrasportVO implements Arrayable
     use FilterArrayTrait;
 
     public function __construct(
-        public string $type,
-        public string $brand_model,
-        public string $year,
-        public string $transport_number,
-        public string $body_volume,
-        public string $body_weight,
-        public string $type_status,
-        public string $organization_id,
-        public string $driver_id,
+        public readonly string $type,
+        public readonly string $brand_model,
+        public readonly string $year,
+        public readonly string $transport_number,
+        public readonly string $body_volume,
+        public readonly string $body_weight,
+        public readonly TransportStatusEnum $type_status,
+        public readonly string $driver_id,
+        public readonly string $description,
+        public ?string $organization_id,
     ) {}
 
     public static function make(
@@ -29,9 +31,10 @@ class TrasportVO implements Arrayable
         string $transport_number,
         string $body_volume,
         string $body_weight,
-        string $type_status,
-        string $organization_id,
+        TransportStatusEnum $type_status,
         string $driver_id,
+        string $description,
+        ?string $organization_id,
     ) : self
     {
         return new self(
@@ -44,6 +47,7 @@ class TrasportVO implements Arrayable
             type_status: $type_status,
             organization_id: $organization_id,
             driver_id: $driver_id,
+            description: $description,
         );
     }
 
@@ -59,6 +63,7 @@ class TrasportVO implements Arrayable
             "type_status" => $this->type_status,
             "organization_id" => $this->organization_id,
             "driver_id" => $this->driver_id,
+            "description" => $this->description,
         ];
 
     }

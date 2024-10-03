@@ -15,6 +15,8 @@
             <directory>App\Modules\InteractorModules\Registration\Common\Tests\Feature</directory>
             <directory>App\Modules\IndividualFace\Common\Tests\Feature</directory>
             <directory>App\Modules\Transaport\Common\Tests\Feature</directory>
+            <directory>App\Modules\PalletSpace\Common\Tests\Feature</directory>
+            <directory>App\Modules\Adress\Common\Tests\Feature</directory>
         </testsuite>
     </testsuites>
     <source>

@@ -3,26 +3,13 @@
 namespace App\Modules\User\Domain\Factories;
 
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
-use App\Modules\User\App\Data\DTO\UserCreateDTO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Model>
- */
 class UserFactory extends Factory
 {
     protected $model = User::class;
-
-    // /**
-    //  * Create a new factory instance for the model.
-    // */
-    // protected static function newFactory()
-    // {
-    //     return User::new();
-    // }
 
     public function definition(): array
     {
@@ -40,6 +27,8 @@ class UserFactory extends Factory
 
         $arrayUser = $user->toArrayNotNull();
 
+
+        //P.S addAuthActiveByUser - можно вызывать через factory
         return $this->addAuthActiveByUser($arrayUser);
     }
 

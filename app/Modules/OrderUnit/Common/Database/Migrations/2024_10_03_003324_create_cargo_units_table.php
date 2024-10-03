@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cargo_units', function (Blueprint $table) {
 
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             $table->uuid('pallets_space_id')
                 ->nullable()

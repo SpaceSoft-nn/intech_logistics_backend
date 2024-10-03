@@ -12,7 +12,7 @@ return new class extends Migration
         //Массо-габаритные-характеристики
         Schema::create('mgxs', function (Blueprint $table) {
 
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             $table->decimal('length', 10, 2)->nullable()->comment('Длина'); // Ширина
             $table->decimal('width', 10, 2)->nullable()->comment('Ширина'); // Длина

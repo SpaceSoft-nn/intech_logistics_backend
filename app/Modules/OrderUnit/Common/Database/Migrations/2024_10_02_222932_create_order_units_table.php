@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('order_units', function (Blueprint $table) {
 
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             $table->date('delivery_start');
             $table->date('delivery_end');
@@ -37,11 +37,7 @@ return new class extends Migration
             $table->uuid('organization_id')
                 ->constrained('organizations')->noActionOnDelete();
 
-            $table->uuid('mgx_id')
-                ->constrained('mgxs')->noActionOnDelete();
 
-
-            $table->string('body_volume');
             $table->timestamps();
 
         });

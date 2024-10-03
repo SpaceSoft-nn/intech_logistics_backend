@@ -22,9 +22,10 @@ return new class extends Migration
             $table->string('body_volume')->comment('Максимальная Вместимость');
             $table->string('body_weight')->comment('Максимальная Масса груза');
             $table->string('type_status')->comment('Текущий статус транспортного средства: свободно, эксплуатация, ремонт');
-            $table->text('description')->comment('Описание/Заметка');
+            $table->text('description')->nullable()->comment('Описание/Заметка');
 
             $table->uuid('organization_id')
+                ->nullable()
                 ->constrained('organizations', 'id')->noActionOnDelete();
 
             $table->uuid('driver_id')

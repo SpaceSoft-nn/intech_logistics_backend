@@ -2,6 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
+use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,11 @@ class OrderUnits extends Model
     use HasFactory, HasUuids;
 
     protected $table = 'order_units';
+
+    protected function newFactory()
+    {
+        return OrderUnitFactory::new();
+    }
 
     protected $fillable = [
 

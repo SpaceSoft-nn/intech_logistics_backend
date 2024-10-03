@@ -2,6 +2,8 @@
 
 namespace App\Modules\Adress\Domain\Models;
 
+use App\Modules\Adress\App\Data\Enums\TypeAdressEnum;
+use App\Modules\Adress\Domain\Factories\AdressFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +11,11 @@ use Illuminate\Database\Eloquent\Model;
 class Adress extends Model
 {
     use HasFactory, HasUuids;
+
+    protected static function newFactory()
+    {
+        return AdressFactory::new();
+    }
 
     protected $table = 'adresses';
 
@@ -23,6 +30,7 @@ class Adress extends Model
         "postal_code",
         "coordinates",
         "type_adress",
+
     ];
 
     protected $guarded = [
@@ -34,7 +42,7 @@ class Adress extends Model
     protected function casts(): array
     {
         return [
-
+            "type_adress" => TypeAdressEnum::class,
         ];
     }
 }

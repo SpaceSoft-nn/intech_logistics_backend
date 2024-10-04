@@ -6,6 +6,7 @@ use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
 use App\Modules\Organization\App\Repositories\OrganizationRepository;
+use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
@@ -49,6 +50,18 @@ class OrganizationTest extends TestCase
 
             $this->assertNotNull($organization);
         }
+    }
+
+
+    /**
+     * Проверка создания organization через Factory
+     * @return [type]
+     */
+    public function test_create_organizatrion_factory()
+    {
+        $organization = Organization::factory()->create();
+
+        $this->assertNotNull($organization);
     }
 
     #private

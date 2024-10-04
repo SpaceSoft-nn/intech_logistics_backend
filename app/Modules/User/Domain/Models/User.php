@@ -4,6 +4,7 @@ namespace App\Modules\User\Domain\Models;
 
 use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
+use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -103,6 +104,11 @@ class User extends Authenticatable
     public function personal_areas(): BelongsToMany
     {
         return $this->belongsToMany(PersonalArea::class, 'user_personal_area', 'personal_area_id', 'user_id');
+    }
+
+    public function organizations(): BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class, 'user_organization', 'organization_id', 'user_id');
     }
 
 

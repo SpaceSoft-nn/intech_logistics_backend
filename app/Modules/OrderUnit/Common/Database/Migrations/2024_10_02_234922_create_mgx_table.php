@@ -19,8 +19,6 @@ return new class extends Migration
             $table->decimal('height', 10, 2)->nullable()->comment('Высота'); // Высота
             $table->decimal('weight', 10, 2)->comment('Вес'); // Вес
 
-            $table->uuid('order_unit_id')->unique()->constrained('order_units')->onDelete('cascade');
-
             $table->timestamps();
 
         });

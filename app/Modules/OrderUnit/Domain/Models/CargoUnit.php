@@ -2,15 +2,22 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
+use App\Modules\OrderUnit\Domain\Factories\CargoUnitFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class CargoUnit extends Model
 {
     use HasFactory, HasUuids;
 
     protected $table = 'cargo_units';
+
+    protected static function newFactory()
+    {
+        return CargoUnitFactory::new();
+    }
 
     protected $fillable = [
 
@@ -36,4 +43,15 @@ class CargoUnit extends Model
 
         ];
     }
+
+    /**
+    * Связь с заказом многие ко многим
+    * @return BelongsToMany
+    */
+    public function order_units(): BelongsToMany
+    {
+        return $this->belongsToMany(OrderUnit::class, 'order_unit_cargo_unit', 'order_unit_id', 'cargo_unit_id');
+    }
+
+
 }

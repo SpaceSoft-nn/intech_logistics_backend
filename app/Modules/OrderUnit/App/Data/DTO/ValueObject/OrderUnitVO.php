@@ -3,6 +3,7 @@
 namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use Illuminate\Contracts\Support\Arrayable;
 
 class OrderUnitVO implements Arrayable
@@ -19,8 +20,9 @@ class OrderUnitVO implements Arrayable
         public readonly string $order_total,
         public readonly string $description,
         public readonly string $organization_id,
+        public readonly string $mgx_id,
         public ?string $product_type,
-        public ?string $order_status,
+        public ?StatusOrderUnitEnum $order_status,
         public ?string $user_id,
 
     ) {}
@@ -35,8 +37,9 @@ class OrderUnitVO implements Arrayable
         string $description,
         string $organization_id,
         string $delivery_start,
+        string $mgx_id,
         ?string $product_type = null,
-        ?string $order_status = null,
+        ?StatusOrderUnitEnum $order_status = null,
         ?string $user_id = null,
 
     ) : self {
@@ -50,6 +53,7 @@ class OrderUnitVO implements Arrayable
             body_volume: $body_volume,
             order_total: $order_total,
             description: $description,
+            mgx_id: $mgx_id,
             product_type: $product_type,
             order_status: $order_status,
             user_id: $user_id,
@@ -75,7 +79,8 @@ class OrderUnitVO implements Arrayable
             "order_status" => $this->order_status,
             "user_id" => $this->user_id,
             "organization_id" => $this->organization_id,
-            
+            "mgx_id" => $this->mgx_id,
+
         ];
     }
 }

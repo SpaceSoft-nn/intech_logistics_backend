@@ -1,6 +1,5 @@
 <?php
 
-use App\Modules\OrderUnit\App\Providers\OrderUnitServiceProvider;
 
 return [
     App\Providers\AppServiceProvider::class,
@@ -17,6 +16,7 @@ return [
     App\Modules\PalletSpace\App\Providers\PalletSpaceServiceProvider::class,
     App\Modules\Adress\App\Providers\AdressServiceProvider::class,
     App\Modules\OrderUnit\App\Providers\OrderUnitServiceProvider::class,
+    App\Modules\Transfer\App\Providers\TransferServiceProvider::class,
 
         #Auth Service
     App\Modules\Auth\App\Providers\AuthServiceProvider::class,

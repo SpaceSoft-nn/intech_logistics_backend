@@ -30,6 +30,8 @@ return new class extends Migration
             $table->string('product_type')->nullable()->comment('Тип товара');
             $table->string('order_status')->nullable()->comment('Заказ: в ожидании, в процессе, в обработке, удален, выполнен');
 
+            $table->uuid('mgx_id')->unique()->constrained('mgxs')->onDelete('cascade')->comment('Ссылку на таблицу с Массо-габаритными-характеристиками');
+
             $table->uuid('user_id')
                 ->nullable()
                 ->constrained('users')->noActionOnDelete();

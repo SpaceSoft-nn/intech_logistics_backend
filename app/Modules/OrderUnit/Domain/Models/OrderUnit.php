@@ -2,19 +2,22 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class OrderUnits extends Model
+class OrderUnit extends Model
 {
 
     use HasFactory, HasUuids;
 
     protected $table = 'order_units';
 
-    protected function newFactory()
+    protected static function newFactory()
     {
         return OrderUnitFactory::new();
     }
@@ -52,7 +55,21 @@ class OrderUnits extends Model
     protected function casts(): array
     {
         return [
-
+            'order_status' => StatusOrderUnitEnum::class,
         ];
+    }
+
+    /**
+     * Связь с паллетами многие ко многим
+     * @return BelongsToMany
+     */
+    public function cargo_units(): BelongsToMany
+    {
+        return $this->belongsToMany(CargoUnit::class, 'order_unit_cargo_unit', 'cargo_unit_id' , 'order_unit_id');
+    }
+
+    public function mgx(): BelongsTo
+    {
+        return $this->belongsTo(Mgx::class);
     }
 }

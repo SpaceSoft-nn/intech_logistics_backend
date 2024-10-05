@@ -10,7 +10,7 @@ class NotificationServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            app_path('Modules\Notification\Common\Config\notification.php'), 'notification'
+            app_path('Modules/Notification/Common/Config/notification.php'), 'notification'
         );
     }
 

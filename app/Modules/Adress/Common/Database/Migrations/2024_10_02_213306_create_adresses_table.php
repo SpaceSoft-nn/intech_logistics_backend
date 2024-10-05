@@ -22,8 +22,10 @@ return new class extends Migration
             $table->string('house_number')->nullable();
             $table->string('postal_code')->nullable();
 
-            $table->string('coordinates');
             $table->string('type_adress')->nullable();
+
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
 
             $table->timestamps();
         });

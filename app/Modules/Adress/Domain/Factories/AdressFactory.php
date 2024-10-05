@@ -11,6 +11,10 @@ class AdressFactory extends Factory
 {
     protected $model = Adress::class;
 
+    /**
+     *
+     * @return array
+     */
     public function definition(): array
     {
 
@@ -27,7 +31,8 @@ class AdressFactory extends Factory
             apartment: $this->faker->randomNumber(3),
             house_number: $this->faker->buildingNumber,
             postal_code: $this->faker->postcode,
-            coordinates: "-000.1 +000.1",
+            latitude:$this->faker->latitude(55.0, 56.0),
+            longitude:$this->faker->longitude(37.0, 38.0),
             type_adress: TypeAdressEnum::work,
 
         );

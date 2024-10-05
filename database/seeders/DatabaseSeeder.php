@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Modules\Notification\Domain\Actions\List\CreateEmailListAction;
-use App\Modules\Notification\Domain\Actions\List\CreatePhoneListAction;
 use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,12 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            \App\Modules\Adress\Common\Database\Seeders\AdressSeeder::class,
+            \App\Modules\OrderUnit\Common\Database\Seeders\OrderUnitSeeder::class,
+            // \App\Modules\PalletSpace\Common\Database\Seeders\PalletSpaceSeeder::class,
+            // Добавьте другие сидеры, если нужно
+        ]);
 
         EmailList::create([
             'value' => 'qjq3@mail.ru',
@@ -33,6 +31,8 @@ class DatabaseSeeder extends Seeder
             'value' => '79200264425',
             'status' => true,
         ]);
+
+
 
     }
 }

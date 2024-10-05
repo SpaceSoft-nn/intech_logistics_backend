@@ -3,7 +3,9 @@
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegistrationController;
 use App\Http\Controllers\API\Notification\NotificationController;
+use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Organization\OrganizationController;
+use App\Http\Controllers\API\Transfer\TransferContoller;
 use App\Http\Controllers\API\User\UserController;
 use App\Modules\Auth\Presentation\HTTP\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -37,3 +39,9 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
     });
 
 });
+
+    //orderUnit
+Route::get('/orders', [OrderUnitController:: class, 'get']);
+
+    //transfer
+Route::post('/transfer', [TransferContoller:: class, 'create']);

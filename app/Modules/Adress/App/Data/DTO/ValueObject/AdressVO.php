@@ -17,7 +17,8 @@ class AdressVO implements Arrayable
         public readonly string $street,
 
 
-        public readonly string $coordinates,
+        public readonly string $latitude,
+        public readonly string $longitude,
 
 
         public ?string $building,
@@ -32,7 +33,9 @@ class AdressVO implements Arrayable
         string $region,
         string $city,
         string $street,
-        string $coordinates,
+
+        string $latitude,
+        string $longitude,
 
         ?string $building = null,
         ?string $apartment = null,
@@ -51,8 +54,9 @@ class AdressVO implements Arrayable
             apartment: $apartment,
             house_number: $house_number,
             postal_code: $postal_code,
-            coordinates: $coordinates,
             type_adress: $type_adress,
+            latitude: $latitude,
+            longitude: $longitude,
 
         );
 
@@ -68,8 +72,9 @@ class AdressVO implements Arrayable
             "apartment" => $this->apartment,
             "house_number" => $this->house_number,
             "postal_code" => $this->postal_code,
-            "coordinates" => $this->coordinates,
             "type_adress" => $this->type_adress,
+            "latitude" => $this->latitude,
+            "longitude" => $this->longitude,
         ];
     }
 

@@ -2,8 +2,11 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
+use App\Modules\Adress\Domain\Models\Adress;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -71,5 +74,25 @@ class OrderUnit extends Model
     public function mgx(): BelongsTo
     {
         return $this->belongsTo(Mgx::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_id');
+    }
+
+    public function adress_start(): BelongsTo
+    {
+        return $this->belongsTo(Adress::class, 'adress_start_id');
+    }
+
+    public function adress_end(): BelongsTo
+    {
+        return $this->belongsTo(Adress::class, 'adress_end_id');
     }
 }

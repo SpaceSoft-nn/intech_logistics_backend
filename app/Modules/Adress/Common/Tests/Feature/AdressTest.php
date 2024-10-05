@@ -15,7 +15,6 @@ class AdressTest extends TestCase
     {
         $adress = Adress::factory()->create();
 
-
         $this->assertNotNull($adress);
     }
 

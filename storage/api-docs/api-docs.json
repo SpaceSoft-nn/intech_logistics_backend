@@ -381,6 +381,56 @@
                 }
             }
         },
+        "/api/orders": {
+            "get": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Получить все готовы заказы.",
+                "operationId": "d645bbc867291a216b3d69f03e3ce98c",
+                "responses": {
+                    "200": {
+                        "description": "Успешное задания Трансфера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OrderUnitResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return Orders."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/registration": {
             "post": {
                 "tags": [
@@ -505,6 +555,90 @@
                                         "message_error": {
                                             "type": "string",
                                             "example": "Error receiving token."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/transfer": {
+            "post": {
+                "tags": [
+                    "Transfer"
+                ],
+                "summary": "Создать трансфер по главному заказу и массиву заказов.",
+                "operationId": "812181f3c75c834a8087229f87facdf8",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "schema": "OrderValidation",
+                                        "required": [
+                                            "main_order",
+                                            "id_order_array"
+                                        ],
+                                        "properties": {
+                                            "main_order": {
+                                                "description": "UUID основного заказа",
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "id_order_array": {
+                                                "description": "Массив UUID заказов (Сюда нужно добавлять так же основной заказ!)",
+                                                "type": "array",
+                                                "items": {
+                                                    "description": "UUID заказа",
+                                                    "type": "string",
+                                                    "format": "uuid"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное создание Трансфера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/TransferResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return Transfer."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
                                         }
                                     },
                                     "type": "object"
@@ -918,65 +1052,260 @@
     },
     "components": {
         "schemas": {
-            "BearerToken": {
-                "title": "Bearer Token Object",
-                "properties": {
-                    "access_token": {
-                        "type": "string",
-                        "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MTQwMDMwNTcsImV4cCI6MTcxNDAwNjY1NywibmJmIjoxNzE0MDAzMDU3LCJqdGkiOiJaampTNWRmOHZtdHNZbWJ0Iiwic3ViIjoiMSIsInBydiI6IjRhNmUyNTJkNDljYzM1ZjlhNmQyODk3ZmRlNGY5MzE0NmU3YzgwMmMifQ.6J4NAHBKlRIG5ZAtgIwXHuToFnG1mCCXwgxrf6rL9DY"
-                    },
-                    "token_type": {
-                        "type": "number",
-                        "example": "Bearer"
-                    },
-                    "expires_in": {
-                        "type": "integer",
-                        "example": "3600"
-                    }
-                },
-                "type": "object"
-            },
-            "UserResource": {
-                "title": "User Resource",
+            "OrderUnitResource": {
+                "title": "Json Ресурс Order Unit",
                 "properties": {
                     "id": {
                         "type": "string",
                         "format": "uuid"
                     },
-                    "first_name": {
+                    "delivery_start": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "delivery_end": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "adress_start_id": {
+                        "$ref": "#/components/schemas/AdressResource"
+                    },
+                    "adress_end_id": {
+                        "$ref": "#/components/schemas/AdressResource"
+                    },
+                    "body_volume": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "order_total": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "description": {
                         "type": "string"
                     },
-                    "last_name": {
+                    "product_type": {
                         "type": "string"
                     },
-                    "father_name": {
+                    "order_status": {
                         "type": "string"
                     },
-                    "role": {
-                        "type": "string",
-                        "enum": [
-                            "admin",
-                            "manager",
-                            "observer"
-                        ]
+                    "user_id": {
+                        "$ref": "#/components/schemas/UserResource"
                     },
-                    "auth": {
-                        "type": "boolean"
-                    },
-                    "personal_area_id": {
-                        "type": "string",
-                        "format": "uuid"
-                    },
-                    "email_id": {
-                        "type": "string",
-                        "format": "uuid"
-                    },
-                    "phone_id": {
-                        "type": "string",
-                        "format": "uuid"
+                    "organization_id": {
+                        "$ref": "#/components/schemas/OrganizationResource"
                     }
                 },
                 "type": "object"
+            },
+            "AdressResource": {
+                "title": "Json Ресурс Адресса",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "region": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "street": {
+                        "type": "string"
+                    },
+                    "building": {
+                        "type": "string"
+                    },
+                    "apartment": {
+                        "type": "string"
+                    },
+                    "house_number": {
+                        "type": "string"
+                    },
+                    "postal_code": {
+                        "type": "string"
+                    },
+                    "type_adress": {
+                        "type": "string"
+                    },
+                    "latitude": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "type": "object"
+            },
+            "OrganizationResource": {
+                "title": "Json Ресурс Организации",
+                "properties": {
+                    "owner_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "$ref": "#/components/schemas/AdressResource"
+                    },
+                    "website": {
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "industry": {
+                        "type": "string"
+                    },
+                    "founded_date": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "remuved": {
+                        "type": "boolean"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "inn": {
+                        "type": "string"
+                    },
+                    "kpp": {
+                        "type": "string"
+                    },
+                    "registration_number": {
+                        "type": "string"
+                    },
+                    "registration_number_individual": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "TransferResource": {
+                "title": "Ресурс Трансфера",
+                "properties": {
+                    "transport_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "delivery_start": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "delivery_end": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "adress_start_id": {
+                        "$ref": "#/components/schemas/AdressResource"
+                    },
+                    "adress_end_id": {
+                        "$ref": "#/components/schemas/AdressResource"
+                    },
+                    "order_total": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "body_volume": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "type": "object"
+            },
+            "BearerToken": {
+                "title": "Bearer Token Object",
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransferResource"
+                    },
+                    {
+                        "properties": {
+                            "access_token": {
+                                "type": "string",
+                                "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MTQwMDMwNTcsImV4cCI6MTcxNDAwNjY1NywibmJmIjoxNzE0MDAzMDU3LCJqdGkiOiJaampTNWRmOHZtdHNZbWJ0Iiwic3ViIjoiMSIsInBydiI6IjRhNmUyNTJkNDljYzM1ZjlhNmQyODk3ZmRlNGY5MzE0NmU3YzgwMmMifQ.6J4NAHBKlRIG5ZAtgIwXHuToFnG1mCCXwgxrf6rL9DY"
+                            },
+                            "token_type": {
+                                "type": "number",
+                                "example": "Bearer"
+                            },
+                            "expires_in": {
+                                "type": "integer",
+                                "example": "3600"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "UserResource": {
+                "title": "User Resource",
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransferResource"
+                    },
+                    {
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "first_name": {
+                                "type": "string"
+                            },
+                            "last_name": {
+                                "type": "string"
+                            },
+                            "father_name": {
+                                "type": "string"
+                            },
+                            "role": {
+                                "type": "string",
+                                "enum": [
+                                    "admin",
+                                    "manager",
+                                    "observer"
+                                ]
+                            },
+                            "auth": {
+                                "type": "boolean"
+                            },
+                            "personal_area_id": {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "email_id": {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "phone_id": {
+                                "type": "string",
+                                "format": "uuid"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
             }
         },
         "securitySchemes": {
@@ -994,6 +1323,14 @@
         {
             "name": "Notification",
             "description": "Notification"
+        },
+        {
+            "name": "Order Unit",
+            "description": "Order Unit"
+        },
+        {
+            "name": "Transfer",
+            "description": "Transfer"
         },
         {
             "name": "Auth JWT",

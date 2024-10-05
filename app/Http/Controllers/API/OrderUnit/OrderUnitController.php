@@ -21,7 +21,7 @@ class OrderUnitController extends Controller
         */
         $order = OrderUnit::all();
 
-        return response()->json(array_success(OredUnitCollection::make($order), 'Return Order.'), 200);
+        return response()->json(array_success(OredUnitCollection::make($order), 'Return Orders.'), 200);
     }
 
     public function algorithm(Request $request)

@@ -14,7 +14,7 @@
             <directory>App\Modules\IndividualPeople\Common\Tests\Feature</directory>
             <directory>App\Modules\InteractorModules\Registration\Common\Tests\Feature</directory>
             <directory>App\Modules\IndividualFace\Common\Tests\Feature</directory>
-            <directory>App\Modules\Transaport\Common\Tests\Feature</directory>
+            <directory>App\Modules\Transport\Common\Tests\Feature</directory>
             <directory>App\Modules\PalletSpace\Common\Tests\Feature</directory>
             <directory>App\Modules\Adress\Common\Tests\Feature</directory>
             <directory>App\Modules\OrderUnit\Common\Tests\Feature</directory>

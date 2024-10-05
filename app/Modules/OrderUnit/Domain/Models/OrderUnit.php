@@ -6,6 +6,7 @@ use App\Modules\Adress\Domain\Models\Adress;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
 use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Transfer\Domain\Models\Transfer;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -69,6 +70,11 @@ class OrderUnit extends Model
     public function cargo_units(): BelongsToMany
     {
         return $this->belongsToMany(CargoUnit::class, 'order_unit_cargo_unit', 'cargo_unit_id' , 'order_unit_id');
+    }
+
+    public function transfers(): BelongsToMany
+    {
+        return $this->belongsToMany(Transfer::class, 'cargo_unit_transfer', 'transfer_id' , 'cargo_unit_id' );
     }
 
     public function mgx(): BelongsTo

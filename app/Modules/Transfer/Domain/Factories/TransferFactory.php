@@ -3,9 +3,9 @@
 namespace App\Modules\Transfer\Domain\Factories;
 
 use App\Modules\Adress\Domain\Models\Adress;
-use App\Modules\Transaport\Domain\Models\Transport;
 use App\Modules\Transfer\Domain\Actions\DTO\ValueObject\TransferVO;
 use App\Modules\Transfer\Domain\Models\Transfer;
+use App\Modules\Transport\Domain\Models\Transport;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

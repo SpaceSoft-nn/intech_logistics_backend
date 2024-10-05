@@ -12,7 +12,7 @@ return [
     App\Modules\IndividualPeople\App\Providers\IndividualPeopleServiceProvider::class,
     App\Modules\Permission\App\Providers\PerrmissionServoceProvider::class, // Сервес прав по бинарной таблице
     App\Modules\IndividualFace\App\Providers\IndividualFaceServiceProvider::class,
-    App\Modules\Transaport\App\Providers\TransportServiceProvider::class,
+    App\Modules\Transport\App\Providers\TransportServiceProvider::class,
     App\Modules\PalletSpace\App\Providers\PalletSpaceServiceProvider::class,
     App\Modules\Adress\App\Providers\AdressServiceProvider::class,
     App\Modules\OrderUnit\App\Providers\OrderUnitServiceProvider::class,

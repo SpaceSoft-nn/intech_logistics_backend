@@ -15,14 +15,12 @@ return new class extends Migration
 
 
             $table->uuid('cargo_unit_id')
-                ->nullable()
                 ->constrained('cargo_units')->noActionOnDelete();
 
             $table->uuid('transfer_id')
-                ->nullable()
                 ->constrained('transafers')->noActionOnDelete();
 
-            $table->unique(['cargo_unit_id', 'transfer_id']);
+            $table->primary(['cargo_unit_id', 'transfer_id']);
 
         });
     }

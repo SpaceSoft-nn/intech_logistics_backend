@@ -13,18 +13,15 @@ return new class extends Migration
     {
         Schema::create('order_unit_cargo_unit', function (Blueprint $table) {
 
-
             $table->uuid('order_unit_id')
-                ->unique()
                 ->constrained('order_units')->noActionOnDelete();
 
             $table->uuid('cargo_unit_id')
-                ->unique()
                 ->constrained('cargo_units')->noActionOnDelete();
 
-            $table->decimal('factor', 10, 2);
+            $table->decimal('factor', 10, 2)->default(1);
 
-            $table->unique(['order_unit_id', 'cargo_unit_id']);
+            $table->primary(['order_unit_id', 'cargo_unit_id']);
 
         });
     }

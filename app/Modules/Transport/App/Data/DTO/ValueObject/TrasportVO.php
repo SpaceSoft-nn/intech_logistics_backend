@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\Transaport\App\Data\DTO\ValueObject;
+namespace App\Modules\Transport\App\Data\DTO\ValueObject;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
-use App\Modules\Transaport\App\Data\Enums\TransportStatusEnum;
+use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
 use Illuminate\Contracts\Support\Arrayable;
 
 class TrasportVO implements Arrayable

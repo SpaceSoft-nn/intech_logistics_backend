@@ -17,9 +17,10 @@ class TransferCreateRequest extends ApiRequest
     public function rules(): array
     {
         return [
-           "id_order_array" => ['required', 'array'],
+            "main_order" => ['required', 'uuid'],
+            "id_order_array" => ['required', 'array'],
             //'id_order_array.*' => ['required', 'uuid', 'exists:order_units,id'],
-           'id_order_array.*' => ['required', 'uuid'],
+            'id_order_array.*' => ['required', 'uuid'],
         ];
     }
 

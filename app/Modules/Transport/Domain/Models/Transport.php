@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\Transaport\Domain\Models;
+namespace App\Modules\Transport\Domain\Models;
 
-use App\Modules\Transaport\App\Data\Enums\TransportStatusEnum;
-use App\Modules\Transaport\Domain\Factories\TransportFactory;
+use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
+use App\Modules\Transport\Domain\Factories\TransportFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

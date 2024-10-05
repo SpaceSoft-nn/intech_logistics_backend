@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\API\Transfer;
 
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\Transfer\Domain\Models\Transfer;
 use App\Modules\Transfer\Domain\Requests\TransferCreateRequest;
+use App\Modules\Transfer\Domain\Resources\TransferResource;
+use App\Modules\Transport\Domain\Models\Transport;
+
+use function App\Helpers\array_success;
 
 class TransferContoller
 {
@@ -15,9 +20,36 @@ class TransferContoller
         /**
         * @var OrderUnit
         */
+        $order_main = OrderUnit::find($validated['main_order']);
+
+        /**
+        * @var OrderUnit
+        */
         $orders = OrderUnit::find($validated['id_order_array']);
 
-        dd($orders);
+        //общая цена трансфера (все заказы)
+        $price = null;
+        $bodyVolume = null;
+
+        foreach ($orders as $order) {
+            $price += $order->order_total;
+            $bodyVolume += $order->body_volume;
+        }
+
+        $transferArray = [
+            "transport_id" => Transport::first()->id,
+            "delivery_start" => $order_main->delivery_start,
+            "delivery_end" => $order_main->delivery_end,
+            "adress_start_id" => $order_main->adress_start_id,
+            "adress_end_id" => $order_main->adress_end_id,
+            "order_total" => $price,
+            "description" => "Сборка Общего Заказа",
+            "body_volume" => $bodyVolume,
+        ];
+
+        $transfer = Transfer::create($transferArray);
+
+        return response()->json(array_success(TransferResource::make($order), 'Return Transfer.'), 201);
     }
 
 }

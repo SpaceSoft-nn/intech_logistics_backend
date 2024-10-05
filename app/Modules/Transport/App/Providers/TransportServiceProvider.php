@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Transaport\App\Providers;
+namespace App\Modules\Transport\App\Providers;
 
 use Closure;
 use Illuminate\Support\ServiceProvider;

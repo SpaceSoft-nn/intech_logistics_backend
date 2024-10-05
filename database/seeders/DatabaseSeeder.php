@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
-
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,6 +18,7 @@ class DatabaseSeeder extends Seeder
             \App\Modules\Adress\Common\Database\Seeders\AdressSeeder::class,
             \App\Modules\OrderUnit\Common\Database\Seeders\OrderUnitSeeder::class,
             // \App\Modules\PalletSpace\Common\Database\Seeders\PalletSpaceSeeder::class,
+            \App\Modules\Transport\Common\Database\Seeders\TransportSeeder::class,
             // Добавьте другие сидеры, если нужно
         ]);
 
@@ -31,8 +31,6 @@ class DatabaseSeeder extends Seeder
             'value' => '79200264425',
             'status' => true,
         ]);
-
-
 
     }
 }

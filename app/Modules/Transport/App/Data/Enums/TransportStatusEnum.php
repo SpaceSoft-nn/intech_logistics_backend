@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Transaport\App\Data\Enums;
+namespace App\Modules\Transport\App\Data\Enums;
 
 enum TransportStatusEnum : string
 {

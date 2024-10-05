@@ -17,15 +17,23 @@ class TransferContoller
     {
         $validated = $request->validated();
 
-        /**
-        * @var OrderUnit
-        */
-        $order_main = OrderUnit::find($validated['main_order']);
+        {
+            /**
+            * @var OrderUnit
+            */
+            $order_main = OrderUnit::find($validated['main_order']);
+            abort_if(is_null($order_main), 'Main order return null', 404);
+        }
 
-        /**
-        * @var OrderUnit
-        */
-        $orders = OrderUnit::find($validated['id_order_array']);
+
+        {
+            /**
+            * @var OrderUnit
+            */
+            $orders = OrderUnit::find($validated['id_order_array']);
+            abort_if(is_null($orders), 'order array return null', 404);
+        }
+
 
         //общая цена трансфера (все заказы)
         $price = null;
@@ -49,7 +57,7 @@ class TransferContoller
 
         $transfer = Transfer::create($transferArray);
 
-        return response()->json(array_success(TransferResource::make($order), 'Return Transfer.'), 201);
+        return response()->json(array_success(TransferResource::make($transfer), 'Return Transfer.'), 201);
     }
 
 }

@@ -6,10 +6,10 @@ use App\Modules\Auth\App\Action\GetUserAuthAction;
 use App\Modules\Auth\App\Action\loginUserAuthAction;
 use App\Modules\Auth\App\Action\LogoutUserAuthAction;
 use App\Modules\Auth\App\Action\RefreshUserAuthAction;
+use App\Modules\Auth\App\Data\DTO\BaseDTO;
 use App\Modules\Auth\App\Data\DTO\UserAttemptDTO;
 use App\Modules\Auth\Domain\Interface\AuthInterface;
 use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
-use App\Modules\User\App\Data\DTO\Base\BaseDTO;
 use Illuminate\Database\Eloquent\Model;
 
 //P.S Могут быть проблемы с подключением BaseDTO классами

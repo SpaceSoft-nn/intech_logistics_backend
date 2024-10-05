@@ -2,7 +2,6 @@
 namespace App\Modules\Auth\Domain\Interface;
 
 use App\Modules\Auth\App\Data\DTO\BaseDTO;
-use App\Modules\Auth\Common\Config\AuthConfig;
 use Illuminate\Database\Eloquent\Model;
 
 interface AuthInterface

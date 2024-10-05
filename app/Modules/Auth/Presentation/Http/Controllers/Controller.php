@@ -25,7 +25,72 @@ use App\Modules\Auth\Domain\Exceptions\Error\ExceptionUnprocessedObject;
  *         type="http",
  *         scheme="bearer",
  *     )
- * )
+ * ),
+ *
+ * @OA\Schema(
+ *    schema="BearerToken",
+ *    title="Bearer Token Object",
+ *    @OA\Property(property="access_token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MTQwMDMwNTcsImV4cCI6MTcxNDAwNjY1NywibmJmIjoxNzE0MDAzMDU3LCJqdGkiOiJaampTNWRmOHZtdHNZbWJ0Iiwic3ViIjoiMSIsInBydiI6IjRhNmUyNTJkNDljYzM1ZjlhNmQyODk3ZmRlNGY5MzE0NmU3YzgwMmMifQ.6J4NAHBKlRIG5ZAtgIwXHuToFnG1mCCXwgxrf6rL9DY"),
+ *    @OA\Property(property="token_type", type="number", example="Bearer"),
+ *    @OA\Property(property="expires_in", type="integer", example="3600"),
+ * ),
+ *
+ *
+ * @OA\Schema(
+ *    schema="OrderUnitResource",
+ *    title="Order Unit json Resource",
+ *    @OA\Property(property="id", type="string", format="uuid"),
+ *    @OA\Property(property="delivery_start", type="string", format="date-time"),
+ *    @OA\Property(property="delivery_end", type="string", format="date-time"),
+ *    @OA\Property(property="adress_start_id", ref="#/components/schemas/AdressResource"),
+ *    @OA\Property(property="adress_end_id", ref="#/components/schemas/AdressResource"),
+ *    @OA\Property(property="body_volume", type="number", format="float"),
+ *    @OA\Property(property="order_total", type="number", format="float"),
+ *    @OA\Property(property="description", type="string"),
+ *    @OA\Property(property="product_type", type="string"),
+ *    @OA\Property(property="order_status", type="string"),
+ *    @OA\Property(property="user_id", ref="#/components/schemas/UserResource"),
+ *    @OA\Property(property="organization_id", ref="#/components/schemas/OrganizationResource"),
+ * ),
+ *
+ * @OA\Schema(
+ *    schema="AdressResource",
+ *    title="Адрес json Ресурс",
+ *    @OA\Property(property="id", type="integer", format="int64"),
+ *    @OA\Property(property="region", type="string"),
+ *    @OA\Property(property="city", type="string"),
+ *    @OA\Property(property="street", type="string"),
+ *    @OA\Property(property="building", type="string"),
+ *    @OA\Property(property="apartment", type="string"),
+ *    @OA\Property(property="house_number", type="string"),
+ *    @OA\Property(property="postal_code", type="string"),
+ *    @OA\Property(property="type_adress", type="string"),
+ *    @OA\Property(property="latitude", type="number", format="float"),
+ *    @OA\Property(property="longitude", type="number", format="float"),
+ * ),
+ *
+ * @OA\Schema(
+ *    schema="OrganizationResource",
+ *    title="Ресурс Организации",
+ *    @OA\Property(property="owner_id", type="integer", format="int64"),
+ *    @OA\Property(property="name", type="string"),
+ *    @OA\Property(property="address", ref="#/components/schemas/AdressResource"),
+ *    @OA\Property(property="website", type="string", format="uri"),
+ *    @OA\Property(property="description", type="string"),
+ *    @OA\Property(property="industry", type="string"),
+ *    @OA\Property(property="founded_date", type="string", format="date"),
+ *    @OA\Property(property="phone", type="string"),
+ *    @OA\Property(property="email", type="string", format="email"),
+ *    @OA\Property(property="remuved", type="boolean"),
+ *    @OA\Property(property="type", type="string"),
+ *    @OA\Property(property="inn", type="string"),
+ *    @OA\Property(property="kpp", type="string"),
+ *    @OA\Property(property="registration_number", type="string"),
+ *    @OA\Property(property="registration_number_individual", type="string"),
+ * ),
+ *
+ *
+ *
  */
 abstract class Controller
 {

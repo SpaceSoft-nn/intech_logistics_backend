@@ -9,9 +9,15 @@ use Illuminate\Database\Eloquent\Collection;
 
 use function App\Helpers\Mylog;
 
-class CoordinateCheckerInteractor
+final class CoordinateCheckerInteractor
 {
-    private $distance = 60000; // высота прямоугольника
+    private $distance = 100000; // высота прямоугольника
+
+    public function setDistance(int $dist) : self
+    {
+        $this->distance = $dist;
+        return $this;
+    }
 
     /**
      * Запускаем в работу методв поиска точки в прямоугольнике основного вектора
@@ -23,7 +29,7 @@ class CoordinateCheckerInteractor
     public function checkCoordinatesInRectangle(Collection $orders, RentagleArrayVO $sortPoint) : array
     {
         $rentagle = $this->buildingRectangle($sortPoint->startLat, $sortPoint->startLng, $sortPoint->endLat, $sortPoint->endLng);
-
+        
         try {
             $vectors = $this->mappingArrayCollection($orders);
         } catch (\Throwable $th) {

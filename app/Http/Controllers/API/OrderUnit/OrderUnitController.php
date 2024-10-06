@@ -34,13 +34,21 @@ class OrderUnitController extends Controller
         $orders = OrderUnit::all()->where("order_status", StatusOrderUnitEnum::wait);
 
         {
-            $orderMain = $orders->where('main_order', $request['main_order'])->first();
-            abort_if($orderMain, 404, "Предоставленный заказ не существует.");
+            $orderMain = $orders->where('id', $request['main_order'])->first();
+            abort_if(is_null($orderMain), 404, "Предоставленный заказ не существует.");
         }
 
+        {
+            //Если указали дистанцию, меня с дефолтного значения на указанное
+            if(!empty($request['search_distance']))
+            {
+                $distance = $request['search_distance'] * 1000;
+                $coordinator->setDistance($distance);
+            }
+        }
 
+        //Вызываем логику работу поиска точек в прямоугольнике
         $rectangle = $coordinator->checkCoordinatesInRectangle($orders, RentagleArrayVO::make($orderMain));
-
 
         return response()->json(array_success(OredUnitCollection::make($orders->find($rectangle)->values()->all()), 'Возвращены все заказы входящие в область, главного заказа.'), 200);
     }

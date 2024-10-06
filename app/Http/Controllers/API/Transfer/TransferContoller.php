@@ -51,7 +51,7 @@ class TransferContoller
             $transport = Transport::first();
             if($bodyVolume >= intval($transport->body_volume) ) { abort(400, 'У транспорта переполнен объём в 100м^3, относительно всех выбранных заказов'); }
         }
-
+        //
         $transferArray = [
             "transport_id" => $transport->id,
             "delivery_start" => $order_main->delivery_start,

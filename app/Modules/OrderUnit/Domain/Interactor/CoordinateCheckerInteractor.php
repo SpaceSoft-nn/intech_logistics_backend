@@ -3,27 +3,56 @@
 namespace App\Modules\OrderUnit\Domain\Interactor;
 
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\RentagleArrayVO;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use Exception;
+use Illuminate\Database\Eloquent\Collection;
+
+use function App\Helpers\Mylog;
 
 class CoordinateCheckerInteractor
 {
-
-    const DISTANCE = 100000; // высота прямоугольника
+    private $distance = 60000; // высота прямоугольника
 
     /**
-     * @param array $vectors
+     * Запускаем в работу методв поиска точки в прямоугольнике основного вектора
+     * @param \Illuminate\Database\Eloquent\Collection<int, OrderUnit> $orders
      * @param RentagleArrayVO $sortPoints
      *
      * @return array
      */
-    public function checkCoordinatesInRectangle(array $vectors , RentagleArrayVO $sortPoint) : array
+    public function checkCoordinatesInRectangle(Collection $orders, RentagleArrayVO $sortPoint) : array
     {
         $rentagle = $this->buildingRectangle($sortPoint->startLat, $sortPoint->startLng, $sortPoint->endLat, $sortPoint->endLng);
+
+        try {
+            $vectors = $this->mappingArrayCollection($orders);
+        } catch (\Throwable $th) {
+            Mylog("Ошибка в алгоритме OrderUnit Algorithm, при маппинге Collection");
+            throw new Exception("Ошибка на стороне сервера", 500);
+        }
+
         $result = $this->checkCoordinatesInRectangleInner($vectors , $rentagle);
 
         return $result;
     }
 
 
+    private function mappingArrayCollection(Collection $orders) : array
+    {
+        //подготавливаем наш массив к функции
+        $cordinstes = $orders->flatMap(function($order) {
+
+            return [
+                $order->id => [
+                    ['lat' => $order->adress_start->latitude , 'lng' => $order->adress_start->longitude],
+                    ['lat' => $order->adress_end->latitude , 'lng' => $order->adress_end->longitude],
+                ]
+            ];
+
+        })->all();
+
+        return $cordinstes;
+    }
 
     public function checkCoordinatesInRectangleInner(array $vectors , array $sortPoints)
     {
@@ -48,16 +77,16 @@ class CoordinateCheckerInteractor
         $bearing = $this->calculateBearing($startLat, $startLng, $endLat, $endLng);
 
         // Уменьшение на 90 градусов для перпендикуляра вверх
-        $upVectorStart = $this->calculateOffsetCoordinates($startLat, $startLng, $bearing - 90 , SELF::DISTANCE);
+        $upVectorStart = $this->calculateOffsetCoordinates($startLat, $startLng, $bearing - 90 , $this->distance);
 
         // Увеличение на 90 градусов для перпендикуляра вниз
-        $downVectorStart = $this->calculateOffsetCoordinates($startLat, $startLng, $bearing + 90  ,  SELF::DISTANCE);
+        $downVectorStart = $this->calculateOffsetCoordinates($startLat, $startLng, $bearing + 90  ,  $this->distance);
 
         // Уменьшение на 90 градусов для перпендикуляра вверх
-        $upVectorEnd = $this->calculateOffsetCoordinates($endLat, $endLng, $bearing - 90,  SELF::DISTANCE);
+        $upVectorEnd = $this->calculateOffsetCoordinates($endLat, $endLng, $bearing - 90,  $this->distance);
 
         // Увеличение на 90 градусов для перпендикуляра вниз
-        $downVectorEnd = $this->calculateOffsetCoordinates($endLat, $endLng, $bearing + 90 ,  SELF::DISTANCE);
+        $downVectorEnd = $this->calculateOffsetCoordinates($endLat, $endLng, $bearing + 90 ,  $this->distance);
 
         $points = [
             $upVectorStart,
@@ -150,7 +179,7 @@ class CoordinateCheckerInteractor
     /**
      * Вычисляет смещенные координаты по азимуту и расстоянию.
      */
-    private function calculateOffsetCoordinates($lat, $lng, $bearing, $distance = self::DISTANCE) : array
+    private function calculateOffsetCoordinates($lat, $lng, $bearing, $distance) : array
     {
         $earthRadius = 6371000; // радиус Земли в метрах
 

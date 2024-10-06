@@ -31,7 +31,6 @@ class OrderUnit extends Model
         "delivery_start",
         "delivery_end",
         "adress_start_id",
-        "adresses",
         "adress_end_id",
         "adresses",
         "body_volume",

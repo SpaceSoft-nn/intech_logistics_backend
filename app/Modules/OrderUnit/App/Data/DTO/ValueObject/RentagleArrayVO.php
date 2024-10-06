@@ -2,29 +2,30 @@
 
 namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject;
 
-/**
- * [Description RentagleArrayVO]
- */
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+
+
 class RentagleArrayVO
 {
     public function __construct(
-        public string|float $startLat,
-        public string|float $startLng,
-        public string|float $endLat,
-        public string|float $endLng,
+        public readonly string|float $startLat,
+        public readonly string|float $startLng,
+        public readonly string|float $endLat,
+        public readonly string|float $endLng,
     ) { }
 
+    /**
+     * Функция создания DTO
+     * @param OrderUnit $order - Ожидание ведущий/главный заказ
+     */
     public static function make(
-        string|float $startLat,
-        string|float $startLng,
-        string|float $endLat,
-        string|float $endLng,
-    ) {
+        OrderUnit $order,
+    ) : self {
         return new self(
-            startLat: $startLat,
-            startLng: $startLng,
-            endLat: $endLat,
-            endLng: $endLng,
+            startLat: $order->adress_start->latitude,
+            startLng: $order->adress_start->longitude,
+            endLat: $order->adress_end->latitude,
+            endLng: $order->adress_end->longitude,
         );
     }
 

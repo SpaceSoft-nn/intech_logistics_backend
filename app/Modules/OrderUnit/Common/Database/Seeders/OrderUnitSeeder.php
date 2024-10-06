@@ -10,7 +10,6 @@ use App\Modules\PalletSpace\Domain\Models\PalletSpace;
 use Cache;
 use DateTime;
 use Faker\Generator;
-use Faker\Factory;
 use Illuminate\Database\Seeder;
 
 class OrderUnitSeeder extends Seeder
@@ -18,9 +17,7 @@ class OrderUnitSeeder extends Seeder
 
     public function __construct(
         private Generator $faker,
-    ) {
-        // parent::__construct();
-    }
+    ) { }
 
 
 
@@ -200,6 +197,22 @@ class OrderUnitSeeder extends Seeder
                 "adress_start_id" => $arrayAdress[19]->id,
                 "adress_end_id" => $arrayAdress[20]->id,
                 "body_volume" => 45,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+            ]);
+
+            $this->linkOrderAndCargo($order, $pallet);
+        }
+
+        {
+            //Заказ 11
+            $order = OrderUnit::factory()->create([
+                "delivery_start" => $startData,
+                "delivery_end" => $this->setTimeEnd($startData, 9), // Добавляем случайное количество дней
+                "adress_start_id" => $arrayAdress[20]->id,
+                "adress_end_id" => $arrayAdress[21]->id,
+                "body_volume" => 25,
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,

@@ -10,6 +10,7 @@ use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 
 class OrderUnitFactory extends Factory
 {

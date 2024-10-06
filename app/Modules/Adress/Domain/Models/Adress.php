@@ -28,7 +28,8 @@ class Adress extends Model
         "apartment",
         "house_number",
         "postal_code",
-        "coordinates",
+        "latitude",
+        "longitude",
         "type_adress",
 
     ];

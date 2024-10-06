@@ -251,6 +251,30 @@ class AdressSeeder extends Seeder
             ]);
         }
 
+        {
+
+            //Заказ 11
+            $adressStart21 = Adress::factory()->create([
+                "region" => 'Смоленская',
+                "city" => 'Ярцево',
+                "street" => 'Школьная улица',
+                "building" => "8",
+                "postal_code" => 215800,
+                "latitude" => 55.069407,
+                "longitude" => 32.691786,
+            ]);
+
+            $adressEnd22 = Adress::factory()->create([
+                "region" => 'Татарстан',
+                "city" => 'Менделеевск',
+                "street" => 'Советская улица',
+                "building" => "8",
+                "postal_code" => 423650,
+                "latitude" => 55.893157,
+                "longitude" => 52.309420,
+            ]);
+        }
+
         $cacheArray = [
             1 => $adressStart1,
             2 => $adressEnd2,
@@ -272,6 +296,8 @@ class AdressSeeder extends Seeder
             18 => $adressEnd18,
             19 => $adressStart19,
             20 => $adressEnd20,
+            21 => $adressStart21,
+            22 => $adressEnd22,
         ];
 
         Cache::put('adress_seeder', $cacheArray, 5);

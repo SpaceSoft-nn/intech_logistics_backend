@@ -431,6 +431,82 @@
                 }
             }
         },
+        "/api/orders/algorithm": {
+            "post": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Получить все заказы которое входят в вектор движения Главного заказа",
+                "operationId": "2d6992478e14d853b93738961bd246a8",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "main_order": {
+                                                "description": "ID основного заказа, обязательное поле",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "550e8400-e29b-41d4-a716-446655440000"
+                                            },
+                                            "search_distance": {
+                                                "description": "Расстояние для поиска, необязательное поле - по стандарту стоит 100 км (Поиска) - (Указывать в Километрах)",
+                                                "type": "integer",
+                                                "example": 10
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное задания Трансфера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OrderUnitResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return Orders."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/registration": {
             "post": {
                 "tags": [

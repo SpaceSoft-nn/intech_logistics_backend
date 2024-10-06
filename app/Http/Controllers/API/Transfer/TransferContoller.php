@@ -49,7 +49,7 @@ class TransferContoller
             * @var Transport
             */
             $transport = Transport::first();
-            if($bodyVolume >= intval($transport->body_volume) ) { abort('У транспорта переполнен объём в 100м^3, относительно всех выбранных заказов', 400); }
+            if($bodyVolume >= intval($transport->body_volume) ) { abort(400, 'У транспорта переполнен объём в 100м^3, относительно всех выбранных заказов'); }
         }
 
         $transferArray = [

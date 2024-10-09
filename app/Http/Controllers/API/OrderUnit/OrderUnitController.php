@@ -104,7 +104,6 @@ class OrderUnitController extends Controller
 
         $status = $vectorMove->run($orderMain, $orders->find($rectangle)->values());
 
-
         dd(5);
 
     }

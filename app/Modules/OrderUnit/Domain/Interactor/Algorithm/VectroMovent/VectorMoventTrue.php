@@ -2,12 +2,9 @@
 
 namespace App\Modules\OrderUnit\Domain\Interactor\Algorithm\VectroMovent;
 
-use App\Modules\Adress\Domain\Models\Adress;
-use App\Modules\OrderUnit\Domain\Interactor\Algorithm\VectroMovent\Distance\DistanceAlgorithmVectorMovent;
 use App\Modules\OrderUnit\Domain\Interface\Algorithm\IVectorMoventAlgorithm;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Collection as SupportCollection;
+use Illuminate\Support\Collection;
 
 /**
  * Класс который проверяет, что вектор находящийся в прямоугольнике (является попутным главному вектору, а не обратным)
@@ -22,22 +19,22 @@ final class VectorMoventTrue
 
     /**
     * @param OrderUnit $mainVector
-    * @param \Illuminate\Database\Eloquent\Collection<int, OrderUnit> $orders
+    * @param Illuminate\Support\Collection<int, OrderUnit> $orders
     *
-    * @return [type]
+    * @return array
     */
-    public function run(OrderUnit $mainVector, Collection $otherVector)
+    public function run(OrderUnit $mainVector, Collection $otherVector) : array
     {
-        $this->startLogic($mainVector, $otherVector);
+        return $this->startLogic($mainVector, $otherVector);
     }
 
     /**
      * Подготовка и запуск в работу логики алгоритма
      * @param \Illuminate\Database\Eloquent\Collection<int, OrderUnit> $orders
      *
-     * @return [type]
+     * @return array
      */
-    private function startLogic(OrderUnit $mainVector, Collection $otherVector)
+    private function startLogic(OrderUnit $mainVector, Collection $otherVector) : array
     {
 
 
@@ -45,13 +42,12 @@ final class VectorMoventTrue
 
             // Это наш коллбэк, который определяет, нужно ли возвращать элемент или нет
             if ($this->distanceAlgorith->run($mainVector, $item)) {
-                return $item;
+                return $item->id;
             }
-
             // Вернуть null, если алгоритм не прошёл проверку
             return null;
 
-        })->filter();
+        })->filter()->all();
 
         return $result;
     }

@@ -3,21 +3,72 @@
 namespace App\Modules\OrderUnit\Domain\Interactor;
 
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\RentagleArrayVO;
+use App\Modules\OrderUnit\Domain\Interactor\Algorithm\VectroMovent\VectorMoventTrue;
+use App\Modules\OrderUnit\Domain\Interface\Trait\Algorithm\CalculateBearingTrait;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 
 use function App\Helpers\Mylog;
+
 
 final class CoordinateCheckerInteractor
 {
 
-    private $distance = 100000; // высота прямоугольника
+    use CalculateBearingTrait;
 
+    private $distance = 100000; // высота прямоугольника
+    private Collection $otherVector; //Добавляем массив "всех" OrderUnit (что бы не запрашивать каждый раз из БД)
+    private OrderUnit $mainVector; //Добавляем массив "всех" OrderUnit (что бы не запрашивать каждый раз из БД)
+
+    public function __construct(
+        public VectorMoventTrue $vectorMov,
+    ) { }
+
+
+    /**
+     * Устанавливаем явно высоту прямоугольника
+     * @param int $dist
+     *
+     * @return self
+     */
     public function setDistance(int $dist) : self
     {
         $this->distance = $dist;
         return $this;
+    }
+
+    #TODO Вынести в сервес, разделить логику создание прямоугольника и остальных алгоритмов (будут пополняться), использовать цепочку обязанностей handler + декоратор
+    /**
+     * @param OrderUnit $mainVector
+     * @param \Illuminate\Database\Eloquent\Collection<int, OrderUnit> $otherVector
+     *
+     * @return [type]
+     */
+    public function run(OrderUnit $mainVector, Collection $otherVector)
+    {
+
+        $this->otherVector = $otherVector;
+        $this->mainVector = $mainVector;
+
+        //строим прямоугольник проверяем что вектора входят
+        $data = $this->checkCoordinatesInRectangle(RentagleArrayVO::make($mainVector), $otherVector);
+
+        //проверяем что вектора которые входят, направлены в попутном направлении относительно главного вектора
+        return $this->runVectorMoventTrue($data);
+    }
+
+
+    /**
+     * Добавляем алгоритм проверки направления вектора
+     * @return [type]
+     */
+    private function runVectorMoventTrue(array $data) : array
+    {
+        $data = $this->otherVector->find($data);
+
+        return $this->vectorMov->run($this->mainVector, collect($data));
     }
 
     /**
@@ -27,7 +78,7 @@ final class CoordinateCheckerInteractor
      *
      * @return array
      */
-    public function checkCoordinatesInRectangle(Collection $orders, RentagleArrayVO $sortPoint) : array
+    private function checkCoordinatesInRectangle(RentagleArrayVO $sortPoint, Collection $orders) : array
     {
         $rentagle = $this->buildingRectangle($sortPoint->startLat, $sortPoint->startLng, $sortPoint->endLat, $sortPoint->endLng);
 
@@ -73,6 +124,7 @@ final class CoordinateCheckerInteractor
 
     }
 
+    //Создаём прямоугольник
     private function buildingRectangle(
         float $startLat,
         float $startLng,
@@ -112,9 +164,9 @@ final class CoordinateCheckerInteractor
      * @param mixed $coordinate
      * @param mixed $polygon
      *
-     * @return [type]
+     * @return bool
      */
-    private function isPointInPolygon($coordinate, $polygon)
+    private function isPointInPolygon($coordinate, $polygon) : bool
     {
         $x = $coordinate['lat'];
         $y = $coordinate['lng'];
@@ -167,7 +219,8 @@ final class CoordinateCheckerInteractor
     /**
      * Вычисляет длину вектора между двумя точками в метрах.
      */
-    public function calculateVectorLength($lat1, $lng1, $lat2, $lng2) {
+    public function calculateVectorLength($lat1, $lng1, $lat2, $lng2) : float
+    {
         $earthRadius = 6371000; // радиус Земли в метрах
 
         $deltaLat = deg2rad($lat2 - $lat1);
@@ -182,26 +235,6 @@ final class CoordinateCheckerInteractor
         return $distance; // в метрах
     }
 
-    /**
-     * Вычисляет угол азимута.
-     */
-    public function calculateBearing($lat1, $lng1, $lat2, $lng2) {
-
-        //Вычисление разности долготы между двумя точками (в радианах).
-        $deltaLng = deg2rad($lng2 - $lng1);
-
-        //Преобразование широты обеих точек из градусов в радианы.
-        $lat1 = deg2rad($lat1);
-        $lat2 = deg2rad($lat2);
-
-        //Вычисление компонентов y и x:
-        $y = sin($deltaLng) * cos($lat2);
-        $x = cos($lat1) * sin($lat2) - sin($lat1) * cos($lat2) * cos($deltaLng);
-
-        $bearing = rad2deg(atan2($y, $x));
-
-        return (fmod($bearing + 360, 360)); // в градусах
-    }
 
     /**
      * Вычисляет смещенные координаты по азимуту и расстоянию.

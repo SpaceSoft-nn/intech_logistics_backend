@@ -275,6 +275,30 @@ class AdressSeeder extends Seeder
             ]);
         }
 
+        {
+
+            //Заказ 12
+            $adressStart23 = Adress::factory()->create([
+                "region" => 'Владимирская',
+                "city" => 'Владимир',
+                "street" => 'Федосеева',
+                "building" => "5",
+                "postal_code" => 600000,
+                "latitude" =>  56.127201,
+                "longitude" => 40.385479,
+            ]);
+
+            $adressEnd24 = Adress::factory()->create([
+                "region" => 'Московская область',
+                "city" => 'Борисово',
+                "street" => 'Нагорная',
+                "building" => "143216",
+                "postal_code" => 423650,
+                "latitude" => 55.420362,
+                "longitude" => 36.054782,
+            ]);
+        }
+
         $cacheArray = [
             1 => $adressStart1,
             2 => $adressEnd2,
@@ -298,6 +322,8 @@ class AdressSeeder extends Seeder
             20 => $adressEnd20,
             21 => $adressStart21,
             22 => $adressEnd22,
+            23 => $adressStart23,
+            24 => $adressEnd24,
         ];
 
         Cache::put('adress_seeder', $cacheArray, 5);

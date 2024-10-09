@@ -43,6 +43,7 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
     //orderUnit
 Route::get('/orders', [OrderUnitController:: class, 'get']);
 Route::get('/orders/algorithm', [OrderUnitController:: class, 'algorithm']);
+Route::get('/orders/algorithm2', [OrderUnitController:: class, 'algorithm2']);
 
     //transfer
 Route::post('/transfer', [TransferContoller:: class, 'create']);

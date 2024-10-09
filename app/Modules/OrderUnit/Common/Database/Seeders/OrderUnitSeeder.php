@@ -210,9 +210,25 @@ class OrderUnitSeeder extends Seeder
             $order = OrderUnit::factory()->create([
                 "delivery_start" => $startData,
                 "delivery_end" => $this->setTimeEnd($startData, 9), // Добавляем случайное количество дней
-                "adress_start_id" => $arrayAdress[20]->id,
-                "adress_end_id" => $arrayAdress[21]->id,
+                "adress_start_id" => $arrayAdress[21]->id,
+                "adress_end_id" => $arrayAdress[22]->id,
                 "body_volume" => 25,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+            ]);
+
+            $this->linkOrderAndCargo($order, $pallet);
+        }
+
+        {
+            //Заказ 12
+            $order = OrderUnit::factory()->create([
+                "delivery_start" => $startData,
+                "delivery_end" => $this->setTimeEnd($startData, 9), // Добавляем случайное количество дней
+                "adress_start_id" => $arrayAdress[23]->id,
+                "adress_end_id" => $arrayAdress[24]->id,
+                "body_volume" => 17,
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,

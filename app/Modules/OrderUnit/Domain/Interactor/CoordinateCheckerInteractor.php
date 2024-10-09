@@ -11,6 +11,7 @@ use function App\Helpers\Mylog;
 
 final class CoordinateCheckerInteractor
 {
+
     private $distance = 100000; // высота прямоугольника
 
     public function setDistance(int $dist) : self
@@ -20,7 +21,7 @@ final class CoordinateCheckerInteractor
     }
 
     /**
-     * Запускаем в работу методв поиска точки в прямоугольнике основного вектора
+     * Запускаем в работу метод поиска точки в прямоугольнике основного вектора
      * @param \Illuminate\Database\Eloquent\Collection<int, OrderUnit> $orders
      * @param RentagleArrayVO $sortPoints
      *
@@ -29,7 +30,7 @@ final class CoordinateCheckerInteractor
     public function checkCoordinatesInRectangle(Collection $orders, RentagleArrayVO $sortPoint) : array
     {
         $rentagle = $this->buildingRectangle($sortPoint->startLat, $sortPoint->startLng, $sortPoint->endLat, $sortPoint->endLng);
-        
+
         try {
             $vectors = $this->mappingArrayCollection($orders);
         } catch (\Throwable $th) {
@@ -60,7 +61,7 @@ final class CoordinateCheckerInteractor
         return $cordinstes;
     }
 
-    public function checkCoordinatesInRectangleInner(array $vectors , array $sortPoints)
+    private function checkCoordinatesInRectangleInner(array $vectors , array $sortPoints)
     {
         // Массив для хранения результатов проверки для каждого подмассива координат
         return collect($vectors)->filter(function ($coordinates) use ($sortPoints) {
@@ -72,7 +73,7 @@ final class CoordinateCheckerInteractor
 
     }
 
-    public function buildingRectangle(
+    private function buildingRectangle(
         float $startLat,
         float $startLng,
         float $endLat,
@@ -105,6 +106,14 @@ final class CoordinateCheckerInteractor
         return $this->sortPointsClockwise($points);
     }
 
+
+    /**
+     * Входят ли координаты в прямоугольник
+     * @param mixed $coordinate
+     * @param mixed $polygon
+     *
+     * @return [type]
+     */
     private function isPointInPolygon($coordinate, $polygon)
     {
         $x = $coordinate['lat'];
@@ -130,6 +139,12 @@ final class CoordinateCheckerInteractor
         return $inside;
     }
 
+    /**
+     * Упорядочивание координат для создание прямоугольника
+     * @param mixed $points
+     *
+     * @return array
+     */
     private function sortPointsClockwise($points) : array
     {
         // Вычисление центра прямоугольника
@@ -171,12 +186,18 @@ final class CoordinateCheckerInteractor
      * Вычисляет угол азимута.
      */
     public function calculateBearing($lat1, $lng1, $lat2, $lng2) {
+
+        //Вычисление разности долготы между двумя точками (в радианах).
         $deltaLng = deg2rad($lng2 - $lng1);
+
+        //Преобразование широты обеих точек из градусов в радианы.
         $lat1 = deg2rad($lat1);
         $lat2 = deg2rad($lat2);
 
+        //Вычисление компонентов y и x:
         $y = sin($deltaLng) * cos($lat2);
         $x = cos($lat1) * sin($lat2) - sin($lat1) * cos($lat2) * cos($deltaLng);
+
         $bearing = rad2deg(atan2($y, $x));
 
         return (fmod($bearing + 360, 360)); // в градусах
@@ -184,6 +205,7 @@ final class CoordinateCheckerInteractor
 
     /**
      * Вычисляет смещенные координаты по азимуту и расстоянию.
+     * P.S Тут добавляем расстояние смещение от главной координаты + угол, к примеру 90 градусов на 150 км (Будет перпендикуляр от начальной точки вектора навверх)
      */
     private function calculateOffsetCoordinates($lat, $lng, $bearing, $distance) : array
     {

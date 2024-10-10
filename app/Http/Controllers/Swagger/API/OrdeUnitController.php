@@ -36,7 +36,7 @@ use App\Http\Controllers\Controller;
 * @OA\Post(
 *
 *      path="/api/orders/algorithm",
-*      summary="Получить все заказы которое входят в вектор движения Главного заказа",
+*      summary="Получить все заказы которые входят в вектор движения Главного заказа",
 *      tags={"Order Unit"},
 *
 *       @OA\RequestBody(

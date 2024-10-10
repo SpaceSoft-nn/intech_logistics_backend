@@ -6,6 +6,325 @@
     },
     "paths": {
         "/api/swagger": {},
+        "/api/adresses": {
+            "get": {
+                "tags": [
+                    "Adress"
+                ],
+                "summary": "Вернуть запись по id",
+                "operationId": "3f588f39642dec1888383fe9ba87880d",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "id": {
+                                                "description": "uuid записи",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "region": {
+                                            "description": "Регион",
+                                            "type": "string",
+                                            "example": "Москва"
+                                        },
+                                        "city": {
+                                            "description": "Город",
+                                            "type": "string",
+                                            "example": "Москва"
+                                        },
+                                        "street": {
+                                            "description": "Улица",
+                                            "type": "string",
+                                            "example": "Тверская"
+                                        },
+                                        "building": {
+                                            "description": "Строение",
+                                            "type": "string",
+                                            "example": "1",
+                                            "nullable": true
+                                        },
+                                        "apartment": {
+                                            "description": "Квартира",
+                                            "type": "string",
+                                            "example": "101",
+                                            "nullable": true
+                                        },
+                                        "house_number": {
+                                            "description": "Номер дома",
+                                            "type": "string",
+                                            "example": "10",
+                                            "nullable": true
+                                        },
+                                        "postal_code": {
+                                            "description": "Почтовый индекс",
+                                            "type": "string",
+                                            "example": "123456",
+                                            "nullable": true
+                                        },
+                                        "latitude": {
+                                            "description": "Широта",
+                                            "type": "string",
+                                            "example": "55.7558"
+                                        },
+                                        "longitude": {
+                                            "description": "Долгота",
+                                            "type": "string",
+                                            "example": "37.6173"
+                                        },
+                                        "id": {
+                                            "description": "uuid записи",
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                                        },
+                                        "updated_at": {
+                                            "description": "Дата и время создания",
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2024-10-10T00:51:39.000000Z"
+                                        },
+                                        "created_at": {
+                                            "description": "Дата и время создания",
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2024-10-10T00:51:39.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Адресс не найден.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Такого адресса не существует."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Adress"
+                ],
+                "summary": "Создать запись adress",
+                "operationId": "75e0aa89ee43e2381fa717ca3813dab3",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "region": {
+                                                "description": "Регион",
+                                                "type": "string",
+                                                "example": "Москва"
+                                            },
+                                            "city": {
+                                                "description": "Город",
+                                                "type": "string",
+                                                "example": "Москва"
+                                            },
+                                            "street": {
+                                                "description": "Улица",
+                                                "type": "string",
+                                                "example": "Тверская"
+                                            },
+                                            "building": {
+                                                "description": "Строение",
+                                                "type": "string",
+                                                "example": "1",
+                                                "nullable": true
+                                            },
+                                            "apartment": {
+                                                "description": "Квартира",
+                                                "type": "string",
+                                                "example": "101",
+                                                "nullable": true
+                                            },
+                                            "house_number": {
+                                                "description": "Номер дома",
+                                                "type": "string",
+                                                "example": "10",
+                                                "nullable": true
+                                            },
+                                            "postal_code": {
+                                                "description": "Почтовый индекс",
+                                                "type": "string",
+                                                "example": "123456",
+                                                "nullable": true
+                                            },
+                                            "latitude": {
+                                                "description": "Широта",
+                                                "type": "string",
+                                                "example": "55.7558"
+                                            },
+                                            "longitude": {
+                                                "description": "Долгота",
+                                                "type": "string",
+                                                "example": "37.6173"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "region": {
+                                            "description": "Регион",
+                                            "type": "string",
+                                            "example": "Москва"
+                                        },
+                                        "city": {
+                                            "description": "Город",
+                                            "type": "string",
+                                            "example": "Москва"
+                                        },
+                                        "street": {
+                                            "description": "Улица",
+                                            "type": "string",
+                                            "example": "Тверская"
+                                        },
+                                        "building": {
+                                            "description": "Строение",
+                                            "type": "string",
+                                            "example": "1",
+                                            "nullable": true
+                                        },
+                                        "apartment": {
+                                            "description": "Квартира",
+                                            "type": "string",
+                                            "example": "101",
+                                            "nullable": true
+                                        },
+                                        "house_number": {
+                                            "description": "Номер дома",
+                                            "type": "string",
+                                            "example": "10",
+                                            "nullable": true
+                                        },
+                                        "postal_code": {
+                                            "description": "Почтовый индекс",
+                                            "type": "string",
+                                            "example": "123456",
+                                            "nullable": true
+                                        },
+                                        "latitude": {
+                                            "description": "Широта",
+                                            "type": "string",
+                                            "example": "55.7558"
+                                        },
+                                        "longitude": {
+                                            "description": "Долгота",
+                                            "type": "string",
+                                            "example": "37.6173"
+                                        },
+                                        "id": {
+                                            "description": "uuid записи",
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                                        },
+                                        "updated_at": {
+                                            "description": "Дата и время создания",
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2024-10-10T00:51:39.000000Z"
+                                        },
+                                        "created_at": {
+                                            "description": "Дата и время создания",
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2024-10-10T00:51:39.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "tags": [
@@ -390,7 +709,82 @@
                 "operationId": "d645bbc867291a216b3d69f03e3ce98c",
                 "responses": {
                     "200": {
-                        "description": "Успешное задания Трансфера.",
+                        "description": "Успешный возврат Заказов.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OrderUnitResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return Orders."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Создать Заказ (OrderUnit) (Прислать только адресса отправки и прибытия, остальное будет заполнено случайно)",
+                "operationId": "f6fd7c39cf5ef7bc1eeb9c592d181abb",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "start_adress_id": {
+                                                "description": "uuid записи",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "end_adress_id": {
+                                                "description": "uuid записи",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное возврат созданного Заказа.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -466,7 +860,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Успешное задания Трансфера.",
+                        "description": "Успешный возврат заказов входящие в область.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1392,6 +1786,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Adress",
+            "description": "Adress"
+        },
         {
             "name": "Login\\Registration",
             "description": "Login\\Registration"

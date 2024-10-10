@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Adress\AdressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegistrationController;
 use App\Http\Controllers\API\Notification\NotificationController;
@@ -40,10 +41,14 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 
 });
 
+    //Adress
+Route::get('/adresses', [AdressController:: class, 'get']);
+Route::post('/adresses', [AdressController:: class, 'create']);
+
     //orderUnit
 Route::get('/orders', [OrderUnitController:: class, 'get']);
+Route::post('/orders', [OrderUnitController:: class, 'create']);
 Route::get('/orders/algorithm', [OrderUnitController:: class, 'algorithm']);
-Route::get('/orders/algorithm2', [OrderUnitController:: class, 'algorithm2']);
 
     //transfer
 Route::post('/transfer', [TransferContoller:: class, 'create']);

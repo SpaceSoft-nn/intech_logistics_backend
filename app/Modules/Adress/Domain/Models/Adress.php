@@ -44,6 +44,8 @@ class Adress extends Model
     {
         return [
             "type_adress" => TypeAdressEnum::class,
+            "latitude" => "decimal:10",
+            "longitude" => "decimal:10",
         ];
     }
 }

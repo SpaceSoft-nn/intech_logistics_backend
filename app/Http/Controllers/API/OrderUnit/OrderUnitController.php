@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\API\OrderUnit;
 
 use App\Http\Controllers\Controller;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\RentagleArrayVO;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
-use App\Modules\OrderUnit\Domain\Interactor\Algorithm\VectroMovent\VectorMoventTrue;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use App\Modules\OrderUnit\Domain\Requests\OrderUnitAlgorithmRequest;
+use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
+use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OredUnitCollection;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OredUnitResource;
 use Illuminate\Http\Request;
 
 use function App\Helpers\array_success;
@@ -27,6 +27,18 @@ class OrderUnitController extends Controller
         $order = OrderUnit::all();
 
         return response()->json(array_success(OredUnitCollection::make($order), 'Return Orders.'), 200);
+    }
+
+    public function create(OrderUnitCreateRequest $request)
+    {
+        $validated = $request->validated();
+
+        $order = OrderUnit::factory()->create([
+            "adress_start_id" => $validated['start_adress_id'],
+            "adress_end_id" => $validated['end_adress_id'],
+        ]);
+
+        return response()->json(array_success(OredUnitResource::make($order), 'Return Orders.'), 200);
     }
 
     public function algorithm(OrderUnitAlgorithmRequest $request, CoordinateCheckerInteractor $coordinator)

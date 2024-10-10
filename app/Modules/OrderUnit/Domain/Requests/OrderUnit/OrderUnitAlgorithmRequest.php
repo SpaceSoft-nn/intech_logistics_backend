@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\OrderUnit\Domain\Requests;
+namespace App\Modules\OrderUnit\Domain\Requests\OrderUnit;
 
 use App\Modules\Base\Requests\ApiRequest;
 

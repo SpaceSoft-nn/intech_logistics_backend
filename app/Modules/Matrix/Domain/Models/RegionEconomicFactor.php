@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RegionEconomicFactors extends Model
+class RegionEconomicFactor extends Model
 {
     use HasFactory, HasUuids;
 

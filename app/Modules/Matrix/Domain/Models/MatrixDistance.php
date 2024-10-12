@@ -26,7 +26,7 @@ class MatrixDistance extends Model
         'city_name_start',
         'city_name_end',
 
-        'factor',
+        'distance',
 
     ];
 

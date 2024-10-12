@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\API\Matrix;
 
 use App\Http\Controllers\Controller;
-use App\Modules\GAR\Common\Config\GARConfig;
-use App\Modules\GAR\Domain\Services\GARService;
-use Dadata\DadataClient;
+use App\Modules\Matrix\Domain\Models\MatrixDistance;
 
 class MatrixDistanceController extends Controller
 {
-    public function get(GARService $service)
+    public function get()
     {
+        //#TODO Большое количество записей, предусмотреть возврат и запись в память
+        $matrix = MatrixDistance::all();
 
-        $result = $service->run('Люберцы')->getFiasId();
-
-        dd($result);
+        return response()->json($matrix);
     }
 }

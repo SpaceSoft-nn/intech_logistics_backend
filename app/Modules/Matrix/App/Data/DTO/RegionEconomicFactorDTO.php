@@ -5,7 +5,7 @@ namespace App\Modules\Matrix\App\Data\DTO;
 use App\Modules\Matrix\App\Data\DTO\Base\BaseDTO;
 use Illuminate\Contracts\Support\Arrayable;
 
-class RegionEconomicFactor extends BaseDTO implements Arrayable
+class RegionEconomicFactorDTO extends BaseDTO implements Arrayable
 {
     public function __construct(
         public string $region_start_gar_id,
@@ -40,12 +40,12 @@ class RegionEconomicFactor extends BaseDTO implements Arrayable
     public function toArray() : array
     {
         return [
-            "city_start_gar_id" => $this->region_start_gar_id,
-            "city_end_gar_id" => $this->region_end_gar_id,
-            "city_name_start" => $this->region_name_start,
-            "city_name_end" => $this->region_name_end,
-            "distance" => $this->factor,
-            "price" => $this->price,
+            "region_start_gar_id" => $this->region_start_gar_id,
+            "region_end_gar_id" => $this->region_end_gar_id,
+            "region_name_start" => $this->region_name_start,
+            "region_name_end" => $this->region_name_end,
+            "factor" => $this->factor,
+            "price" => $this->price ?? null,
         ];
     }
 }

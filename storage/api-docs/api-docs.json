@@ -445,6 +445,56 @@
                 }
             }
         },
+        "/api/matrix-distance": {
+            "get": {
+                "tags": [
+                    "Matrix Distance"
+                ],
+                "summary": "вернуть токен для user по email/phone и password",
+                "operationId": "7d107ddadbc9e13c3a486d7b45418549",
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат матрицы расстояний.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/MatrixDistanceResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return Orders."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/notification/confirm": {
             "post": {
                 "tags": [
@@ -887,6 +937,56 @@
                                         "message_error": {
                                             "type": "string",
                                             "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/region-economic-status": {
+            "get": {
+                "tags": [
+                    "Region Economic"
+                ],
+                "summary": "вернуть токен для user по email/phone и password",
+                "operationId": "4685dbcf1efe7a2410a043bc8b4ca150",
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат всех данных об экономическом статусе регионов.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/RegionEconomicFactorResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return Orders."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
                                         },
                                         "code": {
                                             "type": "integer",
@@ -1776,6 +1876,91 @@
                         "type": "object"
                     }
                 ]
+            },
+            "MatrixDistanceResource": {
+                "title": "Matrix Distance Resource",
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransferResource"
+                    },
+                    {
+                        "properties": {
+                            "city_start_gar_id": {
+                                "description": "ID города отправления",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "city_end_gar_id": {
+                                "description": "ID города назначения",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "city_name_start": {
+                                "description": "Название города отправления",
+                                "type": "string"
+                            },
+                            "city_name_end": {
+                                "description": "Название города назначения",
+                                "type": "string"
+                            },
+                            "distance": {
+                                "description": "Расстояние между городами в километрах",
+                                "type": "number",
+                                "format": "float"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "RegionEconomicFactorResource": {
+                "title": "Ресурс региона",
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransferResource"
+                    },
+                    {
+                        "properties": {
+                            "id": {
+                                "description": "Уникальный идентификатор региона (UUID)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "region_start_gar_id": {
+                                "description": "Значение Гар для области отправления (UUID)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "region_end_gar_id": {
+                                "description": "Значение Гар для области прибытия (UUID)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "region_name_start": {
+                                "description": "Название области отправления",
+                                "type": "string"
+                            },
+                            "region_name_end": {
+                                "description": "Название области прибытия",
+                                "type": "string"
+                            },
+                            "factor": {
+                                "description": "Коэффициент",
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "price": {
+                                "description": "Цена за 1 км",
+                                "type": "string",
+                                "format": "decimal",
+                                "example": "123.45"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
             }
         },
         "securitySchemes": {
@@ -1795,12 +1980,20 @@
             "description": "Login\\Registration"
         },
         {
+            "name": "Matrix Distance",
+            "description": "Matrix Distance"
+        },
+        {
             "name": "Notification",
             "description": "Notification"
         },
         {
             "name": "Order Unit",
             "description": "Order Unit"
+        },
+        {
+            "name": "Region Economic",
+            "description": "Region Economic"
         },
         {
             "name": "Transfer",

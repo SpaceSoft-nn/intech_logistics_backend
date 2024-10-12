@@ -4,6 +4,7 @@ use App\Http\Controllers\API\Adress\AdressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegistrationController;
 use App\Http\Controllers\API\Matrix\MatrixDistanceController;
+use App\Http\Controllers\API\Matrix\RegionEconomicFactorController;
 use App\Http\Controllers\API\Notification\NotificationController;
 use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Organization\OrganizationController;
@@ -56,3 +57,6 @@ Route::post('/transfer', [TransferContoller:: class, 'create']);
 
     //MatrixDistance
 Route::get('/matrix-distance', [MatrixDistanceController:: class, 'get']);
+
+    //RegionEconomicFactor
+Route::get('/region-economic-status', [RegionEconomicFactorController:: class, 'get']);

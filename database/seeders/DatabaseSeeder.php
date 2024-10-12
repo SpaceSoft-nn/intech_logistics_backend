@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceSeed;
 use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -24,6 +23,7 @@ class DatabaseSeeder extends Seeder
 
                 //Дальше по цепочке сиды
             \App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceSeed::class,
+            \App\Modules\Matrix\Common\Database\Seeders\RegionEconomicFactorSeed::class,
 
         ]);
 

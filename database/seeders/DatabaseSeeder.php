@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceSeed;
 use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,11 +16,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+
+                //Нужны первые сиды
             \App\Modules\Adress\Common\Database\Seeders\AdressSeeder::class,
             \App\Modules\OrderUnit\Common\Database\Seeders\OrderUnitSeeder::class,
-            // \App\Modules\PalletSpace\Common\Database\Seeders\PalletSpaceSeeder::class,
-            \App\Modules\Transport\Common\Database\Seeders\TransportSeeder::class,
-            // Добавьте другие сидеры, если нужно
+            // \App\Modules\Transport\Common\Database\Seeders\TransportSeeder::class,
+
+                //Дальше по цепочке сиды
+            \App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceSeed::class,
+
         ]);
 
         EmailList::create([

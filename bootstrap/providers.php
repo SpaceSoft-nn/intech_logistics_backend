@@ -17,6 +17,8 @@ return [
     App\Modules\Adress\App\Providers\AdressServiceProvider::class,
     App\Modules\OrderUnit\App\Providers\OrderUnitServiceProvider::class,
     App\Modules\Transfer\App\Providers\TransferServiceProvider::class,
+    App\Modules\Matrix\App\Providers\MatrixServiceProvider::class,
+    App\Modules\GAR\App\Providers\GARServiceProvider::class,
 
         #Auth Service
     App\Modules\Auth\App\Providers\AuthServiceProvider::class,

@@ -6,10 +6,12 @@ use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
 use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
+use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use App\Modules\Organization\Domain\Rules\OgrnepRule;
 use App\Modules\Organization\Domain\Rules\OgrnRule;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
 class CreateOrganizationRequest extends ApiRequest
@@ -40,6 +42,7 @@ class CreateOrganizationRequest extends ApiRequest
             'industry' => ['nullable', 'string'],
             'founded_date' => ['nullable', 'date'],
             'inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/'],
+            'type_cabinet' => ['required' , Rule::enum(TypeCabinetEnum::class)],
 
         ];
 
@@ -61,6 +64,15 @@ class CreateOrganizationRequest extends ApiRequest
     public function getValueObject(): OrganizationVO
     {
         return OrganizationVO::fromArray($this->validated());
+    }
+
+    /**
+     * Получаем кабинет пользователя
+     * @return [type]
+     */
+    public function getTypeCabinet() : TypeCabinetEnum
+    {
+        return TypeCabinetEnum::returnObjectByString(Arr::get($this->validated(), 'type_cabinet' , null));
     }
 
 }

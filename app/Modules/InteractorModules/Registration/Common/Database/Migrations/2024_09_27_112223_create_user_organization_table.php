@@ -10,13 +10,16 @@ return new class extends Migration
     {
         Schema::create('user_organization', function (Blueprint $table) {
 
+            $table->id('id')->primary();
+
             $table->uuid('user_id')
                 ->constrained('users', 'id')->noActionOnDelete();
 
             $table->uuid('organization_id')
                 ->constrained('organizations', 'id')->noActionOnDelete();
 
-            $table->unique(['user_id', 'organization_id']);
+            #TODO Нужно указать явно что создавать - а не nullable
+            $table->string('type_cabinet')->nullable()->comment('Тип кабинета: заказчик, склад (РЦ), перевозчик');
 
         });
     }
@@ -26,3 +29,4 @@ return new class extends Migration
         Schema::dropIfExists('user_organization');
     }
 };
+

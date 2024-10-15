@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 interface IRepository
 {
-    public function save(BaseDTO $dto);
+    public function save($dto);
     public function getById(string $uuid) : ?Model;
 }

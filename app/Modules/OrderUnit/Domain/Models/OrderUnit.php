@@ -67,12 +67,14 @@ class OrderUnit extends Model
      */
     public function cargo_units(): BelongsToMany
     {
-        return $this->belongsToMany(CargoUnit::class, 'order_unit_cargo_unit', 'cargo_unit_id' , 'order_unit_id');
+        #TODO Может быть баг проверить
+        return $this->belongsToMany(CargoUnit::class, 'order_unit_cargo_unit', 'order_unit_id' ,'cargo_unit_id')->withPivot('factor');
     }
 
     public function transfers(): BelongsToMany
     {
-        return $this->belongsToMany(Transfer::class, 'cargo_unit_transfer', 'transfer_id' , 'cargo_unit_id' );
+        #TODO Может быть баг проверить
+        return $this->belongsToMany(Transfer::class, 'cargo_unit_transfer', 'cargo_unit_id' , 'transfer_id');
     }
 
     public function mgx(): BelongsTo

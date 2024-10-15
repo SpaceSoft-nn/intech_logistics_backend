@@ -103,12 +103,12 @@ class User extends Authenticatable
 
     public function personal_areas(): BelongsToMany
     {
-        return $this->belongsToMany(PersonalArea::class, 'user_personal_area', 'personal_area_id', 'user_id');
+        return $this->belongsToMany(PersonalArea::class, 'user_personal_area', 'user_id' , 'personal_area_id');
     }
 
     public function organizations(): BelongsToMany
     {
-        return $this->belongsToMany(Organization::class, 'user_organization', 'organization_id', 'user_id');
+        return $this->belongsToMany(Organization::class, 'user_organization', 'user_id' , 'organization_id')->withPivot('type_cabinet');
     }
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Modules\User\Domain\Services;
 
+use App\Modules\Organization\App\Data\DTO\User\LinkUserToOrganizationDTO;
+use App\Modules\Organization\Domain\Actions\LinkUserToOrganizationAction;
 use App\Modules\User\App\Data\DTO\Base\BaseDTO;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\App\Repositories\UserRepository;
@@ -29,5 +31,16 @@ class UserService implements IUserService
     public function getUser(string $uuid) : ?User
     {
         return $this->rep->getById($uuid);
+    }
+
+     /**
+     * Привязываем User к Organization через связь многие:многим
+     * @param LinkUserToOrganizationDTO $dto
+     *
+     * @return bool
+    */
+    public function linkUserToOrganization(LinkUserToOrganizationDTO $dto) : bool
+    {
+        return LinkUserToOrganizationAction::run($dto);
     }
 }

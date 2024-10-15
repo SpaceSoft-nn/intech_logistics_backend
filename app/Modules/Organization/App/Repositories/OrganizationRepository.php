@@ -3,8 +3,7 @@
 namespace App\Modules\Organization\App\Repositories;
 
 use App\Modules\Base\Repositories\CoreRepository;
-use App\Modules\Organization\App\Data\DTO\Base\BaseDTO;
-use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
+use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Organization\Domain\Actions\CreateOrganizationAction;
 use App\Modules\Organization\Domain\Interface\Repositories\IRepository;
 use App\Modules\Organization\Domain\Models\Organization as Model;
@@ -22,11 +21,11 @@ class OrganizationRepository extends CoreRepository implements IRepository
     }
 
     /**
-     * @param OrganizationCreateDTO $dto
+     * @param OrganizationVO $dto
      *
      * @return Model
      */
-    public function save(BaseDTO $dto) : Model
+    public function save($dto) : Model
     {
         return CreateOrganizationAction::make($dto);
     }

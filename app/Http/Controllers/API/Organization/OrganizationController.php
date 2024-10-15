@@ -8,6 +8,7 @@ use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Organization\Domain\Requests\CreateOrganizationRequest;
 use App\Modules\Organization\Domain\Resources\OrganizationResource;
 use App\Modules\Organization\Domain\Services\OrganizationService;
+use App\Modules\User\Domain\Models\User;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
@@ -38,13 +39,23 @@ class OrganizationController
         $orgVO->addOwner($user->id);
 
         $organization = $this->service->createOrganization(
-            OrganizationCreateDTO::make($orgVO)
+            OrganizationCreateDTO::make($orgVO, $user, $request->getTypeCabinet())
         );
+
 
         return $organization ?
             response()->json(array_success(OrganizationResource::make($organization), 'Create organization.'), 201)
         :
             response()->json(array_error(OrganizationResource::make($organization), 'Faild create organization.'), 400);
+    }
+
+    /**
+     * Связываем user с organization
+     * @return [type]
+     */
+    public function linkUserToOrg()
+    {
+
     }
 
 }

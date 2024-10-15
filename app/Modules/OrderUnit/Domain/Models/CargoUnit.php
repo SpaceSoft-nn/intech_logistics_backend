@@ -50,7 +50,8 @@ class CargoUnit extends Model
     */
     public function order_units(): BelongsToMany
     {
-        return $this->belongsToMany(OrderUnit::class, 'order_unit_cargo_unit', 'order_unit_id', 'cargo_unit_id');
+        //TODO Может быть баг - потом проверить
+        return $this->belongsToMany(OrderUnit::class, 'order_unit_cargo_unit', 'cargo_unit_id' , 'order_unit_id')->withPivot('factor');
     }
 
 

@@ -2,8 +2,10 @@
 
 namespace App\Modules\Organization\Domain\Factories;
 
+use App\Modules\Organization\App\Data\DTO\User\LinkUserToOrganizationDTO;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
+use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use App\Modules\Organization\Domain\Actions\LinkUserToOrganizationAction;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\User\Domain\Models\User;
@@ -51,9 +53,11 @@ class OrganizationFactory extends Factory
             // ...
         })->afterCreating(function (Organization $organization) {
 
-            $user = User::find($organization->owner_id);
-            //Связываем при связи многие ко многим через промежуточную таблицу
-            LinkUserToOrganizationAction::run($user, $organization);
+            //нужна ли эта логика тут?
+            // $user = User::find($organization->owner_id);
+            // //Связываем при связи многие ко многим через промежуточную таблицу
+            // LinkUserToOrganizationAction::run(LinkUserToOrganizationDTO::make($user, $organization, TypeCabinetEnum::customer));
+
 
         });
     }

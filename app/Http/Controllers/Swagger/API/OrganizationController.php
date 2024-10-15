@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Http\Controllers\Swagger\API;
+
+
+/**
+ * @OA\post(
+ *
+ *      path="/api/organization",
+ *      summary="Создать Organization по авторизированному пользователю",
+ *      tags={"Organization"},
+ *
+ *       @OA\RequestBody(
+ *          required=true,
+ *          @OA\JsonContent(
+ *             required={"name", "address", "phone", "email", "website", "type", "inn", "type_cabinet"},
+ *             @OA\Property(property="name", type="string", description="Name of the organization", maxLength=101, minLength=2, example="My Company"),
+ *             @OA\Property(property="address", type="string", description="Address of the organization", maxLength=255, minLength=12, example="123 Example Street, City, Country"),
+ *             @OA\Property(property="phone", type="string", description="Contact phone number", example="+1234567890"),
+ *             @OA\Property(property="email", type="string", format="email", description="Contact email", maxLength=100, example="contact@example.com"),
+ *             @OA\Property(property="website", type="string", description="Website URL", example="https://www.example.com"),
+ *             @OA\Property(property="type", type="string", enum={"ooo", "ie"}, description="Type of organization, either 'ooo' or 'ie'", example="ooo"),
+ *             @OA\Property(property="description", type="string", nullable=true, description="Description of the organization", example="A leading company in the industry."),
+ *             @OA\Property(property="industry", type="string", nullable=true, description="Industry type", example="Technology"),
+ *             @OA\Property(property="founded_date", type="string", format="date", nullable=true, description="Date the organization was founded", example="2020-01-01"),
+ *             @OA\Property(property="inn", type="string", description="INN number; either 10 or 12 digits", pattern="^(([0-9]{12})|([0-9]{10}))?$", example="1234567890"),
+ *             @OA\Property(property="type_cabinet", type="string", description="Тип кабинета", enum={"Заказчик", "Склад", "Перевозчик"} ),
+ *             @OA\Property(
+ *                 property="kpp",
+ *                 type="string",
+ *                 nullable=true,
+ *                 description="KPP number (обязательный параметр когда 'ooo')",
+ *                 pattern="^[0-9]{9}$",
+ *                 example="123456789"
+ *             ),
+ *             @OA\Property(
+ *                 property="registration_number",
+ *                 type="string",
+ *                 nullable=true,
+ *                 description="OGRN number (обязательный параметр когда 'ooo')",
+ *                 pattern="^[0-9]{13}$",
+ *                 example="1234567890123"
+ *             ),
+ *             @OA\Property(
+ *                 property="registration_number_individual",
+ *                 type="string",
+ *                 nullable=true,
+ *                 description="OGRNIP number (обязательный параметр когда 'Индивидуальный предприниматель')",
+ *                 pattern="^[0-9]{15}$",
+ *                 example="123456789012345"
+ *             ),
+ *          )
+ *       ),
+ *
+ *      @OA\Response(
+ *            response=201,
+ *            description="Организация успешна создана.",
+ *            @OA\JsonContent(
+ *                @OA\Property(property="data", ref="#/components/schemas/OrganizationResource"),
+ *                @OA\Property(property="message", type="string", example="Create organization."),
+ *            ),
+ *      ),
+ *
+ *       @OA\Response(
+ *            response=400,
+ *            description="Ошибка создания организации.",
+ *            @OA\JsonContent(
+ *                @OA\Property(property="data", example="null"),
+ *                @OA\Property(property="message", type="string", example="Faild create organization."),
+ *            ),
+ *      ),
+ *
+ *
+ *      @OA\Response(
+ *          response=500,
+ *          description="Общая ошибка сервера.",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message_error", type="string", example="Общая ошибка сервера."),
+ *              @OA\Property(property="code", type="integer", example="500"),
+ *          ),
+ *      ),
+ * )
+ */
+class OrganizationController
+{
+
+}

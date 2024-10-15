@@ -61,25 +61,6 @@ use App\Modules\Auth\Domain\Exceptions\Error\ExceptionUnprocessedObject;
  *    @OA\Property(property="longitude", type="number", format="float"),
  * ),
  *
- * @OA\Schema(
- *    schema="OrganizationResource",
- *    title="Json Ресурс Организации",
- *    @OA\Property(property="owner_id", type="integer", format="int64"),
- *    @OA\Property(property="name", type="string"),
- *    @OA\Property(property="address", ref="#/components/schemas/AdressResource"),
- *    @OA\Property(property="website", type="string", format="uri"),
- *    @OA\Property(property="description", type="string"),
- *    @OA\Property(property="industry", type="string"),
- *    @OA\Property(property="founded_date", type="string", format="date"),
- *    @OA\Property(property="phone", type="string"),
- *    @OA\Property(property="email", type="string", format="email"),
- *    @OA\Property(property="remuved", type="boolean"),
- *    @OA\Property(property="type", type="string"),
- *    @OA\Property(property="inn", type="string"),
- *    @OA\Property(property="kpp", type="string"),
- *    @OA\Property(property="registration_number", type="string"),
- *    @OA\Property(property="registration_number_individual", type="string"),
- * ),
  *
  * @OA\Schema(
  *    schema="TransferResource",
@@ -92,6 +73,77 @@ use App\Modules\Auth\Domain\Exceptions\Error\ExceptionUnprocessedObject;
  *    @OA\Property(property="order_total", type="number", format="float"),
  *    @OA\Property(property="description", type="string"),
  *    @OA\Property(property="body_volume", type="number", format="float"),
+ * ),
+ *
+ * @OA\Schema(
+ *   schema="MatrixDistanceResource",
+ *   title="Matrix Distance Resource",
+ *   @OA\Property(property="city_start_gar_id", type="string", format="uuid", description="ID города отправления"),
+ *   @OA\Property(property="city_end_gar_id", type="string", format="uuid", description="ID города назначения"),
+ *   @OA\Property(property="city_name_start", type="string", description="Название города отправления"),
+ *   @OA\Property(property="city_name_end", type="string", description="Название города назначения"),
+ *   @OA\Property(property="distance", type="number", format="float", description="Расстояние между городами в километрах"),
+ * ),
+ *
+ * @OA\Schema(
+ *   schema="RegionEconomicFactorResource",
+ *   title="Ресурс региона",
+ *   @OA\Property(property="id", type="string", format="uuid", description="Уникальный идентификатор региона (UUID)"),
+ *   @OA\Property(property="region_start_gar_id", type="string", format="uuid", description="Значение Гар для области отправления (UUID)"),
+ *   @OA\Property(property="region_end_gar_id", type="string", format="uuid", description="Значение Гар для области прибытия (UUID)"),
+ *   @OA\Property(property="region_name_start", type="string", description="Название области отправления"),
+ *   @OA\Property(property="region_name_end", type="string", description="Название области прибытия"),
+ *   @OA\Property(property="factor", type="number", format="float", description="Коэффициент"),
+ *   @OA\Property(property="price", type="string", format="decimal", description="Цена за 1 км", example="123.45"),
+ * ),
+ *
+ * @OA\Schema(
+ *   schema="OrganizationResource",
+ *   title="Организация",
+ *   description="Информация об организации",
+ *
+ *   @OA\Property(property="name", type="string", description="Название организации", maxLength=101, minLength=2),
+ *   @OA\Property(property="address", type="string", description="Адрес организации", maxLength=255, minLength=12),
+ *   @OA\Property(property="phone", type="string", description="Телефон организации"),
+ *   @OA\Property(property="email", type="string", format="email", description="Email организации", maxLength=100),
+ *   @OA\Property(property="website", type="string", description="Вебсайт организации"),
+ *   @OA\Property(
+ *     property="type",
+ *     type="string",
+ *     description="Тип организации",
+ *     enum={"ooo", "ie"}
+ *   ),
+ *   @OA\Property(property="description", type="string", nullable=true, description="Описание организации"),
+ *   @OA\Property(property="industry", type="string", nullable=true, description="Индустрия организации"),
+ *   @OA\Property(property="founded_date", type="string", format="date", nullable=true, description="Дата основания организации"),
+ *   @OA\Property(property="inn", type="string", description="ИНН организации", pattern="^(([0-9]{12})|([0-9]{10}))?$"),
+ *   @OA\Property(
+ *     property="type_cabinet",
+ *     type="string",
+ *     description="Тип кабинета",
+ *     enum={"Заказчик", "Склад", "Перевозчик"}
+ *   ),
+ *   @OA\Property(
+ *     property="kpp",
+ *     type="string",
+ *     description="КПП (для ООО)",
+ *     pattern="^([0-9]{9})?$",
+ *     nullable=true
+ *   ),
+ *   @OA\Property(
+ *     property="registration_number",
+ *     type="string",
+ *     description="ОГРН (для ООО)",
+ *     pattern="^([0-9]{13})?$",
+ *     nullable=true
+ *   ),
+ *   @OA\Property(
+ *     property="registration_number_individual",
+ *     type="string",
+ *     description="ОГРНИП (для ИП)",
+ *     pattern="^\d{15}$",
+ *     nullable=true
+ *   ),
  * ),
  *
  *

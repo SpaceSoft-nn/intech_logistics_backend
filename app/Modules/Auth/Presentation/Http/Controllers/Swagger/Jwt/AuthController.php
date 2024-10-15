@@ -225,28 +225,6 @@ use App\Modules\Auth\Presentation\Http\Controllers\Controller;
  * ),
  *
  *
- * @OA\Schema(
- *   schema="MatrixDistanceResource",
- *   title="Matrix Distance Resource",
- *   @OA\Property(property="city_start_gar_id", type="string", format="uuid", description="ID города отправления"),
- *   @OA\Property(property="city_end_gar_id", type="string", format="uuid", description="ID города назначения"),
- *   @OA\Property(property="city_name_start", type="string", description="Название города отправления"),
- *   @OA\Property(property="city_name_end", type="string", description="Название города назначения"),
- *   @OA\Property(property="distance", type="number", format="float", description="Расстояние между городами в километрах"),
- * ),
- *
- * @OA\Schema(
- *   schema="RegionEconomicFactorResource",
- *   title="Ресурс региона",
- *   @OA\Property(property="id", type="string", format="uuid", description="Уникальный идентификатор региона (UUID)"),
- *   @OA\Property(property="region_start_gar_id", type="string", format="uuid", description="Значение Гар для области отправления (UUID)"),
- *   @OA\Property(property="region_end_gar_id", type="string", format="uuid", description="Значение Гар для области прибытия (UUID)"),
- *   @OA\Property(property="region_name_start", type="string", description="Название области отправления"),
- *   @OA\Property(property="region_name_end", type="string", description="Название области прибытия"),
- *   @OA\Property(property="factor", type="number", format="float", description="Коэффициент"),
- *   @OA\Property(property="price", type="string", format="decimal", description="Цена за 1 км", example="123.45"),
- * ),
- *
  */
 class AuthController extends Controller
 {

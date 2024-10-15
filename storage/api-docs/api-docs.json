@@ -951,6 +951,192 @@
                 }
             }
         },
+        "/api/organization": {
+            "post": {
+                "tags": [
+                    "Organization"
+                ],
+                "summary": "Создать Organization по авторизированному пользователю",
+                "operationId": "62b63a5f7bac3df8aece9a8efc010a55",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "address",
+                                    "phone",
+                                    "email",
+                                    "website",
+                                    "type",
+                                    "inn",
+                                    "type_cabinet"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of the organization",
+                                        "type": "string",
+                                        "maxLength": 101,
+                                        "minLength": 2,
+                                        "example": "My Company"
+                                    },
+                                    "address": {
+                                        "description": "Address of the organization",
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "minLength": 12,
+                                        "example": "123 Example Street, City, Country"
+                                    },
+                                    "phone": {
+                                        "description": "Contact phone number",
+                                        "type": "string",
+                                        "example": "+1234567890"
+                                    },
+                                    "email": {
+                                        "description": "Contact email",
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 100,
+                                        "example": "contact@example.com"
+                                    },
+                                    "website": {
+                                        "description": "Website URL",
+                                        "type": "string",
+                                        "example": "https://www.example.com"
+                                    },
+                                    "type": {
+                                        "description": "Type of organization, either 'ooo' or 'ie'",
+                                        "type": "string",
+                                        "enum": [
+                                            "ooo",
+                                            "ie"
+                                        ],
+                                        "example": "ooo"
+                                    },
+                                    "description": {
+                                        "description": "Description of the organization",
+                                        "type": "string",
+                                        "example": "A leading company in the industry.",
+                                        "nullable": true
+                                    },
+                                    "industry": {
+                                        "description": "Industry type",
+                                        "type": "string",
+                                        "example": "Technology",
+                                        "nullable": true
+                                    },
+                                    "founded_date": {
+                                        "description": "Date the organization was founded",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2020-01-01",
+                                        "nullable": true
+                                    },
+                                    "inn": {
+                                        "description": "INN number; either 10 or 12 digits",
+                                        "type": "string",
+                                        "pattern": "^(([0-9]{12})|([0-9]{10}))?$",
+                                        "example": "1234567890"
+                                    },
+                                    "type_cabinet": {
+                                        "description": "Тип кабинета",
+                                        "type": "string",
+                                        "enum": [
+                                            "Заказчик",
+                                            "Склад",
+                                            "Перевозчик"
+                                        ]
+                                    },
+                                    "kpp": {
+                                        "description": "KPP number (обязательный параметр когда 'ooo')",
+                                        "type": "string",
+                                        "pattern": "^[0-9]{9}$",
+                                        "example": "123456789",
+                                        "nullable": true
+                                    },
+                                    "registration_number": {
+                                        "description": "OGRN number (обязательный параметр когда 'ooo')",
+                                        "type": "string",
+                                        "pattern": "^[0-9]{13}$",
+                                        "example": "1234567890123",
+                                        "nullable": true
+                                    },
+                                    "registration_number_individual": {
+                                        "description": "OGRNIP number (обязательный параметр когда 'Индивидуальный предприниматель')",
+                                        "type": "string",
+                                        "pattern": "^[0-9]{15}$",
+                                        "example": "123456789012345",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Организация успешна создана.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OrganizationResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Create organization."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка создания организации.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Faild create organization."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/region-economic-status": {
             "get": {
                 "tags": [
@@ -1711,61 +1897,6 @@
                 },
                 "type": "object"
             },
-            "OrganizationResource": {
-                "title": "Json Ресурс Организации",
-                "properties": {
-                    "owner_id": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "address": {
-                        "$ref": "#/components/schemas/AdressResource"
-                    },
-                    "website": {
-                        "type": "string",
-                        "format": "uri"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "industry": {
-                        "type": "string"
-                    },
-                    "founded_date": {
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "phone": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "remuved": {
-                        "type": "boolean"
-                    },
-                    "type": {
-                        "type": "string"
-                    },
-                    "inn": {
-                        "type": "string"
-                    },
-                    "kpp": {
-                        "type": "string"
-                    },
-                    "registration_number": {
-                        "type": "string"
-                    },
-                    "registration_number_individual": {
-                        "type": "string"
-                    }
-                },
-                "type": "object"
-            },
             "TransferResource": {
                 "title": "Ресурс Трансфера",
                 "properties": {
@@ -1801,12 +1932,170 @@
                 },
                 "type": "object"
             },
+            "MatrixDistanceResource": {
+                "title": "Matrix Distance Resource",
+                "properties": {
+                    "city_start_gar_id": {
+                        "description": "ID города отправления",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "city_end_gar_id": {
+                        "description": "ID города назначения",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "city_name_start": {
+                        "description": "Название города отправления",
+                        "type": "string"
+                    },
+                    "city_name_end": {
+                        "description": "Название города назначения",
+                        "type": "string"
+                    },
+                    "distance": {
+                        "description": "Расстояние между городами в километрах",
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "type": "object"
+            },
+            "RegionEconomicFactorResource": {
+                "title": "Ресурс региона",
+                "properties": {
+                    "id": {
+                        "description": "Уникальный идентификатор региона (UUID)",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "region_start_gar_id": {
+                        "description": "Значение Гар для области отправления (UUID)",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "region_end_gar_id": {
+                        "description": "Значение Гар для области прибытия (UUID)",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "region_name_start": {
+                        "description": "Название области отправления",
+                        "type": "string"
+                    },
+                    "region_name_end": {
+                        "description": "Название области прибытия",
+                        "type": "string"
+                    },
+                    "factor": {
+                        "description": "Коэффициент",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "price": {
+                        "description": "Цена за 1 км",
+                        "type": "string",
+                        "format": "decimal",
+                        "example": "123.45"
+                    }
+                },
+                "type": "object"
+            },
+            "OrganizationResource": {
+                "title": "Организация",
+                "description": "Информация об организации",
+                "properties": {
+                    "name": {
+                        "description": "Название организации",
+                        "type": "string",
+                        "maxLength": 101,
+                        "minLength": 2
+                    },
+                    "address": {
+                        "description": "Адрес организации",
+                        "type": "string",
+                        "maxLength": 255,
+                        "minLength": 12
+                    },
+                    "phone": {
+                        "description": "Телефон организации",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email организации",
+                        "type": "string",
+                        "format": "email",
+                        "maxLength": 100
+                    },
+                    "website": {
+                        "description": "Вебсайт организации",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Тип организации",
+                        "type": "string",
+                        "enum": [
+                            "ooo",
+                            "ie"
+                        ]
+                    },
+                    "description": {
+                        "description": "Описание организации",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "industry": {
+                        "description": "Индустрия организации",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "founded_date": {
+                        "description": "Дата основания организации",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true
+                    },
+                    "inn": {
+                        "description": "ИНН организации",
+                        "type": "string",
+                        "pattern": "^(([0-9]{12})|([0-9]{10}))?$"
+                    },
+                    "type_cabinet": {
+                        "description": "Тип кабинета",
+                        "type": "string",
+                        "enum": [
+                            "Заказчик",
+                            "Склад",
+                            "Перевозчик"
+                        ]
+                    },
+                    "kpp": {
+                        "description": "КПП (для ООО)",
+                        "type": "string",
+                        "pattern": "^([0-9]{9})?$",
+                        "nullable": true
+                    },
+                    "registration_number": {
+                        "description": "ОГРН (для ООО)",
+                        "type": "string",
+                        "pattern": "^([0-9]{13})?$",
+                        "nullable": true
+                    },
+                    "registration_number_individual": {
+                        "description": "ОГРНИП (для ИП)",
+                        "type": "string",
+                        "pattern": "^\\d{15}$",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "BearerToken": {
                 "title": "Bearer Token Object",
                 "type": "object",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/TransferResource"
+                        "$ref": "#/components/schemas/OrganizationResource"
                     },
                     {
                         "properties": {
@@ -1832,7 +2121,7 @@
                 "type": "object",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/TransferResource"
+                        "$ref": "#/components/schemas/OrganizationResource"
                     },
                     {
                         "properties": {
@@ -1876,91 +2165,6 @@
                         "type": "object"
                     }
                 ]
-            },
-            "MatrixDistanceResource": {
-                "title": "Matrix Distance Resource",
-                "type": "object",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/TransferResource"
-                    },
-                    {
-                        "properties": {
-                            "city_start_gar_id": {
-                                "description": "ID города отправления",
-                                "type": "string",
-                                "format": "uuid"
-                            },
-                            "city_end_gar_id": {
-                                "description": "ID города назначения",
-                                "type": "string",
-                                "format": "uuid"
-                            },
-                            "city_name_start": {
-                                "description": "Название города отправления",
-                                "type": "string"
-                            },
-                            "city_name_end": {
-                                "description": "Название города назначения",
-                                "type": "string"
-                            },
-                            "distance": {
-                                "description": "Расстояние между городами в километрах",
-                                "type": "number",
-                                "format": "float"
-                            }
-                        },
-                        "type": "object"
-                    }
-                ]
-            },
-            "RegionEconomicFactorResource": {
-                "title": "Ресурс региона",
-                "type": "object",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/TransferResource"
-                    },
-                    {
-                        "properties": {
-                            "id": {
-                                "description": "Уникальный идентификатор региона (UUID)",
-                                "type": "string",
-                                "format": "uuid"
-                            },
-                            "region_start_gar_id": {
-                                "description": "Значение Гар для области отправления (UUID)",
-                                "type": "string",
-                                "format": "uuid"
-                            },
-                            "region_end_gar_id": {
-                                "description": "Значение Гар для области прибытия (UUID)",
-                                "type": "string",
-                                "format": "uuid"
-                            },
-                            "region_name_start": {
-                                "description": "Название области отправления",
-                                "type": "string"
-                            },
-                            "region_name_end": {
-                                "description": "Название области прибытия",
-                                "type": "string"
-                            },
-                            "factor": {
-                                "description": "Коэффициент",
-                                "type": "number",
-                                "format": "float"
-                            },
-                            "price": {
-                                "description": "Цена за 1 км",
-                                "type": "string",
-                                "format": "decimal",
-                                "example": "123.45"
-                            }
-                        },
-                        "type": "object"
-                    }
-                ]
             }
         },
         "securitySchemes": {
@@ -1990,6 +2194,10 @@
         {
             "name": "Order Unit",
             "description": "Order Unit"
+        },
+        {
+            "name": "Organization",
+            "description": "Organization"
         },
         {
             "name": "Region Economic",

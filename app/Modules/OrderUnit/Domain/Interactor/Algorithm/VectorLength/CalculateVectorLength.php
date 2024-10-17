@@ -7,12 +7,12 @@ namespace App\Modules\OrderUnit\Domain\Interactor\Algorithm\VectorLength;
  */
 class calculateVectorLength
 {
-    public function run(float $lat1, float $lon1, float $lat2, float $lon2) : int
+    public function run(float $lat1, float $lon1, float $lat2, float $lon2, int $randomDistance = 0) : int
     {
-        return $this->calculateDistance($lat1, $lon1, $lat2, $lon2);
+        return $this->calculateDistance($lat1, $lon1, $lat2, $lon2, $randomDistance);
     }
 
-    private function calculateDistance(float $lat1, float $lon1, float $lat2, float $lon2) {
+    private function calculateDistance(float $lat1, float $lon1, float $lat2, float $lon2, int $randomDistance = 0) {
         $earthRadius = 6371; // Радиус Земли в километрах
 
         // Преобразование градусов в радианы
@@ -30,6 +30,6 @@ class calculateVectorLength
 
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-        return $earthRadius * $c; // Возвращает расстояние в километрах
+        return ($earthRadius * $c) + $randomDistance; // Возвращает расстояние в километрах
     }
 }

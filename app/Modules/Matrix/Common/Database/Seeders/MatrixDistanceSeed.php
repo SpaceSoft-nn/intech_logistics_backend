@@ -8,6 +8,7 @@ use App\Modules\Matrix\Domain\Models\MatrixDistance;
 use App\Modules\OrderUnit\Domain\Interactor\Algorithm\VectorLength\calculateVectorLength;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class MatrixDistanceSeed extends Seeder
 {
@@ -32,6 +33,9 @@ class MatrixDistanceSeed extends Seeder
     private function createMatrix()
     {
         $orders = OrderUnit::all();
+
+        $faker = Faker::create();
+
 
         foreach ($orders as $order) {
 
@@ -63,7 +67,7 @@ class MatrixDistanceSeed extends Seeder
                 "city_end_gar_id" => $start_fias_id,
                 "city_name_start" => $adress_end->city,
                 "city_name_end" => $adress_start->city,
-                "distance" => $this->calculateDistanceBetweenCities($adress_end->latitude, $adress_end->longitude, $adress_start->latitude, $adress_start->longitude),
+                "distance" => $this->calculateDistanceBetweenCities($adress_end->latitude, $adress_end->longitude, $adress_start->latitude, $adress_start->longitude, $faker->numberBetween(5, 55)),
             ]);
 
         }
@@ -86,11 +90,12 @@ class MatrixDistanceSeed extends Seeder
      * @param float $lot1
      * @param float $lat2
      * @param float $lot2
+     * @param int $randomDistance (по умолчанию 0) Необязательный параметр для добавлению случайного расстояния к актуальному расстоянию
      *
      * @return int
      */
-    private function calculateDistanceBetweenCities(float $lat1, float $lot1, float $lat2, float $lot2) : int
+    private function calculateDistanceBetweenCities(float $lat1, float $lot1, float $lat2, float $lot2, int $randomDistance = 0) : int
     {
-        return $this->calculateVectorLength->run($lat1, $lot1, $lat2, $lot2);
+        return $this->calculateVectorLength->run($lat1, $lot1, $lat2, $lot2, $randomDistance);
     }
 }

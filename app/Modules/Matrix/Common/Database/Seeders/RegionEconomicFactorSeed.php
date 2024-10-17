@@ -12,16 +12,12 @@ use Illuminate\Database\Seeder;
 class RegionEconomicFactorSeed extends Seeder
 {
     protected GARService $garService;
-    protected calculateVectorLength $calculateVectorLength; // Высчитывание расстояние по координатам
-
     public function __construct(
 
         GARService $garService,
-        calculateVectorLength $calculateVectorLength,
 
     ) {
         $this->garService = $garService;
-        $this->calculateVectorLength = $calculateVectorLength;
     }
 
     public function run(): void

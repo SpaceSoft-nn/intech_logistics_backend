@@ -11,7 +11,7 @@ class MatrixDistanceFileSeed extends Seeder
     public function run(): void
     {
         // Путь к CSV файлу
-        $csvFile = database_path('data/matrix_distance.csv');
+        $csvFile = database_path('data/matrix_distance_v2.csv');
 
         // Проверим, существует ли файл
         if (!File::exists($csvFile)) {

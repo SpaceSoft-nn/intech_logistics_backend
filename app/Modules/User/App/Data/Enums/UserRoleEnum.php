@@ -2,8 +2,6 @@
 
 namespace App\Modules\User\App\Data\Enums;
 
-use Exception;
-
 enum UserRoleEnum : string
 {
     case admin = "admin";

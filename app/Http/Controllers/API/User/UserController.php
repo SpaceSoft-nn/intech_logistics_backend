@@ -35,7 +35,7 @@ class UserController
         }])
         ->find($user->id)
         ->personal_areas->first();
-
+        
         //TODO Нужно потом доделать регистрацию при manager и observed в интеракторе
         /**
         *  $userVO->setPersonalArea - устанавливсем значение area_id

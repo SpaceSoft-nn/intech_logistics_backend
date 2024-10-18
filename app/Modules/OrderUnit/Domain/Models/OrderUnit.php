@@ -77,6 +77,11 @@ class OrderUnit extends Model
         return $this->belongsToMany(Transfer::class, 'cargo_unit_transfer', 'cargo_unit_id' , 'transfer_id');
     }
 
+    public function order_units(): BelongsToMany
+    {
+        return $this->belongsToMany(OrderUnit::class, 'order_unit_adress', 'adress_id' , 'order_unit_id');
+    }
+
     public function mgx(): BelongsTo
     {
         return $this->belongsTo(Mgx::class);
@@ -92,13 +97,4 @@ class OrderUnit extends Model
         return $this->belongsTo(Organization::class, 'organization_id');
     }
 
-    public function adress_start(): BelongsTo
-    {
-        return $this->belongsTo(Adress::class, 'adress_start_id');
-    }
-
-    public function adress_end(): BelongsTo
-    {
-        return $this->belongsTo(Adress::class, 'adress_end_id');
-    }
 }

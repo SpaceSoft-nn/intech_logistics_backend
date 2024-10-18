@@ -35,16 +35,15 @@ class OrderUnitFactory extends Factory
 
         {
 
-            $deliveryStart = $this->faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d H:i:s'); // Генерируем дату начала в пределах последнего месяца
-            $daysToAdd = rand(2, 5); // Случайное количество дней от 2 до 5
+            #TODO Удалить если не будет нужно
+            // $deliveryStart = $this->faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d H:i:s'); // Генерируем дату начала в пределах последнего месяца
+            // $daysToAdd = rand(2, 7); // Случайное количество дней от 2 до 5
+
             /**
             * @var OrderUnitVO
             */
             $orderUnitVO = OrderUnitVO::make(
-                delivery_start: (string) $deliveryStart,
-                delivery_end: (new DateTime($deliveryStart))->modify("+{$daysToAdd} days")->format('Y-m-d H:i:s'), // Добавляем случайное количество дней
-                adress_start_id: $adress[0]->id,
-                adress_end_id: $adress[1]->id,
+                end_date: null,
                 body_volume: $this->faker->randomFloat(2, 1, 80),
                 order_total: $this->faker->numberBetween(50000, 275000),
                 description: $this->faker->text(),

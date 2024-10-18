@@ -20,6 +20,10 @@ return [
     App\Modules\Matrix\App\Providers\MatrixServiceProvider::class,
     App\Modules\GAR\App\Providers\GARServiceProvider::class,
 
+
+        #Interactor Service
+    App\Modules\InteractorModules\AdressOrder\App\Providers\AdressOrderServiceProvide::class,
+
         #Auth Service
     App\Modules\Auth\App\Providers\AuthServiceProvider::class,
 ];

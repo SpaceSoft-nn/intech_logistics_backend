@@ -13,15 +13,7 @@ return new class extends Migration
 
             $table->uuid('id')->primary();
 
-            $table->date('delivery_start');
-            $table->date('delivery_end');
-
-            $table->uuid('adress_start_id')
-                ->constrained('adresses')->noActionOnDelete();
-
-            $table->uuid('adress_end_id')
-                ->constrained('adresses')->noActionOnDelete();
-
+            $table->date('end_date_order')->nullable()->comment('До какой даты заказ будет активен');
 
             $table->string('body_volume')->comment('Общий объём заказа');
 
@@ -38,6 +30,10 @@ return new class extends Migration
 
             $table->uuid('organization_id')
                 ->constrained('organizations')->noActionOnDelete();
+
+            $table->boolean('add_load_space')->default(false)->comment('Возможен ли догруз');
+            $table->boolean('change_price')->default(false)->comment('Возможна изменения цены (торг)');
+            $table->boolean('change_time')->default(false)->comment('Возможна Изменение времени');
 
 
             $table->timestamps();

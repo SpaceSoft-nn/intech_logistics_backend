@@ -11,11 +11,13 @@ use Tests\TestCase;
 
 class OrderUnitTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
-    public function test_create_order_uniut_factory()
+    public function test_create_order_unit_factory()
     {
         $orderUnits = OrderUnit::factory()->create();
+
+        dd($orderUnits);
 
         $this->assertNotNull($orderUnits);
     }

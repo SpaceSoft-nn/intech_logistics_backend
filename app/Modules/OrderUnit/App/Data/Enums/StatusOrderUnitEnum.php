@@ -4,6 +4,19 @@ namespace App\Modules\OrderUnit\App\Data\Enums;
 
 enum StatusOrderUnitEnum : string
 {
-    case wait = "В ожидании";
-    case progress = "В процессе";
+
+    case draft = "Черновик"; // Создан в черновике
+
+    case published = "Опубликован"; // Опубликован в общем доступен
+
+    case private = "Закрыт"; //Запревачен (видно не всем)
+
+    case close = "Отозван"; //Снят из общего доступа
+
+    case wait = "В ожидании"; // В Ожидании подразумевает что заказ будет выложен
+
+    case progress = "В процессе"; // В работе
+
+    case delete = "Полностью удален"; // В работе
+
 }

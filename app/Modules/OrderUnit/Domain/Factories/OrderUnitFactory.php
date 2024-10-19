@@ -49,7 +49,7 @@ class OrderUnitFactory extends Factory
                 description: $this->faker->text(),
                 mgx_id: $mgx->id,
                 product_type: $this->faker->word(),
-                order_status: StatusOrderUnitEnum::wait,
+                // order_status: StatusOrderUnitEnum::wait,
                 user_id: $organization->owner_id,
                 organization_id: $organization->id,
             );

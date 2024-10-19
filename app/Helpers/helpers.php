@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
 use App\Modules\User\Domain\Models\User;
+use DateTime;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -71,6 +72,22 @@ if (!function_exists('isAuthorized'))
         return $user;
     }
 }
+
+if (!function_exists('add_time_random'))
+{
+    function add_time_random(DateTime $data_time, int $daysToAdd = null) :  string
+    {
+        // Вычислите конечную дату, добавив количество дней к начальному дню
+        // Вы также можете заменить $daysToAdd на конкретное количество дней или сделать их рандомным значением
+        if(is_null($daysToAdd)) { $daysToAdd = random_int(1, 30); }
+        $deliveryEnd = $data_time->modify("+$daysToAdd days")->format('Y-m-d H:i:s');
+
+        return $deliveryEnd;
+    }
+}
+
+
+
 
 
 

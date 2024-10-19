@@ -5,6 +5,7 @@ namespace App\Modules\InteractorModules\AdressOrder\App\Data\DTO;
 use App\Modules\Adress\Domain\Models\Adress;
 use App\Modules\InteractorModules\AdressOrder\App\Data\Enum\TypeStateAdressEnum;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use Illuminate\Support\Collection;
 
 class OrderToAdressDTO
 {

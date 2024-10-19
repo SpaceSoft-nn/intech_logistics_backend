@@ -3,6 +3,7 @@
 namespace App\Modules\OrderUnit\Domain\Models;
 
 use App\Modules\Adress\Domain\Models\Adress;
+use App\Modules\InteractorModules\AdressOrder\Domain\Models\OrderUnitAddress;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
 use App\Modules\Organization\Domain\Models\Organization;
@@ -61,6 +62,8 @@ class OrderUnit extends Model
         ];
     }
 
+
+
     /**
      * Связь с паллетами многие ко многим
      * @return BelongsToMany
@@ -68,18 +71,21 @@ class OrderUnit extends Model
     public function cargo_units(): BelongsToMany
     {
         #TODO Может быть баг проверить
-        return $this->belongsToMany(CargoUnit::class, 'order_unit_cargo_unit', 'order_unit_id' ,'cargo_unit_id')->withPivot('factor');
+        return $this->belongsToMany(CargoUnit::class, 'order_unit_cargo_unit', 'order_unit_id' , 'cargo_unit_id')->withPivot('factor');
     }
 
     public function transfers(): BelongsToMany
     {
-        #TODO Может быть баг проверить
+        #TODO Может быть баг проверить - нужно ли это тут?
         return $this->belongsToMany(Transfer::class, 'cargo_unit_transfer', 'cargo_unit_id' , 'transfer_id');
     }
 
-    public function order_units(): BelongsToMany
+    public function adresses(): BelongsToMany
     {
-        return $this->belongsToMany(OrderUnit::class, 'order_unit_adress', 'adress_id' , 'order_unit_id');
+        return $this->belongsToMany(Adress::class, 'order_unit_adress', 'order_unit_id' , 'adress_id' )
+            ->using(OrderUnitAddress::class)
+            ->withPivot(['data_time', 'type', 'priority'])
+            ->withTimestamps();
     }
 
     public function mgx(): BelongsTo

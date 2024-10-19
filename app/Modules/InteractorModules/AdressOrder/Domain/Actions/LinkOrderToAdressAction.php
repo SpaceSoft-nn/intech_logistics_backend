@@ -35,15 +35,14 @@ class LinkOrderToAdressAction
         */
         $type_status = $dto->type_status;
 
-        //Сохраняем связь от user к personal area
         $adress->order_units()->syncWithoutDetaching([$order->id => [
             'data_time' => $dto->date,
             'type' => $type_status,
             // 'priority' => опустим, чтобы использовать автоматическое назначение
         ]]);
 
-        dd($adress->order_units);
 
+        return true;
         // try {
 
         //     /**

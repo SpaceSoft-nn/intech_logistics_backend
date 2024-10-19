@@ -15,6 +15,8 @@ use DateTime;
 use Faker\Generator;
 use Illuminate\Database\Seeder;
 
+use function App\Helpers\add_time_random;
+
 class OrderUnitSeeder extends Seeder
 {
 
@@ -38,8 +40,9 @@ class OrderUnitSeeder extends Seeder
 
         $organization = Organization::factory()->create();
 
-        $startData = (new DateTime())->format('Y-m-d');
-        $endData = $this->setTimeEnd($startData);
+        $end_date_order = add_time_random(now(), 4);
+        $startData = add_time_random($end_date_order, 2);
+        $endData = add_time_random($startData);
 
 
         /**
@@ -48,9 +51,11 @@ class OrderUnitSeeder extends Seeder
         $pallet = PalletSpace::factory()->create();
 
         {
+
             //Заказ 1
             $order = OrderUnit::factory()->create([
 
+                'end_date_order' => $end_date_order,
                 "body_volume" => 10,
                 "order_total" => 45000,
                 "description" => $this->faker->text(),
@@ -74,193 +79,317 @@ class OrderUnitSeeder extends Seeder
                     LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[2], $order, TypeStateAdressEnum::coming, $endData));
                 }
 
+            }
+
+        }
+
+        {
+            //Заказ 2
+            $order = OrderUnit::factory()->create([
+
+                "end_date_order" => $end_date_order,
+                "body_volume" => 9,
+                "order_total" => 70000,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+
+            ]);
+
+            //делаем связки через промежуточные таблицы
+            {
+                //с cargo_unit
+                $this->linkOrderAndCargo($order, $pallet);
+
+                //с адрессами(ом)
+                {
+                    //Адресс отбытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[3], $order, TypeStateAdressEnum::sending, $startData));
+
+                    //Адресс прибытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[4], $order, TypeStateAdressEnum::coming, $endData));
+                }
 
             }
 
-            dd($order);
         }
 
-        // {
-        //     //Заказ 2
-        //     $order = OrderUnit::factory()->create([
-        //         "delivery_start" => $startData,
-        //         "delivery_end" => $this->setTimeEnd($startData, 9), // Добавляем случайное количество дней
-        //         "adress_start_id" => $arrayAdress[3]->id,
-        //         "adress_end_id" => $arrayAdress[4]->id,
-        //         "body_volume" => 9,
-        //         "order_total" => 70000,
-        //         "description" => $this->faker->text(),
-        //         "user_id" => $organization->owner_id,
-        //         "organization_id" => $organization->id,
-        //     ]);
+        {
+            //Заказ 3
+            $order = OrderUnit::factory()->create([
+                'end_date_order' => $end_date_order,
+                "body_volume" => 3,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+            ]);
 
-        //     $this->linkOrderAndCargo($order, $pallet);
-        // }
+            //делаем связки через промежуточные таблицы
+            {
+                //с cargo_unit
+                $this->linkOrderAndCargo($order, $pallet);
 
-        // {
-        //     //Заказ 3
-        //     $order = OrderUnit::factory()->create([
-        //         "delivery_start" => $startData,
-        //         "delivery_end" => $this->setTimeEnd($startData, 14), // Добавляем случайное количество дней
-        //         "adress_start_id" => $arrayAdress[5]->id,
-        //         "adress_end_id" => $arrayAdress[6]->id,
-        //         "body_volume" => 3,
-        //         "description" => $this->faker->text(),
-        //         "user_id" => $organization->owner_id,
-        //         "organization_id" => $organization->id,
-        //     ]);
+                //с адрессами(ом)
+                {
+                    //Адресс отбытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[5], $order, TypeStateAdressEnum::sending, $startData));
 
-        //     $this->linkOrderAndCargo($order, $pallet);
-        // }
+                    //Адресс прибытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[6], $order, TypeStateAdressEnum::coming, $endData));
+                }
 
-        // {
-        //     //Заказ 4
-        //     $order = OrderUnit::factory()->create([
-        //         "delivery_start" => $this->setTimeEnd($startData, 1),
-        //         "delivery_end" => $this->setTimeEnd($startData, 9), // Добавляем случайное количество дней
-        //         "adress_start_id" => $arrayAdress[7]->id,
-        //         "adress_end_id" => $arrayAdress[8]->id,
-        //         "body_volume" => 15,
-        //         "order_total" => 120000,
-        //         "description" => $this->faker->text(),
-        //         "user_id" => $organization->owner_id,
-        //         "organization_id" => $organization->id,
-        //     ]);
+            }
+        }
 
-        //     $this->linkOrderAndCargo($order, $pallet);
-        // }
+        {
+            //Заказ 4
+            $order = OrderUnit::factory()->create([
+                'end_date_order' => $end_date_order,
+                "body_volume" => 15,
+                "order_total" => 120000,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
 
-        // {
-        //     //Заказ 5
-        //     $order = OrderUnit::factory()->create([
-        //         "delivery_start" => $startData,
-        //         "delivery_end" => $this->setTimeEnd($startData, 15), // Добавляем случайное количество дней
-        //         "adress_start_id" => $arrayAdress[9]->id,
-        //         "adress_end_id" => $arrayAdress[10]->id,
-        //         "body_volume" => 20,
-        //         "description" => $this->faker->text(),
-        //         "user_id" => $organization->owner_id,
-        //         "organization_id" => $organization->id,
-        //     ]);
+            ]);
 
-        //     $this->linkOrderAndCargo($order, $pallet);
-        // }
+            //делаем связки через промежуточные таблицы
+            {
+                //с cargo_unit
+                $this->linkOrderAndCargo($order, $pallet);
 
-        // {
-        //     //Заказ 6
-        //     $order = OrderUnit::factory()->create([
-        //         "delivery_start" => $this->setTimeEnd($startData, 3),
-        //         "delivery_end" => $this->setTimeEnd($startData, 12), // Добавляем случайное количество дней
-        //         "adress_start_id" => $arrayAdress[11]->id,
-        //         "adress_end_id" => $arrayAdress[12]->id,
-        //         "body_volume" => 31,
-        //         "description" => $this->faker->text(),
-        //         "user_id" => $organization->owner_id,
-        //         "organization_id" => $organization->id,
-        //     ]);
+                //с адрессами(ом)
+                {
+                    //Адресс отбытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[7], $order, TypeStateAdressEnum::sending, $startData));
 
-        //     $this->linkOrderAndCargo($order, $pallet);
-        // }
+                    //Адресс прибытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[8], $order, TypeStateAdressEnum::coming, $endData));
+                }
 
-        // {
-        //     //Заказ 7
-        //     $order = OrderUnit::factory()->create([
-        //         "delivery_start" => $startData,
-        //         "delivery_end" => $this->setTimeEnd($startData, 18), // Добавляем случайное количество дней
-        //         "adress_start_id" => $arrayAdress[13]->id,
-        //         "adress_end_id" => $arrayAdress[14]->id,
-        //         "body_volume" => 12,
-        //         "description" => $this->faker->text(),
-        //         "user_id" => $organization->owner_id,
-        //         "organization_id" => $organization->id,
-        //     ]);
+            }
+        }
 
-        //     $this->linkOrderAndCargo($order, $pallet);
-        // }
+        {
+            //Заказ 5
+            $order = OrderUnit::factory()->create([
+                'end_date_order' => $end_date_order,
+                "body_volume" => 20,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+            ]);
 
-        // {
-        //     //Заказ 8
-        //     $order = OrderUnit::factory()->create([
-        //         "delivery_start" => $this->setTimeEnd($startData, 3),
-        //         "delivery_end" => $this->setTimeEnd($startData, 23), // Добавляем случайное количество дней
-        //         "adress_start_id" => $arrayAdress[15]->id,
-        //         "adress_end_id" => $arrayAdress[16]->id,
-        //         "body_volume" => 4,
-        //         "description" => $this->faker->text(),
-        //         "user_id" => $organization->owner_id,
-        //         "organization_id" => $organization->id,
-        //     ]);
+           //делаем связки через промежуточные таблицы
+            {
+                //с cargo_unit
+                $this->linkOrderAndCargo($order, $pallet);
 
-        //     $this->linkOrderAndCargo($order, $pallet);
-        // }
+                //с адрессами(ом)
+                {
+                    //Адресс отбытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[9], $order, TypeStateAdressEnum::sending, $startData));
 
-        // {
-        //     //Заказ 9
-        //     $order = OrderUnit::factory()->create([
-        //         "delivery_start" => $startData,
-        //         "delivery_end" => $this->setTimeEnd($startData, 25), // Добавляем случайное количество дней
-        //         "adress_start_id" => $arrayAdress[17]->id,
-        //         "adress_end_id" => $arrayAdress[18]->id,
-        //         "body_volume" => 33,
-        //         "description" => $this->faker->text(),
-        //         "user_id" => $organization->owner_id,
-        //         "organization_id" => $organization->id,
-        //     ]);
+                    //Адресс прибытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[10], $order, TypeStateAdressEnum::coming, $endData));
+                }
 
-        //     $this->linkOrderAndCargo($order, $pallet);
-        // }
+            }
+        }
 
-        // {
-        //     //Заказ 10
-        //     $order = OrderUnit::factory()->create([
-        //         "delivery_start" => $startData,
-        //         "delivery_end" => $this->setTimeEnd($startData, 4), // Добавляем случайное количество дней
-        //         "adress_start_id" => $arrayAdress[19]->id,
-        //         "adress_end_id" => $arrayAdress[20]->id,
-        //         "body_volume" => 45,
-        //         "description" => $this->faker->text(),
-        //         "user_id" => $organization->owner_id,
-        //         "organization_id" => $organization->id,
-        //     ]);
+        {
+            //Заказ 6
+            $order = OrderUnit::factory()->create([
+                'end_date_order' => $end_date_order,
+                "body_volume" => 31,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+            ]);
 
-        //     $this->linkOrderAndCargo($order, $pallet);
-        // }
+            //делаем связки через промежуточные таблицы
+            {
+                //с cargo_unit
+                $this->linkOrderAndCargo($order, $pallet);
 
-        // {
-        //     //Заказ 11
-        //     $order = OrderUnit::factory()->create([
-        //         "delivery_start" => $startData,
-        //         "delivery_end" => $this->setTimeEnd($startData, 9), // Добавляем случайное количество дней
-        //         "adress_start_id" => $arrayAdress[21]->id,
-        //         "adress_end_id" => $arrayAdress[22]->id,
-        //         "body_volume" => 25,
-        //         "description" => $this->faker->text(),
-        //         "user_id" => $organization->owner_id,
-        //         "organization_id" => $organization->id,
-        //     ]);
+                //с адрессами(ом)
+                {
+                    //Адресс отбытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[11], $order, TypeStateAdressEnum::sending, $startData));
 
-        //     $this->linkOrderAndCargo($order, $pallet);
-        // }
+                    //Адресс прибытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[12], $order, TypeStateAdressEnum::coming, $endData));
+                }
 
-        // {
-        //     //Заказ 12
-        //     $order = OrderUnit::factory()->create([
-        //         "delivery_start" => $startData,
-        //         "delivery_end" => $this->setTimeEnd($startData, 9), // Добавляем случайное количество дней
-        //         "adress_start_id" => $arrayAdress[23]->id,
-        //         "adress_end_id" => $arrayAdress[24]->id,
-        //         "body_volume" => 17,
-        //         "description" => $this->faker->text(),
-        //         "user_id" => $organization->owner_id,
-        //         "organization_id" => $organization->id,
-        //     ]);
+            }
+        }
 
-        //     $this->linkOrderAndCargo($order, $pallet);
-        // }
+        {
+            //Заказ 7
+            $order = OrderUnit::factory()->create([
+                'end_date_order' => $end_date_order,
+                "body_volume" => 12,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+            ]);
+
+             //делаем связки через промежуточные таблицы
+             {
+                //с cargo_unit
+                $this->linkOrderAndCargo($order, $pallet);
+
+                //с адрессами(ом)
+                {
+                    //Адресс отбытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[13], $order, TypeStateAdressEnum::sending, $startData));
+
+                    //Адресс прибытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[14], $order, TypeStateAdressEnum::coming, $endData));
+                }
+
+            }
+        }
+
+        {
+            //Заказ 8
+            $order = OrderUnit::factory()->create([
+                'end_date_order' => $end_date_order,
+                "body_volume" => 4,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+            ]);
+
+           //делаем связки через промежуточные таблицы
+           {
+            //с cargo_unit
+            $this->linkOrderAndCargo($order, $pallet);
+
+            //с адрессами(ом)
+            {
+                //Адресс отбытия
+                LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[15], $order, TypeStateAdressEnum::sending, $startData));
+
+                //Адресс прибытия
+                LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[16], $order, TypeStateAdressEnum::coming, $endData));
+            }
+
+        }
+        }
+
+        {
+            //Заказ 9
+            $order = OrderUnit::factory()->create([
+                'end_date_order' => $end_date_order,
+                "body_volume" => 33,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+            ]);
+
+             //делаем связки через промежуточные таблицы
+             {
+                //с cargo_unit
+                $this->linkOrderAndCargo($order, $pallet);
+
+                //с адрессами(ом)
+                {
+                    //Адресс отбытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[17], $order, TypeStateAdressEnum::sending, $startData));
+
+                    //Адресс прибытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[18], $order, TypeStateAdressEnum::coming, $endData));
+                }
+
+            }
+        }
+
+        {
+            //Заказ 10
+            $order = OrderUnit::factory()->create([
+                'end_date_order' => $end_date_order,
+                "body_volume" => 45,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+            ]);
+
+            //делаем связки через промежуточные таблицы
+            {
+                //с cargo_unit
+                $this->linkOrderAndCargo($order, $pallet);
+
+                //с адрессами(ом)
+                {
+                    //Адресс отбытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[19], $order, TypeStateAdressEnum::sending, $startData));
+
+                    //Адресс прибытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[20], $order, TypeStateAdressEnum::coming, $endData));
+                }
+
+            }
+        }
+
+        {
+            //Заказ 11
+            $order = OrderUnit::factory()->create([
+                'end_date_order' => $end_date_order,
+                "body_volume" => 25,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+            ]);
+
+            //делаем связки через промежуточные таблицы
+            {
+                //с cargo_unit
+                $this->linkOrderAndCargo($order, $pallet);
+
+                //с адрессами(ом)
+                {
+                    //Адресс отбытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[21], $order, TypeStateAdressEnum::sending, $startData));
+
+                    //Адресс прибытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[22], $order, TypeStateAdressEnum::coming, $endData));
+                }
+
+            }
+        }
+
+        {
+            //Заказ 12
+            $order = OrderUnit::factory()->create([
+                'end_date_order' => $end_date_order,
+                "body_volume" => 17,
+                "description" => $this->faker->text(),
+                "user_id" => $organization->owner_id,
+                "organization_id" => $organization->id,
+            ]);
+
+            //делаем связки через промежуточные таблицы
+            {
+                //с cargo_unit
+                $this->linkOrderAndCargo($order, $pallet);
+
+                //с адрессами(ом)
+                {
+                    //Адресс отбытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[23], $order, TypeStateAdressEnum::sending, $startData));
+
+                    //Адресс прибытия
+                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[24], $order, TypeStateAdressEnum::coming, $endData));
+                }
+
+            }
+        }
 
     }
 
     /**
+     * #TODO Вынести в action
      * Делаем линвку при связи многие ко многим
      * @return [type]
      */
@@ -277,18 +406,6 @@ class OrderUnitSeeder extends Seeder
 
 
         $order->cargo_units()->syncWithoutDetaching($syncData->toArray());
-    }
-
-    private function setTimeEnd($deliveryStart , int $daysToAdd = null)
-    {
-        // Вычислите конечную дату, добавив количество дней к начальному дню
-        // Вы также можете заменить $daysToAdd на конкретное количество дней или сделать их рандомным значением
-        if(is_null($daysToAdd)) { $daysToAdd = random_int(1, 30); }
-        $deliveryEnd = (new DateTime($deliveryStart))
-                         ->modify("+$daysToAdd days")
-                         ->format('Y-m-d H:i:s');
-
-        return $deliveryEnd;
     }
 
 }

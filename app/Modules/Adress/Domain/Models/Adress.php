@@ -20,7 +20,7 @@ class Adress extends Model
         return AdressFactory::new();
     }
 
-    protected $table = 'adresses';
+    protected $table = 'addresses';
 
     protected $fillable = [
 

@@ -21,15 +21,15 @@ class DatabaseSeeder extends Seeder
                 //Нужны первые сиды
             \App\Modules\Adress\Common\Database\Seeders\AdressSeeder::class,
             \App\Modules\OrderUnit\Common\Database\Seeders\OrderUnitSeeder::class,
-            // \App\Modules\Transport\Common\Database\Seeders\TransportSeeder::class,
+            \App\Modules\Transport\Common\Database\Seeders\TransportSeeder::class,
 
                 //Дальше по цепочке сиды - эти сиды вынесены отдельно как склепок БД (Т.к по апи есть ограничение на бесплатные запросы)
             // \App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceSeed::class,
             // \App\Modules\Matrix\Common\Database\Seeders\RegionEconomicFactorSeed::class,
 
                 //Запускаем готовый склепок бд
-            // \App\Modules\Matrix\Common\Database\Seeders\RegionEconomicFactorFileSeed::class,
-            // \App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceFileSeed::class,
+            \App\Modules\Matrix\Common\Database\Seeders\RegionEconomicFactorFileSeed::class,
+            \App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceFileSeed::class,
 
 
         ]);

@@ -29,19 +29,23 @@ class OrderUnit extends Model
 
     protected $fillable = [
 
-        "delivery_start",
-        "delivery_end",
-        "adress_start_id",
-        "adress_end_id",
+
+        "end_date_order",
+
         "body_volume",
         "order_total",
         "description",
         "product_type",
         "order_status",
+
         "user_id",
         "organization_id",
+
         "mgx_id",
-        "body_volume",
+
+        "add_load_space",
+        "change_price",
+        "change_time",
 
     ];
 
@@ -59,6 +63,12 @@ class OrderUnit extends Model
     {
         return [
             'order_status' => StatusOrderUnitEnum::class,
+
+            'end_date_order' => "datetime",
+
+            'add_load_space' => "boolean",
+            'change_price' => "boolean",
+            'change_time' => "boolean",
         ];
     }
 
@@ -80,7 +90,7 @@ class OrderUnit extends Model
         return $this->belongsToMany(Transfer::class, 'cargo_unit_transfer', 'cargo_unit_id' , 'transfer_id');
     }
 
-    public function adresses(): BelongsToMany
+    public function addresses(): BelongsToMany
     {
         return $this->belongsToMany(Adress::class, 'order_unit_adress', 'order_unit_id' , 'adress_id' )
             ->using(OrderUnitAddress::class)

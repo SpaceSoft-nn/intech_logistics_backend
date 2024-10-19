@@ -37,7 +37,6 @@ final class VectorMoventTrue
     private function startLogic(OrderUnit $mainVector, Collection $otherVector) : array
     {
 
-
         $result = $otherVector->map(function ($item) use ($mainVector)  {
 
             // Это наш коллбэк, который определяет, нужно ли возвращать элемент или нет
@@ -48,6 +47,7 @@ final class VectorMoventTrue
             return null;
 
         })->filter()->all();
+
 
         return $result;
     }

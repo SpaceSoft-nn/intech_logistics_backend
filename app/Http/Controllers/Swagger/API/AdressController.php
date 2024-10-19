@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 /**
  * @OA\POST(
  *
- *      path="/api/adresses",
+ *      path="/api/addresses",
  *      summary="Создать запись adress",
  *      tags={"Adress"},
  *
@@ -61,7 +61,7 @@ use App\Http\Controllers\Controller;
  *
  * @OA\GET(
  *
- *      path="/api/adresses",
+ *      path="/api/addresses",
  *      summary="Вернуть запись по id",
  *      tags={"Adress"},
  *

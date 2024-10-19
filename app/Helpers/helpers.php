@@ -75,8 +75,10 @@ if (!function_exists('isAuthorized'))
 
 if (!function_exists('add_time_random'))
 {
-    function add_time_random(DateTime $data_time, int $daysToAdd = null) :  string
+    function add_time_random(DateTime|string $data_time, int $daysToAdd = null) :  string
     {
+        if(is_string($data_time)) { $data_time =  new DateTime($data_time); }
+
         // Вычислите конечную дату, добавив количество дней к начальному дню
         // Вы также можете заменить $daysToAdd на конкретное количество дней или сделать их рандомным значением
         if(is_null($daysToAdd)) { $daysToAdd = random_int(1, 30); }

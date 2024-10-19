@@ -2,6 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Interactor\Algorithm\VectroMovent\Azimut;
 
+use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Interface\Algorithm\IVectorMoventAlgorithm;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Illuminate\Support\Collection;
@@ -11,6 +12,12 @@ use Illuminate\Support\Collection;
  */
 final class AzimutAlgorithmVectorMovent implements IVectorMoventAlgorithm
 {
+
+
+    public function __construct(
+        private OrderUnitRepository $repOrdeUnit,
+    ) { }
+
 
     public function run(OrderUnit $mainVector, OrderUnit $otherVector) : bool
     {
@@ -81,17 +88,20 @@ final class AzimutAlgorithmVectorMovent implements IVectorMoventAlgorithm
 
     /**
      * Мапим из модели в массив координат
-     * @param OrderUnit $mainVector
+     * @param OrderUnit $mainVector - Это наш вектор движение или другими словами Order
      *
      * @return Collection
     */
     private function mappingVectorCordinatToArray(OrderUnit $otherOrder) : Collection
     {
+
+
+
         /**
         * @var Adress
         */
-        $adressStart = $otherOrder->adress_start;
-        $adressEnd = $otherOrder->adress_end;
+        $adressStart = $this->repOrdeUnit->firstPivotPriorityAdress($otherOrder);
+        $adressEnd = $this->repOrdeUnit->lastPivotPriorityAdress($otherOrder);
 
         return collect([
             [$adressStart->latitude, $adressStart->longitude],

@@ -44,8 +44,8 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 });
 
     //Adress
-Route::get('/adresses', [AdressController:: class, 'get']);
-Route::post('/adresses', [AdressController:: class, 'create']);
+Route::get('/addresses', [AdressController:: class, 'get']);
+Route::post('/addresses', [AdressController:: class, 'create']);
 
     //orderUnit
 Route::get('/orders', [OrderUnitController:: class, 'get']);

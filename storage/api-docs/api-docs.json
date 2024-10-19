@@ -6,7 +6,7 @@
     },
     "paths": {
         "/api/swagger": {},
-        "/api/adresses": {
+        "/api/addresses": {
             "get": {
                 "tags": [
                     "Adress"

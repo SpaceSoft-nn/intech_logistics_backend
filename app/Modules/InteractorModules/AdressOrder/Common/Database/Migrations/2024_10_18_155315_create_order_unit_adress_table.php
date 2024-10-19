@@ -19,7 +19,7 @@ return new class extends Migration
                 ->constrained('order_units')->noActionOnDelete();
 
             $table->uuid('adress_id')
-                ->constrained('adresses')->noActionOnDelete();
+                ->constrained('addresses')->noActionOnDelete();
 
             $table->date('data_time');
 

@@ -6,6 +6,7 @@ use App\Modules\Adress\Domain\Models\Adress;
 use App\Modules\InteractorModules\AdressOrder\App\Data\DTO\OrderToAdressDTO;
 use App\Modules\InteractorModules\AdressOrder\App\Data\Enum\TypeStateAdressEnum;
 use App\Modules\InteractorModules\AdressOrder\Domain\Actions\LinkOrderToAdressAction;
+use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoUnitAction;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 use App\Modules\OrderUnit\Domain\Models\Mgx;
@@ -66,13 +67,14 @@ class OrderUnitTest extends TestCase
         LinkOrderToAdressAction::run(OrderToAdressDTO::make($adress[0], $orderUnit, TypeStateAdressEnum::sending, add_time_random(now(), 0) ));
         LinkOrderToAdressAction::run(OrderToAdressDTO::make($adress[1], $orderUnit, TypeStateAdressEnum::coming, add_time_random(now(), 7) ));
 
+
         // Проверяем, что коллекция не null
-        $this->assertNotNull($orderUnit->adresses->toArray(), 'Коллекция OrderUnit не должна быть null.');
+        $this->assertNotNull($orderUnit->addresses->toArray(), 'Коллекция OrderUnit не должна быть null.');
 
         // Проверяем, что это экземпляр Illuminate\Support\Collection
-        $this->assertInstanceOf(Collection::class, $orderUnit->adresses, 'OrderUnit должна быть коллекцией.');
+        $this->assertInstanceOf(Collection::class, $orderUnit->addresses, 'OrderUnit должна быть коллекцией.');
 
         // Проверяем, что в коллекции ровно 2 элемента
-        $this->assertCount(2, $orderUnit->adresses->toArray(), 'Коллекция OrderUnit должна содержать ровно 2 элемента.');
+        $this->assertCount(2, $orderUnit->addresses->toArray(), 'Коллекция OrderUnit должна содержать ровно 2 элемента.');
     }
 }

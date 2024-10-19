@@ -41,6 +41,13 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OredUnitResource::make($order), 'Return Orders.'), 200);
     }
 
+    /**
+     * Поиск входящих векторов относительно главного вектора (заказа)
+     * @param OrderUnitAlgorithmRequest $request
+     * @param CoordinateCheckerInteractor $coordinator
+     *
+     * @return [type]
+     */
     public function algorithm(OrderUnitAlgorithmRequest $request, CoordinateCheckerInteractor $coordinator)
     {
 
@@ -62,7 +69,7 @@ class OrderUnitController extends Controller
 
         //Вызываем логику работу поиска точек в прямоугольнике
         $rectangle = $coordinator->run($orderMain , $orders);
-
+    
         return response()->json(array_success(OredUnitCollection::make($orders->find($rectangle)->values()->all()), 'Возвращены все заказы входящие в область, главного заказа.'), 200);
     }
 

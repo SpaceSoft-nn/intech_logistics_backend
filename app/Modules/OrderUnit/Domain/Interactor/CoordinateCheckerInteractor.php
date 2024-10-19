@@ -3,6 +3,7 @@
 namespace App\Modules\OrderUnit\Domain\Interactor;
 
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\RentagleArrayVO;
+use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Interactor\Algorithm\VectroMovent\VectorMoventTrue;
 use App\Modules\OrderUnit\Domain\Interface\Trait\Algorithm\CalculateBearingTrait;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
@@ -24,6 +25,7 @@ final class CoordinateCheckerInteractor
 
     public function __construct(
         public VectorMoventTrue $vectorMov,
+        public OrderUnitRepository $repOrderUnit,
     ) { }
 
 
@@ -80,7 +82,10 @@ final class CoordinateCheckerInteractor
      */
     private function checkCoordinatesInRectangle(RentagleArrayVO $sortPoint, Collection $orders) : array
     {
+
         $rentagle = $this->buildingRectangle($sortPoint->startLat, $sortPoint->startLng, $sortPoint->endLat, $sortPoint->endLng);
+
+        $vectors = $this->mappingArrayCollection($orders);
 
         try {
             $vectors = $this->mappingArrayCollection($orders);
@@ -88,6 +93,7 @@ final class CoordinateCheckerInteractor
             Mylog("Ошибка в алгоритме OrderUnit Algorithm, при маппинге Collection");
             throw new Exception("Ошибка на стороне сервера", 500);
         }
+
 
         $result = $this->checkCoordinatesInRectangleInner($vectors , $rentagle);
 
@@ -100,10 +106,13 @@ final class CoordinateCheckerInteractor
         //подготавливаем наш массив к функции
         $cordinstes = $orders->flatMap(function($order) {
 
+            $adress_start = $this->repOrderUnit->firstPivotPriorityAdress($order);
+            $adress_end =  $this->repOrderUnit->lastPivotPriorityAdress($order);
+
             return [
                 $order->id => [
-                    ['lat' => $order->adress_start->latitude , 'lng' => $order->adress_start->longitude],
-                    ['lat' => $order->adress_end->latitude , 'lng' => $order->adress_end->longitude],
+                    ['lat' => $adress_start->latitude , 'lng' => $adress_start->longitude],
+                    ['lat' => $adress_end->latitude , 'lng' => $adress_end->longitude],
                 ]
             ];
 

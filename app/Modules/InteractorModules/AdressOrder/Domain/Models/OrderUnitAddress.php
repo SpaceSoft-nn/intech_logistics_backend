@@ -24,6 +24,7 @@ class OrderUnitAddress extends Pivot
 
     protected $casts = [
         'type' => TypeStateAdressEnum::class,
+        'priority' => 'integer',
     ];
 
     /**

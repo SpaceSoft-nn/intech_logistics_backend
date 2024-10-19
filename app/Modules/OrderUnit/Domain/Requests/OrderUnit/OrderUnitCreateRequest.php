@@ -17,8 +17,8 @@ class OrderUnitCreateRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            "start_adress_id" => ['required', 'uuid', "exists:adresses,id"],
-            "end_adress_id" => ['required', 'uuid', "exists:adresses,id"],
+            "start_adress_id" => ['required', 'uuid', "exists:addresses,id"],
+            "end_adress_id" => ['required', 'uuid', "exists:addresses,id"],
         ];
     }
 

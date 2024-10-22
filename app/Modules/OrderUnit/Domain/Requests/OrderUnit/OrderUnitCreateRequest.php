@@ -3,7 +3,7 @@
 namespace App\Modules\OrderUnit\Domain\Requests\OrderUnit;
 
 use App\Modules\Base\Requests\ApiRequest;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnitVO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use Illuminate\Validation\Rule;

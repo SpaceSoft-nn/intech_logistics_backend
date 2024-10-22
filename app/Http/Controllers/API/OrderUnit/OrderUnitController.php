@@ -3,19 +3,23 @@
 namespace App\Http\Controllers\API\OrderUnit;
 
 use App\Http\Controllers\Controller;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnitVO;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitCreate;
+use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdate;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitSelectPriceRequest;
+use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitUpdateRequest;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderPriceResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OredUnitCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OredUnitResource;
 use Illuminate\Http\Request;
 
+use function App\Helpers\array_error;
 use function App\Helpers\array_success;
 
 class OrderUnitController extends Controller
@@ -64,10 +68,25 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OredUnitResource::make($order), 'Return create Order.'), 201);
     }
 
-    public function update(Request $request)
+    public function update(OrderUnit $orderUnit, OrderUnitUpdateRequest $request)
     {
-        dd(5);
+        $validated = $request->validated();
+
+        $status = OrderUnitUpdate::make(
+            OrderUnitUpdateDTO::make(
+                order: $orderUnit,
+                change_price: $validated['change_price'] ?? null,
+                change_time: $validated['change_time'] ?? null,
+                order_status: $validated['order_status'] ?? null,
+            )
+        );
+
+        return ($status)
+            ? response()->json(array_success(null, 'Update order successfully.'), 200)
+            : response()->json(array_error(null, 'Update order error.'), 404);
+
     }
+
 
 
     /**
@@ -80,7 +99,7 @@ class OrderUnitController extends Controller
     public function algorithm(OrderUnitAlgorithmRequest $request, CoordinateCheckerInteractor $coordinator)
     {
 
-        $orders = OrderUnit::all()->where("order_status", StatusOrderUnitEnum::wait);
+        $orders = OrderUnit::all()->where("order_status", StatusOrderUnitEnum::draft);
 
         {
             $orderMain = $orders->where('id', $request['main_order'])->first();

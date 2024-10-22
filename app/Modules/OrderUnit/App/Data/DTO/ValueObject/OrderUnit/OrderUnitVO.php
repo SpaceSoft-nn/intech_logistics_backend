@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject;
+namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;

@@ -51,7 +51,7 @@ Route::post('/addresses', [AdressController:: class, 'create']);
 Route::get('/orders', [OrderUnitController:: class, 'get']);
 Route::post('/orders', [OrderUnitController:: class, 'create']);
 Route::post('/orders/select-price', [OrderUnitController:: class, 'selectPrice']);
-Route::patch('/orders', [OrderUnitController:: class, 'update']);
+Route::patch('/orders/{orderUnit}', [OrderUnitController:: class, 'update'])->whereUuid('orderUnit');
 Route::get('/orders/algorithm', [OrderUnitController:: class, 'algorithm']);
 
     //transfer

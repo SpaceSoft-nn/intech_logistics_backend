@@ -17,7 +17,6 @@ class OrderUnitVO implements Arrayable
         public readonly string $order_total,
         public readonly string $description,
         public readonly string $organization_id,
-        public readonly string $mgx_id,
         public ?string $end_date,
         public ?string $product_type,
         public ?StatusOrderUnitEnum $order_status,
@@ -32,7 +31,6 @@ class OrderUnitVO implements Arrayable
         string $order_total,
         string $description,
         string $organization_id,
-        string $mgx_id,
         ?string $end_date = null,
         ?string $product_type = null,
         ?StatusOrderUnitEnum $order_status = null,
@@ -45,7 +43,6 @@ class OrderUnitVO implements Arrayable
             body_volume: $body_volume,
             order_total: $order_total,
             description: $description,
-            mgx_id: $mgx_id,
             end_date: $end_date,
             product_type: $product_type,
             order_status: $order_status,
@@ -69,7 +66,6 @@ class OrderUnitVO implements Arrayable
             "order_status" => $this->order_status,
             "user_id" => $this->user_id,
             "organization_id" => $this->organization_id,
-            "mgx_id" => $this->mgx_id,
 
         ];
     }

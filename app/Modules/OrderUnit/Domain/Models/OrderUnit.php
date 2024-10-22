@@ -43,9 +43,6 @@ class OrderUnit extends Model
 
         "mgx_id",
 
-        "add_load_space",
-        "change_price",
-        "change_time",
 
     ];
 
@@ -53,6 +50,10 @@ class OrderUnit extends Model
         'id',
         'created_at',
         'updated_at',
+
+        "add_load_space",
+        "change_price",
+        "change_time",
     ];
 
     protected $hidden = [

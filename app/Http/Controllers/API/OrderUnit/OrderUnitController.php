@@ -29,17 +29,22 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OredUnitCollection::make($order), 'Return Orders.'), 200);
     }
 
-    public function create(OrderUnitCreateRequest $request)
+    public function preCreate(OrderUnitCreateRequest $request)
     {
         $validated = $request->validated();
 
-        $order = OrderUnit::factory()->create([
-            "adress_start_id" => $validated['start_adress_id'],
-            "adress_end_id" => $validated['end_adress_id'],
-        ]);
+        dd($validated, 1);
+
+
+        // $order = OrderUnit::factory()->create([
+        //     "adress_start_id" => $validated['start_adress_id'],
+        //     "adress_end_id" => $validated['end_adress_id'],
+        // ]);
 
         return response()->json(array_success(OredUnitResource::make($order), 'Return Orders.'), 200);
     }
+
+    
 
     /**
      * Поиск входящих векторов относительно главного вектора (заказа)
@@ -69,7 +74,7 @@ class OrderUnitController extends Controller
 
         //Вызываем логику работу поиска точек в прямоугольнике
         $rectangle = $coordinator->run($orderMain , $orders);
-    
+
         return response()->json(array_success(OredUnitCollection::make($orders->find($rectangle)->values()->all()), 'Возвращены все заказы входящие в область, главного заказа.'), 200);
     }
 

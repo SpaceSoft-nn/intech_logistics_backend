@@ -23,11 +23,8 @@ class OrderUnitFactory extends Factory
         */
         $organization = Organization::factory()->create();
 
-        /**
-        * @var \App\Models\Adress[] $adress
-        */
-        $adress = Adress::factory()->count(2)->create();
 
+        #TODP Реализовать создание mgx
         /**
          * @var Mgx
         */
@@ -47,12 +44,12 @@ class OrderUnitFactory extends Factory
                 body_volume: $this->faker->randomFloat(2, 1, 80),
                 order_total: $this->faker->numberBetween(50000, 275000),
                 description: $this->faker->text(),
-                mgx_id: $mgx->id,
                 product_type: $this->faker->word(),
                 // order_status: StatusOrderUnitEnum::wait,
                 user_id: $organization->owner_id,
                 organization_id: $organization->id,
             );
+
         }
 
 

@@ -18,12 +18,12 @@ return new class extends Migration
             $table->string('body_volume')->comment('Общий объём заказа');
 
             $table->string('order_total')->comment('Цена/Выплата за заказ');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('product_type')->nullable()->comment('Тип товара');
 
             // $table->string('order_status')->nullable()->comment('Заказ: в ожидании, в процессе, в обработке, удален, выполнен');
 
-            $table->uuid('mgx_id')->unique()->constrained('mgxs')->onDelete('cascade')->comment('Ссылку на таблицу с Массо-габаритными-характеристиками');
+            // $table->uuid('mgx_id')->unique()->constrained('mgxs')->onDelete('cascade')->comment('Ссылку на таблицу с Массо-габаритными-характеристиками');
 
             $table->uuid('user_id')
                 ->nullable()

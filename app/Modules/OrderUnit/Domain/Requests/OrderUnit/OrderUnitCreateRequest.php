@@ -17,10 +17,21 @@ class OrderUnitCreateRequest extends ApiRequest
     public function rules(): array
     {
         return [
+
             "start_adress_id" => ['required', 'uuid', "exists:addresses,id"],
             "end_adress_id" => ['required', 'uuid', "exists:addresses,id"],
+            "organization_id" => ['required', 'uuid', "exists:organizations,id"],
+
+            "end_date_order" => ['required', 'date'], //Дата окончание order
+
+            "product_type" => ['required', 'string', 'max:255'], //Тип продукта
+            "body_volume" => ['required', 'numeric', 'min:1'], //Объём продукта
+
+            "description" => ['nullable', 'string', 'max:1000'], //Описание
+
         ];
     }
+
 
 
 }

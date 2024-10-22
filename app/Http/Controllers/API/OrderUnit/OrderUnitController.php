@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\API\OrderUnit;
 
 use App\Http\Controllers\Controller;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
+use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitCreate;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
+use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitSelectPriceRequest;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderPriceResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OredUnitCollection;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OredUnitResource;
 use Illuminate\Http\Request;
 
 use function App\Helpers\array_success;
@@ -29,10 +33,9 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OredUnitCollection::make($order), 'Return Orders.'), 200);
     }
 
-    public function preCreate(OrderUnitCreateRequest $request)
+    public function selectPrice(OrderUnitSelectPriceRequest $request)
     {
         $validated = $request->validated();
-
         // dd($validated, 1);
 
 
@@ -42,9 +45,23 @@ class OrderUnitController extends Controller
         // ]);
 
         //TODO Нужна логика высчитывание цены в зависимости от заказа
-        $order = "test";
+        $test = "test";
 
-        return response()->json(array_success(OrderPriceResource::make($order), 'Return Orders.'), 200);
+        return response()->json(array_success(OrderPriceResource::make($test), 'Return Select Price.'), 200);
+    }
+
+    public function create(OrderUnitCreateRequest $request)
+    {
+        /**
+        * @var OrderUnitVO
+        */
+        $orderUnitVO = $request->getValueObject();
+
+
+        $order = OrderUnitCreate::make($orderUnitVO);
+
+
+        return response()->json(array_success(OredUnitResource::make($order), 'Return create Order.'), 201);
     }
 
 

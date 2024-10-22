@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('product_type')->nullable()->comment('Тип товара');
 
+            $table->string('type_load_truck')->comment('Тип загрузки трака: LTL, FTL, Custom...');
+
             // $table->string('order_status')->nullable()->comment('Заказ: в ожидании, в процессе, в обработке, удален, выполнен');
 
             // $table->uuid('mgx_id')->unique()->constrained('mgxs')->onDelete('cascade')->comment('Ссылку на таблицу с Массо-габаритными-характеристиками');

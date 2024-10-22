@@ -23,6 +23,8 @@ class OrganizationFactory extends Factory
         */
         $user = User::factory()->create();
 
+        #TODO Соединение с таблице через связь многие ко многим нету.
+
         /**
         * @var OrganizationVO
         */

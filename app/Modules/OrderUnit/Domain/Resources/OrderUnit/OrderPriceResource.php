@@ -15,8 +15,17 @@ class OrderPriceResource extends JsonResource
         $faker = Faker::create();
 
         return [
-            TypeLoadingTruckMethod::ftl->value => $faker->numberBetween(45000, 300000),
-            TypeLoadingTruckMethod::ltl->value => $faker->numberBetween(35000, 190000),
+
+            "FTL" => [
+                "value" => TypeLoadingTruckMethod::ftl->value,
+                "price" => $faker->numberBetween(45000, 300000),
+            ],
+
+            "LTL" => [
+                "value" => TypeLoadingTruckMethod::ltl->value,
+                "price" => $faker->numberBetween(35000, 190000),
+            ]
+
         ];
     }
 }

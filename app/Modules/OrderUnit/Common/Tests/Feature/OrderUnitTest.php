@@ -11,6 +11,7 @@ use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoUnitAction;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 use App\Modules\OrderUnit\Domain\Models\Mgx;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\Organization\Domain\Models\Organization;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
@@ -76,5 +77,63 @@ class OrderUnitTest extends TestCase
 
         // Проверяем, что в коллекции ровно 2 элемента
         $this->assertCount(2, $orderUnit->addresses->toArray(), 'Коллекция OrderUnit должна содержать ровно 2 элемента.');
+    }
+
+    public function test_create_order_endpoint()
+    {
+
+        $adress = Adress::factory()->count(2)->create();
+
+        $organization = Organization::factory()->create();
+
+        // Данные для POST-запроса
+        $postData = [
+            "start_adress_id" => $adress[0]->id,
+            "end_adress_id" => $adress[1]->id,
+            "organization_id" =>  $organization->id,
+
+            "end_date_order" => "25.10.2024",
+
+            "product_type" => "Кукуруза",
+            "body_volume" => "60",
+
+            "type_load_truck" => "ltl",
+            "order_total" => "10000",
+
+            "description" => "9d3476dc-d456-4960-a227-6d7fd3facc2e"
+        ];
+
+        // Отправляем POST-запрос на ваш endpoint
+        $response = $this->post('/api/orders', $postData);
+
+
+        // Проверяем, что статус ответа 200 OK
+        $response->assertStatus(201);
+
+        // Например, проверяем, что массив содержит конкретные ключи
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'body_volume',
+                'order_total',
+                'type_load_truck',
+                'end_date_order',
+                'add_load_space',
+                'change_price',
+                'change_time',
+                'description',
+                'product_type',
+                'order_status',
+                'user_id',
+            ],
+            'message'
+        ]);
+
+
+        // Проверка наличия заказа в базе данных
+        $this->assertDatabaseHas('order_units', [
+            'id' => $response->decodeResponseJson()['data']['id'],
+        ]);
+
     }
 }

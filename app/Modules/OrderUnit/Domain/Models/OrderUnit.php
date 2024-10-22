@@ -5,6 +5,7 @@ namespace App\Modules\OrderUnit\Domain\Models;
 use App\Modules\Adress\Domain\Models\Adress;
 use App\Modules\InteractorModules\AdressOrder\Domain\Models\OrderUnitAddress;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
+use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transfer\Domain\Models\Transfer;
@@ -29,13 +30,14 @@ class OrderUnit extends Model
 
     protected $fillable = [
 
-
         "end_date_order",
 
         "body_volume",
         "order_total",
         "description",
+
         "product_type",
+        "type_load_truck",
         "order_status",
 
         "user_id",
@@ -43,6 +45,7 @@ class OrderUnit extends Model
 
         "mgx_id",
 
+        "add_load_space",
 
     ];
 
@@ -51,7 +54,6 @@ class OrderUnit extends Model
         'created_at',
         'updated_at',
 
-        "add_load_space",
         "change_price",
         "change_time",
     ];
@@ -63,6 +65,9 @@ class OrderUnit extends Model
     protected function casts(): array
     {
         return [
+
+            "type_load_truck" => TypeLoadingTruckMethod::class,
+
             'order_status' => StatusOrderUnitEnum::class,
 
             'end_date_order' => "datetime",

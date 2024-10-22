@@ -49,7 +49,8 @@ Route::post('/addresses', [AdressController:: class, 'create']);
 
     //orderUnit
 Route::get('/orders', [OrderUnitController:: class, 'get']);
-Route::post('/orders', [OrderUnitController:: class, 'preCreate']);
+Route::post('/orders', [OrderUnitController:: class, 'create']);
+Route::post('/orders/select-price', [OrderUnitController:: class, 'selectPrice']);
 Route::get('/orders/algorithm', [OrderUnitController:: class, 'algorithm']);
 
     //transfer

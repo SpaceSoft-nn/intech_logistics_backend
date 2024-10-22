@@ -3,12 +3,8 @@
 namespace App\Modules\OrderUnit\Domain\Requests\OrderUnit;
 
 use App\Modules\Base\Requests\ApiRequest;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnitVO;
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
-use Illuminate\Validation\Rule;
 
-class OrderUnitCreateRequest extends ApiRequest
+class OrderUnitSelectPriceRequest extends ApiRequest
 {
 
     protected $stopOnFirstFailure = true;
@@ -20,10 +16,6 @@ class OrderUnitCreateRequest extends ApiRequest
 
     public function rules(): array
     {
-
-        // Получаем названия всех кейсов
-        $type = array_column(TypeLoadingTruckMethod::cases(), 'name');
-
         return [
 
             "start_adress_id" => ['required', 'uuid', "exists:addresses,id"],
@@ -35,21 +27,8 @@ class OrderUnitCreateRequest extends ApiRequest
             "product_type" => ['required', 'string', 'max:255'], //Тип продукта
             "body_volume" => ['required', 'numeric', 'min:1'], //Объём продукта
 
-            "type_load_truck" => ['required', Rule::in($type)],
-
-            "order_total" => ['required', 'numeric'], //Цена #TODO цена может быть в копейках предусмотреть работу с ценой в laravel
-
             "description" => ['nullable', 'string', 'max:1000'], //Описание
-
         ];
-    }
-
-    /**
-    * @return UserVO
-    */
-    public function getValueObject(): OrderUnitVO
-    {
-        return OrderUnitVO::fromArrayToObject($this->validated());
     }
 
 }

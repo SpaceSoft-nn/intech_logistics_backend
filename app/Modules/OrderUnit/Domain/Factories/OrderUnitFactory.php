@@ -5,6 +5,7 @@ namespace App\Modules\OrderUnit\Domain\Factories;
 use App\Modules\Adress\Domain\Models\Adress;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
+use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Models\Mgx;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
@@ -40,7 +41,8 @@ class OrderUnitFactory extends Factory
             * @var OrderUnitVO
             */
             $orderUnitVO = OrderUnitVO::make(
-                end_date: null,
+                end_date_order: now(),
+                type_load_truck: $this->faker->randomElement(['ltl', 'ftl', 'custom']),
                 body_volume: $this->faker->randomFloat(2, 1, 80),
                 order_total: $this->faker->numberBetween(50000, 275000),
                 description: $this->faker->text(),

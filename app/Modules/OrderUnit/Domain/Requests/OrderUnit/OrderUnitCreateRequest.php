@@ -28,7 +28,6 @@ class OrderUnitCreateRequest extends ApiRequest
             "body_volume" => ['required', 'numeric', 'min:1'], //Объём продукта
 
             "description" => ['nullable', 'string', 'max:1000'], //Описание
-
         ];
     }
 

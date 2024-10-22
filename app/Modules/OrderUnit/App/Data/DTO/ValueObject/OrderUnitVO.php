@@ -21,6 +21,9 @@ class OrderUnitVO implements Arrayable
         public ?string $product_type,
         public ?StatusOrderUnitEnum $order_status,
         public ?string $user_id,
+        public ?bool $add_load_space,
+        public ?bool $change_price,
+        public ?bool $change_time,
 
     ) {}
 
@@ -35,6 +38,9 @@ class OrderUnitVO implements Arrayable
         ?string $product_type = null,
         ?StatusOrderUnitEnum $order_status = null,
         ?string $user_id = null,
+        ?bool $add_load_space,
+        ?bool $change_price,
+        ?bool $change_time,
 
     ) : self {
 
@@ -48,6 +54,9 @@ class OrderUnitVO implements Arrayable
             order_status: $order_status,
             user_id: $user_id,
             organization_id: $organization_id,
+            add_load_space: $add_load_space,
+            change_price: $change_price,
+            change_time: $change_time,
 
         );
 
@@ -66,6 +75,9 @@ class OrderUnitVO implements Arrayable
             "order_status" => $this->order_status,
             "user_id" => $this->user_id,
             "organization_id" => $this->organization_id,
+            "add_load_space" => $this->add_load_space,
+            "change_price" => $this->change_price,
+            "change_time" => $this->change_time,
 
         ];
     }

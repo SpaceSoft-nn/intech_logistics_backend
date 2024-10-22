@@ -8,8 +8,8 @@ use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderPriceResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OredUnitCollection;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OredUnitResource;
 use Illuminate\Http\Request;
 
 use function App\Helpers\array_success;
@@ -33,7 +33,7 @@ class OrderUnitController extends Controller
     {
         $validated = $request->validated();
 
-        dd($validated, 1);
+        // dd($validated, 1);
 
 
         // $order = OrderUnit::factory()->create([
@@ -41,10 +41,13 @@ class OrderUnitController extends Controller
         //     "adress_end_id" => $validated['end_adress_id'],
         // ]);
 
-        return response()->json(array_success(OredUnitResource::make($order), 'Return Orders.'), 200);
+        //TODO Нужна логика высчитывание цены в зависимости от заказа
+        $order = "test";
+
+        return response()->json(array_success(OrderPriceResource::make($order), 'Return Orders.'), 200);
     }
 
-    
+
 
     /**
      * Поиск входящих векторов относительно главного вектора (заказа)

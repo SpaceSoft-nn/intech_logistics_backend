@@ -2,7 +2,7 @@
 
 namespace App\Modules\OrderUnit\App\Data\Enums;
 
-enum LoadingTruckMethod : string
+enum TypeLoadingTruckMethod : string
 {
     case ftl = "Полная Загрузка Грузовика"; //Full Truckload
 

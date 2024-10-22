@@ -64,6 +64,10 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OredUnitResource::make($order), 'Return create Order.'), 201);
     }
 
+    public function update(Request $request)
+    {
+        dd(5);
+    }
 
 
     /**

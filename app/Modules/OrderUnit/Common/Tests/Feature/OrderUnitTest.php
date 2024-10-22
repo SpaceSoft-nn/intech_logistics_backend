@@ -79,7 +79,11 @@ class OrderUnitTest extends TestCase
         $this->assertCount(2, $orderUnit->addresses->toArray(), 'Коллекция OrderUnit должна содержать ровно 2 элемента.');
     }
 
-    public function test_create_order_endpoint()
+    /**
+     * Проверка работоспособности endpoint - создание OrderUnit
+     * @return void
+     */
+    public function test_create_order_endpoint() : void
     {
 
         $adress = Adress::factory()->count(2)->create();

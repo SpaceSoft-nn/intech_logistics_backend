@@ -13,8 +13,6 @@ enum StatusOrderUnitEnum : string
 
     case close = "Отозван"; //Снят из общего доступа
 
-    case wait = "В ожидании"; // В Ожидании подразумевает что заказ будет выложен
-
     case progress = "В процессе"; // В работе
 
     case delete = "Полностью удален"; // В работе

@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->string('body_volume')->comment('Общий объём заказа');
 
             $table->string('order_total')->comment('Цена/Выплата за заказ');
+            $table->string('order_status')->default(StatusOrderUnitEnum::draft)->comment('status order');
             $table->string('description')->nullable();
             $table->string('product_type')->nullable()->comment('Тип товара');
 

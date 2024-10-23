@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('invoice_orders', function (Blueprint $table) {
 
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             //Нужно ли?
             // $table->uuid('organization_id')

@@ -14,7 +14,7 @@ return new class extends Migration
         //когда исполнитель выбран заказчиком
         Schema::create('agreement_orders', function (Blueprint $table) {
 
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             $table->uuid('order_unit_id')->unique()
                 ->constrained('order_units')->noActionOnDelete();

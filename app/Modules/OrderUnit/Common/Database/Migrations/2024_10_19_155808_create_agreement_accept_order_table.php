@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('agreement_orders_accepts', function (Blueprint $table) {
 
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             $table->nullableMorphs('document_agreement_accept_order');
 
@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->boolean('order_bool')->default(false)->comment('Заказчик подтвердил');
             $table->boolean('contractor_bool')->default(false)->comment('Исполнитель подтвердил');
-      
+
             $table->timestamps();
 
         });

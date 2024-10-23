@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('organization_order_unit_invoces', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             $table->uuid('order_unit_id')
                 ->constrained('order_units')->noActionOnDelete();

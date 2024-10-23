@@ -15,12 +15,13 @@ return new class extends Migration
 
             $table->uuid('id');
 
-            $table->uuid('organization_id')
-                ->constrained('organizations')->noActionOnDelete();
+            //Нужно ли?
+            // $table->uuid('organization_id')
+            //     ->constrained('organizations')->noActionOnDelete();
 
             $table->string('price');
 
-            $table->date('data');
+            $table->date('date');
 
             $table->text('comment');
 

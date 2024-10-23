@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API\Transfer;
 
+use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
+use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Transfer\Domain\Models\Transfer;
 use App\Modules\Transfer\Domain\Requests\TransferCreateRequest;
@@ -13,9 +15,20 @@ use function App\Helpers\array_success;
 class TransferContoller
 {
 
-    public function create(TransferCreateRequest $request)
-    {
+    public function create(
+
+        TransferCreateRequest $request,
+        OrderUnitRepository $orderRepository,
+
+    ) {
         $validated = $request->validated();
+
+
+        {
+            #TODO - вынести в сервес
+            $model = AgreementOrderAccept::find($validated['agreement_order_accept_id']);
+            abort_unless( ($model->order_bool && $model->contractor_bool), 403, 'Стороны не согласовали документ.');
+        }
 
         {
             /**
@@ -25,13 +38,15 @@ class TransferContoller
             abort_if(is_null($order_main), 'Main order return null', 404);
         }
 
+        dd($orderRepository->firstPivotPriorityAdress($order_main));
+
 
         {
             /**
             * @var OrderUnit
             */
             $orders = OrderUnit::find($validated['id_order_array']);
-            abort_if(is_null($orders), 'order array return null', 404);
+            abort_if(is_null($orders), 'Order array return null', 404);
         }
 
 

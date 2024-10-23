@@ -19,8 +19,10 @@ class TransferCreateRequest extends ApiRequest
         return [
             "main_order" => ['required', 'uuid'],
             "id_order_array" => ['required', 'array'],
-            //'id_order_array.*' => ['required', 'uuid', 'exists:order_units,id'],
+            //'id_order_array.*' => ['required', 'uuid', 'exists:order_units,id'], //делать проверку?
             'id_order_array.*' => ['required', 'uuid'],
+
+            "agreement_order_accept_id" => ['required', 'uuid'],
         ];
     }
 

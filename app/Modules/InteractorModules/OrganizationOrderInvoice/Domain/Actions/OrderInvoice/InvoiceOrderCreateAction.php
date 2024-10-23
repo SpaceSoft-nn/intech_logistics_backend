@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Actions\OrderInvoice;
+
+use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
+use Exception;
+
+class InvoiceOrderCreateAction
+{
+
+    /**
+     * @param InvoiceOrderVO $vo
+     *
+     * @return ?InvoiceOrder
+     */
+    public static function make(InvoiceOrderVO $vo) : ?InvoiceOrder
+    {
+        return self::run($vo);
+    }
+
+    /**
+     * @param InvoiceOrderVO $vo
+     *
+     * @return ?InvoiceOrder
+     */
+    public static function run(InvoiceOrderVO $vo) : ?InvoiceOrder
+    {
+
+        $model = InvoiceOrder::create($vo->toArray());
+
+        // try {
+
+        //     $model = InvoiceOrder::create($vo->toArray());
+
+        // } catch (\Throwable $th) {
+        //     throw new Exception('Ошибка создание OrderInvoice', 500);
+        // }
+
+        return $model ? $model : null;
+    }
+}

@@ -1,6 +1,7 @@
 <?php
 
 
+
 return [
     App\Providers\AppServiceProvider::class,
 
@@ -23,6 +24,7 @@ return [
 
         #Interactor Service
     App\Modules\InteractorModules\AdressOrder\App\Providers\AdressOrderServiceProvide::class,
+    App\Modules\InteractorModules\OrganizationOrderInvoice\App\Providers\OrganizationOrderInvoiceServiceProvider::class,
 
         #Auth Service
     App\Modules\Auth\App\Providers\AuthServiceProvider::class,

@@ -48,14 +48,44 @@ Route::get('/addresses', [AdressController:: class, 'get']);
 Route::post('/addresses', [AdressController:: class, 'create']);
 
     //orderUnit
-Route::get('/orders', [OrderUnitController:: class, 'get']);
-Route::post('/orders', [OrderUnitController:: class, 'create']);
-Route::post('/orders/select-price', [OrderUnitController:: class, 'selectPrice']);
-Route::patch('/orders/{orderUnit}', [OrderUnitController:: class, 'update'])->whereUuid('orderUnit');
-Route::get('/orders/algorithm', [OrderUnitController:: class, 'algorithm']);
+Route::prefix('/orders')->group(function () {
+
+
+    {
+        Route::get('/', [OrderUnitController:: class, 'get']);
+
+        Route::post('/', [OrderUnitController:: class, 'create']);
+
+            //Поиск цены от параметров Order
+        Route::post('/select-price', [OrderUnitController:: class, 'selectPrice']);
+
+        Route::patch('/{orderUnit}', [OrderUnitController:: class, 'update'])->whereUuid('orderUnit');
+    }
+
+
+    //Алгоритм поиска доп заказов по главному заказу (вектора движение)
+    Route::get('/algorithm', [OrderUnitController:: class, 'algorithm']);
+
+
+    {
+        //Возврат всех подрятчиков откликнувшиеся на заказ.
+        Route::get('/{orderUnit}/contractors', [OrderUnitController:: class, 'getContractor'])->whereUuid('orderUnit', 'organization');
+
+        //Добавление исполнителей к заказу
+        Route::post('/{orderUnit}/contractors/{organization}', [OrderUnitController:: class, 'addСontractor'])->whereUuid('orderUnit', 'organization');
+
+        //Выбрать исполнителя
+        Route::post('/{orderUnit}/agreement-order', [OrderUnitController:: class, 'agreementOrder'])->whereUuid('orderUnit');
+
+    }
+
+});
+
+
 
     //transfer
 Route::post('/transfer', [TransferContoller:: class, 'create']);
+
 
     //MatrixDistance
 Route::get('/matrix-distance', [MatrixDistanceController:: class, 'get']);

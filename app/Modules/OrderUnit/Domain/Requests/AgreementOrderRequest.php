@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Modules\OrderUnit\Domain\Requests;
+
+use App\Modules\Base\Requests\ApiRequest;
+
+class AgreementOrderRequest extends ApiRequest
+{
+
+    protected $stopOnFirstFailure = true;
+
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'invoice_cotractor_id' => ['required', 'uuid', 'exists:organization_order_unit_invoces,id'], // organization_order_units_invoce Откликнувшиеся перевозчики на заказ (Order)
+        ];
+    }
+
+}

@@ -2,7 +2,6 @@
 
 namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models;
 
-use App\Modules\OrderUnit\Domain\Models\InvoiceOrder;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;

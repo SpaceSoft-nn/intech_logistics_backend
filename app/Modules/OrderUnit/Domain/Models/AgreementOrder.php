@@ -2,28 +2,29 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
+
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class InvoiceOrder extends Model
+class AgreementOrder extends Model
 {
+
     use HasFactory, HasUuids;
 
-    protected $table = 'invoice_orders';
+    protected $table = 'agreement_orders';
 
     // protected static function newFactory()
     // {
-    //     return CargoUnitFactory::new();
+    //     return TransferFactory::new();
     // }
 
     protected $fillable = [
 
-        "organization_id",
-        "price",
-        "data",
-        "comment",
+        'order_unit_id',
+        'organization_transfer_id',
+        'organization_order_units_invoce_id',
 
     ];
 
@@ -40,13 +41,14 @@ class InvoiceOrder extends Model
     protected function casts(): array
     {
         return [
-            'data' => "datetime",
+
         ];
     }
 
-    public function organizationOrderUnitInvoice()
+    // Связь один к одному с AgreementAccept
+    public function agreementOrderAccept() : HasOne
     {
-        return $this->hasOne(OrganizationOrderUnitInvoice::class, 'invoice_order_id', 'id');
+        return $this->hasOne(AgreementOrderAccept::class);
     }
 
 

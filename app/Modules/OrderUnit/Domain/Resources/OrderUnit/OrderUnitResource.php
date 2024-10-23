@@ -7,7 +7,7 @@ use App\Modules\User\Domain\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OredUnitResource extends JsonResource
+class OrderUnitResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

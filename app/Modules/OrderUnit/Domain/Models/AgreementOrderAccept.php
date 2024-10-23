@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Modules\Transfer\Domain\Models;
+namespace App\Modules\OrderUnit\Domain\Models;
 
-use App\Modules\Transfer\Domain\Factories\TransferFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +27,8 @@ class AgreementOrderAccept extends Model
         'agreement_order_id',
 
         'order_bool',
-        'executor_bool',
+        'contractor_bool',
+
 
     ];
 
@@ -45,14 +45,15 @@ class AgreementOrderAccept extends Model
     protected function casts(): array
     {
         return [
-
+            'order_bool' => 'boolean',
+            'contractor_bool' => 'boolean',
         ];
     }
 
     // Связь обратная belongsTo с Agreement
     public function agreement() : BelongsTo
     {
-        return $this->belongsTo(AgreementOrder::class);
+        return $this->belongsTo(AgreementOrder::class, 'agreement_order_id');
     }
 
 }

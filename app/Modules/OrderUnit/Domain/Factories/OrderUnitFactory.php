@@ -2,16 +2,11 @@
 
 namespace App\Modules\OrderUnit\Domain\Factories;
 
-use App\Modules\Adress\Domain\Models\Adress;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnitVO;
-use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\Domain\Models\Mgx;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
-use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Model;
 
 class OrderUnitFactory extends Factory
 {

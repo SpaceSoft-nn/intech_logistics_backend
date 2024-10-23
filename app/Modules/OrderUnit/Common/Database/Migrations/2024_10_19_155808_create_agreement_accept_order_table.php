@@ -20,9 +20,9 @@ return new class extends Migration
             $table->uuid('agreement_order_id')->unique()
                 ->constrained('agreement_orders')->noActionOnDelete();
 
-            $table->boolean('order_bool')->comment('Заказчик подтвердил');
-            $table->boolean('executor_bool')->comment('Исполнитель подтвердил');
-
+            $table->boolean('order_bool')->default(false)->comment('Заказчик подтвердил');
+            $table->boolean('contractor_bool')->default(false)->comment('Исполнитель подтвердил');
+      
             $table->timestamps();
 
         });

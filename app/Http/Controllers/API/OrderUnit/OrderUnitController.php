@@ -3,20 +3,32 @@
 namespace App\Http\Controllers\API\OrderUnit;
 
 use App\Http\Controllers\Controller;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\DTO\OrgOrderInvoiceCreateDTO;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Requests\AddContractorRequest;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
+use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitCreate;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdate;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
+use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\OrderUnit\Domain\Requests\AgreementOrderRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitSelectPriceRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitUpdateRequest;
+use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderAcceptResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderPriceResource;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OredUnitCollection;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OredUnitResource;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
+use App\Modules\OrderUnit\Domain\Services\AgreementOrderService;
+use App\Modules\Organization\Domain\Models\Organization;
 use Illuminate\Http\Request;
 
 use function App\Helpers\array_error;
@@ -34,7 +46,7 @@ class OrderUnitController extends Controller
         */
         $order = OrderUnit::all();
 
-        return response()->json(array_success(OredUnitCollection::make($order), 'Return Orders.'), 200);
+        return response()->json(array_success(OrderUnitCollection::make($order), 'Return Orders.'), 200);
     }
 
     public function selectPrice(OrderUnitSelectPriceRequest $request)
@@ -65,7 +77,7 @@ class OrderUnitController extends Controller
         $order = OrderUnitCreate::make($orderUnitVO);
 
 
-        return response()->json(array_success(OredUnitResource::make($order), 'Return create Order.'), 201);
+        return response()->json(array_success(OrderUnitResource::make($order), 'Return create Order.'), 201);
     }
 
     public function update(OrderUnit $orderUnit, OrderUnitUpdateRequest $request)
@@ -87,6 +99,70 @@ class OrderUnitController extends Controller
 
     }
 
+    /**
+     * Добавление исполнителя к заказу
+     */
+    public function addСontractor(
+        OrderUnit $orderUnit,
+        Organization $organization,
+        AddContractorRequest $request,
+        OrganizationOrderInvoiceService $service,
+    ) {
+        /**
+        * @var InvoiceOrderVO
+        */
+        $invoceOrder = $request->getValueObject();
+
+        $status = $service->addСontractor(
+            OrgOrderInvoiceCreateDTO::make(
+                organization: $organization,
+                order: $orderUnit,
+                invoiceOrderVO: $invoceOrder,
+            )
+        );
+
+        return ($status)
+        ? response()->json(array_success(null, 'Successfully added a contractor to the order.'), 201)
+        : response()->json(array_error(null, 'Error added a contractor to the order.'), 404);
+
+    }
+
+    /**
+     * Возврат всех подрятчиков откликнувшиеся на заказ.
+     * @param OrderUnit $orderUnit
+     *
+     */
+    public function getContractor(OrderUnit $orderUnit)
+    {
+        $arrays = OrganizationOrderUnitInvoice::where('order_unit_id', $orderUnit->id)->get();
+
+        return response()->json(array_success(OrgOrderInvoiceCollection::make($arrays), 'Возвращены все подрядчики откликнувшиеся на заказ.'), 200);
+    }
+
+    /**
+    * Принятие подрятчика на заказ от заказчика.
+    */
+    public function agreementOrder(
+        OrderUnit $orderUnit,
+        AgreementOrderRequest $request,
+        AgreementOrderService $service,
+    ) {
+        $validated = $request->validated();
+
+        /**
+        * @var AgreementOrderAccept
+        */
+        $model = $service->run(
+            AgreementOrderCreateDTO::make(
+                order_unit_id: $orderUnit->id,
+                organization_order_units_invoce_id: $validated['invoice_cotractor_id'],
+                organization_transfer_id: null,
+            )
+        );
+
+
+        return response()->json(array_success(AgreementOrderAcceptResource::make($model), 'Заказчик успешно выбрал подрятчика, запись создана.'), 201);
+    }
 
 
     /**
@@ -94,7 +170,6 @@ class OrderUnitController extends Controller
      * @param OrderUnitAlgorithmRequest $request
      * @param CoordinateCheckerInteractor $coordinator
      *
-     * @return [type]
      */
     public function algorithm(OrderUnitAlgorithmRequest $request, CoordinateCheckerInteractor $coordinator)
     {
@@ -118,7 +193,7 @@ class OrderUnitController extends Controller
         //Вызываем логику работу поиска точек в прямоугольнике
         $rectangle = $coordinator->run($orderMain , $orders);
 
-        return response()->json(array_success(OredUnitCollection::make($orders->find($rectangle)->values()->all()), 'Возвращены все заказы входящие в область, главного заказа.'), 200);
+        return response()->json(array_success(OrderUnitCollection::make($orders->find($rectangle)->values()->all()), 'Возвращены все заказы входящие в область, главного заказа.'), 200);
     }
 
 }

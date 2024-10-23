@@ -16,11 +16,13 @@ return new class extends Migration
 
             $table->uuid('id');
 
+            $table->uuid('order_unit_id')->unique()
+                ->constrained('order_units')->noActionOnDelete();
 
             $table->uuid('organization_transfer_id')->nullable()->comment('Пока стороны не заключили договор двухсторонний, transfer не будет создан')
                 ->constrained('transfers')->noActionOnDelete();
 
-            $table->uuid('organization_order_units_invoce')->unique()
+            $table->uuid('organization_order_units_invoce_id')->unique()
                 ->constrained('organization_order_unit_invoces')->noActionOnDelete();
 
 

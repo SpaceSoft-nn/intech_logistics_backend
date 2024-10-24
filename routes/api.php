@@ -57,14 +57,14 @@ Route::prefix('/orders')->group(function () {
         Route::post('/', [OrderUnitController:: class, 'create']);
 
             //Поиск цены от параметров Order
-        Route::post('/select-price', [OrderUnitController:: class, 'selectPrice']);
+        Route::post('/select-offers', [OrderUnitController:: class, 'selectPrice']);
 
         Route::patch('/{orderUnit}', [OrderUnitController:: class, 'update'])->whereUuid('orderUnit');
     }
 
 
     //Алгоритм поиска доп заказов по главному заказу (вектора движение)
-    Route::get('/algorithm', [OrderUnitController:: class, 'algorithm']);
+    Route::get('/get-schem', [OrderUnitController:: class, 'algorithm']);
 
 
     {

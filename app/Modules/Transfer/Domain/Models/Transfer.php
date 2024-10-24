@@ -67,4 +67,9 @@ class Transfer extends Model
     {
         return $this->belongsTo(Adress::class, 'adress_end_id');
     }
+
+    public function agreements(): BelongsToMany
+    {
+        return $this->belongsToMany(Transfer::class, 'agreement_transfer', 'agreement_id' , 'transfer_id');
+    }
 }

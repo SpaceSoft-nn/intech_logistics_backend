@@ -1,7 +1,5 @@
 <?php
 
-
-
 return [
     App\Providers\AppServiceProvider::class,
 
@@ -20,6 +18,7 @@ return [
     App\Modules\Transfer\App\Providers\TransferServiceProvider::class,
     App\Modules\Matrix\App\Providers\MatrixServiceProvider::class,
     App\Modules\GAR\App\Providers\GARServiceProvider::class,
+    App\Modules\InteractorModules\AgreementTransfer\App\Providers\AgreementTransferServiceProvider::class,
 
 
         #Interactor Service
@@ -28,4 +27,5 @@ return [
 
         #Auth Service
     App\Modules\Auth\App\Providers\AuthServiceProvider::class,
+
 ];

@@ -3,9 +3,11 @@
 namespace App\Modules\OrderUnit\Domain\Models;
 
 use App\Modules\OrderUnit\Domain\Factories\AgreementOrderFactory;
+use App\Modules\Transfer\Domain\Models\Transfer;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class AgreementOrder extends Model
@@ -51,5 +53,8 @@ class AgreementOrder extends Model
         return $this->hasOne(AgreementOrderAccept::class);
     }
 
-
+    public function transfers(): BelongsToMany
+    {
+        return $this->belongsToMany(Transfer::class, 'agreement_transfer', 'transfer_id' , 'agreement_id');
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
-
+use App\Modules\OrderUnit\Domain\Factories\AgreementOrderFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,10 +15,10 @@ class AgreementOrder extends Model
 
     protected $table = 'agreement_orders';
 
-    // protected static function newFactory()
-    // {
-    //     return TransferFactory::new();
-    // }
+    protected static function newFactory()
+    {
+        return AgreementOrderFactory::new();
+    }
 
     protected $fillable = [
 

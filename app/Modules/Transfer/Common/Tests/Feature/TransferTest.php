@@ -11,6 +11,8 @@ class TransferTest extends TestCase
     {
         $model = Transfer::factory()->create();
 
+        dd($model);
+
         $this->assertNotNull($model);
     }
 }

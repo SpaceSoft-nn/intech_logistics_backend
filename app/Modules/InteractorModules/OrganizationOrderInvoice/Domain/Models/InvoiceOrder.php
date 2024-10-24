@@ -2,6 +2,7 @@
 
 namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models;
 
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Factories\InvoiceOrderFactory;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,10 +14,10 @@ class InvoiceOrder extends Model
 
     protected $table = 'invoice_orders';
 
-    // protected static function newFactory()
-    // {
-    //     return CargoUnitFactory::new();
-    // }
+    protected static function newFactory()
+    {
+        return InvoiceOrderFactory::new();
+    }
 
     protected $fillable = [
 

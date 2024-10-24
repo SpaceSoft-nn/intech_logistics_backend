@@ -84,7 +84,14 @@ Route::prefix('/orders')->group(function () {
 
 
     //transfer
-Route::post('/transfer', [TransferContoller:: class, 'create']);
+Route::prefix('/transfer')->group(function () {
+
+
+    Route::get('', [TransferContoller:: class, 'get']);
+    Route::post('', [TransferContoller:: class, 'create']);
+
+});
+
 
 
     //MatrixDistance

@@ -5,7 +5,7 @@ namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 
-
+#TODO Вынести из Order modules
 class RentagleArrayVO
 {
     public function __construct(

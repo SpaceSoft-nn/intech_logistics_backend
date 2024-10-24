@@ -2,11 +2,15 @@
 
 namespace App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice;
 
+use App\Modules\Base\Traits\FilterArrayTrait;
 use Arr;
 use Illuminate\Contracts\Support\Arrayable;
 
 class InvoiceOrderVO implements Arrayable
 {
+
+    use FilterArrayTrait;
+
     public function __construct(
         public readonly string $price,
         public readonly string $date,

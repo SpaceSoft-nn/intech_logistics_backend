@@ -8,6 +8,8 @@ use App\Modules\InteractorModules\AdressOrder\App\Data\Enum\TypeStateAdressEnum;
 use App\Modules\InteractorModules\AdressOrder\Domain\Actions\LinkOrderToAdressAction;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoUnitAction;
+use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
+use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 use App\Modules\OrderUnit\Domain\Models\Mgx;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
@@ -139,5 +141,19 @@ class OrderUnitTest extends TestCase
             'id' => $response->decodeResponseJson()['data']['id'],
         ]);
 
+    }
+
+    public function test_agreement_order()
+    {
+        $model = AgreementOrder::factory()->create();
+
+        $this->assertNotNull($model);
+    }
+
+    public function test_agreement_order_accept()
+    {
+        $model = AgreementOrderAccept::factory()->create();
+
+        $this->assertNotNull($model);
     }
 }

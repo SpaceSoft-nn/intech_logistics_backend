@@ -7,6 +7,7 @@
     <testsuites>
         <testsuite name="Unit">
             <!-- <directory>tests/Unit</directory> -->
+            <directory>App\Modules\OrderUnit\Common\Tests\Unit</directory>
         </testsuite>
         <testsuite name="Feature">
             <directory>App\Modules\User\Common\Tests\Feature</directory>

@@ -57,4 +57,9 @@ class AgreementOrder extends Model
     {
         return $this->belongsToMany(Transfer::class, 'agreement_transfer', 'transfer_id' , 'agreement_id');
     }
+
+    public function organization_order_units_invoce_id() 
+    {
+
+    }
 }

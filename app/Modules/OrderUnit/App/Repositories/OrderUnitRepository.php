@@ -5,6 +5,7 @@ namespace App\Modules\OrderUnit\App\Repositories;
 use App\Modules\Adress\Domain\Models\Adress;
 use App\Modules\Base\Repositories\CoreRepository;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit as Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class OrderUnitRepository extends CoreRepository
 {
@@ -16,6 +17,20 @@ class OrderUnitRepository extends CoreRepository
     private function query() : \Illuminate\Database\Eloquent\Builder
     {
         return $this->startConditions()->query();
+    }
+
+    public function get(string $uuid) : ?Model
+    {
+        return $this->query()->find($uuid);
+    }
+
+    /**
+     * @param string[] $uuid
+     * @return ?Model[]
+     */
+    public function getAll(array $arrUuid) : ?Collection
+    {
+        return $this->query()->find($arrUuid);
     }
 
     /**

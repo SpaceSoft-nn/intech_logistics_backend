@@ -3,17 +3,21 @@
 namespace App\Modules\Transfer\Common\Tests\Feature;
 
 use App\Modules\Transfer\Domain\Models\Transfer;
+use App\Modules\Transfer\Domain\Services\TransferService;
 use Tests\TestCase;
 
 class TransferTest extends TestCase
 {
-    public function test_create_transfer_factory()
+    public function test_create_transfer_service()
     {
-        $model = Transfer::factory()->create();
+        $serv = app(TransferService::class);
 
-        dd($model);
+        $status = $serv->createTransfer(
+            
+        );
 
-        $this->assertNotNull($model);
+        dd($status)
+
     }
 }
 

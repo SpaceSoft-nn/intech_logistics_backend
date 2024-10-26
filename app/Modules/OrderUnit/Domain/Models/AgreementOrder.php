@@ -2,11 +2,13 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\OrderUnit\Domain\Factories\AgreementOrderFactory;
 use App\Modules\Transfer\Domain\Models\Transfer;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -58,8 +60,17 @@ class AgreementOrder extends Model
         return $this->belongsToMany(Transfer::class, 'agreement_transfer', 'transfer_id' , 'agreement_id');
     }
 
-    public function organization_order_units_invoce_id() 
+    /**
+     * Связь таблитцы organization_order_units_invoce
+     * @return BelongsTo
+     */
+    public function orgOrdertInvoices() : BelongsTo
     {
+        return $this->belongsTo(OrganizationOrderUnitInvoice::class, 'organization_order_units_invoce_id');
+    }
 
+    public function order() : BelongsTo
+    {
+        return $this->belongsTo(OrderUnit::class, 'order_unit_id');
     }
 }

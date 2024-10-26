@@ -3,7 +3,9 @@
 namespace App\Modules\OrderUnit\Domain\Services;
 
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 
 class OrderUnitSirvice
 {
@@ -15,16 +17,18 @@ class OrderUnitSirvice
 
     /**
      * Подсчитывает сумму всех заказов
-     * @param string[] $arrUuid
+     * @param string[]|Collection<OrderUnit> $arr
      *
      * @return
      */
-    public function calcultTotalOrders(array $arrUuid) : float
+    public function calcultTotalOrders(array|Collection $arr) : float
     {
 
         $total = 0;
 
-        $arrayOrders = $this->repOrder->getAll($arrUuid);
+        if( !($arr instanceof Collection) ) { $arrayOrders = $this->repOrder->getAll($arr); }
+
+        $arrayOrders = $arr;
 
         if($arrayOrders) {
 
@@ -50,16 +54,18 @@ class OrderUnitSirvice
 
      /**
      * Подсчитывает сумму объёмов всех заказов
-     * @param string[] $arrUuid
+     * @param string[]|Collection<OrderUnit> $arr
      *
      * @return
      */
-    public function calcultBodyBolumeOrders(array $arrUuid) : float
+    public function calcultBodyBolumeOrders(array|Collection $arr) : float
     {
 
         $total = 0;
 
-        $arrayOrders = $this->repOrder->getAll($arrUuid);
+        if( !($arr instanceof Collection) ) { $arrayOrders = $this->repOrder->getAll($arr); }
+
+        $arrayOrders = $arr;
 
         if($arrayOrders) {
 

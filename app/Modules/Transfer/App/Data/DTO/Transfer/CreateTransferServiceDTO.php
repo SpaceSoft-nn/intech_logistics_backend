@@ -2,29 +2,31 @@
 
 namespace App\Modules\Transfer\App\Data\DTO\Transfer;
 
+use App\Modules\Transfer\Domain\Models\Transfer;
+
 /**
- * @property string[] $orderUnit_id Массив строк, который содержит теги.
- * @property string $tags Массив строк, который содержит теги.
- * @property string $tags Массив строк, который содержит теги.
+ * @property string $main_order
+ * @property string[] $agreementOrder_id
+ * @property TransferDTO $transferDTO
  */
 class CreateTransferServiceDTO
 {
     public function __construct(
-        public ?array $orderUnit_id,
         public readonly string $main_order,
-        public readonly string $agreementOrder_id,
+        public ?array $agreementOrder_id,
+        public readonly TransferDTO $transferDTO,
     ) {}
 
     public static function make(
-        ?array $orderUnit_id,
         string $main_order,
-        string $agreementOrder_id,
+        ?array $agreementOrder_id,
+        TransferDTO $transferDTO,
     ) : self {
 
         return new self(
-            orderUnit_id: $orderUnit_id,
             main_order: $main_order,
             agreementOrder_id: $agreementOrder_id,
+            transferDTO: $transferDTO,
         );
 
     }

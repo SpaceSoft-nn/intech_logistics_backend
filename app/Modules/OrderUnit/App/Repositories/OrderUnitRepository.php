@@ -36,7 +36,7 @@ class OrderUnitRepository extends CoreRepository
     /**
      * Получаем последний адресс (прибытия) по приоритетности при связи orderUnit => adress
      * @param Model|int $order
-     * @return
+     * @return ?Adress
      */
     public function lastPivotPriorityAdress(Model|int $order) : ?Adress
     {
@@ -67,6 +67,7 @@ class OrderUnitRepository extends CoreRepository
 
     /**
      * Получаем первый адресс (отправки) по приоритетности при связи orderUnit => adress
+     * @param Model|int $order
      * @return ?Adress
      */
     public function firstPivotPriorityAdress(Model|int $order) : ?Adress

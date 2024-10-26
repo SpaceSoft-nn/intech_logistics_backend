@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Modules\OrderUnit\App\Repositories;
+
+use App\Modules\Base\Repositories\CoreRepository;
+use App\Modules\OrderUnit\Domain\Models\AgreementOrder as Model;
+
+class AgreementOrderRepository extends CoreRepository
+{
+    protected function getModelClass()
+    {
+        return Model::class;
+    }
+
+    private function query() : \Illuminate\Database\Eloquent\Builder
+    {
+        return $this->startConditions()->query();
+    }
+
+    /**
+     * Проверяем что в модели существует main_order и значит он вляется главным.
+     * @param Model $model
+     * @param mixed $main_order_id
+     *
+     * @return bool
+     */
+    public function isMainOrder(Model $model, $main_order_id) : bool
+    {
+        return (bool) $model->order_unit_id === $main_order_id;
+    }
+
+
+
+
+
+
+}

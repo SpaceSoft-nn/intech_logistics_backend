@@ -29,6 +29,8 @@ class OrderUnitTest extends TestCase
         $orderUnits = OrderUnit::factory()->create();
 
         $this->assertNotNull($orderUnits);
+
+        $this->assertGreaterThan(0, $orderUnits->addresses()->count());
     }
 
     public function test_create_mgx_factory()

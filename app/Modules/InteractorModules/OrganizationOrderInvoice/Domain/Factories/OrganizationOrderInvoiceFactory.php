@@ -31,7 +31,9 @@ class OrganizationOrderInvoiceFactory extends Factory
         /**
         * @var OrderUnit
         */
-        $orderUnit = OrderUnit::inRandomOrder()->first();
+        $orderUnit = OrderUnit::factory()->create();
+
+        // if(!$orderUnit) { $this->fail('Пожалуйста запустите seed'); }
 
         $organization = Organization::factory()->create();
 

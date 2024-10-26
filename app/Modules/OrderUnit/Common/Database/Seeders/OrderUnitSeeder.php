@@ -61,6 +61,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
 
 
             ]);
@@ -93,6 +94,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
 
             ]);
 
@@ -122,6 +124,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
             ]);
 
             //делаем связки через промежуточные таблицы
@@ -150,6 +153,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
 
             ]);
 
@@ -178,6 +182,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
             ]);
 
            //делаем связки через промежуточные таблицы
@@ -205,6 +210,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
             ]);
 
             //делаем связки через промежуточные таблицы
@@ -232,6 +238,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
             ]);
 
              //делаем связки через промежуточные таблицы
@@ -259,6 +266,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
             ]);
 
            //делаем связки через промежуточные таблицы
@@ -286,6 +294,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
             ]);
 
              //делаем связки через промежуточные таблицы
@@ -313,6 +322,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
             ]);
 
             //делаем связки через промежуточные таблицы
@@ -340,6 +350,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
             ]);
 
             //делаем связки через промежуточные таблицы
@@ -367,6 +378,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
+                "adress_is_array" => false,
             ]);
 
             //делаем связки через промежуточные таблицы

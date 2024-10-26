@@ -2,7 +2,7 @@
 
 namespace App\Modules\Transfer\Domain\Actions\Transfer;
 
-use App\Modules\Transfer\Domain\Actions\DTO\ValueObject\TransferVO;
+use App\Modules\Transfer\App\Data\ValueObject\TransferVO;
 use App\Modules\Transfer\Domain\Models\Transfer;
 use Exception;
 

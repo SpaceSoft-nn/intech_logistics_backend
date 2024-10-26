@@ -2,6 +2,10 @@
 
 namespace App\Modules\OrderUnit\Domain\Factories;
 
+use App\Modules\Adress\Domain\Models\Adress;
+use App\Modules\InteractorModules\AdressOrder\App\Data\DTO\OrderToAdressDTO;
+use App\Modules\InteractorModules\AdressOrder\App\Data\Enum\TypeStateAdressEnum;
+use App\Modules\InteractorModules\AdressOrder\Domain\Actions\LinkOrderToAdressAction;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\Domain\Models\Mgx;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
@@ -47,10 +51,38 @@ class OrderUnitFactory extends Factory
                 organization_id: $organization->id,
             );
 
+            return $orderUnitVO->toArrayNotNull();
         }
 
+    }
 
-        return $orderUnitVO->toArrayNotNull();
+
+    public function configure(): static
+    {
+        // Добавляем теги после создания поста
+        return $this->afterCreating(function (OrderUnit $orderUnit) {
+
+            $adresses = Adress::factory()->count(2)->create();
+
+            LinkOrderToAdressAction::run(
+                OrderToAdressDTO::make(
+                    adress: $adresses[0],
+                    order: $orderUnit,
+                    type_status: TypeStateAdressEnum::sending,
+                    date: now(),
+                )
+            );
+
+            LinkOrderToAdressAction::run(
+                OrderToAdressDTO::make(
+                    adress: $adresses[1],
+                    order: $orderUnit,
+                    type_status: TypeStateAdressEnum::coming,
+                    date: now(),
+                )
+            );
+
+        });
     }
 
 }

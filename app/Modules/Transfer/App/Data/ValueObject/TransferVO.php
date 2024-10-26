@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Transfer\Domain\Actions\DTO\ValueObject;
+namespace App\Modules\Transfer\App\Data\ValueObject;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
 use Illuminate\Contracts\Support\Arrayable;

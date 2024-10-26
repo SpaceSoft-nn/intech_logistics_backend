@@ -5,7 +5,7 @@ namespace App\Modules\OrderUnit\Domain\Services;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class OrderUnitSirvice
 {

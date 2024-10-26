@@ -24,13 +24,20 @@ class AgreementOrderSeeder extends Seeder
 
     private function createAgreementOrder()
     {
-        try {
-            AgreementOrderAccept::factory()->count(3)->create();
-        } catch (\Throwable $th) {
 
-            $this->command->error('Пожалуйста перезапустите Seed, AgreementOrderSeeder - выбирается случайные OrderUnit, т.к они уникальны, они могу пересекаться.');
-            throw new Exception();
-        }
+        AgreementOrderAccept::factory()->count(1)->create();
+        // try {
+
+
+        //     AgreementOrderAccept::factory()->count(1)->create();
+
+
+        // } catch (\Throwable $th) {
+
+        //     //Из за того что OrderUnit при создании Factory выбирается случаным образом, они могут перескачаться, т.к у нас в таблицах должны быть уникальные значение OrderUnit без повторений, вылетает ошибка
+        //     $this->command->error('Пожалуйста перезапустите Seed, AgreementOrderSeeder - выбирается случайные OrderUnit, т.к они уникальны, они могу пересекаться.');
+        //     throw new Exception();
+        // }
     }
 
 

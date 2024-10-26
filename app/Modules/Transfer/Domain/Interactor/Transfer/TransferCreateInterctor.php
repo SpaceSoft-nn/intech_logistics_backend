@@ -10,8 +10,7 @@ use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Services\OrderUnitSirvice;
 use App\Modules\Transfer\App\Data\DTO\Transfer\CreateTransferServiceDTO;
-use App\Modules\Transfer\App\Data\DTO\Transfer\TransferDTO;
-use App\Modules\Transfer\Domain\Actions\DTO\ValueObject\TransferVO;
+use App\Modules\Transfer\App\Data\ValueObject\TransferVO;
 use App\Modules\Transfer\Domain\Actions\Transfer\TransferCreateAction;
 use App\Modules\Transfer\Domain\Models\Transfer;
 use Exception;
@@ -26,7 +25,7 @@ class TransferCreateInterctor
     /**
     * @var Collection
     */
-    private array $agreementOrders = [];
+    private Collection $agreementOrders;
 
     public function __construct(
         private OrderUnitSirvice $orderService,
@@ -81,13 +80,15 @@ class TransferCreateInterctor
 
         foreach ($this->agreementOrders as $agreementOrder) {
 
+
+
             //проверяем сущестувет ли связь с главным заказом и получаем его
-            if($this->agrOrderReposiotry->isMainOrder($agreementOrder, $dto->main_order))
+            if($this->agrOrderReposiotry->isMainOrder($agreementOrder, $dto->main_order_id))
             {
-                $order_main = $agreementOrder->order();
+                $order_main = $agreementOrder->order;
             }
 
-            $arrayCollection[] = $agreementOrder->order();
+            $arrayCollection[] = $agreementOrder->order;
 
         }
 
@@ -96,6 +97,7 @@ class TransferCreateInterctor
         //получаем через репозиторий адресс начала и конца в связки по приоритености (т.е главный заказ)
         $adress_start = $this->orderUnitRepository->firstPivotPriorityAdress($order_main);
         $adress_end = $this->orderUnitRepository->lastPivotPriorityAdress($order_main);
+
 
 
         //TODO Может быть баг - когда адрессов много у заказа (или же когда у адресса может быть множество заказов)
@@ -113,6 +115,7 @@ class TransferCreateInterctor
             body_volume: $this->orderService->calcultBodyBolumeOrders(collect($arrayCollection)),
         );
 
+        dd($transferVO);
         return $transferVO;
     }
 

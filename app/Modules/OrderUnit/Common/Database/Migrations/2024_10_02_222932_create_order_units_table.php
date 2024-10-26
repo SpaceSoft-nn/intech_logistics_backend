@@ -32,7 +32,7 @@ return new class extends Migration
             $table->uuid('organization_id')
                 ->constrained('organizations')->noActionOnDelete();
 
-            $table->uuid('contractors_id')->comment('Выбранный подрядчик на заказ.')
+            $table->uuid('contractors_id')->comment('Выбранный подрядчик на заказ.')->nullable()
                 ->constrained('organizations')->noActionOnDelete();
 
                 //служебнеы поля

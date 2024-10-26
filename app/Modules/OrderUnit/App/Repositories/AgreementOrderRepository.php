@@ -26,7 +26,7 @@ class AgreementOrderRepository extends CoreRepository
      */
     public function isMainOrder(Model $model, $main_order_id) : bool
     {
-        return (bool) $model->order_unit_id === $main_order_id;
+        return $model->order_unit_id === $main_order_id;
     }
 
 

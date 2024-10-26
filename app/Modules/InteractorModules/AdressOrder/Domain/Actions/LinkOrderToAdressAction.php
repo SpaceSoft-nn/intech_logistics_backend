@@ -20,60 +20,36 @@ class LinkOrderToAdressAction
     public static function run(OrderToAdressDTO $dto) : bool
     {
 
-        /**
-        * @var Adress
-        */
-        $adress = $dto->adress;
+        try {
 
-        /**
-        * @var OrderUnit
-        */
-        $order = $dto->order;
+            /**
+            * @var Adress
+            */
+            $adress = $dto->adress;
 
-        /**
-        * @var TypeStateAdressEnum
-        */
-        $type_status = $dto->type_status;
+            /**
+            * @var OrderUnit
+            */
+            $order = $dto->order;
 
-        $adress->order_units()->syncWithoutDetaching([$order->id => [
-            'data_time' => $dto->date,
-            'type' => $type_status,
-            // 'priority' => опустим, чтобы использовать автоматическое назначение
-        ]]);
+            /**
+            * @var TypeStateAdressEnum
+            */
+            $type_status = $dto->type_status;
 
+            $adress->order_units()->syncWithoutDetaching([$order->id => [
+                'data_time' => $dto->date,
+                'type' => $type_status,
+                // 'priority' => опустим, чтобы использовать автоматическое назначение
+            ]]);
 
-        return true;
-        // try {
+            return true;
 
-        //     /**
-        //     * @var Adress
-        //     */
-        //     $adress = $dto->adress;
+        } catch (\Throwable $th) {
+            throw new Exception('Ошибка в связывании LinkOrderToAdressAction', 500);
+        }
 
-        //     /**
-        //     * @var OrderUnit
-        //     */
-        //     $order = $dto->order;
-
-        //     /**
-        //     * @var TypeStateAdressEnum
-        //     */
-        //     $type_status = $dto->type_status;
-
-        //     //Сохраняем связь от user к personal area
-        //     $adress->order_units()->syncWithoutDetaching($order->id, [
-        //         'data_time' => $dto->date,
-        //         'type' => $type_status,
-        //         // 'priority' => опустим, чтобы использовать автоматическое назначение
-        //     ]);
-
-        //     return true;
-
-        // } catch (\Throwable $th) {
-
-        //     throw new Exception('Ошибка в связывании LinkOrderToAdressAction', 500);
-
-        // }
+        return false;
 
     }
 }

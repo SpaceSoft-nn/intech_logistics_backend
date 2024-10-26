@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             \App\Modules\OrderUnit\Common\Database\Seeders\AgreementOrderSeeder::class,
 
                 //Запуск seed Transfer - Даты доставок и т.д, могут быть случайны.
-            \App\Modules\Transfer\Common\Database\Seeders\TransferSeeder::class,
+            // \App\Modules\Transfer\Common\Database\Seeders\TransferSeeder::class,
 
         ]);
 

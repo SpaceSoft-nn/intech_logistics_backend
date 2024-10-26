@@ -25,10 +25,6 @@ return new class extends Migration
 
             $table->string('type_load_truck')->comment('Тип загрузки трака: LTL, FTL, Custom...');
 
-            // $table->string('order_status')->nullable()->comment('Заказ: в ожидании, в процессе, в обработке, удален, выполнен');
-
-            // $table->uuid('mgx_id')->unique()->constrained('mgxs')->onDelete('cascade')->comment('Ссылку на таблицу с Массо-габаритными-характеристиками');
-
             $table->uuid('user_id')
                 ->nullable()
                 ->constrained('users')->noActionOnDelete();
@@ -36,9 +32,14 @@ return new class extends Migration
             $table->uuid('organization_id')
                 ->constrained('organizations')->noActionOnDelete();
 
+            $table->uuid('contractors_id')->comment('Выбранный подрядчик на заказ.')
+                ->constrained('organizations')->noActionOnDelete();
+
+                //служебнеы поля
             $table->boolean('add_load_space')->default(false)->comment('Возможен ли догруз');
             $table->boolean('change_price')->default(false)->comment('Возможна изменения цены (торг)');
             $table->boolean('change_time')->default(false)->comment('Возможна Изменение времени');
+            $table->boolean('adress_is_array')->comment('Если у нас больше двух адрессов');
 
 
             $table->timestamps();

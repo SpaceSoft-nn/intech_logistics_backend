@@ -2,22 +2,27 @@
 
 namespace App\Modules\InteractorModules\AgreementTransfer\Domain\Actions;
 
-use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
-use App\Modules\Transfer\Domain\Models\Transfer;
+use App\Modules\InteractorModules\AgreementTransfer\App\Data\DTO\LinkAgreementToTransferDTO;
+
+
+use function App\Helpers\Mylog;
 
 class LinkAgreementToTransferAction
 {
-    public static function run(AgreementOrder $agreementOrder, Transfer $transfer) : bool
+    public static function run(LinkAgreementToTransferDTO $dto) : bool
     {
         try {
 
             //Сохраняем связь от AgreementOrder к Transfer
-            $agreementOrder->transfers()->syncWithoutDetaching([$transfer->id]);
+            $dto->agreementOrder->transfers()->syncWithoutDetaching([
+                $dto->transfer->id => ['order_main' => $dto->order_main]
+            ]);
 
             return true;
 
         } catch (\Throwable $th) {
 
+            Mylog('Ошибка в LinkAgreementToTransferAction');
             return false;
 
         }

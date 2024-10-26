@@ -27,7 +27,7 @@ class TransferTest extends TestCase
             $array[] = $agrOrder->id;
         }
 
-        $status = $serv->createTransfer(
+        $transfer = $serv->createTransfer(
             CreateTransferServiceDTO::make(
                 main_order_id:  $agrOrders[0]->order->id,
                 agreementOrder_id: $array,
@@ -38,7 +38,10 @@ class TransferTest extends TestCase
             )
         );
 
-        dd($status);
+        $this->assertNotNull($transfer);
+
+        $this->assertIsArray($transfer->agreements->toArray());
+        $this->assertNotEmpty($transfer->agreements->toArray());
 
     }
 }

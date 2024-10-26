@@ -13,6 +13,7 @@ use App\Modules\Transfer\App\Data\DTO\Transfer\CreateTransferServiceDTO;
 use App\Modules\Transfer\App\Data\ValueObject\TransferVO;
 use App\Modules\Transfer\Domain\Actions\Transfer\TransferCreateAction;
 use App\Modules\Transfer\Domain\Models\Transfer;
+use DB;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -38,34 +39,57 @@ class TransferCreateInterctor
         return $this->InteractorLogic($dto);
     }
 
+
     private function InteractorLogic(CreateTransferServiceDTO $dto) : ?Transfer
     {
         #TODO Здесь нужно использовать паттерн handler (цепочка обязанностей)
 
-        {
-            $modelsAgreementOrder = AgreementOrder::find($dto->agreementOrder_id);
-            $modelsAgreementOrder ?? throw new Exception('Не найденны никакие заявки AgreementOrder', 404);
+        try {
 
-            $this->agreementOrders = $modelsAgreementOrder;
+            return DB::transaction(function ($pdo) use ($dto) {
+
+                //получаем agreementOrders в свойства класса $agreementOrders
+                $this->setAgreementOrders($dto->agreementOrder_id);
+
+                //создаём transfer
+                {
+
+                /**
+                 * @var TransferVO
+                 */
+                $vo = $this->createTransferVO($dto);
+
+
+                /**
+                 * @var Transfer
+                 */
+                $transfer = $this->createTransfer($vo);
+                if(!$transfer) { throw new Exception("Ошибка в TransferCreateInterctor, при создании transfer", 500); }
+                }
+
+                //привязываем AgreementOrder к transfer
+                {
+                    $this->linkAgreementTransfer($transfer , $dto->main_order_id);
+                }
+
+                return $transfer;
+
+            });
+
+        } catch (\Throwable $th) {
+
+            throw new Exception('Ошибка в интеракторе TransferCreateInterctor', 500);
+
         }
 
-        {
+    }
 
-            /**
-            * @var TransferVO
-            */
-            $vo = $this->createTransferVO($dto);
+    private function setAgreementOrders(array $agreementOrder_id)
+    {
+        $modelsAgreementOrder = AgreementOrder::find($agreementOrder_id);
+        $modelsAgreementOrder ?? throw new Exception('Не найденны никакие заявки AgreementOrder', 404);
 
-
-            /**
-            * @var Transfer
-            */
-            $transfer = $this->createTransfer($vo);
-            if(!$transfer) { throw new Exception("Ошибка в TransferCreateInterctor, при создании transfer", 500); }
-        }
-
-       return $transfer;
-
+        $this->agreementOrders = $modelsAgreementOrder;
     }
 
     private function createTransferVO(CreateTransferServiceDTO $dto) : ?TransferVO
@@ -115,7 +139,6 @@ class TransferCreateInterctor
             body_volume: $this->orderService->calcultBodyBolumeOrders(collect($arrayCollection)),
         );
 
-        dd($transferVO);
         return $transferVO;
     }
 

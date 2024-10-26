@@ -20,6 +20,9 @@ return new class extends Migration
             $table->uuid('transfer_id')
                 ->constrained('transfers')->noActionOnDelete();
 
+
+            $table->boolean('order_main')->default(false)->comment('Является ли выбранный заказ главным.');
+
             $table->timestamps();
 
             // Добавляем составной уникальный ключ на order_unit_id и organization_id

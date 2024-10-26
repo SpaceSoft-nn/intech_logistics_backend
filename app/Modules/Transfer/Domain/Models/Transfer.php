@@ -3,6 +3,7 @@
 namespace App\Modules\Transfer\Domain\Models;
 
 use App\Modules\Adress\Domain\Models\Adress;
+use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 use App\Modules\Transfer\Domain\Factories\TransferFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -70,6 +71,6 @@ class Transfer extends Model
 
     public function agreements(): BelongsToMany
     {
-        return $this->belongsToMany(Transfer::class, 'agreement_transfer', 'agreement_id' , 'transfer_id');
+        return $this->belongsToMany(AgreementOrder::class, 'agreement_transfer', 'agreement_id' , 'transfer_id');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Modules\Transfer\Domain\Services;
 
 use App\Modules\Transfer\App\Data\DTO\Transfer\CreateTransferServiceDTO;
 use App\Modules\Transfer\Domain\Interactor\Transfer\TransferCreateInterctor;
+use App\Modules\Transfer\Domain\Models\Transfer;
 
 class TransferService
 {
@@ -13,18 +14,16 @@ class TransferService
         private TransferCreateInterctor $interactorCreateTransfer,
     ) { }
 
-
-    public function createTransfer(CreateTransferServiceDTO $dto)
+    /**
+     * Вызываем лоигку работы созданияы transfer
+     * @param CreateTransferServiceDTO $dto
+     *
+     * @return ?Transfer
+     */
+    public function createTransfer(CreateTransferServiceDTO $dto) : ?Transfer
     {
         return $this->interactorCreateTransfer->execute($dto);
     }
 
-    /**
-     * Создаём transfer и делаем логику остальных привязок
-     * @return [type]
-     */
-    private function createTransferAndLink()
-    {
 
-    }
 }

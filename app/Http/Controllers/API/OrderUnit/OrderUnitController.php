@@ -14,7 +14,7 @@ use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitCreate;
-use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdate;
+use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdateAction;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
@@ -49,6 +49,12 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OrderUnitCollection::make($order), 'Return Orders.'), 200);
     }
 
+    /**
+     * Поски цены для заказа (временно на рандоме)
+     * @param OrderUnitSelectPriceRequest $request
+     *
+     * @return [type]
+     */
     public function selectPrice(OrderUnitSelectPriceRequest $request)
     {
         $validated = $request->validated();
@@ -66,6 +72,11 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OrderPriceResource::make($test), 'Return Select Price.'), 200);
     }
 
+    /**
+     * Создание заказа
+     * @param OrderUnitCreateRequest $request
+     *
+     */
     public function create(OrderUnitCreateRequest $request)
     {
         /**
@@ -74,17 +85,23 @@ class OrderUnitController extends Controller
         $orderUnitVO = $request->getValueObject();
 
 
-        $order = OrderUnitCreate::make($orderUnitVO);
+        $order = OrderUnitCreateAction::make($orderUnitVO);
 
 
         return response()->json(array_success(OrderUnitResource::make($order), 'Return create Order.'), 201);
     }
 
+    /**
+     * Обновление данных
+     * @param OrderUnit $orderUnit
+     * @param OrderUnitUpdateRequest $request
+     *
+     */
     public function update(OrderUnit $orderUnit, OrderUnitUpdateRequest $request)
     {
         $validated = $request->validated();
 
-        $status = OrderUnitUpdate::make(
+        $status = OrderUnitUpdateAction::make(
             OrderUnitUpdateDTO::make(
                 order: $orderUnit,
                 change_price: $validated['change_price'] ?? null,

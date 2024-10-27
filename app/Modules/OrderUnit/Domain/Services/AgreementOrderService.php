@@ -18,6 +18,6 @@ class AgreementOrderService
      */
     public function run(AgreementOrderCreateDTO $dto) : ?AgreementOrderAccept
     {
-        return AgreementOrderInteractor::make($dto);
+        return AgreementOrderInteractor::execute($dto);
     }
 }

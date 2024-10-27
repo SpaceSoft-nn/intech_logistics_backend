@@ -3,7 +3,7 @@
 namespace App\Modules\OrderUnit\Common\Tests\Unit;
 
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
-use App\Modules\OrderUnit\Domain\Services\OrderUnitSirvice;
+use App\Modules\OrderUnit\Domain\Services\OrderUnitSirvece;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\TestCase;
 use Mockery;
@@ -30,7 +30,7 @@ class OrderUnitTest extends TestCase
         * @var OrderUnitRepository $orderMock
         */
         // Создаем инстанс сервиса
-        $orderService = new OrderUnitSirvice($orderMock);
+        $orderService = new OrderUnitSirvece($orderMock);
 
         // Вызываем метод сервиса
         $sum = $orderService->calcultTotalOrders(['uuid1', 'uuid2', 'uuid3']);
@@ -60,7 +60,7 @@ class OrderUnitTest extends TestCase
         * @var OrderUnitRepository $orderMock
         */
         // Создаем инстанс сервиса
-        $orderService = new OrderUnitSirvice($orderMock);
+        $orderService = new OrderUnitSirvece($orderMock);
 
         // Вызываем метод сервиса
         $sum = $orderService->calcultBodyBolumeOrders(['uuid1', 'uuid2', 'uuid3']);

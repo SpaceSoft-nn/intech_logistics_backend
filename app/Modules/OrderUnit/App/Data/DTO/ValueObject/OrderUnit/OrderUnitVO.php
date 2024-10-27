@@ -24,6 +24,7 @@ class OrderUnitVO implements Arrayable
         public ?string $product_type,
         public ?StatusOrderUnitEnum $order_status,
         public ?string $user_id,
+        public ?string $contractors_id,
         public ?bool $add_load_space,
         public ?bool $change_price,
         public ?bool $change_time,
@@ -42,6 +43,7 @@ class OrderUnitVO implements Arrayable
         ?string $product_type = null,
         ?StatusOrderUnitEnum $order_status = null,
         ?string $user_id = null,
+        ?string $contractors_id = null,
         ?bool $add_load_space = null,
         ?bool $change_price = null,
         ?bool $change_time = null,
@@ -59,6 +61,7 @@ class OrderUnitVO implements Arrayable
             type_load_truck: TypeLoadingTruckMethod::stringByCaseToObject($type_load_truck),
             order_status: $order_status,
             user_id: $user_id,
+            contractors_id: $contractors_id,
             organization_id: $organization_id,
             add_load_space: $add_load_space,
             change_price: $change_price,
@@ -82,6 +85,7 @@ class OrderUnitVO implements Arrayable
             "type_load_truck" => $this->type_load_truck,
             "order_status" => $this->order_status,
             "user_id" => $this->user_id,
+            "contractors_id" => $this->contractors_id,
             "organization_id" => $this->organization_id,
             "add_load_space" => $this->add_load_space,
             "change_price" => $this->change_price,
@@ -103,6 +107,7 @@ class OrderUnitVO implements Arrayable
         $product_type = Arr::get($data, "product_type", null);
         $order_status = Arr::get($data, "order_status", null);
         $user_id = Arr::get($data, "user_id", null);
+        $contractors_id = Arr::get($data, "contractors_id", null);
         $change_price = Arr::get($data, "change_price", null);
         $change_time = Arr::get($data, "change_time", null);
         $adress_is_array = Arr::get($data, "adress_is_array", null);
@@ -116,6 +121,7 @@ class OrderUnitVO implements Arrayable
             type_load_truck: TypeLoadingTruckMethod::stringByCaseToObject($type_load_truck),
             order_status: $order_status,
             user_id: $user_id,
+            contractors_id: $contractors_id,
             organization_id: $organization_id,
             add_load_space: self::filterEnumTypeLoad($type_load_truck),
             change_price: $change_price,
@@ -128,7 +134,6 @@ class OrderUnitVO implements Arrayable
      * Проверяем если загрузка ltl, то add_load_space = true
      * @param string $value
      *
-     * @return [type]
      */
     public static function filterEnumTypeLoad(string $value)
     {

@@ -8,7 +8,7 @@ use App\Modules\OrderUnit\App\Repositories\AgreementOrderRepository;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use App\Modules\OrderUnit\Domain\Services\OrderUnitSirvice;
+use App\Modules\OrderUnit\Domain\Services\OrderUnitSirvece;
 use App\Modules\Transfer\App\Data\DTO\Transfer\CreateTransferServiceDTO;
 use App\Modules\Transfer\App\Data\ValueObject\TransferVO;
 use App\Modules\Transfer\Domain\Actions\Transfer\TransferCreateAction;
@@ -29,7 +29,7 @@ class TransferCreateInterctor
     private Collection $agreementOrders;
 
     public function __construct(
-        private OrderUnitSirvice $orderService,
+        private OrderUnitSirvece $orderService,
         private AgreementOrderRepository $agrOrderReposiotry,
         private OrderUnitRepository $orderUnitRepository,
     ) { }

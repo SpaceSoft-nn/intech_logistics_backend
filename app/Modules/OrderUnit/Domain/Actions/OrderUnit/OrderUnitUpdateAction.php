@@ -6,7 +6,7 @@ use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 
-class OrderUnitUpdate
+class OrderUnitUpdateAction
 {
     public static function make(OrderUnitUpdateDTO $dto) : bool
     {

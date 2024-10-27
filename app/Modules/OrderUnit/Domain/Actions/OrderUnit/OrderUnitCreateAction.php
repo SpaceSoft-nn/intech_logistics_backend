@@ -5,7 +5,7 @@ namespace App\Modules\OrderUnit\Domain\Actions\OrderUnit;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 
-class OrderUnitCreate
+class OrderUnitCreateAction
 {
     public static function make(OrderUnitVO $vo) : ?OrderUnit
     {

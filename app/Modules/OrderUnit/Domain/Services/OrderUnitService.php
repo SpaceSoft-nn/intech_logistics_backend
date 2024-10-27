@@ -2,19 +2,28 @@
 
 namespace App\Modules\OrderUnit\Domain\Services;
 
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
+use App\Modules\OrderUnit\Domain\Interactor\Agreement\CreateOrderUnitInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Exception;
 use Illuminate\Support\Collection;
 
-class OrderUnitSirvice
+class OrderUnitSirvece
 {
 
     public function __construct(
         public OrderUnitRepository $repOrder,
+        public CreateOrderUnitInteractor $createOrderUnitInteractor,
     ) {}
 
+    public function createOrderUnit(OrderUnitVO $orderUnitVO) : ?OrderUnit
+    {
+        return $this->createOrderUnitInteractor->execute($orderUnitVO);
+    }
 
+
+        #TODO Вынести эту логику в отдельный класс
     /**
      * Подсчитывает сумму всех заказов
      * @param string[]|Collection<OrderUnit> $arr

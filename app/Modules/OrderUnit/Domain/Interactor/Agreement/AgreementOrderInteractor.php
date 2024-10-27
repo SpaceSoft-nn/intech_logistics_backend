@@ -18,7 +18,7 @@ class AgreementOrderInteractor
      *
      * @return ?AgreementOrderAccept
      */
-    public static function make(AgreementOrderCreateDTO $dto) : ?AgreementOrderAccept
+    public static function execute(AgreementOrderCreateDTO $dto) : ?AgreementOrderAccept
     {
         return (new self())->run($dto);
     }
@@ -40,23 +40,6 @@ class AgreementOrderInteractor
 
         return $model;
 
-        // try {
-
-        //     return DB::transaction(function ($pdo) use ($dto) {
-
-        //         $agreementOrderCreate = $this->agreementOrderCreate($dto);
-
-        //         $model = $this->agreementOrderAcceptCreate($agreementOrderCreate->id);
-
-        //         return $model;
-
-        //     });
-
-        // } catch (\Exception $e) {
-
-        //     throw new Exception('Ошибка транзакции в интеракторе: InteractorOrgOrderInvoice', 500);
-
-        // }
     }
 
     private function agreementOrderAcceptCreate(string $agreement_order_id) : ?AgreementOrderAccept

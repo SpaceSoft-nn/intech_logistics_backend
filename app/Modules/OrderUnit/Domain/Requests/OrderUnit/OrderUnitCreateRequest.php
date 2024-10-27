@@ -26,8 +26,12 @@ class OrderUnitCreateRequest extends ApiRequest
 
         return [
 
-            "start_adress_id" => ['required', 'uuid', "exists:addresses,id"],
-            "end_adress_id" => ['required', 'uuid', "exists:addresses,id"],
+            "start_adress_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс начало.
+            "end_adress_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс окончания.
+
+            "start_date_delivery" => ['required', 'date'], // Дата начала заказа
+            "end_date_delivery" => ['required', 'date'], // Дата окончания заказа
+
             "organization_id" => ['required', 'uuid', "exists:organizations,id"],
 
             "end_date_order" => ['required', 'date'], //Дата окончание order

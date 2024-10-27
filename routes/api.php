@@ -86,8 +86,8 @@ Route::prefix('/orders')->group(function () {
     //transfer
 Route::prefix('/transfer')->group(function () {
 
-
-    Route::get('', [TransferContoller:: class, 'get']);
+    Route::get('', [TransferContoller:: class, 'index']);
+    Route::get('/{transfer}', [TransferContoller:: class, 'show'])->whereUuid('transfer');
     Route::post('', [TransferContoller:: class, 'create']);
 
 });

@@ -3,10 +3,8 @@
 namespace App\Modules\Transfer\Common\Tests\Feature;
 
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Transfer\App\Data\DTO\Transfer\CreateTransferServiceDTO;
 use App\Modules\Transfer\App\Data\DTO\Transfer\TransferDTO;
-use App\Modules\Transfer\Domain\Models\Transfer;
 use App\Modules\Transfer\Domain\Services\TransferService;
 use App\Modules\Transport\Domain\Models\Transport;
 use Tests\TestCase;

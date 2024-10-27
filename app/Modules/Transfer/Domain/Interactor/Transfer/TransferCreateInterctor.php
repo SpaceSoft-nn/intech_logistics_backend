@@ -44,6 +44,32 @@ class TransferCreateInterctor
     {
         #TODO Здесь нужно использовать паттерн handler (цепочка обязанностей)
 
+        //получаем agreementOrders в свойства класса $agreementOrders
+        $this->setAgreementOrders($dto->agreementOrder_id);
+
+        //создаём transfer
+        {
+
+        /**
+         * @var TransferVO
+         */
+        $vo = $this->createTransferVO($dto);
+
+
+        /**
+         * @var Transfer
+         */
+        $transfer = $this->createTransfer($vo);
+        if(!$transfer) { throw new Exception("Ошибка в TransferCreateInterctor, при создании transfer", 500); }
+        }
+
+        //привязываем AgreementOrder к transfer
+        {
+            $this->linkAgreementTransfer($transfer , $dto->main_order_id);
+        }
+
+        return $transfer;
+
         try {
 
             return DB::transaction(function ($pdo) use ($dto) {
@@ -103,8 +129,6 @@ class TransferCreateInterctor
         $arrayCollection = [];
 
         foreach ($this->agreementOrders as $agreementOrder) {
-
-
 
             //проверяем сущестувет ли связь с главным заказом и получаем его
             if($this->agrOrderReposiotry->isMainOrder($agreementOrder, $dto->main_order_id))

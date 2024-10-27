@@ -10,14 +10,14 @@ class TransferDTO
     public function __construct(
 
         public readonly string $transport_id,
-        public readonly string $description,
+        public ?string $description,
 
     ) {}
 
     public static function make(
 
         string $transport_id,
-        string $description,
+        ?string $description = null,
 
     ) : self {
         return new self(

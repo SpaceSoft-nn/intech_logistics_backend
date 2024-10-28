@@ -20,7 +20,7 @@ class OrderUnitCreateRequest extends ApiRequest
 
     public function rules(): array
     {
-
+        #TODO Моного запросов в бд в validation*
         // Получаем названия всех кейсов
         $type = array_column(TypeLoadingTruckMethod::cases(), 'name');
 
@@ -31,6 +31,11 @@ class OrderUnitCreateRequest extends ApiRequest
 
             "start_date_delivery" => ['required', 'date'], // Дата начала заказа
             "end_date_delivery" => ['required', 'date'], // Дата окончания заказа
+
+            //Если есть массив заказов
+            "adress_array" => ['nullable', 'array', 'min:1'],
+            "adress_array_id" => ['nullable','uuid', "exists:addresses,id" ],
+
 
             "organization_id" => ['required', 'uuid', "exists:organizations,id"],
 

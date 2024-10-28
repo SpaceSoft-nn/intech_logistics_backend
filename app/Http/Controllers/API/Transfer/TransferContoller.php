@@ -30,10 +30,6 @@ class TransferContoller
 
     public function show(Transfer $transfer)
     {
-
-
-        dd($transfer->agreements);
-
         return response()->json(array_success(TransferResource::make($transfer), 'Return Transfer.'), 200);
     }
 

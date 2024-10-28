@@ -79,10 +79,9 @@ class OrderUnitController extends Controller
      */
     public function create(OrderUnitCreateRequest $request)
     {
-        /**
-        * @var OrderUnitVO
-        */
-        $orderUnitVO = $request->getValueObject();
+        $validated = $request->validated();
+
+        dd($validated['adress_array']);
 
 
         $order = OrderUnitCreateAction::make($orderUnitVO);

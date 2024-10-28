@@ -3,7 +3,6 @@
 namespace App\Modules\OrderUnit\App\Data\DTO\OrderUnit;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use Illuminate\Contracts\Support\Arrayable;
@@ -20,9 +19,9 @@ class OrderUnitCreateDTO implements Arrayable
         public readonly string $end_date_delivery,
         public readonly string $organization_id,
         public readonly string $end_date_order,
-        public readonly TypeLoadingTruckMethod $type_load_truck,
+        public readonly string $type_load_truck,
         public readonly int $order_total, #TODO Учитывать работу с деньгами
-        public ?array $adress_array_id,
+        public ?array $adress_array,
         public ?string $product_type,
         public ?int $body_volume,
         public ?StatusOrderUnitEnum $order_status,
@@ -41,14 +40,14 @@ class OrderUnitCreateDTO implements Arrayable
         string $organization_id,
         string $end_date_order,
         int $order_total,
-        TypeLoadingTruckMethod $type_load_truck,
+        string $type_load_truck,
         ?string $user_id = null,
         ?string $contractors_id = null,
         ?string $product_type = null,
         ?int $body_volume = null,
         ?StatusOrderUnitEnum $order_status = null,
         ?string $description= null,
-        ?array $adress_array_id = null, // Учесть если у нас будет массив адрессов
+        ?array $adress_array = null, // Учесть если у нас будет массив адрессов
 
     ) : self {
 
@@ -67,7 +66,7 @@ class OrderUnitCreateDTO implements Arrayable
             order_status: $order_status,
             user_id: $user_id,
             contractors_id: $contractors_id,
-            adress_array_id: $adress_array_id,
+            adress_array: $adress_array,
         );
 
     }
@@ -90,29 +89,9 @@ class OrderUnitCreateDTO implements Arrayable
             "order_status" => $this->order_status,
             "user_id" => $this->user_id,
             "contractors_id" => $this->contractors_id,
-            "adress_array_id" => $this->adress_array_id,
+            "adress_array" => $this->adress_array,
 
         ];
-    }
-
-    public function createOrderUnitVO() : ?OrderUnitVO
-    {
-        return OrderUnitVO::make(
-            body_volume: $this->body_volume,
-            order_total: $this->order_total,
-            description: $this->description,
-            organization_id: $this->organization_id,
-            type_load_truck: $this->type_load_truck,
-            end_date_order: $this->end_date_order,
-            product_type: $this->product_type,
-            order_status: $this->order_status,
-            user_id: $this->user_id,
-            contractors_id: $this->contractors_id,
-            add_load_space: $this->add_load_space,
-            change_price: $this->change_price,
-            change_time: $this->change_time,
-            adress_is_array: $this->adress_is_array,
-        );
     }
 
 }

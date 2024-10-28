@@ -40,7 +40,7 @@ class LinkOrderToAdressAction
             $adress->order_units()->syncWithoutDetaching([$order->id => [
                 'data_time' => $dto->date,
                 'type' => $type_status,
-                // 'priority' => опустим, чтобы использовать автоматическое назначение
+                'priority' => $dto->priority,
             ]]);
 
             return true;

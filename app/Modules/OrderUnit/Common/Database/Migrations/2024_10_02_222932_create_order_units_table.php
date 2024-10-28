@@ -29,6 +29,10 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('users')->noActionOnDelete();
 
+            $table->uuid('mgx_id')->comment('Масса-габаритные характеристики')
+                ->nullable()
+                ->constrained('mgxs')->noActionOnDelete();
+
             $table->uuid('organization_id')
                 ->constrained('organizations')->noActionOnDelete();
 

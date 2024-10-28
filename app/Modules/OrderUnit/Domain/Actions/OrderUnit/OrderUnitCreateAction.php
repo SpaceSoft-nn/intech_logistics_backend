@@ -19,8 +19,9 @@ class OrderUnitCreateAction
      */
     private static function run(OrderUnitVO $vo) : ?OrderUnit
     {
-
         #TODO Отлавливать ошибки
+
+        // dd($vo->toArrayNotNull());
 
         $order = OrderUnit::create($vo->toArrayNotNull());
 

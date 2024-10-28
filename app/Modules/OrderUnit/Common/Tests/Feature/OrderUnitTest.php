@@ -6,8 +6,10 @@ use App\Modules\Adress\Domain\Models\Adress;
 use App\Modules\InteractorModules\AdressOrder\App\Data\DTO\OrderToAdressDTO;
 use App\Modules\InteractorModules\AdressOrder\App\Data\Enum\TypeStateAdressEnum;
 use App\Modules\InteractorModules\AdressOrder\Domain\Actions\LinkOrderToAdressAction;
-use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
+use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoUnitAction;
+use App\Modules\OrderUnit\Domain\Interactor\Order\CreateOrderUnitInteractor;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
@@ -157,5 +159,97 @@ class OrderUnitTest extends TestCase
         $model = AgreementOrderAccept::factory()->create();
 
         $this->assertNotNull($model);
+    }
+
+    /**
+     * Тестироование логики работы интерактора когда только главный заказ (2 адресса доставки)
+     */
+    public function test_create_order_interactor_one_adress()
+    {
+        $interactor = app(CreateOrderUnitInteractor::class);
+
+        /**
+        * @var Adress
+        */
+        $adresses = Adress::factory()->count(2)->create();
+
+        /**
+        * @var Organization
+        */
+        $organization = Organization::factory()->create();
+
+        $order = $interactor->execute(
+            OrderUnitCreateDTO::make(
+                start_adress_id: $adresses[0]->id,
+                end_adress_id: $adresses[1]->id,
+                start_date_delivery: now(),
+                end_date_delivery: now(),
+                organization_id: $organization->id,
+                end_date_order: now(),
+                type_load_truck: "ftl",
+                order_total: 80000,
+                adress_array: null,
+                product_type: 'Печеньки',
+                body_volume: 70,
+                order_status: null,
+                user_id: $organization->owner_id,
+                contractors_id: null,
+                description: 'Test description',
+            )
+        )->refresh();
+
+        $this->assertNotNull($order);
+        $this->assertIsArray($order->addresses->toArray());
+        $this->assertNotEmpty($order->addresses->toArray());
+    }
+
+     /**
+     * Тестироование логики работы интерактора когда главный заказ + (2 адресса) + множество других
+     */
+    public function test_create_order_interactor_many_adress()
+    {
+        $interactor = app(CreateOrderUnitInteractor::class);
+
+        /**
+        * @var Adress
+        */
+        $adresses = Adress::factory()->count(4)->create();
+
+        /**
+        * @var Organization
+        */
+        $organization = Organization::factory()->create();
+
+
+        /**
+        * @var OrderUnit
+        */
+        $order = $interactor->execute(
+            OrderUnitCreateDTO::make(
+                start_adress_id: $adresses[0]->id,
+                end_adress_id: $adresses[1]->id,
+                start_date_delivery: now(),
+                end_date_delivery: now(),
+                organization_id: $organization->id,
+                end_date_order: now(),
+                type_load_truck: "ftl",
+                order_total: 80000,
+                adress_array: [
+                    ["{$adresses[2]->id}" => now(),],
+                    ["{$adresses[3]->id}" => now(),],
+                ],
+                product_type: 'Печеньки',
+                body_volume: 70,
+                order_status: null,
+                user_id: $organization->owner_id,
+                contractors_id: null,
+                description: 'Test description',
+            )
+        )->refresh();
+
+
+        $this->assertNotNull($order);
+        $this->assertIsArray($order->addresses->toArray());
+        $this->assertNotEmpty($order->addresses->toArray());
     }
 }

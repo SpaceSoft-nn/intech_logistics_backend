@@ -42,10 +42,15 @@ class OrderUnit extends Model
 
         "user_id",
         "organization_id",
+        "contractors_id",
 
         "mgx_id",
 
+        //bool
         "add_load_space",
+        "change_price",
+        "change_time",
+        "adress_is_array",
 
     ];
 

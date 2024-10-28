@@ -15,6 +15,7 @@ class OrderToAdressDTO
         public OrderUnit $order,
         public TypeStateAdressEnum $type_status,
         public string $date,
+        public ?int $priority = null,
 
     ) { }
 
@@ -24,6 +25,7 @@ class OrderToAdressDTO
         OrderUnit $order,
         TypeStateAdressEnum $type_status,
         string $date,
+        ?int $priority = null,
 
     ) : self {
 
@@ -32,6 +34,7 @@ class OrderToAdressDTO
             order: $order,
             type_status: $type_status,
             date: $date,
+            priority: $priority,
         );
 
     }

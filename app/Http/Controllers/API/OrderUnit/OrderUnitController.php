@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\API\OrderUnit;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Auth\Domain\Services\AuthService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\DTO\OrgOrderInvoiceCreateDTO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Requests\AddContractorRequest;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
+use App\Modules\InteractorModules\Registration\Domain\Services\RegistrationService;
 use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
@@ -149,7 +151,7 @@ class OrderUnitController extends Controller
         OrganizationOrderInvoiceService $service,
     ) {
         /**
-        * @var InvoiceOrderVO
+        * @var InvoiceOrderVO 
         */
         $invoceOrder = $request->getValueObject();
 
@@ -172,7 +174,7 @@ class OrderUnitController extends Controller
      * @param OrderUnit $orderUnit
      *
      */
-    public function getContractor(OrderUnit $orderUnit)
+    public function getContractors(OrderUnit $orderUnit)
     {
         $arrays = OrganizationOrderUnitInvoice::where('order_unit_id', $orderUnit->id)->get();
 
@@ -236,4 +238,17 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OrderUnitCollection::make($orders->find($rectangle)->values()->all()), 'Возвращены все заказы входящие в область, главного заказа.'), 200);
     }
 
+
+    public function algorithAccept(
+        OrderUnitAlgorithmRequest $request,
+        AuthService $auth,
+    ) {
+        /**
+        * @var User
+        */
+        $user = $auth->getUserAuth();
+
+        // agreement_order
+
+    }
 }

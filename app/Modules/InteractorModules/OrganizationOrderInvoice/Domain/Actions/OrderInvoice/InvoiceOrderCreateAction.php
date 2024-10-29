@@ -27,15 +27,13 @@ class InvoiceOrderCreateAction
     public static function run(InvoiceOrderVO $vo) : ?InvoiceOrder
     {
 
-        $model = InvoiceOrder::create($vo->toArray());
+        try {
 
-        // try {
+            $model = InvoiceOrder::create($vo->toArray());
 
-        //     $model = InvoiceOrder::create($vo->toArray());
-
-        // } catch (\Throwable $th) {
-        //     throw new Exception('Ошибка создание OrderInvoice', 500);
-        // }
+        } catch (\Throwable $th) {
+            throw new Exception('Ошибка создание OrderInvoice', 500);
+        }
 
         return $model ? $model : null;
     }

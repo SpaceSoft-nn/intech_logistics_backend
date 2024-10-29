@@ -9,14 +9,25 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Actions\Organi
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use DB;
 use Exception;
 
 class InteractorOrgOrderInvoice
 {
-    public function __construct(
-        private OrganizationOrderInvoiceService $service
-    ) {}
+    // public function __construct(
+    //     private OrganizationOrderInvoiceService $service
+    // ) {}
+
+    /**
+     * @param OrgOrderInvoiceCreateDTO $dto
+     *
+     * @return bool
+     */
+    public static function excexute(OrgOrderInvoiceCreateDTO $dto) : bool
+    {
+        return (new self())->run($dto);
+    }
 
     /**
      * Запуск работы бизнес логики
@@ -24,20 +35,36 @@ class InteractorOrgOrderInvoice
      *
      * @return bool
      */
-    public static function run(OrgOrderInvoiceCreateDTO $dto) : bool
+    private function run(OrgOrderInvoiceCreateDTO $dto) : bool
     {
+        $modelInvoce = $this->createInvoiceOrder($dto->invoiceOrderVO);
+
+        $model = $this->createOrgOrderInvoice(
+            orderId: $dto->order->id,
+            orgId: $dto->organization->id,
+            invoiceId: $modelInvoce->id,
+        );
+
+        //Добавляем cotractor к OrederUnit
+        $this->addContractorOrder($dto->order, $dto->organization->id);
+
+        return $model ? true : false;
+
 
         try {
 
             return DB::transaction(function ($pdo) use ($dto) {
 
-                $modelInvoce = self::createInvoiceOrder($dto->invoiceOrderVO);
+                $modelInvoce = $this->createInvoiceOrder($dto->invoiceOrderVO);
 
-                $model = self::createOrgOrderInvoice(
+                $model = $this->createOrgOrderInvoice(
                     orderId: $dto->order->id,
                     orgId: $dto->organization->id,
                     invoiceId: $modelInvoce->id,
                 );
+
+                //Добавляем cotractor к OrederUnit
+                $this->addContractorOrder($dto->order, $dto->organization->id);
 
                 return $model ? true : false;
 
@@ -71,5 +98,16 @@ class InteractorOrgOrderInvoice
     private static function createOrgOrderInvoice(string $orderId, string $orgId, string $invoiceId) : ?OrganizationOrderUnitInvoice
     {
         return OrganizationOrderUnitInvoiceCreateAction::make($orderId, $orgId, $invoiceId);
+    }
+
+    /**
+     * Добавляем contractor_id к Order
+     * @return bool
+     */
+    private function addContractorOrder(OrderUnit $order, string $organization_id) : bool
+    {
+        $order->contractor_id = $organization_id;
+
+        return $order->save() ? true : false;
     }
 }

@@ -10,7 +10,7 @@ class OrganizationOrderInvoiceService
 
     public function addСontractor(OrgOrderInvoiceCreateDTO $dto) : bool
     {
-        return InteractorOrgOrderInvoice::run($dto);
+        return InteractorOrgOrderInvoice::excexute($dto);
     }
 
 }

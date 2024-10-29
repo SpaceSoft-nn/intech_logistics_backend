@@ -232,7 +232,7 @@ class OrderUnitTest extends TestCase
                 end_date_delivery: now(),
                 organization_id: $organization->id,
                 end_date_order: now(),
-                type_load_truck: "ftl",
+                type_load_truck: "ltl",
                 order_total: 80000,
                 adress_array: [
                     ["{$adresses[2]->id}" => now(),],

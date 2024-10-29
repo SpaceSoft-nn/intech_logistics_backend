@@ -2,14 +2,14 @@
 
 namespace App\Modules\OrderUnit\Domain\Services;
 
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
-use App\Modules\OrderUnit\Domain\Interactor\Agreement\CreateOrderUnitInteractor;
+use App\Modules\OrderUnit\Domain\Interactor\Order\CreateOrderUnitInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Exception;
 use Illuminate\Support\Collection;
 
-class OrderUnitSirvece
+class OrderUnitService
 {
 
     public function __construct(
@@ -17,13 +17,13 @@ class OrderUnitSirvece
         public CreateOrderUnitInteractor $createOrderUnitInteractor,
     ) {}
 
-    public function createOrderUnit(OrderUnitVO $orderUnitVO) : ?OrderUnit
+    public function createOrderUnit(OrderUnitCreateDTO $dto) : ?OrderUnit
     {
-        return $this->createOrderUnitInteractor->execute($orderUnitVO);
+        return $this->createOrderUnitInteractor->execute($dto);
     }
 
 
-        #TODO Вынести эту логику в отдельный класс
+    #TODO Вынести эту логику в отдельный класс
     /**
      * Подсчитывает сумму всех заказов
      * @param string[]|Collection<OrderUnit> $arr
@@ -61,12 +61,13 @@ class OrderUnitSirvece
         return $total;
     }
 
-     /**
-     * Подсчитывает сумму объёмов всех заказов
-     * @param string[]|Collection<OrderUnit> $arr
-     *
-     * @return
-     */
+    #TODO Вынести эту логику в отдельный класс
+    /**
+    * Подсчитывает сумму объёмов всех заказов
+    * @param string[]|Collection<OrderUnit> $arr
+    *
+    * @return
+    */
     public function calcultBodyBolumeOrders(array|Collection $arr) : float
     {
 

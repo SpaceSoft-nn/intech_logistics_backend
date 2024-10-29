@@ -74,8 +74,8 @@ class CreateOrderUnitInteractor
 
             //bool значения
             add_load_space: $this->filterIsLtlType($dto->type_load_truck),
-            change_price: null,
-            change_time: null,
+            change_price: false,
+            change_time: false,
             adress_is_array: $this->filterIsArrayAdress($dto->adress_array),
 
         );
@@ -204,7 +204,8 @@ class CreateOrderUnitInteractor
     */
     private function filterIsLtlType(string $type_load_truck) : bool
     {
-        return TypeLoadingTruckMethod::ltl->value === $type_load_truck ? true : false;
+
+        return TypeLoadingTruckMethod::ltl === TypeLoadingTruckMethod::stringByCaseToObject($type_load_truck);
     }
 
 }

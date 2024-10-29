@@ -24,7 +24,7 @@ class OrderUnitCreateDTO implements Arrayable
         public ?array $adress_array,
         public ?string $product_type,
         public ?int $body_volume,
-        public ?StatusOrderUnitEnum $order_status,
+        public ?StatusOrderUnitEnum $order_status = StatusOrderUnitEnum::draft,
         public ?string $user_id,
         public ?string $contractors_id,
         public ?string $description,

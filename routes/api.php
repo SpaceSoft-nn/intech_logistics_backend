@@ -52,7 +52,11 @@ Route::prefix('/orders')->group(function () {
 
 
     {
-        Route::get('/', [OrderUnitController:: class, 'get']);
+        //Вернуть все записи
+        Route::get('/', [OrderUnitController:: class, 'index']);
+
+        //Вернуть 1 запись по uuid
+        Route::get('/{orderUnit}', [OrderUnitController:: class, 'show'])->whereUuid('orderUnit');
 
         Route::post('/', [OrderUnitController:: class, 'create']);
 

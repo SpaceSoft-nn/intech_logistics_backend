@@ -17,6 +17,7 @@ class OrderUnitCreateRequest extends ApiRequest
 
     public function authorize(): bool
     {
+        #TODO - Проверять относится ли organization_id - к user_id
         return true;
     }
 
@@ -28,31 +29,26 @@ class OrderUnitCreateRequest extends ApiRequest
 
         return [
 
-            // "start_adress_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс начало.
-            // "end_adress_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс окончания.
+            "start_adress_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс начало.
+            "end_adress_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс окончания.
 
-            // "start_date_delivery" => ['required', 'date'], // Дата начала заказа
-            // "end_date_delivery" => ['required', 'date'], // Дата окончания заказа
-
-            //Если есть массив заказов
-            // "adress_array" => ['nullable', 'array', 'min:1'],
-            // "adress_array_id*" => ['nullable','uuid', "exists:addresses,id" ],
+            "start_date_delivery" => ['required', 'date'], // Дата начала заказа
+            "end_date_delivery" => ['required', 'date'], // Дата окончания заказа
 
             'adress_array' => ['required', new ArrayAdressRule()],
 
+            "organization_id" => ['required', 'uuid', "exists:organizations,id"],
 
-            // "organization_id" => ['required', 'uuid', "exists:organizations,id"],
+            "end_date_order" => ['required', 'date'], //Дата окончание order
 
-            // "end_date_order" => ['required', 'date'], //Дата окончание order
+            "product_type" => ['required', 'string', 'max:255'], //Тип продукта
+            "body_volume" => ['required', 'numeric', 'min:1'], //Объём продукта
 
-            // "product_type" => ['required', 'string', 'max:255'], //Тип продукта
-            // "body_volume" => ['required', 'numeric', 'min:1'], //Объём продукта
+            "type_load_truck" => ['required', Rule::in($type)],
 
-            // "type_load_truck" => ['required', Rule::in($type)],
+            "order_total" => ['required', 'numeric'], //Цена #TODO цена может быть в копейках предусмотреть работу с ценой в laravel
 
-            // "order_total" => ['required', 'numeric'], //Цена #TODO цена может быть в копейках предусмотреть работу с ценой в laravel
-
-            // "description" => ['nullable', 'string', 'max:1000'], //Описание
+            "description" => ['nullable', 'string', 'max:1000'], //Описание
 
         ];
     }

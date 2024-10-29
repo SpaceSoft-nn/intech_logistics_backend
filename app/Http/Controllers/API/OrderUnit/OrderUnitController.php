@@ -10,10 +10,9 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Requests\AddCo
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
 use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
-use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitCreate;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdateAction;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
@@ -28,6 +27,7 @@ use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderPriceResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
 use App\Modules\OrderUnit\Domain\Services\AgreementOrderService;
+use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
 use App\Modules\Organization\Domain\Models\Organization;
 use Illuminate\Http\Request;
 
@@ -39,7 +39,7 @@ class OrderUnitController extends Controller
     /**
      * Вернуть все заказы
      */
-    public function get(Request $request)
+    public function index(Request $request)
     {
         /**
         * @var OrderUnit[]
@@ -47,6 +47,14 @@ class OrderUnitController extends Controller
         $order = OrderUnit::all();
 
         return response()->json(array_success(OrderUnitCollection::make($order), 'Return Orders.'), 200);
+    }
+
+     /**
+     * Вернуть все заказы
+     */
+    public function show(OrderUnit $orderUnit)
+    {
+        return response()->json(array_success(OrderUnitResource::make($orderUnit), 'Return Order.'), 200);
     }
 
     /**
@@ -77,15 +85,31 @@ class OrderUnitController extends Controller
      * @param OrderUnitCreateRequest $request
      *
      */
-    public function create(OrderUnitCreateRequest $request)
-    {
+    public function create(
+        OrderUnitCreateRequest $request,
+        OrderUnitService $service
+    ) {
+
         $validated = $request->validated();
 
-        dd($validated['adress_array']);
-
-
-        $order = OrderUnitCreateAction::make($orderUnitVO);
-
+        $order = $service->createOrderUnit(
+            OrderUnitCreateDTO::make(
+                start_adress_id: $validated['start_adress_id'],
+                end_adress_id: $validated['end_adress_id'],
+                start_date_delivery: $validated['start_date_delivery'],
+                end_date_delivery: $validated['end_date_delivery'],
+                organization_id: $validated['organization_id'],
+                end_date_order: $validated['end_date_order'],
+                type_load_truck: $validated['type_load_truck'],
+                order_total: $validated['order_total'],
+                adress_array: $validated['adress_array'] ?? null,
+                product_type: $validated['product_type'] ?? null,
+                body_volume: $validated['body_volume'] ?? null,
+                user_id: $validated['user_id'] ?? null,
+                contractors_id: $validated['contractors_id'] ?? null,
+                description: $validated['description'] ?? null,
+            )
+        );
 
         return response()->json(array_success(OrderUnitResource::make($order), 'Return create Order.'), 201);
     }

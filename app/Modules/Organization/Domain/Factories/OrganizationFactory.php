@@ -55,11 +55,9 @@ class OrganizationFactory extends Factory
             // ...
         })->afterCreating(function (Organization $organization) {
 
-            //нужна ли эта логика тут?
-            // $user = User::find($organization->owner_id);
-            // //Связываем при связи многие ко многим через промежуточную таблицу
-            // LinkUserToOrganizationAction::run(LinkUserToOrganizationDTO::make($user, $organization, TypeCabinetEnum::customer));
-
+            $user = User::find($organization->owner_id);
+            //Связываем при связи многие ко многим через промежуточную таблицу
+            LinkUserToOrganizationAction::run(LinkUserToOrganizationDTO::make($user, $organization, TypeCabinetEnum::customer));
 
         });
     }

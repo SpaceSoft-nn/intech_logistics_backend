@@ -2,6 +2,7 @@
 
 namespace App\Modules\Notification\Domain\Models;
 
+use App\Modules\Notification\Domain\Factories\EmailFactory;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,6 +30,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class EmailList extends Model
 {
     use HasFactory, HasUuids;
+
+    protected static function newFactory()
+    {
+        return EmailFactory::new();
+    }
 
     protected $table = 'email_list';
 

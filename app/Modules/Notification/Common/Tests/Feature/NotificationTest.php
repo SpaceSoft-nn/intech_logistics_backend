@@ -562,6 +562,20 @@ class NotificationTest extends TestCase
         });
     }
 
+    public function test_factory_email_list()
+    {
+        $email = EmailList::factory()->create();
+
+        $this->assertNotNull($email);
+    }
+
+    public function test_factory_phone_list()
+    {
+        $phone = PhoneList::factory()->create();
+
+        $this->assertNotNull($phone);
+    }
+
     public function tearDown(): void
     {
         // Сбрасываем тестовое время

@@ -9,7 +9,6 @@ use App\Modules\OrderUnit\Domain\Interface\Trait\Algorithm\CalculateBearingTrait
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Collection as SupportCollection;
 
 use function App\Helpers\Mylog;
 

@@ -42,7 +42,7 @@ class OrderUnit extends Model
 
         "user_id",
         "organization_id",
-        "contractors_id",
+        "contractor_id",
 
         "mgx_id",
 
@@ -122,6 +122,11 @@ class OrderUnit extends Model
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'organization_id');
+    }
+
+    public function contractor(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'contractor_id');
     }
 
 }

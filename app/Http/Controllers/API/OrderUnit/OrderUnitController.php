@@ -10,7 +10,6 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\Organiz
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Requests\AddContractorRequest;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
-use App\Modules\InteractorModules\Registration\Domain\Services\RegistrationService;
 use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
@@ -28,9 +27,11 @@ use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderAcceptResourc
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderPriceResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
+use App\Modules\OrderUnit\Domain\Services\AgreementOrderAcceptService;
 use App\Modules\OrderUnit\Domain\Services\AgreementOrderService;
 use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
 use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Http\Request;
 
 use function App\Helpers\array_error;
@@ -46,9 +47,11 @@ class OrderUnitController extends Controller
         /**
         * @var OrderUnit[]
         */
-        $order = OrderUnit::all();
+        $orders = OrderUnit::all();
 
-        return response()->json(array_success(OrderUnitCollection::make($order), 'Return Orders.'), 200);
+        $st = new OrderUnitCollection($orders);
+
+        return response()->json(array_success(OrderUnitCollection::make($orders), 'Return Orders.'), 200);
     }
 
      /**
@@ -151,7 +154,7 @@ class OrderUnitController extends Controller
         OrganizationOrderInvoiceService $service,
     ) {
         /**
-        * @var InvoiceOrderVO 
+        * @var InvoiceOrderVO
         */
         $invoceOrder = $request->getValueObject();
 
@@ -194,7 +197,7 @@ class OrderUnitController extends Controller
         /**
         * @var AgreementOrderAccept
         */
-        $model = $service->run(
+        $model = $service->acceptCotractorToOrder(
             AgreementOrderCreateDTO::make(
                 order_unit_id: $orderUnit->id,
                 organization_order_units_invoce_id: $validated['invoice_cotractor_id'],
@@ -238,17 +241,28 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OrderUnitCollection::make($orders->find($rectangle)->values()->all()), 'Возвращены все заказы входящие в область, главного заказа.'), 200);
     }
 
-
-    public function algorithAccept(
-        OrderUnitAlgorithmRequest $request,
+    /**
+     * Двух сторонний договор, о принятии в работу Заказа,
+     * P.S Заказчик/Подрядчик - true/true - что бы создался Transfer
+     */
+    public function agreementAccept(
+        AgreementOrderAccept $agreementOrderAccept,
         AuthService $auth,
+        AgreementOrderAcceptService $service,
     ) {
+
+        #TODO вынести логику в сервес
+
         /**
         * @var User
         */
         $user = $auth->getUserAuth();
 
-        // agreement_order
+        $result = $service->acceptAgreement($user, $agreementOrderAccept);
 
+
+        return $result->status
+            ? response()->json(array_success(null, $result->message), 200)
+            : response()->json(array_success(null, $result->message), 403);
     }
 }

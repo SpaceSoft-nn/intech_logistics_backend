@@ -35,15 +35,16 @@ class OrderUnitService
 
         $total = 0;
 
-        if( !($arr instanceof Collection) ) { $arrayOrders = $this->repOrder->getAll($arr); }
+        if( !($arr instanceof Collection ) || (is_array($arr)) ) { $arrayOrders = $this->repOrder->getAll($arr); }
+        else {  throw new Exception('Ошибка типа.', 400); }
 
-        $arrayOrders = $arr;
 
         if($arrayOrders) {
 
             foreach ($arrayOrders as $order) {
 
                 $price = trim($order->order_total); // Убираем пробелы по краям
+
                 if (is_numeric($price)) {
 
                     $total += (float) $price; // Приводим к числу с плавающей точкой и добавляем к общей сумме
@@ -73,9 +74,8 @@ class OrderUnitService
 
         $total = 0;
 
-        if( !($arr instanceof Collection) ) { $arrayOrders = $this->repOrder->getAll($arr); }
-
-        $arrayOrders = $arr;
+        if( !($arr instanceof Collection ) || (is_array($arr)) ) { $arrayOrders = $this->repOrder->getAll($arr); }
+        else {  throw new Exception('Ошибка типа.', 400); }
 
         if($arrayOrders) {
 

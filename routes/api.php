@@ -78,8 +78,11 @@ Route::prefix('/orders')->group(function () {
         //Добавление исполнителей к заказу
         Route::post('/{orderUnit}/contractors/{organization}', [OrderUnitController:: class, 'addСontractor'])->whereUuid('orderUnit', 'organization');
 
-        //Выбрать исполнителя
+        //Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи
         Route::post('/{orderUnit}/agreement-order', [OrderUnitController:: class, 'agreementOrder'])->whereUuid('orderUnit');
+
+        //Выбрать исполнителя
+        Route::post('/{agreementOrderAccept}/agreement-accept', [OrderUnitController:: class, 'agreementAccept'])->whereUuid('agreementOrderAccept');
 
     }
 
@@ -95,8 +98,6 @@ Route::prefix('/transfer')->group(function () {
     Route::post('', [TransferContoller:: class, 'create']);
 
 });
-
-
 
     //MatrixDistance
 Route::get('/matrix-distance', [MatrixDistanceController:: class, 'get']);

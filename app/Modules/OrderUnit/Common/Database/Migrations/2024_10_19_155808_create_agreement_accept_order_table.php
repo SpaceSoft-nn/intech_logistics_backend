@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->boolean('order_bool')->default(false)->comment('Заказчик подтвердил');
             $table->boolean('contractor_bool')->default(false)->comment('Исполнитель подтвердил');
+            $table->boolean('one_agreement')->default(false)->comment('Если вдруг исполнитель/заказчик не находится в нашей инфрастуктуре (внешний апи), тогда нужно что бы было подтвреждение с одной стороны');
 
             $table->timestamps();
 

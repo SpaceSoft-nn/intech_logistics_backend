@@ -252,4 +252,9 @@ class OrderUnitTest extends TestCase
         $this->assertIsArray($order->addresses->toArray());
         $this->assertNotEmpty($order->addresses->toArray());
     }
+
+    public function test_service_AgreementOrderAcceptService(): void
+    {
+
+    }
 }

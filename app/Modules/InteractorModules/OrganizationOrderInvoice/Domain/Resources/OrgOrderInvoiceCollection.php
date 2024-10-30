@@ -13,8 +13,6 @@ class OrgOrderInvoiceCollection extends ResourceCollection
 
     public function toArray(Request $request): array
     {
-        return [
-            'collections' => $this->collection,
-        ];
+        return $this->collection->toArray();
     }
 }

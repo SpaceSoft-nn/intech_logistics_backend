@@ -16,7 +16,7 @@ class AgreementOrderService
      *
      * @return ?AgreementOrderAccept
      */
-    public function run(AgreementOrderCreateDTO $dto) : ?AgreementOrderAccept
+    public function acceptCotractorToOrder(AgreementOrderCreateDTO $dto) : ?AgreementOrderAccept
     {
         return AgreementOrderInteractor::execute($dto);
     }

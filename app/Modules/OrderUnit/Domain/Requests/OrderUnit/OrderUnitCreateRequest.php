@@ -4,10 +4,7 @@ namespace App\Modules\OrderUnit\Domain\Requests\OrderUnit;
 
 use App\Modules\Address\Domain\Rules\ArrayAddressRule;
 use App\Modules\Base\Requests\ApiRequest;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class OrderUnitCreateRequest extends ApiRequest
@@ -52,13 +49,5 @@ class OrderUnitCreateRequest extends ApiRequest
 
         ];
     }
-
-    // /**
-    // * @return UserVO
-    // */
-    // public function getValueObject(): OrderUnitVO
-    // {
-    //     return OrderUnitVO::fromArrayToObject($this->validated());
-    // }
 
 }

@@ -12,7 +12,7 @@
                     "Address"
                 ],
                 "summary": "Вернуть запись по id",
-                "operationId": "3f588f39642dec1888383fe9ba87880d",
+                "operationId": "23d69645ecdd7bdc52ff82c11c23bc44",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -157,7 +157,7 @@
                     "Address"
                 ],
                 "summary": "Создать запись Address",
-                "operationId": "75e0aa89ee43e2381fa717ca3813dab3",
+                "operationId": "4b41ba3f0a4bcc842be9aa5845bfa934",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -803,26 +803,110 @@
                 "tags": [
                     "Order Unit"
                 ],
-                "summary": "Создать Заказ (OrderUnit) (Прислать только адресса отправки и прибытия, остальное будет заполнено случайно)",
+                "summary": "Создать Заказ (OrderUnit)\n*      (если догруз разрешён (ltl) - присылается главный массив адрессов start_address_id/end_address_id (начало/конца) и массив address_array), если тип ftl (без догруза) address_array - опускается",
                 "operationId": "f6fd7c39cf5ef7bc1eeb9c592d181abb",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "allOf": [
                                     {
                                         "properties": {
-                                            "start_Address_id": {
-                                                "description": "uuid записи",
+                                            "start_address_id": {
+                                                "description": "UUID адреса начала.",
                                                 "type": "string",
                                                 "format": "uuid",
                                                 "example": "123e4567-e89b-12d3-a456-426614174000"
                                             },
-                                            "end_Address_id": {
-                                                "description": "uuid записи",
+                                            "end_address_id": {
+                                                "description": "UUID адреса окончания.",
                                                 "type": "string",
                                                 "format": "uuid",
                                                 "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "start_date_delivery": {
+                                                "description": "Дата начала заказа.",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-10-01"
+                                            },
+                                            "end_date_delivery": {
+                                                "description": "Дата окончания заказа.",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-10-10"
+                                            },
+                                            "organization_id": {
+                                                "description": "UUID организации.",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "end_date_order": {
+                                                "description": "Дата окончания заказа.",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-10-15"
+                                            },
+                                            "product_type": {
+                                                "description": "Тип продукта (максимум 255 символов).",
+                                                "type": "string",
+                                                "maxLength": 255,
+                                                "example": "Продукты питания"
+                                            },
+                                            "body_volume": {
+                                                "description": "Объём продукта (минимум 1).",
+                                                "type": "number",
+                                                "format": "float",
+                                                "minimum": 1,
+                                                "example": 100.5
+                                            },
+                                            "type_load_truck": {
+                                                "description": "Тип загрузки грузовика. Возможные значения: ftl, ltl, custom.",
+                                                "type": "string",
+                                                "enum": [
+                                                    "ftl",
+                                                    "ltl",
+                                                    "custom"
+                                                ]
+                                            },
+                                            "order_total": {
+                                                "description": "Цена заказа.",
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": 50000
+                                            },
+                                            "description": {
+                                                "description": "Описание (необязательное поле, максимум 1000 символов).",
+                                                "type": "string",
+                                                "maxLength": 1000,
+                                                "example": "Это пример описания заказа.",
+                                                "nullable": true
+                                            },
+                                            "address_array": {
+                                                "description": "Массив объектов с UUID адресов в качестве ключей и датами в качестве значений.",
+                                                "type": "array",
+                                                "items": {
+                                                    "description": "Объект с UUID адреса и соответствующей датой.",
+                                                    "type": "object",
+                                                    "additionalProperties": {
+                                                        "schema": "OrdeUnitController",
+                                                        "description": "Дата в формате 'дд.мм.гггг'.",
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "07.01.2024"
+                                                    }
+                                                },
+                                                "example": [
+                                                    {
+                                                        "9d5b6d75-e26a-419e-96e3-0c0674987e06": "07.01.2024"
+                                                    },
+                                                    {
+                                                        "9d5b6d75-e2eb-42a1-9d67-f767190f1f75": "07.01.2024"
+                                                    }
+                                                ],
+                                                "nullable": true
                                             }
                                         },
                                         "type": "object"
@@ -1808,6 +1892,12 @@
     },
     "components": {
         "schemas": {
+            "OrdeUnitController": {
+                "description": "Дата в формате 'дд.мм.гггг'.",
+                "type": "string",
+                "format": "date",
+                "example": "07.01.2024"
+            },
             "OrderUnitResource": {
                 "title": "Json Ресурс Order Unit",
                 "properties": {

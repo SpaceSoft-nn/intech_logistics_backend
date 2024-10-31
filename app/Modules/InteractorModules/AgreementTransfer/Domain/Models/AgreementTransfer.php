@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\AgreementTransfer\Domain\Models;
+namespace App\Modules\InteractorModules\AgreementTransfer\Domain\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

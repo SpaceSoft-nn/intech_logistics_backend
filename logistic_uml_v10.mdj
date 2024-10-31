@@ -19774,7 +19774,7 @@
 											"top": 1084,
 											"width": 214.56689453125,
 											"height": 13,
-											"text": "+organization_transfer_id",
+											"text": "+organization_contractor_id",
 											"horizontalAlignment": 0
 										},
 										{
@@ -26745,7 +26745,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGSmmgiusHK/aM="
 							},
-							"name": "organization_transfer_id",
+							"name": "organization_contractor_id",
 							"type": ""
 						},
 						{

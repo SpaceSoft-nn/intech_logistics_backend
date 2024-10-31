@@ -29,8 +29,8 @@ namespace App\Http\Controllers;
 *    @OA\Property(property="id", type="string", format="uuid"),
 *    @OA\Property(property="delivery_start", type="string", format="date-time"),
 *    @OA\Property(property="delivery_end", type="string", format="date-time"),
-*    @OA\Property(property="Address_start_id", ref="#/components/schemas/AddressResource"),
-*    @OA\Property(property="Address_end_id", ref="#/components/schemas/AddressResource"),
+*    @OA\Property(property="address_start_id", ref="#/components/schemas/addressResource"),
+*    @OA\Property(property="address_end_id", ref="#/components/schemas/addressResource"),
 *    @OA\Property(property="body_volume", type="number", format="float"),
 *    @OA\Property(property="order_total", type="number", format="float"),
 *    @OA\Property(property="description", type="string"),
@@ -40,35 +40,6 @@ namespace App\Http\Controllers;
 *    @OA\Property(property="organization_id", ref="#/components/schemas/OrganizationResource"),
 * ),
 *
-* @OA\Schema(
-*    schema="AddressResource",
-*    title="Json Ресурс Адресса",
-*    @OA\Property(property="id", type="integer", format="int64"),
-*    @OA\Property(property="region", type="string"),
-*    @OA\Property(property="city", type="string"),
-*    @OA\Property(property="street", type="string"),
-*    @OA\Property(property="building", type="string"),
-*    @OA\Property(property="apartment", type="string"),
-*    @OA\Property(property="house_number", type="string"),
-*    @OA\Property(property="postal_code", type="string"),
-*    @OA\Property(property="type_Address", type="string"),
-*    @OA\Property(property="latitude", type="number", format="float"),
-*    @OA\Property(property="longitude", type="number", format="float"),
-* ),
-*
-*
-* @OA\Schema(
-*    schema="TransferResource",
-*    title="Ресурс Трансфера",
-*    @OA\Property(property="transport_id", type="integer", format="int64"),
-*    @OA\Property(property="delivery_start", type="string", format="date-time"),
-*    @OA\Property(property="delivery_end", type="string", format="date-time"),
-*    @OA\Property(property="Address_start_id", ref="#/components/schemas/AddressResource"),
-*    @OA\Property(property="Address_end_id", ref="#/components/schemas/AddressResource"),
-*    @OA\Property(property="order_total", type="number", format="float"),
-*    @OA\Property(property="description", type="string"),
-*    @OA\Property(property="body_volume", type="number", format="float"),
-* ),
 *
 * @OA\Schema(
 *   schema="MatrixDistanceResource",
@@ -140,7 +111,175 @@ namespace App\Http\Controllers;
 *     nullable=true
 *   ),
 * ),
-
+*
+* @OA\Schema(
+*    schema="OrderPriceResource",
+*    description="Json ресурс методов погрузки грузовика с ценами",
+*    title="Loading Truck Methods",
+*    @OA\Property(
+*        property="FTL",
+*        type="object",
+*        @OA\Property(property="value", type="string", description="Значение метода FTL"),
+*        @OA\Property(property="price", type="integer", description="Цена метода FTL")
+*    ),
+*    @OA\Property(
+*        property="LTL",
+*        type="object",
+*        @OA\Property(property="value", type="string", description="Значение метода LTL"),
+*        @OA\Property(property="price", type="integer", description="Цена метода LTL")
+*    )
+* ),
+*
+*
+* @OA\Schema(
+*     schema="InvoceOrderResource",
+*     description="JSON ресурс с информацией о ресурсе",
+*     title="Your Resource",
+*     @OA\Property(
+*         property="id",
+*         type="string",
+*         format="uuid",
+*         description="Уникальный идентификатор ресурса", example="41e9b50e-22c3-48b4-81be-efd6da3fa95b",
+*     ),
+*     @OA\Property(
+*         property="price",
+*         type="number",
+*         description="Информация о цене",
+*         type="number",
+*         format="float",
+*         description="Цена ресурса",
+*         example=100000,
+*     ),
+*     @OA\Property(
+*         property="date",
+*         description="Информация о дате",
+*         type="string", format="date", description="Дата ресурса", example="31.10.2024",
+*     ),
+*     @OA\Property(
+*         property="comment",
+*         description="Информация о комментарии",
+*         type="string", description="Текст комментария", example="Это комментарий от Подрядчика",
+*     ),
+* ),
+*
+* @OA\Schema(
+*     schema="OrgOrderInvoiceResource",
+*     title="Organization Order Invoice Resource",
+*     description="JSON ресурс - который отвечает какой Подрядчик откликнулся на опеределённый заказ (с invoice_order (неким документом или инфомрацией) )",
+*     type="object",
+*     @OA\Property(
+*         property="id",
+*         type="string",
+*         format="uuid",
+*         example="3fa85f64-5717-4562-b3fc-2c963f66afa6"
+*     ),
+*     @OA\Property(
+*         property="organization_contract",
+*         type="object",
+*         nullable=true,
+*         ref="#/components/schemas/OrganizationResource"
+*     ),
+*     @OA\Property(
+*         property="order",
+*         type="object",
+*         nullable=true,
+*         ref="#/components/schemas/OrderUnitResource"
+*     ),
+*     @OA\Property(
+*         property="invoice_order",
+*         type="object",
+*         nullable=true,
+*         ref="#/components/schemas/InvoceOrderResource"
+*     ),
+* ),
+*
+*
+* @OA\Schema(
+*     schema="AgreementOrderAcceptResource",
+*     description="JSON ресурс (agreement_order_accept) - статус утверждения двухстороннего договора Заказчик/Исполнитель",
+*     title="Agreement Order Accept Resource",
+*     @OA\Property(
+*         property="id",
+*         type="string",
+*         format="uuid",
+*         description="Уникальный идентификатор ресурса",
+*         example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+*     ),
+*     @OA\Property(
+*         property="agreement_order",
+*         type="object",
+*         description="Данные о заказе",
+*         @OA\Property(
+*             property="order_unit_id",
+*             type="string",
+*             format="uuid",
+*             description="Идентификатор подразделения заказа",
+*             example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+*         ),
+*         @OA\Property(
+*             property="organization_contractor_id",
+*             type="string",
+*             format="uuid",
+*             description="Идентификатор организации Подрядчика",
+*             example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+*         ),
+*         @OA\Property(
+*             property="organization_order_units_invoce_id",
+*             type="string",
+*             format="uuid",
+*             description="Идентификатор откликнувшегося подрядчика на заказ",
+*             example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+*         )
+*     ),
+*     @OA\Property(
+*         property="order_bool",
+*         type="boolean",
+*         description="Статус утверждения со стороны Заказчика",
+*         example=true
+*     ),
+*     @OA\Property(
+*         property="contractor_bool",
+*         type="boolean",
+*         description="Статус утверждения со стороны Исполнителя",
+*         example=true
+*     )
+* )
+*
+*
+*
+*
+* @OA\Schema(
+*     schema="TransferResource",
+*     description="JSON ресурс - информация о перевозке, которая согласована к работе (может состоять из одного заказа или множества)",
+*     title="Transfer",
+*     @OA\Property(property="transport_id", type="string", format="uuid", description="ID транспорта"),
+*     @OA\Property(property="delivery_start", type="string", description="Начало доставки"),
+*     @OA\Property(property="delivery_end", type="string", description="Конец доставки"),
+*     @OA\Property(property="Address_start_id", type="object", format="uuid", description="Адрес начала доставки"),
+*     @OA\Property(property="Address_end_id", type="string", format="uuid", description="Адрес конца доставки"),
+*     @OA\Property(property="order_total", type="integer", description="Общая сумма заказа"),
+*     @OA\Property(property="description", type="string", description="Описание заказа"),
+*     @OA\Property(property="body_volume", type="integer", description="Объем кузова")
+* ),
+*
+*
+* @OA\Schema(
+*     schema="AddressResource",
+*     description="Json ресурс адресса",
+*     title="Address",
+*     @OA\Property(property="id", type="string", format="uuid", description="ID адреса"),
+*     @OA\Property(property="region", type="string", description="Регион адреса"),
+*     @OA\Property(property="city", type="string", description="Город адреса"),
+*     @OA\Property(property="street", type="string", description="Улица адреса"),
+*     @OA\Property(property="building", type="string", description="Дом адреса", nullable=true),
+*     @OA\Property(property="apartament", type="string", description="Квартира адреса", nullable=true),
+*     @OA\Property(property="house_number", type="string", description="Номер дома адреса", nullable=true),
+*     @OA\Property(property="postal_code", type="string", description="Почтовый индекс адреса", nullable=true),
+*     @OA\Property(property="type_Address", type="string", description="Тип адреса", nullable=true),
+*     @OA\Property(property="latitude", type="float", description="Широта адреса"),
+*     @OA\Property(property="longitude", type="float", description="Долгота адреса")
+* ),
+*
 */
 abstract class Controller
 {

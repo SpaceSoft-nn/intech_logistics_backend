@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\TestCase;
 use Mockery;
 
+use function App\Helpers\array_success;
+
 class OrderUnitTest extends TestCase
 {
 

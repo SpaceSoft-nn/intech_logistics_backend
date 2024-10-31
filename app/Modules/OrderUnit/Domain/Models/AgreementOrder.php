@@ -27,7 +27,7 @@ class AgreementOrder extends Model
     protected $fillable = [
 
         'order_unit_id',
-        'organization_transfer_id',
+        'organization_contractor_id',
         'organization_order_units_invoce_id',
 
     ];

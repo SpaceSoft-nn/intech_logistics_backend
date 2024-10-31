@@ -28,12 +28,12 @@ class AddressFactory extends Factory
             city: $this->faker->city(),
             street: $this->faker->streetName(),
             building: $this->faker->buildingNumber,
-            apartment: $this->faker->randomNumber(3),
+            apartament: $this->faker->randomNumber(3),
             house_number: $this->faker->buildingNumber,
             postal_code: $this->faker->postcode,
             latitude:$this->faker->latitude(55.0, 56.0),
             longitude:$this->faker->longitude(37.0, 38.0),
-            type_Address: TypeAddressEnum::work,
+            type_address: TypeAddressEnum::work,
 
         );
 

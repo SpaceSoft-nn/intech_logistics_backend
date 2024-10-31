@@ -31,7 +31,7 @@ class AgreementOrderFactory extends Factory
         */
         $agreementOrder = AgreementOrderCreateDTO::make(
             order_unit_id: $orgOrderUnitInvoice->order_unit_id,
-            organization_transfer_id: null,
+            organization_contractor_id: null,
             organization_order_units_invoce_id : $orgOrderUnitInvoice->id,
         );
 

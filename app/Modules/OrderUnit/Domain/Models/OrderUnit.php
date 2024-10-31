@@ -50,7 +50,7 @@ class OrderUnit extends Model
         "add_load_space",
         "change_price",
         "change_time",
-        "Address_is_array",
+        "address_is_array",
 
     ];
 

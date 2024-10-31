@@ -901,7 +901,7 @@
                                                         "example": "07.01.2024",
                                                         "allOf": [
                                                             {
-                                                                "$ref": "#/components/schemas/OrganizationResource"
+                                                                "$ref": "#/components/schemas/AgreementOrderAcceptResource"
                                                             }
                                                         ]
                                                     }
@@ -967,16 +967,16 @@
                 }
             }
         },
-        "/api/orders/{uuid}": {
+        "/api/orders/{OrderUnit::uuid}": {
             "get": {
                 "tags": [
                     "Order Unit"
                 ],
                 "summary": "Получить заказ по uuid.",
-                "operationId": "80f1baec263398c3fc1d39b36e8da062",
+                "operationId": "6f875155dfa4800ea488578fc462b057",
                 "parameters": [
                     {
-                        "name": "uuid",
+                        "name": "OrderUnit::uuid",
                         "in": "path",
                         "description": "UUID заказа",
                         "required": true,
@@ -1004,6 +1004,125 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Return Order."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Обновить данные заказа.",
+                "description": "Обновляет информацию о заказе по UUID",
+                "operationId": "14a9a4f41dcce93793f26265c94b80c3",
+                "parameters": [
+                    {
+                        "name": "OrderUnit::uuid",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "change_price": {
+                                                "type": "boolean",
+                                                "example": false,
+                                                "nullable": true
+                                            },
+                                            "change_time": {
+                                                "type": "boolean",
+                                                "example": true,
+                                                "nullable": true
+                                            },
+                                            "order_status": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Опубликован",
+                                                    "Закрыт",
+                                                    "Отозван"
+                                                ],
+                                                "example": "Опубликован",
+                                                "nullable": true
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Обновление заказа по указанным параметрам, успешно.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Update order successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка обновление заказа.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Update order error."
                                         }
                                     },
                                     "type": "object"
@@ -1175,17 +1294,17 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Успешный возврат заказов входящие в область.",
+                        "description": "Успешный возврат сформированный цены, от данных заказа.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/components/schemas/OrderUnitResource"
+                                            "$ref": "#/components/schemas/OrderPriceResource"
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Return Orders."
+                                            "example": "Return select price."
                                         }
                                     },
                                     "type": "object"
@@ -1206,6 +1325,374 @@
                                         "code": {
                                             "type": "integer",
                                             "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/{OrderUnit::uuid}/contractors": {
+            "get": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Получить всех подрятчиков откликнувшиеся на заказ",
+                "description": "Получить всез подрятчиков которые откликнулись на заказ, и заинтересованы в работе, возвращает: organization_order_unit_invoces",
+                "operationId": "306e78e6917c09fd02589f5d90091927",
+                "parameters": [
+                    {
+                        "name": "OrderUnit::uuid",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Получение всех подрядчиков успешно.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/OrgOrderInvoiceResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Возвращены все подрядчики откликнувшиеся на заказ."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/orders/{OrderUnit::uuid}/contractors/{organization:uuid}": {
+            "post": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Добавление подрятчика к заказу",
+                "description": "Добавление подрядчика к заказу",
+                "operationId": "eed6963e94f4b0fa1d8db119da9302dc",
+                "parameters": [
+                    {
+                        "name": "OrderUnit::uuid",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "organization:uuid",
+                        "in": "path",
+                        "description": "UUID организации - которая будет подрядчиком",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "price": {
+                                                "description": "Цена",
+                                                "type": "number",
+                                                "example": "1000"
+                                            },
+                                            "date": {
+                                                "description": "Дата",
+                                                "type": "string",
+                                                "example": "2023-03-08"
+                                            },
+                                            "comment": {
+                                                "description": "Комментарий",
+                                                "type": "string",
+                                                "example": "Комментарий"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешный выбор заказчиком, конкретного подрядчика.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully added a contractor to the order."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка выбора конкретного подрядчика, заказчиком",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error added a contractor to the order."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/orders/{OrderUnit::uuid}/agreement-order": {
+            "post": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Выбор подрядчика (исполнителя), заказчиком",
+                "description": "//Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи",
+                "operationId": "8c34703ca0af5fa7ff213b7f6eaeb3e1",
+                "parameters": [
+                    {
+                        "name": "OrderUnit::uuid",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "invoice_cotractor_id": {
+                                                "description": "organization_order_units_invoce - откликнувшиеся подрядчики на заказ",
+                                                "type": "uuid",
+                                                "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Заказчик успешно выбрал подрятчика, запись создана.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AgreementOrderAcceptResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Заказчик успешно выбрал подрятчика, запись создана."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/orders/{agreementOrderAccept::uuid}/agreement-accept": {
+            "patch": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Утверждения Двух-стороннего договор, о принятии в работу Заказа, со стороны Заказчика/Подрядчика",
+                "description": "Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer",
+                "operationId": "8d0bc1e70b8c426d872bfd348b544ed9",
+                "parameters": [
+                    {
+                        "name": "agreementOrderAccept::uuid",
+                        "in": "path",
+                        "description": "uuid записи agreementOrderAccept (двухстороннего договора)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заказчик успешно выбрал подрятчика, запись создана.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Заказчик успешно согласовал выполнение заказа."
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "Подрядчик успешно согласовал выполнение заказа."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "У данного пользователя нет прав на согласования заказа.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "У Данного пользователя недостаточно прав, для подтврждения указанного договора agreementOrderAccept::uuid."
                                         }
                                     },
                                     "type": "object"
@@ -2088,11 +2575,11 @@
                         "type": "string",
                         "format": "date-time"
                     },
-                    "Address_start_id": {
-                        "$ref": "#/components/schemas/AddressResource"
+                    "address_start_id": {
+                        "$ref": "#/components/schemas/addressResource"
                     },
-                    "Address_end_id": {
-                        "$ref": "#/components/schemas/AddressResource"
+                    "address_end_id": {
+                        "$ref": "#/components/schemas/addressResource"
                     },
                     "body_volume": {
                         "type": "number",
@@ -2120,7 +2607,7 @@
                 },
                 "type": "object"
             },
-            "AddressResource": {
+            "addressResource": {
                 "title": "Json Ресурс Адресса",
                 "properties": {
                     "id": {
@@ -2148,7 +2635,7 @@
                     "postal_code": {
                         "type": "string"
                     },
-                    "type_Address": {
+                    "type_address": {
                         "type": "string"
                     },
                     "latitude": {
@@ -2177,11 +2664,11 @@
                         "type": "string",
                         "format": "date-time"
                     },
-                    "Address_start_id": {
-                        "$ref": "#/components/schemas/AddressResource"
+                    "address_start_id": {
+                        "$ref": "#/components/schemas/addressResource"
                     },
-                    "Address_end_id": {
-                        "$ref": "#/components/schemas/AddressResource"
+                    "address_end_id": {
+                        "$ref": "#/components/schemas/addressResource"
                     },
                     "order_total": {
                         "type": "number",
@@ -2355,6 +2842,155 @@
                 },
                 "type": "object"
             },
+            "OrderPriceResource": {
+                "title": "Loading Truck Methods",
+                "description": "Json ресурс методов погрузки грузовика с ценами",
+                "properties": {
+                    "FTL": {
+                        "properties": {
+                            "value": {
+                                "description": "Значение метода FTL",
+                                "type": "string"
+                            },
+                            "price": {
+                                "description": "Цена метода FTL",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "LTL": {
+                        "properties": {
+                            "value": {
+                                "description": "Значение метода LTL",
+                                "type": "string"
+                            },
+                            "price": {
+                                "description": "Цена метода LTL",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "InvoceOrderResource": {
+                "title": "Your Resource",
+                "description": "JSON ресурс с информацией о ресурсе",
+                "properties": {
+                    "id": {
+                        "description": "Уникальный идентификатор ресурса",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+                    },
+                    "price": {
+                        "description": "Цена ресурса",
+                        "type": "number",
+                        "format": "float",
+                        "example": 100000
+                    },
+                    "date": {
+                        "description": "Дата ресурса",
+                        "type": "string",
+                        "format": "date",
+                        "example": "31.10.2024"
+                    },
+                    "comment": {
+                        "description": "Текст комментария",
+                        "type": "string",
+                        "example": "Это комментарий от Подрядчика"
+                    }
+                },
+                "type": "object"
+            },
+            "OrgOrderInvoiceResource": {
+                "title": "Organization Order Invoice Resource",
+                "description": "JSON ресурс - который отвечает какой Подрядчик откликнулся на опеределённый заказ (с invoice_order (неким документом или инфомрацией) )",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                    },
+                    "organization_contract": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/OrganizationResource"
+                            }
+                        ],
+                        "nullable": true,
+                        "type": "object"
+                    },
+                    "order": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/OrderUnitResource"
+                            }
+                        ],
+                        "nullable": true,
+                        "type": "object"
+                    },
+                    "invoice_order": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/InvoceOrderResource"
+                            }
+                        ],
+                        "nullable": true,
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "AgreementOrderAcceptResource": {
+                "title": "Agreement Order Accept Resource",
+                "description": "JSON ресурс (agreement_order_accept) - статус утверждение двух стороннего договора Заказчик/Исполнитель",
+                "properties": {
+                    "id": {
+                        "description": "Уникальный идентификатор ресурса",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+                    },
+                    "agreement_order": {
+                        "description": "Данные о заказе",
+                        "properties": {
+                            "order_unit_id": {
+                                "description": "Идентификатор подразделения заказа",
+                                "type": "string",
+                                "format": "uuid",
+                                "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+                            },
+                            "organization_contractor_id": {
+                                "description": "Идентификатор организации Подрядчика",
+                                "type": "string",
+                                "format": "uuid",
+                                "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+                            },
+                            "organization_order_units_invoce_id": {
+                                "description": "Индефикатор откликнувшегося подрядчика на заказ",
+                                "type": "string",
+                                "format": "uuid",
+                                "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "order_bool": {
+                        "description": "Статус утверждения со стороны Заказчика",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "contractor_bool": {
+                        "description": "Статус утверждения со стороны Исполнителя",
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
+            },
             "OrdeUnitController": {
                 "description": "Дата в формате 'дд.мм.гггг'.",
                 "type": "string",
@@ -2362,7 +2998,7 @@
                 "example": "07.01.2024",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/OrganizationResource"
+                        "$ref": "#/components/schemas/AgreementOrderAcceptResource"
                     }
                 ]
             },

@@ -151,6 +151,9 @@ class OrderUnitController extends Controller
         AddContractorRequest $request,
         OrganizationOrderInvoiceService $service,
     ) {
+
+        #TODO Проверять что организация принадлежит к user от корого идёт запрос
+
         /**
         * @var InvoiceOrderVO
         */
@@ -190,6 +193,7 @@ class OrderUnitController extends Controller
         AgreementOrderRequest $request,
         AgreementOrderService $service,
     ) {
+        #TODO Проверять что заказ принадлежит user
         $validated = $request->validated();
 
         /**
@@ -198,8 +202,8 @@ class OrderUnitController extends Controller
         $model = $service->acceptCotractorToOrder(
             AgreementOrderCreateDTO::make(
                 order_unit_id: $orderUnit->id,
-                organization_order_units_invoce_id: $validated['invoice_cotractor_id'],
-                organization_transfer_id: null,
+                organization_order_units_invoce_id: $validated['organization_order_units_invoce_id'],
+                organization_contractor_id: null,
             )
         );
 
@@ -257,7 +261,6 @@ class OrderUnitController extends Controller
         $user = $auth->getUserAuth();
 
         $result = $service->acceptAgreement($user, $agreementOrderAccept);
-
 
         return $result->status
             ? response()->json(array_success(null, $result->message), 200)

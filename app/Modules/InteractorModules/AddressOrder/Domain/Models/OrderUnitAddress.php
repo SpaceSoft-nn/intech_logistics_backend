@@ -9,7 +9,7 @@ class OrderUnitAddress extends Pivot
 {
     public $incrementing = true;
 
-    protected $table = 'order_unit_Address'; // Убедитесь, что название таблицы правильное
+    protected $table = 'order_unit_address'; // Убедитесь, что название таблицы правильное
 
     protected $fillable = [
         'order_unit_id',

@@ -28,7 +28,7 @@ class Address extends Model
         "city",
         "street",
         "building",
-        "apartment",
+        "apartament",
         "house_number",
         "postal_code",
         "latitude",
@@ -54,7 +54,7 @@ class Address extends Model
 
     public function order_units(): BelongsToMany
     {
-        return $this->belongsToMany(OrderUnit::class, 'order_unit_Address', 'Address_id' , 'order_unit_id')
+        return $this->belongsToMany(OrderUnit::class, 'order_unit_address', 'address_id' , 'order_unit_id')
             ->using(OrderUnitAddress::class)
             ->withPivot(['data_time', 'type', 'priority'])
             ->withTimestamps();

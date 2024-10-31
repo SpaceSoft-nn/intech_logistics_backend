@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers\API\Transfer;
 
-use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
-use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Transfer\App\Data\DTO\Transfer\CreateTransferServiceDTO;
 use App\Modules\Transfer\App\Data\DTO\Transfer\TransferDTO;
 use App\Modules\Transfer\Domain\Models\Transfer;
@@ -12,7 +9,7 @@ use App\Modules\Transfer\Domain\Requests\TransferCreateRequest;
 use App\Modules\Transfer\Domain\Resources\TransferCollection;
 use App\Modules\Transfer\Domain\Resources\TransferResource;
 use App\Modules\Transfer\Domain\Services\TransferService;
-use App\Modules\Transport\Domain\Models\Transport;
+
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
@@ -56,7 +53,7 @@ class TransferContoller
 
         return $transfer
             ? response()->json(array_success(TransferResource::make($transfer), 'Return Transfer.'), 201)
-            : response()->json(array_error(TransferResource::make($transfer), 'Error create transfer'), 404);
+            : response()->json(array_error(null, 'Error create transferю'), 404);
     }
 
 }

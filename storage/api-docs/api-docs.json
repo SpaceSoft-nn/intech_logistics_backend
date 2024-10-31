@@ -7,151 +7,6 @@
     "paths": {
         "/api/swagger": {},
         "/api/addresses": {
-            "get": {
-                "tags": [
-                    "Address"
-                ],
-                "summary": "Вернуть запись по id",
-                "operationId": "23d69645ecdd7bdc52ff82c11c23bc44",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "properties": {
-                                            "id": {
-                                                "description": "uuid записи",
-                                                "type": "string",
-                                                "format": "uuid",
-                                                "example": "123e4567-e89b-12d3-a456-426614174000"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "region": {
-                                            "description": "Регион",
-                                            "type": "string",
-                                            "example": "Москва"
-                                        },
-                                        "city": {
-                                            "description": "Город",
-                                            "type": "string",
-                                            "example": "Москва"
-                                        },
-                                        "street": {
-                                            "description": "Улица",
-                                            "type": "string",
-                                            "example": "Тверская"
-                                        },
-                                        "building": {
-                                            "description": "Строение",
-                                            "type": "string",
-                                            "example": "1",
-                                            "nullable": true
-                                        },
-                                        "apartment": {
-                                            "description": "Квартира",
-                                            "type": "string",
-                                            "example": "101",
-                                            "nullable": true
-                                        },
-                                        "house_number": {
-                                            "description": "Номер дома",
-                                            "type": "string",
-                                            "example": "10",
-                                            "nullable": true
-                                        },
-                                        "postal_code": {
-                                            "description": "Почтовый индекс",
-                                            "type": "string",
-                                            "example": "123456",
-                                            "nullable": true
-                                        },
-                                        "latitude": {
-                                            "description": "Широта",
-                                            "type": "string",
-                                            "example": "55.7558"
-                                        },
-                                        "longitude": {
-                                            "description": "Долгота",
-                                            "type": "string",
-                                            "example": "37.6173"
-                                        },
-                                        "id": {
-                                            "description": "uuid записи",
-                                            "type": "string",
-                                            "format": "uuid",
-                                            "example": "123e4567-e89b-12d3-a456-426614174000"
-                                        },
-                                        "updated_at": {
-                                            "description": "Дата и время создания",
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2024-10-10T00:51:39.000000Z"
-                                        },
-                                        "created_at": {
-                                            "description": "Дата и время создания",
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2024-10-10T00:51:39.000000Z"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Адресс не найден.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message_error": {
-                                            "type": "string",
-                                            "example": "Такого адресса не существует."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Общая ошибка сервера.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message_error": {
-                                            "type": "string",
-                                            "example": "Общая ошибка сервера."
-                                        },
-                                        "code": {
-                                            "type": "integer",
-                                            "example": "500"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "post": {
                 "tags": [
                     "Address"
@@ -229,72 +84,90 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "region": {
-                                            "description": "Регион",
-                                            "type": "string",
-                                            "example": "Москва"
+                                        "data": {
+                                            "$ref": "#/components/schemas/AddressResource"
                                         },
-                                        "city": {
-                                            "description": "Город",
+                                        "message": {
                                             "type": "string",
-                                            "example": "Москва"
+                                            "example": "Return Address create."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
                                         },
-                                        "street": {
-                                            "description": "Улица",
-                                            "type": "string",
-                                            "example": "Тверская"
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/addresses/{address::uuid}": {
+            "get": {
+                "tags": [
+                    "Address"
+                ],
+                "summary": "Вернуть запись по id",
+                "operationId": "fe1ddef7f0f8c34e93c0ea641cb05199",
+                "parameters": [
+                    {
+                        "name": "address::uuid",
+                        "in": "path",
+                        "description": "UUID Адресса",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/AddressResource"
                                         },
-                                        "building": {
-                                            "description": "Строение",
+                                        "message": {
                                             "type": "string",
-                                            "example": "1",
-                                            "nullable": true
-                                        },
-                                        "apartment": {
-                                            "description": "Квартира",
+                                            "example": "Return Address select."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Адресс не найден.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
                                             "type": "string",
-                                            "example": "101",
-                                            "nullable": true
-                                        },
-                                        "house_number": {
-                                            "description": "Номер дома",
-                                            "type": "string",
-                                            "example": "10",
-                                            "nullable": true
-                                        },
-                                        "postal_code": {
-                                            "description": "Почтовый индекс",
-                                            "type": "string",
-                                            "example": "123456",
-                                            "nullable": true
-                                        },
-                                        "latitude": {
-                                            "description": "Широта",
-                                            "type": "string",
-                                            "example": "55.7558"
-                                        },
-                                        "longitude": {
-                                            "description": "Долгота",
-                                            "type": "string",
-                                            "example": "37.6173"
-                                        },
-                                        "id": {
-                                            "description": "uuid записи",
-                                            "type": "string",
-                                            "format": "uuid",
-                                            "example": "123e4567-e89b-12d3-a456-426614174000"
-                                        },
-                                        "updated_at": {
-                                            "description": "Дата и время создания",
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2024-10-10T00:51:39.000000Z"
-                                        },
-                                        "created_at": {
-                                            "description": "Дата и время создания",
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2024-10-10T00:51:39.000000Z"
+                                            "example": "Такого адресса не существует."
                                         }
                                     },
                                     "type": "object"
@@ -901,7 +774,7 @@
                                                         "example": "07.01.2024",
                                                         "allOf": [
                                                             {
-                                                                "$ref": "#/components/schemas/AgreementOrderAcceptResource"
+                                                                "$ref": "#/components/schemas/AddressResource"
                                                             }
                                                         ]
                                                     }
@@ -1700,7 +1573,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/organization": {
@@ -1859,6 +1737,84 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Faild create organization."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organization/{organization::uuid}": {
+            "get": {
+                "tags": [
+                    "Organization"
+                ],
+                "summary": "Вернуть запись organization по id",
+                "operationId": "a7d9897663da4837a7162e26be4fd318",
+                "parameters": [
+                    {
+                        "name": "organization::uuid",
+                        "in": "path",
+                        "description": "UUID Организации",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OrganizationResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return organization select."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Организация не найдена.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Такой организации не существует."
                                         }
                                     },
                                     "type": "object"
@@ -2074,37 +2030,106 @@
             }
         },
         "/api/transfer": {
+            "get": {
+                "tags": [
+                    "Transfer"
+                ],
+                "summary": "Получить все записи Transfer",
+                "operationId": "0ffb18c1b89d6269f4a0fdadce20ef63",
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат Заказов.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TransferResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return all Transfers."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Transfer"
                 ],
-                "summary": "Создать трансфер по главному заказу и массиву заказов.",
+                "summary": "Создать трансфер по главному заказу или массиву заказов.",
                 "operationId": "812181f3c75c834a8087229f87facdf8",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "allOf": [
                                     {
-                                        "schema": "OrderValidation",
+                                        "schema": "TransferRequest",
                                         "required": [
                                             "main_order",
-                                            "id_order_array"
+                                            "agreement_order_accept_id",
+                                            "transport_id"
                                         ],
                                         "properties": {
                                             "main_order": {
-                                                "description": "UUID основного заказа",
+                                                "description": "UUID основного заказа - главный заказ или главный вектор движения",
                                                 "type": "string",
-                                                "format": "uuid"
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
                                             },
-                                            "id_order_array": {
-                                                "description": "Массив UUID заказов (Сюда нужно добавлять так же основной заказ!)",
+                                            "agreement_order_accept_id": {
+                                                "description": "Массив UUID соглашений на заказ. Должен содержать как минимум один элемент.",
                                                 "type": "array",
                                                 "items": {
-                                                    "description": "UUID заказа",
+                                                    "description": "UUID соглашения на заказ",
                                                     "type": "string",
-                                                    "format": "uuid"
-                                                }
+                                                    "format": "uuid",
+                                                    "example": "123e4567-e89b-12d3-a456-426614174001"
+                                                },
+                                                "minItems": 1
+                                            },
+                                            "transport_id": {
+                                                "description": "UUID транспорта",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174002"
+                                            },
+                                            "description": {
+                                                "description": "Описание трансфера. Необязательно. От 3 до 1000 символов.",
+                                                "type": "string",
+                                                "maxLength": 1000,
+                                                "minLength": 3,
+                                                "example": "Описание трансфера..."
                                             }
                                         },
                                         "type": "object"
@@ -2123,6 +2148,92 @@
                                     "properties": {
                                         "data": {
                                             "$ref": "#/components/schemas/TransferResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return Transfer."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Успешное создание Трансфера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error create transfer."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/transfer/{transfer::uuid}": {
+            "get": {
+                "tags": [
+                    "Transfer"
+                ],
+                "summary": "Получить запись по uuid Transfer",
+                "operationId": "4551161fcb3a4d051433f170553e57a2",
+                "parameters": [
+                    {
+                        "name": "transfer::uuid",
+                        "in": "path",
+                        "description": "UUID Трансфера",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат Заказов.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TransferResource"
+                                            }
                                         },
                                         "message": {
                                             "type": "string",
@@ -2576,10 +2687,10 @@
                         "format": "date-time"
                     },
                     "address_start_id": {
-                        "$ref": "#/components/schemas/addressResource"
+                        "$ref": "#/components/schemas/AddressResource"
                     },
                     "address_end_id": {
-                        "$ref": "#/components/schemas/addressResource"
+                        "$ref": "#/components/schemas/AddressResource"
                     },
                     "body_volume": {
                         "type": "number",
@@ -2603,83 +2714,6 @@
                     },
                     "organization_id": {
                         "$ref": "#/components/schemas/OrganizationResource"
-                    }
-                },
-                "type": "object"
-            },
-            "addressResource": {
-                "title": "Json Ресурс Адресса",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    "region": {
-                        "type": "string"
-                    },
-                    "city": {
-                        "type": "string"
-                    },
-                    "street": {
-                        "type": "string"
-                    },
-                    "building": {
-                        "type": "string"
-                    },
-                    "apartment": {
-                        "type": "string"
-                    },
-                    "house_number": {
-                        "type": "string"
-                    },
-                    "postal_code": {
-                        "type": "string"
-                    },
-                    "type_address": {
-                        "type": "string"
-                    },
-                    "latitude": {
-                        "type": "number",
-                        "format": "float"
-                    },
-                    "longitude": {
-                        "type": "number",
-                        "format": "float"
-                    }
-                },
-                "type": "object"
-            },
-            "TransferResource": {
-                "title": "Ресурс Трансфера",
-                "properties": {
-                    "transport_id": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    "delivery_start": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "delivery_end": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "address_start_id": {
-                        "$ref": "#/components/schemas/addressResource"
-                    },
-                    "address_end_id": {
-                        "$ref": "#/components/schemas/addressResource"
-                    },
-                    "order_total": {
-                        "type": "number",
-                        "format": "float"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "body_volume": {
-                        "type": "number",
-                        "format": "float"
                     }
                 },
                 "type": "object"
@@ -2875,7 +2909,7 @@
                 },
                 "type": "object"
             },
-            "InvoceOrderResource": {
+            "InvoiceOrderResource": {
                 "title": "Your Resource",
                 "description": "JSON ресурс с информацией о ресурсе",
                 "properties": {
@@ -2895,7 +2929,7 @@
                         "description": "Дата ресурса",
                         "type": "string",
                         "format": "date",
-                        "example": "31.10.2024"
+                        "example": "2024-10-31"
                     },
                     "comment": {
                         "description": "Текст комментария",
@@ -2907,7 +2941,7 @@
             },
             "OrgOrderInvoiceResource": {
                 "title": "Organization Order Invoice Resource",
-                "description": "JSON ресурс - который отвечает какой Подрядчик откликнулся на опеределённый заказ (с invoice_order (неким документом или инфомрацией) )",
+                "description": "JSON ресурс - который отвечает за то, какой Подрядчик откликнулся на определённый заказ (с invoice_order (неким документом или информацией))",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -2935,7 +2969,7 @@
                     "invoice_order": {
                         "oneOf": [
                             {
-                                "$ref": "#/components/schemas/InvoceOrderResource"
+                                "$ref": "#/components/schemas/InvoiceOrderResource"
                             }
                         ],
                         "nullable": true,
@@ -2946,7 +2980,7 @@
             },
             "AgreementOrderAcceptResource": {
                 "title": "Agreement Order Accept Resource",
-                "description": "JSON ресурс (agreement_order_accept) - статус утверждение двух стороннего договора Заказчик/Исполнитель",
+                "description": "JSON ресурс (agreement_order_accept) - статус утверждения двухстороннего договора Заказчик/Исполнитель",
                 "properties": {
                     "id": {
                         "description": "Уникальный идентификатор ресурса",
@@ -2970,7 +3004,7 @@
                                 "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
                             },
                             "organization_order_units_invoce_id": {
-                                "description": "Индефикатор откликнувшегося подрядчика на заказ",
+                                "description": "Идентификатор откликнувшегося подрядчика на заказ",
                                 "type": "string",
                                 "format": "uuid",
                                 "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
@@ -2991,6 +3025,107 @@
                 },
                 "type": "object"
             },
+            "TransferResource": {
+                "title": "Transfer",
+                "description": "JSON ресурс - информация о перевозке, которая согласована к работе (может состоять из одного заказа или множества)",
+                "properties": {
+                    "transport_id": {
+                        "description": "ID транспорта",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "delivery_start": {
+                        "description": "Начало доставки",
+                        "type": "string"
+                    },
+                    "delivery_end": {
+                        "description": "Конец доставки",
+                        "type": "string"
+                    },
+                    "Address_start_id": {
+                        "description": "Адрес начала доставки",
+                        "type": "object",
+                        "format": "uuid"
+                    },
+                    "Address_end_id": {
+                        "description": "Адрес конца доставки",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "order_total": {
+                        "description": "Общая сумма заказа",
+                        "type": "integer"
+                    },
+                    "description": {
+                        "description": "Описание заказа",
+                        "type": "string"
+                    },
+                    "body_volume": {
+                        "description": "Объем кузова",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "AddressResource": {
+                "title": "Address",
+                "description": "Json ресурс адресса",
+                "properties": {
+                    "id": {
+                        "description": "ID адреса",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "region": {
+                        "description": "Регион адреса",
+                        "type": "string"
+                    },
+                    "city": {
+                        "description": "Город адреса",
+                        "type": "string"
+                    },
+                    "street": {
+                        "description": "Улица адреса",
+                        "type": "string"
+                    },
+                    "building": {
+                        "description": "Дом адреса",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "apartament": {
+                        "description": "Квартира адреса",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "house_number": {
+                        "description": "Номер дома адреса",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "postal_code": {
+                        "description": "Почтовый индекс адреса",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "type_Address": {
+                        "description": "Тип адреса",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "latitude": {
+                        "description": "Широта адреса",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "longitude": {
+                        "description": "Долгота адреса",
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "type": "object"
+            },
             "OrdeUnitController": {
                 "description": "Дата в формате 'дд.мм.гггг'.",
                 "type": "string",
@@ -2998,7 +3133,7 @@
                 "example": "07.01.2024",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/AgreementOrderAcceptResource"
+                        "$ref": "#/components/schemas/AddressResource"
                     }
                 ]
             },

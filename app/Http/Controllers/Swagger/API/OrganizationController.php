@@ -79,6 +79,51 @@ namespace App\Http\Controllers\Swagger\API;
  *              @OA\Property(property="code", type="integer", example="500"),
  *          ),
  *      ),
+ * ),
+ *
+ * @OA\GET(
+ *
+ *      path="/api/organization/{organization::uuid}",
+ *      summary="Вернуть запись organization по id",
+ *      tags={"Organization"},
+ *      @OA\Parameter(
+ *              name="organization::uuid",
+ *              in="path",
+ *              required=true,
+ *              description="UUID Организации",
+ *              @OA\Schema(
+ *                  type="string",
+ *                  format="uuid"
+ *              )
+ *       ),
+ *
+ *
+ *      @OA\Response(
+ *          response=200,
+ *          description="Ok",
+ *          @OA\JsonContent(
+ *              @OA\Property( property="data", type="object", ref="#/components/schemas/OrganizationResource" ),
+ *              @OA\Property(property="message", type="string", example="Return organization select."),
+ *          ),
+ *      ),
+ *
+ *      @OA\Response(
+ *          response=404,
+ *          description="Организация не найдена.",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message_error", type="string", example="Такой организации не существует."),
+ *          ),
+ *      ),
+ *
+ *
+ *      @OA\Response(
+ *          response=500,
+ *          description="Общая ошибка сервера.",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message_error", type="string", example="Общая ошибка сервера."),
+ *              @OA\Property(property="code", type="integer", example="500"),
+ *          ),
+ *      ),
  * )
  */
 class OrganizationController

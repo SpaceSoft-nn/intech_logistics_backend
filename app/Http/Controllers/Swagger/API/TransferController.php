@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 *
 *      path="/api/transfer",
 *      summary="Получить все записи Transfer",
-*      tags={"Order Unit"},
+*      tags={"Transfer"},
 *
 *       @OA\Response(
 *           response=200,
@@ -35,12 +35,12 @@ use App\Http\Controllers\Controller;
 *
 *      path="/api/transfer/{transfer::uuid}",
 *      summary="Получить запись по uuid Transfer",
-*      tags={"Order Unit"},
+*      tags={"Transfer"},
 *          @OA\Parameter(
 *              name="transfer::uuid",
 *              in="path",
 *              required=true,
-*              description="UUID заказа",
+*              description="UUID Трансфера",
 *              @OA\Schema(
 *                  type="string",
 *                  format="uuid"

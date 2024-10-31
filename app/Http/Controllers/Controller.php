@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-
 /**
 *
 *
@@ -29,8 +27,8 @@ namespace App\Http\Controllers;
 *    @OA\Property(property="id", type="string", format="uuid"),
 *    @OA\Property(property="delivery_start", type="string", format="date-time"),
 *    @OA\Property(property="delivery_end", type="string", format="date-time"),
-*    @OA\Property(property="address_start_id", ref="#/components/schemas/addressResource"),
-*    @OA\Property(property="address_end_id", ref="#/components/schemas/addressResource"),
+*    @OA\Property(property="address_start_id", ref="#/components/schemas/AddressResource"),
+*    @OA\Property(property="address_end_id", ref="#/components/schemas/AddressResource"),
 *    @OA\Property(property="body_volume", type="number", format="float"),
 *    @OA\Property(property="order_total", type="number", format="float"),
 *    @OA\Property(property="description", type="string"),
@@ -132,65 +130,24 @@ namespace App\Http\Controllers;
 *
 *
 * @OA\Schema(
-*     schema="InvoceOrderResource",
+*     schema="InvoiceOrderResource",
 *     description="JSON ресурс с информацией о ресурсе",
 *     title="Your Resource",
-*     @OA\Property(
-*         property="id",
-*         type="string",
-*         format="uuid",
-*         description="Уникальный идентификатор ресурса", example="41e9b50e-22c3-48b4-81be-efd6da3fa95b",
-*     ),
-*     @OA\Property(
-*         property="price",
-*         type="number",
-*         description="Информация о цене",
-*         type="number",
-*         format="float",
-*         description="Цена ресурса",
-*         example=100000,
-*     ),
-*     @OA\Property(
-*         property="date",
-*         description="Информация о дате",
-*         type="string", format="date", description="Дата ресурса", example="31.10.2024",
-*     ),
-*     @OA\Property(
-*         property="comment",
-*         description="Информация о комментарии",
-*         type="string", description="Текст комментария", example="Это комментарий от Подрядчика",
-*     ),
+*     @OA\Property(property="id", type="string", format="uuid", description="Уникальный идентификатор ресурса", example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"),
+*     @OA\Property(property="price", type="number", format="float", description="Цена ресурса", example=100000),
+*     @OA\Property(property="date", type="string", format="date", description="Дата ресурса", example="2024-10-31"),
+*     @OA\Property(property="comment", type="string", description="Текст комментария", example="Это комментарий от Подрядчика")
 * ),
 *
 * @OA\Schema(
 *     schema="OrgOrderInvoiceResource",
 *     title="Organization Order Invoice Resource",
-*     description="JSON ресурс - который отвечает какой Подрядчик откликнулся на опеределённый заказ (с invoice_order (неким документом или инфомрацией) )",
+*     description="JSON ресурс - который отвечает за то, какой Подрядчик откликнулся на определённый заказ (с invoice_order (неким документом или информацией))",
 *     type="object",
-*     @OA\Property(
-*         property="id",
-*         type="string",
-*         format="uuid",
-*         example="3fa85f64-5717-4562-b3fc-2c963f66afa6"
-*     ),
-*     @OA\Property(
-*         property="organization_contract",
-*         type="object",
-*         nullable=true,
-*         ref="#/components/schemas/OrganizationResource"
-*     ),
-*     @OA\Property(
-*         property="order",
-*         type="object",
-*         nullable=true,
-*         ref="#/components/schemas/OrderUnitResource"
-*     ),
-*     @OA\Property(
-*         property="invoice_order",
-*         type="object",
-*         nullable=true,
-*         ref="#/components/schemas/InvoceOrderResource"
-*     ),
+*     @OA\Property(property="id", type="string", format="uuid", example="3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+*     @OA\Property(property="organization_contract", type="object", nullable=true, ref="#/components/schemas/OrganizationResource"),
+*     @OA\Property(property="order", type="object", nullable=true, ref="#/components/schemas/OrderUnitResource"),
+*     @OA\Property(property="invoice_order", type="object", nullable=true, ref="#/components/schemas/InvoiceOrderResource")
 * ),
 *
 *
@@ -243,8 +200,7 @@ namespace App\Http\Controllers;
 *         description="Статус утверждения со стороны Исполнителя",
 *         example=true
 *     )
-* )
-*
+* ),
 *
 *
 *

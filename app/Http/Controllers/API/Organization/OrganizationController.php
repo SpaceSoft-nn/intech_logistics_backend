@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Organization;
 use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
 use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
+use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Organization\Domain\Requests\CreateOrganizationRequest;
 use App\Modules\Organization\Domain\Resources\OrganizationResource;
 use App\Modules\Organization\Domain\Services\OrganizationService;
@@ -16,11 +17,15 @@ use function App\Helpers\isAuthorized;
 
 class OrganizationController
 {
-
     public function __construct(
         private OrganizationService $service,
         private AuthServiceInterface $auth,
     ) {}
+
+    public function show(Organization $organization)
+    {
+        return response()->json(array_success(OrganizationResource::make($organization), 'Return organization select.'), 200);
+    }
 
 
     public function create(CreateOrganizationRequest $request)

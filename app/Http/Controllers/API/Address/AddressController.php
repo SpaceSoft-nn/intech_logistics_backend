@@ -15,13 +15,9 @@ use function App\Helpers\array_success;
 class AddressController extends Controller
 {
 
-    public function get(Request $Address)
+    public function show(Address $address)
     {
-        $Address = Address::find($Address->input('id'));
-
-        abort_unless( (bool) $Address , 404, "Такого адресса не существует.");
-
-        return $Address;
+        return response()->json(array_success(AddressResource::make($address), 'Return create Address.'), 200);
     }
 
     public function create(

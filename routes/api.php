@@ -22,7 +22,9 @@ Route::post('/notification/send', [NotificationController::class, 'sendNotificat
 Route::post('/notification/confirm', [NotificationController::class, 'confirmCode']);
 
     //Organization
-Route::post('/organization', [OrganizationController:: class, 'create'])->middleware(['auth:sanctum']);
+Route::get('/organization/{organization}', [OrganizationController:: class, 'show'])->whereUuid('organization');
+Route::post('/organization', [OrganizationController:: class, 'create']);
+
 
     //User
 Route::post('/user', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
@@ -44,7 +46,7 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 });
 
     //Address
-Route::get('/addresses', [AddressController:: class, 'get']);
+Route::get('/addresses/{addresses}', [AddressController:: class, 'show'])->whereUuid('orderUnit');
 Route::post('/addresses', [AddressController:: class, 'create']);
 
     //orderUnit

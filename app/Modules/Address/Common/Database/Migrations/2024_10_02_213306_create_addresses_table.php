@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('city');
             $table->string('street');
             $table->string('building')->nullable();
-            $table->string('apartment')->nullable();
+            $table->string('apartament')->nullable();
             $table->string('house_number')->nullable();
             $table->string('postal_code')->nullable();
 
-            $table->string('type_Address')->nullable();
+            $table->string('type_address')->nullable();
 
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);

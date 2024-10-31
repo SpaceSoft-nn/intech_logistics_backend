@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_unit_Address', function (Blueprint $table) {
+        Schema::create('order_unit_address', function (Blueprint $table) {
 
             $table->id('id')->primary();
 
             $table->uuid('order_unit_id')
                 ->constrained('order_units')->noActionOnDelete();
 
-            $table->uuid('Address_id')
+            $table->uuid('address_id')
                 ->constrained('addresses')->noActionOnDelete();
 
             $table->date('data_time');
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_unit_Address');
+        Schema::dropIfExists('order_unit_address');
     }
 };

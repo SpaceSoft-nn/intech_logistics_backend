@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Controllers\API\Address;
+
+use App\Http\Controllers\Controller;
+use App\Modules\Address\App\Data\DTO\ValueObject\AddressVO;
+use App\Modules\Address\Domain\Actions\Address\CreateAddressAction;
+use App\Modules\Address\Domain\Models\Address;
+use App\Modules\Address\Domain\Requests\Address\AddressCreateRequest;
+use App\Modules\Address\Domain\Resources\AddressResource;
+use Illuminate\Http\Request;
+
+use function App\Helpers\array_success;
+
+class AddressController extends Controller
+{
+
+    public function get(Request $Address)
+    {
+        $Address = Address::find($Address->input('id'));
+
+        abort_unless( (bool) $Address , 404, "Такого адресса не существует.");
+
+        return $Address;
+    }
+
+    public function create(
+        AddressCreateRequest $request,
+        CreateAddressAction $action,
+    )  {
+        /**
+        * @var AddressVO
+        */
+        $addressVO = $request->getAddressVO();
+
+        $address = $action->make($addressVO);
+
+        return response()->json(array_success(AddressResource::make($address), 'Return create Address.'), 201);
+    }
+}

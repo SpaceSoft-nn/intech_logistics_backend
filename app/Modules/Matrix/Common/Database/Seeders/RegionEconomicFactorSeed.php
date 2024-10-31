@@ -2,7 +2,7 @@
 
 namespace App\Modules\Matrix\Common\Database\Seeders;
 
-use App\Modules\Adress\Domain\Models\Adress;
+use App\Modules\Address\Domain\Models\Address;
 use App\Modules\GAR\Domain\Services\GARService;
 use App\Modules\Matrix\Domain\Models\RegionEconomicFactor;
 use App\Modules\OrderUnit\Domain\Interactor\Algorithm\VectorLength\calculateVectorLength;
@@ -35,21 +35,21 @@ class RegionEconomicFactorSeed extends Seeder
         foreach ($orders as $order) {
 
             /**
-            * @var Adress
+            * @var Address
             */
-            $adress_start = $order->adress_start;
+            $Address_start = $order->Address_start;
 
             /**
-            * @var Adress
+            * @var Address
             */
-            $adress_end = $order->adress_end;
+            $Address_end = $order->Address_end;
 
             //TODO Может быть проблема, что в зависимости от order - у нас будут повторяться записи Где Стар:Нижний Конец:Нижний - их нужно фильтровать и убирать из бд
             RegionEconomicFactor::factory()->create([
-                "region_start_gar_id" => $this->getFiasId($adress_start->region),
-                "region_end_gar_id" => $this->getFiasId($adress_end->region),
-                "region_name_start" => $adress_start->region,
-                "region_name_end" => $adress_end->region,
+                "region_start_gar_id" => $this->getFiasId($Address_start->region),
+                "region_end_gar_id" => $this->getFiasId($Address_end->region),
+                "region_name_start" => $Address_start->region,
+                "region_name_end" => $Address_end->region,
                 "factor" => 1,
             ]);
 
@@ -57,8 +57,8 @@ class RegionEconomicFactorSeed extends Seeder
         }
     }
 
-    private function getFiasId(string $adress) : string
+    private function getFiasId(string $Address) : string
     {
-        return $this->garService->run($adress)->getFiasId();
+        return $this->garService->run($Address)->getFiasId();
     }
 }

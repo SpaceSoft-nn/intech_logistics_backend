@@ -2,7 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Requests\OrderUnit;
 
-use App\Modules\Adress\Domain\Rules\ArrayAdressRule;
+use App\Modules\Address\Domain\Rules\ArrayAddressRule;
 use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
@@ -29,13 +29,13 @@ class OrderUnitCreateRequest extends ApiRequest
 
         return [
 
-            "start_adress_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс начало.
-            "end_adress_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс окончания.
+            "start_Address_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс начало.
+            "end_Address_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс окончания.
 
             "start_date_delivery" => ['required', 'date'], // Дата начала заказа
             "end_date_delivery" => ['required', 'date'], // Дата окончания заказа
 
-            'adress_array' => ['required', new ArrayAdressRule()],
+            'address_array' => ['nullable', new ArrayAddressRule()],
 
             "organization_id" => ['required', 'uuid', "exists:organizations,id"],
 

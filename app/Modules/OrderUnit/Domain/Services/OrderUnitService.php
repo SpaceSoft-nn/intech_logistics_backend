@@ -32,11 +32,10 @@ class OrderUnitService
      */
     public function calcultTotalOrders(array|Collection $arr) : float
     {
-
         $total = 0;
 
-        if( !($arr instanceof Collection ) || (is_array($arr)) ) { $arrayOrders = $this->repOrder->getAll($arr); }
-        else {  throw new Exception('Ошибка типа.', 400); }
+        if( !($arr instanceof Collection) ) { $arrayOrders = $this->repOrder->getAll($arr); }
+        else {  $arrayOrders = $arr; }
 
 
         if($arrayOrders) {
@@ -72,10 +71,12 @@ class OrderUnitService
     public function calcultBodyBolumeOrders(array|Collection $arr) : float
     {
 
+
         $total = 0;
 
-        if( !($arr instanceof Collection ) || (is_array($arr)) ) { $arrayOrders = $this->repOrder->getAll($arr); }
-        else {  throw new Exception('Ошибка типа.', 400); }
+        if( !($arr instanceof Collection) ) {  $arrayOrders = $this->repOrder->getAll($arr); }
+        else {  $arrayOrders = $arr; }
+
 
         if($arrayOrders) {
 

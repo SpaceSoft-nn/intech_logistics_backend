@@ -98,14 +98,14 @@ final class AzimutAlgorithmVectorMovent implements IVectorMoventAlgorithm
 
 
         /**
-        * @var Adress
+        * @var Address
         */
-        $adressStart = $this->repOrdeUnit->firstPivotPriorityAdress($otherOrder);
-        $adressEnd = $this->repOrdeUnit->lastPivotPriorityAdress($otherOrder);
+        $AddressStart = $this->repOrdeUnit->firstPivotPriorityAddress($otherOrder);
+        $AddressEnd = $this->repOrdeUnit->lastPivotPriorityAddress($otherOrder);
 
         return collect([
-            [$adressStart->latitude, $adressStart->longitude],
-            [$adressEnd->latitude, $adressEnd->longitude],
+            [$AddressStart->latitude, $AddressStart->longitude],
+            [$AddressEnd->latitude, $AddressEnd->longitude],
         ]);
     }
 

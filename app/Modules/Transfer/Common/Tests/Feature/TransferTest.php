@@ -37,7 +37,6 @@ class TransferTest extends TestCase
         );
 
         $this->assertNotNull($transfer);
-
         $this->assertIsArray($transfer->agreements->toArray());
         $this->assertNotEmpty($transfer->agreements->toArray());
 

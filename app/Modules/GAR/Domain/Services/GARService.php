@@ -24,7 +24,7 @@ class GARService
         //Проверяем был ли вызван сначала run
         $this->checkEmptyResult();
 
-        return $this->getFiasIdByAdress();
+        return $this->getFiasIdByAddress();
     }
 
     /**
@@ -42,24 +42,24 @@ class GARService
     //TODO Нужно возвращать DTO
     /**
      * Возвращает объект целиком, можно использовать билдер
-     * @param string $adress адресс для поиска GAR
+     * @param string $Address адресс для поиска GAR
      *
      * @return self
      */
-    public function run(string $adress) : self
+    public function run(string $Address) : self
     {
-        $this->result = $this->getGarInfoByAdress($adress);
+        $this->result = $this->getGarInfoByAddress($Address);
         return $this;
     }
 
 
     /**
      * Вернуть гар региона и его координаты
-     * @param string $adress
+     * @param string $Address
      *
      * @return string
      */
-    private function getFiasIdByAdress() : ?string
+    private function getFiasIdByAddress() : ?string
     {
         /**
         * @var Collection
@@ -82,9 +82,9 @@ class GARService
 
     }
 
-    private function getGarInfoByAdress(string $adress) : array
+    private function getGarInfoByAddress(string $Address) : array
     {
-        $result = $this->client->clean("address", $adress);
+        $result = $this->client->clean("address", $Address);
 
         return $result;
     }

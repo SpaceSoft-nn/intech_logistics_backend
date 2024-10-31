@@ -28,7 +28,7 @@ class OrderUnitVO implements Arrayable
         public ?bool $add_load_space,
         public ?bool $change_price,
         public ?bool $change_time,
-        public ?bool $adress_is_array,
+        public ?bool $Address_is_array,
 
     ) {}
 
@@ -47,7 +47,7 @@ class OrderUnitVO implements Arrayable
         ?bool $add_load_space = null,
         ?bool $change_price = null,
         ?bool $change_time = null,
-        ?bool $adress_is_array = false,
+        ?bool $Address_is_array = false,
 
     ) : self {
 
@@ -66,7 +66,7 @@ class OrderUnitVO implements Arrayable
             add_load_space: $add_load_space,
             change_price: $change_price,
             change_time: $change_time,
-            adress_is_array: $adress_is_array,
+            Address_is_array: $Address_is_array,
 
         );
 
@@ -90,7 +90,7 @@ class OrderUnitVO implements Arrayable
             "add_load_space" => $this->add_load_space,
             "change_price" => $this->change_price,
             "change_time" => $this->change_time,
-            "adress_is_array" => $this->adress_is_array,
+            "Address_is_array" => $this->Address_is_array,
 
         ];
     }
@@ -110,7 +110,7 @@ class OrderUnitVO implements Arrayable
         $contractors_id = Arr::get($data, "contractors_id", null);
         $change_price = Arr::get($data, "change_price", null);
         $change_time = Arr::get($data, "change_time", null);
-        $adress_is_array = Arr::get($data, "adress_is_array", null);
+        $Address_is_array = Arr::get($data, "Address_is_array", null);
 
         return new self(
             end_date_order: $end_date_order,
@@ -126,7 +126,7 @@ class OrderUnitVO implements Arrayable
             add_load_space: self::filterEnumTypeLoad($type_load_truck),
             change_price: $change_price,
             change_time: $change_time,
-            adress_is_array: $adress_is_array,
+            Address_is_array: $Address_is_array,
         );
     }
 

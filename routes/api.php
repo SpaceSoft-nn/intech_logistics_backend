@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\Adress\AdressController;
+use App\Http\Controllers\API\Address\AddressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegistrationController;
 use App\Http\Controllers\API\Matrix\MatrixDistanceController;
@@ -43,9 +43,9 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 
 });
 
-    //Adress
-Route::get('/addresses', [AdressController:: class, 'get']);
-Route::post('/addresses', [AdressController:: class, 'create']);
+    //Address
+Route::get('/addresses', [AddressController:: class, 'get']);
+Route::post('/addresses', [AddressController:: class, 'create']);
 
     //orderUnit
 Route::prefix('/orders')->group(function () {

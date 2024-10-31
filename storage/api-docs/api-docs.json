@@ -9,7 +9,7 @@
         "/api/addresses": {
             "get": {
                 "tags": [
-                    "Adress"
+                    "Address"
                 ],
                 "summary": "Вернуть запись по id",
                 "operationId": "3f588f39642dec1888383fe9ba87880d",
@@ -154,9 +154,9 @@
             },
             "post": {
                 "tags": [
-                    "Adress"
+                    "Address"
                 ],
-                "summary": "Создать запись adress",
+                "summary": "Создать запись Address",
                 "operationId": "75e0aa89ee43e2381fa717ca3813dab3",
                 "requestBody": {
                     "content": {
@@ -812,13 +812,13 @@
                                 "allOf": [
                                     {
                                         "properties": {
-                                            "start_adress_id": {
+                                            "start_Address_id": {
                                                 "description": "uuid записи",
                                                 "type": "string",
                                                 "format": "uuid",
                                                 "example": "123e4567-e89b-12d3-a456-426614174000"
                                             },
-                                            "end_adress_id": {
+                                            "end_Address_id": {
                                                 "description": "uuid записи",
                                                 "type": "string",
                                                 "format": "uuid",
@@ -1823,11 +1823,11 @@
                         "type": "string",
                         "format": "date-time"
                     },
-                    "adress_start_id": {
-                        "$ref": "#/components/schemas/AdressResource"
+                    "Address_start_id": {
+                        "$ref": "#/components/schemas/AddressResource"
                     },
-                    "adress_end_id": {
-                        "$ref": "#/components/schemas/AdressResource"
+                    "Address_end_id": {
+                        "$ref": "#/components/schemas/AddressResource"
                     },
                     "body_volume": {
                         "type": "number",
@@ -1855,7 +1855,7 @@
                 },
                 "type": "object"
             },
-            "AdressResource": {
+            "AddressResource": {
                 "title": "Json Ресурс Адресса",
                 "properties": {
                     "id": {
@@ -1883,7 +1883,7 @@
                     "postal_code": {
                         "type": "string"
                     },
-                    "type_adress": {
+                    "type_Address": {
                         "type": "string"
                     },
                     "latitude": {
@@ -1912,11 +1912,11 @@
                         "type": "string",
                         "format": "date-time"
                     },
-                    "adress_start_id": {
-                        "$ref": "#/components/schemas/AdressResource"
+                    "Address_start_id": {
+                        "$ref": "#/components/schemas/AddressResource"
                     },
-                    "adress_end_id": {
-                        "$ref": "#/components/schemas/AdressResource"
+                    "Address_end_id": {
+                        "$ref": "#/components/schemas/AddressResource"
                     },
                     "order_total": {
                         "type": "number",
@@ -2176,8 +2176,8 @@
     },
     "tags": [
         {
-            "name": "Adress",
-            "description": "Adress"
+            "name": "Address",
+            "description": "Address"
         },
         {
             "name": "Login\\Registration",

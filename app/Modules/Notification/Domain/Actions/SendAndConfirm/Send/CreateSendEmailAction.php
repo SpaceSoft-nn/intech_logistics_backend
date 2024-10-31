@@ -14,8 +14,6 @@ class CreateSendEmailAction
     }
     public function run(CreateSendDTO $data) : Model
     {
-
-
         $model = Model::query()
                 ->create(
                     [

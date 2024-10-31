@@ -76,14 +76,14 @@ class DistanceAlgorithmVectorMovent implements IVectorMoventAlgorithm
     private function mappingVectorCordinatToArray(OrderUnit $otherOrder) : Collection
     {
         /**
-        * @var Adress
+        * @var Address
         */
-        $adressStart = $otherOrder->adress_start;
-        $adressEnd = $otherOrder->adress_end;
+        $AddressStart = $otherOrder->Address_start;
+        $AddressEnd = $otherOrder->Address_end;
 
         return collect([
-            [$adressStart->latitude, $adressStart->longitude],
-            [$adressEnd->latitude, $adressEnd->longitude],
+            [$AddressStart->latitude, $AddressStart->longitude],
+            [$AddressEnd->latitude, $AddressEnd->longitude],
         ]);
     }
 
@@ -96,10 +96,10 @@ class DistanceAlgorithmVectorMovent implements IVectorMoventAlgorithm
     private function mappingMainVector(OrderUnit $mainVector) : Collection
     {
         /**
-        * @var Adress
+        * @var Address
         */
-        $adress = $mainVector->adress_start;
+        $Address = $mainVector->Address_start;
 
-        return collect([$adress->latitude, $adress->longitude]);
+        return collect([$Address->latitude, $Address->longitude]);
     }
 }

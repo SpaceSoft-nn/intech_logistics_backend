@@ -2,7 +2,7 @@
 
 namespace App\Modules\OrderUnit\App\Repositories;
 
-use App\Modules\Adress\Domain\Models\Adress;
+use App\Modules\Address\Domain\Models\Address;
 use App\Modules\Base\Repositories\CoreRepository;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit as Model;
 use Illuminate\Database\Eloquent\Collection;
@@ -34,11 +34,11 @@ class OrderUnitRepository extends CoreRepository
     }
 
     /**
-     * Получаем последний адресс (прибытия) по приоритетности при связи orderUnit => adress
+     * Получаем последний адресс (прибытия) по приоритетности при связи orderUnit => Address
      * @param Model|int $order
-     * @return ?Adress
+     * @return ?Address
      */
-    public function lastPivotPriorityAdress(Model|int $order) : ?Adress
+    public function lastPivotPriorityAddress(Model|int $order) : ?Address
     {
 
         if ($order instanceof Model) {
@@ -66,11 +66,11 @@ class OrderUnitRepository extends CoreRepository
     }
 
     /**
-     * Получаем первый адресс (отправки) по приоритетности при связи orderUnit => adress
+     * Получаем первый адресс (отправки) по приоритетности при связи orderUnit => Address
      * @param Model|int $order
-     * @return ?Adress
+     * @return ?Address
      */
-    public function firstPivotPriorityAdress(Model|int $order) : ?Adress
+    public function firstPivotPriorityAddress(Model|int $order) : ?Address
     {
         if($order instanceof Model){
 

@@ -3,6 +3,7 @@
 namespace App\Modules\Organization\App\Repositories;
 
 use App\Modules\Base\Repositories\CoreRepository;
+use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Organization\Domain\Actions\CreateOrganizationAction;
 use App\Modules\Organization\Domain\Interface\Repositories\IRepository;

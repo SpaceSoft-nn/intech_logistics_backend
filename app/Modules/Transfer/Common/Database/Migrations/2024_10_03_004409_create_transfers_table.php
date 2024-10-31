@@ -21,10 +21,10 @@ return new class extends Migration
             $table->date('delivery_start')->comment('Дата загрузки и отправления');
             $table->date('delivery_end')->comment('Дата прибытия');
 
-            $table->uuid('adress_start_id')
+            $table->uuid('Address_start_id')
                 ->constrained('addresses')->noActionOnDelete();
 
-            $table->uuid('adress_end_id')
+            $table->uuid('Address_end_id')
                 ->constrained('addresses')->noActionOnDelete();
 
             $table->string('order_total')->comment('Общая сумма всех заказов');

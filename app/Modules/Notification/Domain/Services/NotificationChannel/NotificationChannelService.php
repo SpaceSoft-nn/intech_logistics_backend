@@ -50,17 +50,23 @@ class NotificationChannelService implements INotificationChannel
             //объединение логики создание записей в интерактор send+list table
             $interactor = app(InteractorSendNotification::class);
             $status = $interactor->runSendEmail($dto);
+
             if($status['status'])
             {
                 $dto = SendNotificationDTO::make($dto->driver->value, $dto->value, $status['code']);
 
                 $this->serviceNotification->sendNotification($dto);
+
                 return [
                     'uuid_send' => $status['uuid'],
                     'message' => 'Отправка была успешна.',
                     'status' => true,
                 ];
+
+
             }
+
+
 
             return [
                 'message' => 'Повторная отправка возможна через несколько минут.',

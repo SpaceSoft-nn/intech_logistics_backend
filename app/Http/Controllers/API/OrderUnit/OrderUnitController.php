@@ -75,8 +75,8 @@ class OrderUnitController extends Controller
 
 
         // $order = OrderUnit::factory()->create([
-        //     "adress_start_id" => $validated['start_adress_id'],
-        //     "adress_end_id" => $validated['end_adress_id'],
+        //     "Address_start_id" => $validated['start_Address_id'],
+        //     "Address_end_id" => $validated['end_Address_id'],
         // ]);
 
         //TODO Нужна логика высчитывание цены в зависимости от заказа
@@ -99,15 +99,15 @@ class OrderUnitController extends Controller
 
         $order = $service->createOrderUnit(
             OrderUnitCreateDTO::make(
-                start_adress_id: $validated['start_adress_id'],
-                end_adress_id: $validated['end_adress_id'],
+                start_Address_id: $validated['start_Address_id'],
+                end_Address_id: $validated['end_Address_id'],
                 start_date_delivery: $validated['start_date_delivery'],
                 end_date_delivery: $validated['end_date_delivery'],
                 organization_id: $validated['organization_id'],
                 end_date_order: $validated['end_date_order'],
                 type_load_truck: $validated['type_load_truck'],
                 order_total: $validated['order_total'],
-                adress_array: $validated['adress_array'] ?? null,
+                Address_array: $validated['address_array'] ?? null,
                 product_type: $validated['product_type'] ?? null,
                 body_volume: $validated['body_volume'] ?? null,
                 user_id: $validated['user_id'] ?? null,

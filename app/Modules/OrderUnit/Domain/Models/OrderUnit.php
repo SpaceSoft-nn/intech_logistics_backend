@@ -2,8 +2,8 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
-use App\Modules\Adress\Domain\Models\Adress;
-use App\Modules\InteractorModules\AdressOrder\Domain\Models\OrderUnitAddress;
+use App\Modules\Address\Domain\Models\Address;
+use App\Modules\InteractorModules\AddressOrder\Domain\Models\OrderUnitAddress;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
@@ -50,7 +50,7 @@ class OrderUnit extends Model
         "add_load_space",
         "change_price",
         "change_time",
-        "adress_is_array",
+        "Address_is_array",
 
     ];
 
@@ -103,7 +103,7 @@ class OrderUnit extends Model
 
     public function addresses(): BelongsToMany
     {
-        return $this->belongsToMany(Adress::class, 'order_unit_adress', 'order_unit_id' , 'adress_id' )
+        return $this->belongsToMany(Address::class, 'order_unit_Address', 'order_unit_id' , 'Address_id' )
             ->using(OrderUnitAddress::class)
             ->withPivot(['data_time', 'type', 'priority'])
             ->withTimestamps();

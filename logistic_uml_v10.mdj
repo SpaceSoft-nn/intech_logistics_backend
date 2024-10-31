@@ -12408,7 +12408,7 @@
 											"top": 479,
 											"width": 103,
 											"height": 13,
-											"text": "Adress"
+											"text": "Address"
 										},
 										{
 											"_type": "LabelView",
@@ -12616,7 +12616,7 @@
 											"top": 622,
 											"width": 103,
 											"height": 13,
-											"text": "+type_adress",
+											"text": "+type_Address",
 											"horizontalAlignment": 0
 										},
 										{
@@ -13220,7 +13220,7 @@
 											"top": 684,
 											"width": 143,
 											"height": 13,
-											"text": "type_adress"
+											"text": "type_Address"
 										},
 										{
 											"_type": "LabelView",
@@ -14249,7 +14249,7 @@
 											"top": 629,
 											"width": 151,
 											"height": 13,
-											"text": "+many_start_adress: bool",
+											"text": "+many_start_Address: bool",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14266,7 +14266,7 @@
 											"top": 644,
 											"width": 151,
 											"height": 13,
-											"text": "+many_end_adress: bool",
+											"text": "+many_end_Address: bool",
 											"horizontalAlignment": 0
 										}
 									],
@@ -16088,7 +16088,7 @@
 											"top": 1410,
 											"width": 231,
 											"height": 13,
-											"text": "+adress_start_id",
+											"text": "+Address_start_id",
 											"horizontalAlignment": 0
 										},
 										{
@@ -16105,7 +16105,7 @@
 											"top": 1425,
 											"width": 231,
 											"height": 13,
-											"text": "+adress_end_id",
+											"text": "+Address_end_id",
 											"horizontalAlignment": 0
 										},
 										{
@@ -18354,7 +18354,7 @@
 											"top": 143,
 											"width": 240,
 											"height": 13,
-											"text": "order_units_adress"
+											"text": "order_units_Address"
 										},
 										{
 											"_type": "LabelView",
@@ -18443,7 +18443,7 @@
 											"top": 181,
 											"width": 240,
 											"height": 13,
-											"text": "+adress_id",
+											"text": "+Address_id",
 											"horizontalAlignment": 0
 										},
 										{
@@ -25335,7 +25335,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Adress",
+					"name": "Address",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -25444,7 +25444,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGSTmCj/ZgnUGM="
 							},
-							"name": "type_adress",
+							"name": "type_Address",
 							"type": ""
 						},
 						{
@@ -25510,7 +25510,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "type_adress",
+					"name": "type_Address",
 					"attributes": [
 						{
 							"_type": "UMLAttribute",
@@ -25529,7 +25529,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "type_adress",
+					"name": "type_Address",
 					"literals": [
 						{
 							"_type": "UMLEnumerationLiteral",
@@ -25746,7 +25746,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGSTmpfEOjJDEU="
 							},
-							"name": "many_start_adress",
+							"name": "many_start_Address",
 							"type": "bool"
 						},
 						{
@@ -25755,7 +25755,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGSTmpfEOjJDEU="
 							},
-							"name": "many_end_adress",
+							"name": "many_end_Address",
 							"type": "bool"
 						}
 					]
@@ -26041,7 +26041,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGSTo4KG7GIolc="
 							},
-							"name": "adress_start_id",
+							"name": "Address_start_id",
 							"type": ""
 						},
 						{
@@ -26050,7 +26050,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGSTo4KG7GIolc="
 							},
-							"name": "adress_end_id",
+							"name": "Address_end_id",
 							"type": ""
 						},
 						{
@@ -26446,7 +26446,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "order_units_adress",
+					"name": "order_units_Address",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -26521,7 +26521,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGSmk4LwJ/mvOk="
 							},
-							"name": "adress_id",
+							"name": "Address_id",
 							"type": ""
 						},
 						{
@@ -26559,7 +26559,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "order_units_adress_end"
+					"name": "order_units_Address_end"
 				},
 				{
 					"_type": "UMLClass",

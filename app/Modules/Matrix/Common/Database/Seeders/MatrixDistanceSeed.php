@@ -2,7 +2,7 @@
 
 namespace App\Modules\Matrix\Common\Database\Seeders;
 
-use App\Modules\Adress\Domain\Models\Adress;
+use App\Modules\Address\Domain\Models\Address;
 use App\Modules\GAR\Domain\Services\GARService;
 use App\Modules\Matrix\Domain\Models\MatrixDistance;
 use App\Modules\OrderUnit\Domain\Interactor\Algorithm\VectorLength\calculateVectorLength;
@@ -40,24 +40,24 @@ class MatrixDistanceSeed extends Seeder
         foreach ($orders as $order) {
 
             /**
-            * @var Adress
+            * @var Address
             */
-            $adress_start = $order->adress_start;
+            $Address_start = $order->Address_start;
 
             /**
-            * @var Adress
+            * @var Address
             */
-            $adress_end = $order->adress_end;
+            $Address_end = $order->Address_end;
 
-            $start_fias_id = $this->getFiasId($adress_start->city);
-            $end_fias_id = $this->getFiasId($adress_end->city);
+            $start_fias_id = $this->getFiasId($Address_start->city);
+            $end_fias_id = $this->getFiasId($Address_end->city);
 
             MatrixDistance::factory()->create([
                 "city_start_gar_id" => $start_fias_id,
                 "city_end_gar_id" => $end_fias_id,
-                "city_name_start" => $adress_start->city,
-                "city_name_end" => $adress_end->city,
-                "distance" => $this->calculateDistanceBetweenCities($adress_start->latitude, $adress_start->longitude, $adress_end->latitude, $adress_end->longitude),
+                "city_name_start" => $Address_start->city,
+                "city_name_end" => $Address_end->city,
+                "distance" => $this->calculateDistanceBetweenCities($Address_start->latitude, $Address_start->longitude, $Address_end->latitude, $Address_end->longitude),
             ]);
 
             //наоборот
@@ -65,9 +65,9 @@ class MatrixDistanceSeed extends Seeder
             MatrixDistance::factory()->create([
                 "city_start_gar_id" => $end_fias_id,
                 "city_end_gar_id" => $start_fias_id,
-                "city_name_start" => $adress_end->city,
-                "city_name_end" => $adress_start->city,
-                "distance" => $this->calculateDistanceBetweenCities($adress_end->latitude, $adress_end->longitude, $adress_start->latitude, $adress_start->longitude, $faker->numberBetween(5, 55)),
+                "city_name_start" => $Address_end->city,
+                "city_name_end" => $Address_start->city,
+                "distance" => $this->calculateDistanceBetweenCities($Address_end->latitude, $Address_end->longitude, $Address_start->latitude, $Address_start->longitude, $faker->numberBetween(5, 55)),
             ]);
 
         }
@@ -75,13 +75,13 @@ class MatrixDistanceSeed extends Seeder
 
     /**
      * Получаем значение fias Адресса
-     * @param string $adress
+     * @param string $Address
      *
      * @return string
      */
-    private function getFiasId(string $adress) : string
+    private function getFiasId(string $Address) : string
     {
-        return $this->garService->run($adress)->getFiasId();
+        return $this->garService->run($Address)->getFiasId();
     }
 
     /**

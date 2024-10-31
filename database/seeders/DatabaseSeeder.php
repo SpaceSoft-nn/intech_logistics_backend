@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
 
                 //Нужны первые сиды
-            \App\Modules\Adress\Common\Database\Seeders\AdressSeeder::class,
+            \App\Modules\Address\Common\Database\Seeders\AddressSeeder::class,
             \App\Modules\OrderUnit\Common\Database\Seeders\OrderUnitSeeder::class,
             \App\Modules\Transport\Common\Database\Seeders\TransportSeeder::class,
 

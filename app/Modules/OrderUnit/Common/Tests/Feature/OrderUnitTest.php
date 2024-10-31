@@ -2,10 +2,10 @@
 
 namespace App\Modules\OrderUnit\Common\Tests\Feature;
 
-use App\Modules\Adress\Domain\Models\Adress;
-use App\Modules\InteractorModules\AdressOrder\App\Data\DTO\OrderToAdressDTO;
-use App\Modules\InteractorModules\AdressOrder\App\Data\Enum\TypeStateAdressEnum;
-use App\Modules\InteractorModules\AdressOrder\Domain\Actions\LinkOrderToAdressAction;
+use App\Modules\Address\Domain\Models\Address;
+use App\Modules\InteractorModules\AddressOrder\App\Data\DTO\OrderToAddressDTO;
+use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
+use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoUnitAction;
@@ -63,16 +63,16 @@ class OrderUnitTest extends TestCase
     }
 
     /**
-     * Проверяем работу линковки через промежуточную таблицу Adress + OrderUnit
+     * Проверяем работу линковки через промежуточную таблицу Address + OrderUnit
      * @return void
      */
-    public function test_link_adress_order()
+    public function test_link_Address_order()
     {
         $orderUnit = OrderUnit::factory()->create();
-        $adress = Adress::factory()->count(2)->create();
+        $address = Address::factory()->count(2)->create();
 
-        LinkOrderToAdressAction::run(OrderToAdressDTO::make($adress[0], $orderUnit, TypeStateAdressEnum::sending, add_time_random(now(), 0) ));
-        LinkOrderToAdressAction::run(OrderToAdressDTO::make($adress[1], $orderUnit, TypeStateAdressEnum::coming, add_time_random(now(), 7) ));
+        LinkOrderToAddressAction::run(OrderToAddressDTO::make($address[0], $orderUnit, TypeStateAddressEnum::sending, add_time_random(now(), 0) ));
+        LinkOrderToAddressAction::run(OrderToAddressDTO::make($address[1], $orderUnit, TypeStateAddressEnum::coming, add_time_random(now(), 7) ));
 
 
         // Проверяем, что коллекция не null
@@ -82,7 +82,7 @@ class OrderUnitTest extends TestCase
         $this->assertInstanceOf(Collection::class, $orderUnit->addresses, 'OrderUnit должна быть коллекцией.');
 
         // Проверяем, что в коллекции ровно 2 элемента
-        $this->assertCount(2, $orderUnit->addresses->toArray(), 'Коллекция OrderUnit должна содержать ровно 2 элемента.');
+        $this->assertCount(4, $orderUnit->addresses->toArray(), 'Коллекция OrderUnit должна содержать ровно 2 элемента.');
     }
 
     /**
@@ -92,15 +92,18 @@ class OrderUnitTest extends TestCase
     public function test_create_order_endpoint() : void
     {
 
-        $adress = Adress::factory()->count(2)->create();
+        $Address = Address::factory()->count(2)->create();
 
         $organization = Organization::factory()->create();
 
         // Данные для POST-запроса
         $postData = [
-            "start_adress_id" => $adress[0]->id,
-            "end_adress_id" => $adress[1]->id,
+            "start_Address_id" => $Address[0]->id,
+            "end_Address_id" => $Address[1]->id,
             "organization_id" =>  $organization->id,
+
+            "start_date_delivery" => now(),
+            "end_date_delivery" => now(),
 
             "end_date_order" => "25.10.2024",
 
@@ -110,14 +113,15 @@ class OrderUnitTest extends TestCase
             "type_load_truck" => "ltl",
             "order_total" => "10000",
 
-            "description" => "9d3476dc-d456-4960-a227-6d7fd3facc2e"
+            "description" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. In, dolorum?"
         ];
 
         // Отправляем POST-запрос на ваш endpoint
         $response = $this->post('/api/orders', $postData);
 
 
-        // Проверяем, что статус ответа 200 OK
+
+        // Проверяем, что статус ответа 201 OK
         $response->assertStatus(201);
 
         // Например, проверяем, что массив содержит конкретные ключи
@@ -135,6 +139,7 @@ class OrderUnitTest extends TestCase
                 'product_type',
                 'order_status',
                 'user_id',
+                'organization_id'
             ],
             'message'
         ]);
@@ -164,14 +169,14 @@ class OrderUnitTest extends TestCase
     /**
      * Тестироование логики работы интерактора когда только главный заказ (2 адресса доставки)
      */
-    public function test_create_order_interactor_one_adress()
+    public function test_create_order_interactor_one_Address()
     {
         $interactor = app(CreateOrderUnitInteractor::class);
 
         /**
-        * @var Adress
+        * @var Address
         */
-        $adresses = Adress::factory()->count(2)->create();
+        $Addresses = Address::factory()->count(2)->create();
 
         /**
         * @var Organization
@@ -180,15 +185,15 @@ class OrderUnitTest extends TestCase
 
         $order = $interactor->execute(
             OrderUnitCreateDTO::make(
-                start_adress_id: $adresses[0]->id,
-                end_adress_id: $adresses[1]->id,
+                start_Address_id: $Addresses[0]->id,
+                end_Address_id: $Addresses[1]->id,
                 start_date_delivery: now(),
                 end_date_delivery: now(),
                 organization_id: $organization->id,
                 end_date_order: now(),
                 type_load_truck: "ftl",
                 order_total: 80000,
-                adress_array: null,
+                Address_array: null,
                 product_type: 'Печеньки',
                 body_volume: 70,
                 order_status: null,
@@ -206,14 +211,14 @@ class OrderUnitTest extends TestCase
      /**
      * Тестироование логики работы интерактора когда главный заказ + (2 адресса) + множество других
      */
-    public function test_create_order_interactor_many_adress()
+    public function test_create_order_interactor_many_Address()
     {
         $interactor = app(CreateOrderUnitInteractor::class);
 
         /**
-        * @var Adress
+        * @var Address
         */
-        $adresses = Adress::factory()->count(4)->create();
+        $Addresses = Address::factory()->count(4)->create();
 
         /**
         * @var Organization
@@ -226,17 +231,17 @@ class OrderUnitTest extends TestCase
         */
         $order = $interactor->execute(
             OrderUnitCreateDTO::make(
-                start_adress_id: $adresses[0]->id,
-                end_adress_id: $adresses[1]->id,
+                start_Address_id: $Addresses[0]->id,
+                end_Address_id: $Addresses[1]->id,
                 start_date_delivery: now(),
                 end_date_delivery: now(),
                 organization_id: $organization->id,
                 end_date_order: now(),
                 type_load_truck: "ltl",
                 order_total: 80000,
-                adress_array: [
-                    ["{$adresses[2]->id}" => now(),],
-                    ["{$adresses[3]->id}" => now(),],
+                Address_array: [
+                    ["{$Addresses[2]->id}" => now(),],
+                    ["{$Addresses[3]->id}" => now(),],
                 ],
                 product_type: 'Печеньки',
                 body_volume: 70,

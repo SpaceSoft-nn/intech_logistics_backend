@@ -8,8 +8,8 @@ use App\Http\Controllers\Controller;
  * @OA\POST(
  *
  *      path="/api/addresses",
- *      summary="Создать запись adress",
- *      tags={"Adress"},
+ *      summary="Создать запись Address",
+ *      tags={"Address"},
  *
  *       @OA\RequestBody(
  *          @OA\JsonContent(
@@ -63,7 +63,7 @@ use App\Http\Controllers\Controller;
  *
  *      path="/api/addresses",
  *      summary="Вернуть запись по id",
- *      tags={"Adress"},
+ *      tags={"Address"},
  *
  *       @OA\RequestBody(
  *          @OA\JsonContent(
@@ -113,7 +113,7 @@ use App\Http\Controllers\Controller;
  *      ),
  * )
  */
-class AdressController extends Controller
+class AddressController extends Controller
 {
 
 }

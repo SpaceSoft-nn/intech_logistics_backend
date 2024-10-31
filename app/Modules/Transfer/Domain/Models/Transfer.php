@@ -2,7 +2,7 @@
 
 namespace App\Modules\Transfer\Domain\Models;
 
-use App\Modules\Adress\Domain\Models\Adress;
+use App\Modules\Address\Domain\Models\Address;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 use App\Modules\Transfer\Domain\Factories\TransferFactory;
@@ -29,8 +29,8 @@ class Transfer extends Model
         "transport_id",
         "delivery_start",
         "delivery_end",
-        "adress_start_id",
-        "adress_end_id",
+        "Address_start_id",
+        "Address_end_id",
         "order_total",
         "description",
         "body_volume",
@@ -59,14 +59,14 @@ class Transfer extends Model
         return $this->belongsToMany(CargoUnit::class, 'cargo_unit_transfer', 'cargo_unit_id' , 'transfer_id');
     }
 
-    public function adress_start(): BelongsTo
+    public function Address_start(): BelongsTo
     {
-        return $this->belongsTo(Adress::class, 'adress_start_id');
+        return $this->belongsTo(Address::class, 'Address_start_id');
     }
 
-    public function adress_end(): BelongsTo
+    public function Address_end(): BelongsTo
     {
-        return $this->belongsTo(Adress::class, 'adress_end_id');
+        return $this->belongsTo(Address::class, 'Address_end_id');
     }
 
     public function agreements(): BelongsToMany

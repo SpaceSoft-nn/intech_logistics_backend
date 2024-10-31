@@ -367,7 +367,7 @@ class NotificationTest extends TestCase
             $repository->save('123456', $model->id);
             $repository->save('123456', $model->id);
 
-            $status =  $repository->checkCountConfirm($model->id);
+            $status = $repository->checkCountConfirm($model->id);
 
             //Проверяем что мы получили true (вр)
             $this->assertFalse($status);

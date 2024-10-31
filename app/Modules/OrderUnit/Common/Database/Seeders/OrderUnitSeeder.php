@@ -2,10 +2,10 @@
 
 namespace App\Modules\OrderUnit\Common\Database\Seeders;
 
-use App\Modules\Adress\Domain\Models\Adress;
-use App\Modules\InteractorModules\AdressOrder\App\Data\DTO\OrderToAdressDTO;
-use App\Modules\InteractorModules\AdressOrder\App\Data\Enum\TypeStateAdressEnum;
-use App\Modules\InteractorModules\AdressOrder\Domain\Actions\LinkOrderToAdressAction;
+use App\Modules\Address\Domain\Models\Address;
+use App\Modules\InteractorModules\AddressOrder\App\Data\DTO\OrderToAddressDTO;
+use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
+use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
@@ -34,9 +34,9 @@ class OrderUnitSeeder extends Seeder
     private function createOrderUnit()
     {
         /**
-        * @var Adress[]
+        * @var Address[]
         */
-        $arrayAdress = Cache::get('adress_seeder');
+        $arrayAddress = Cache::get('Address_seeder');
 
         $organization = Organization::factory()->create();
 
@@ -61,7 +61,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
 
 
             ]);
@@ -74,10 +74,10 @@ class OrderUnitSeeder extends Seeder
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[1], $order, TypeStateAdressEnum::sending, $startData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[1], $order, TypeStateAddressEnum::sending, $startData));
 
                     //Адресс прибытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[2], $order, TypeStateAdressEnum::coming, $endData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[2], $order, TypeStateAddressEnum::coming, $endData));
                 }
 
             }
@@ -94,7 +94,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
 
             ]);
 
@@ -106,10 +106,10 @@ class OrderUnitSeeder extends Seeder
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[3], $order, TypeStateAdressEnum::sending, $startData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[3], $order, TypeStateAddressEnum::sending, $startData));
 
                     //Адресс прибытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[4], $order, TypeStateAdressEnum::coming, $endData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[4], $order, TypeStateAddressEnum::coming, $endData));
                 }
 
             }
@@ -124,7 +124,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
             ]);
 
             //делаем связки через промежуточные таблицы
@@ -135,10 +135,10 @@ class OrderUnitSeeder extends Seeder
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[5], $order, TypeStateAdressEnum::sending, $startData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[5], $order, TypeStateAddressEnum::sending, $startData));
 
                     //Адресс прибытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[6], $order, TypeStateAdressEnum::coming, $endData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[6], $order, TypeStateAddressEnum::coming, $endData));
                 }
 
             }
@@ -153,7 +153,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
 
             ]);
 
@@ -165,10 +165,10 @@ class OrderUnitSeeder extends Seeder
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[7], $order, TypeStateAdressEnum::sending, $startData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[7], $order, TypeStateAddressEnum::sending, $startData));
 
                     //Адресс прибытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[8], $order, TypeStateAdressEnum::coming, $endData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[8], $order, TypeStateAddressEnum::coming, $endData));
                 }
 
             }
@@ -182,7 +182,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
             ]);
 
            //делаем связки через промежуточные таблицы
@@ -193,10 +193,10 @@ class OrderUnitSeeder extends Seeder
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[9], $order, TypeStateAdressEnum::sending, $startData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[9], $order, TypeStateAddressEnum::sending, $startData));
 
                     //Адресс прибытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[10], $order, TypeStateAdressEnum::coming, $endData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[10], $order, TypeStateAddressEnum::coming, $endData));
                 }
 
             }
@@ -210,7 +210,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
             ]);
 
             //делаем связки через промежуточные таблицы
@@ -221,10 +221,10 @@ class OrderUnitSeeder extends Seeder
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[11], $order, TypeStateAdressEnum::sending, $startData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[11], $order, TypeStateAddressEnum::sending, $startData));
 
                     //Адресс прибытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[12], $order, TypeStateAdressEnum::coming, $endData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[12], $order, TypeStateAddressEnum::coming, $endData));
                 }
 
             }
@@ -238,7 +238,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
             ]);
 
              //делаем связки через промежуточные таблицы
@@ -249,10 +249,10 @@ class OrderUnitSeeder extends Seeder
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[13], $order, TypeStateAdressEnum::sending, $startData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[13], $order, TypeStateAddressEnum::sending, $startData));
 
                     //Адресс прибытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[14], $order, TypeStateAdressEnum::coming, $endData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[14], $order, TypeStateAddressEnum::coming, $endData));
                 }
 
             }
@@ -266,7 +266,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
             ]);
 
            //делаем связки через промежуточные таблицы
@@ -277,10 +277,10 @@ class OrderUnitSeeder extends Seeder
             //с адрессами(ом)
             {
                 //Адресс отбытия
-                LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[15], $order, TypeStateAdressEnum::sending, $startData));
+                LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[15], $order, TypeStateAddressEnum::sending, $startData));
 
                 //Адресс прибытия
-                LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[16], $order, TypeStateAdressEnum::coming, $endData));
+                LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[16], $order, TypeStateAddressEnum::coming, $endData));
             }
 
         }
@@ -294,7 +294,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
             ]);
 
              //делаем связки через промежуточные таблицы
@@ -305,10 +305,10 @@ class OrderUnitSeeder extends Seeder
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[17], $order, TypeStateAdressEnum::sending, $startData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[17], $order, TypeStateAddressEnum::sending, $startData));
 
                     //Адресс прибытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[18], $order, TypeStateAdressEnum::coming, $endData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[18], $order, TypeStateAddressEnum::coming, $endData));
                 }
 
             }
@@ -322,7 +322,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
             ]);
 
             //делаем связки через промежуточные таблицы
@@ -333,10 +333,10 @@ class OrderUnitSeeder extends Seeder
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[19], $order, TypeStateAdressEnum::sending, $startData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[19], $order, TypeStateAddressEnum::sending, $startData));
 
                     //Адресс прибытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[20], $order, TypeStateAdressEnum::coming, $endData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[20], $order, TypeStateAddressEnum::coming, $endData));
                 }
 
             }
@@ -350,7 +350,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
             ]);
 
             //делаем связки через промежуточные таблицы
@@ -361,10 +361,10 @@ class OrderUnitSeeder extends Seeder
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[21], $order, TypeStateAdressEnum::sending, $startData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[21], $order, TypeStateAddressEnum::sending, $startData));
 
                     //Адресс прибытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[22], $order, TypeStateAdressEnum::coming, $endData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[22], $order, TypeStateAddressEnum::coming, $endData));
                 }
 
             }
@@ -378,7 +378,7 @@ class OrderUnitSeeder extends Seeder
                 "description" => $this->faker->text(),
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
-                "adress_is_array" => false,
+                "Address_is_array" => false,
             ]);
 
             //делаем связки через промежуточные таблицы
@@ -389,10 +389,10 @@ class OrderUnitSeeder extends Seeder
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[23], $order, TypeStateAdressEnum::sending, $startData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[23], $order, TypeStateAddressEnum::sending, $startData));
 
                     //Адресс прибытия
-                    LinkOrderToAdressAction::run(OrderToAdressDTO::make($arrayAdress[24], $order, TypeStateAdressEnum::coming, $endData));
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[24], $order, TypeStateAddressEnum::coming, $endData));
                 }
 
             }

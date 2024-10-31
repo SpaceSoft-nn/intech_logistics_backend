@@ -2,10 +2,10 @@
 
 namespace App\Modules\OrderUnit\Domain\Interactor\Order;
 
-use App\Modules\Adress\Domain\Models\Adress;
-use App\Modules\InteractorModules\AdressOrder\App\Data\DTO\OrderToAdressDTO;
-use App\Modules\InteractorModules\AdressOrder\App\Data\Enum\TypeStateAdressEnum;
-use App\Modules\InteractorModules\AdressOrder\Domain\Actions\LinkOrderToAdressAction;
+use App\Modules\Address\Domain\Models\Address;
+use App\Modules\InteractorModules\AddressOrder\App\Data\DTO\OrderToAddressDTO;
+use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
+use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
@@ -76,7 +76,7 @@ class CreateOrderUnitInteractor
             add_load_space: $this->filterIsLtlType($dto->type_load_truck),
             change_price: false,
             change_time: false,
-            adress_is_array: $this->filterIsArrayAdress($dto->adress_array),
+            Address_is_array: $this->filterIsArrayAddress($dto->Address_array),
 
         );
 
@@ -102,17 +102,17 @@ class CreateOrderUnitInteractor
         #TODO Проблема ножества запросов (изменить логику)
         {
             //получаем связку главного вектора движение
-            $adress_start_main = $this->getAdress($dto->start_adress_id);
-            $adress_end_main = $this->getAdress($dto->end_adress_id);
+            $Address_start_main = $this->getAddress($dto->start_Address_id);
+            $Address_end_main = $this->getAddress($dto->end_Address_id);
         }
 
         {
             //Начало главного адресс
-            $status = LinkOrderToAdressAction::run(
-                OrderToAdressDTO::make(
-                    adress: $adress_start_main,
+            $status = LinkOrderToAddressAction::run(
+                OrderToAddressDTO::make(
+                    Address: $Address_start_main,
                     order: $order,
-                    type_status: TypeStateAdressEnum::sending,
+                    type_status: TypeStateAddressEnum::sending,
                     date: $dto->start_date_delivery,
                     priority: 1,
                 ),
@@ -121,11 +121,11 @@ class CreateOrderUnitInteractor
 
         {
             //Конец главного адресса
-            $status = LinkOrderToAdressAction::run(
-                OrderToAdressDTO::make(
-                    adress: $adress_end_main,
+            $status = LinkOrderToAddressAction::run(
+                OrderToAddressDTO::make(
+                    Address: $Address_end_main,
                     order: $order,
-                    type_status: TypeStateAdressEnum::coming,
+                    type_status: TypeStateAddressEnum::coming,
                     date: $dto->end_date_delivery,
                     priority: 1,
                 ),
@@ -134,24 +134,24 @@ class CreateOrderUnitInteractor
 
         {
 
-            if(!empty($dto->adress_array)) {
+            if(!empty($dto->Address_array)) {
 
                 $flag = 2;
 
-                foreach ($dto->adress_array as $subArray) {
+                foreach ($dto->Address_array as $subArray) {
 
                     if( !empty($subArray) ) {
 
                         //Flag приоритености, делаем его 2, т.к 1 - будет главным адрессом движения.
                         foreach ($subArray as $uuid => $date) {
 
-                            $adress = $this->getAdress($uuid);
+                            $Address = $this->getAddress($uuid);
 
-                            $status = LinkOrderToAdressAction::run(
-                                OrderToAdressDTO::make(
-                                    adress: $adress,
+                            $status = LinkOrderToAddressAction::run(
+                                OrderToAddressDTO::make(
+                                    Address: $Address,
                                     order: $order,
-                                    type_status: TypeStateAdressEnum::coming, #TODO - Нужно потом указывать не стандартное (в массиве получать адресс прибытия это или отбытия в валидации)
+                                    type_status: TypeStateAddressEnum::coming, #TODO - Нужно потом указывать не стандартное (в массиве получать адресс прибытия это или отбытия в валидации)
                                     date: $date,
                                     priority: $flag++,
                                 ),
@@ -170,16 +170,16 @@ class CreateOrderUnitInteractor
         return $status;
     }
 
-    private function getAdress(string $adress_id) : ?Adress
+    private function getAddress(string $Address_id) : ?Address
     {
 
         try {
 
-            return Adress::findOrFail($adress_id);
+            return Address::findOrFail($Address_id);
 
         } catch (\Throwable $th) {
 
-            throw new Exception("Адресс: {$adress_id} не найден.", 404);
+            throw new Exception("Адресс: {$Address_id} не найден.", 404);
 
         }
 
@@ -187,18 +187,18 @@ class CreateOrderUnitInteractor
 
     /**
      * Проверяем, пустой ли массив адрессов
-     * @param ?array $arrAdress
+     * @param ?array $arrAddress
      *
      * @return bool
      */
-    private function filterIsArrayAdress(?array $arrAdress = null) : bool
+    private function filterIsArrayAddress(?array $arrAddress = null) : bool
     {
-        return empty($arrAdress) ? false : true;
+        return empty($arrAddress) ? false : true;
     }
 
     /**
      * Проверяем, пустой ли массив адрессов
-     * @param ?array $arrAdress
+     * @param ?array $arrAddress
      *
      * @return bool
     */

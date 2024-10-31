@@ -91,8 +91,8 @@ use App\Http\Controllers\Controller;
 *           @OA\JsonContent(
 *               allOf={
 *                  @OA\Schema(
-*                      @OA\Property(property="start_adress_id", type="string", format="uuid", description="uuid записи", example="123e4567-e89b-12d3-a456-426614174000"),
-*                      @OA\Property(property="end_adress_id", type="string", format="uuid", description="uuid записи", example="123e4567-e89b-12d3-a456-426614174000"),
+*                      @OA\Property(property="start_Address_id", type="string", format="uuid", description="uuid записи", example="123e4567-e89b-12d3-a456-426614174000"),
+*                      @OA\Property(property="end_Address_id", type="string", format="uuid", description="uuid записи", example="123e4567-e89b-12d3-a456-426614174000"),
 *                  ),
 *               },
 *           ),

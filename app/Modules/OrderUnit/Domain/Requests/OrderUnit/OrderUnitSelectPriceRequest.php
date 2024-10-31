@@ -18,8 +18,8 @@ class OrderUnitSelectPriceRequest extends ApiRequest
     {
         return [
 
-            "start_adress_id" => ['required', 'uuid', "exists:addresses,id"],
-            "end_adress_id" => ['required', 'uuid', "exists:addresses,id"],
+            "start_Address_id" => ['required', 'uuid', "exists:addresses,id"],
+            "end_Address_id" => ['required', 'uuid', "exists:addresses,id"],
             "organization_id" => ['required', 'uuid', "exists:organizations,id"],
 
             "end_date_order" => ['required', 'date'], //Дата окончание order

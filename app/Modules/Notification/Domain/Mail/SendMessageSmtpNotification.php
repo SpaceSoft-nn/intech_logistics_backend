@@ -4,7 +4,6 @@ namespace App\Modules\Notification\Domain\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
@@ -17,21 +16,19 @@ class SendMessageSmtpNotification extends Mailable implements ShouldQueue
     public function __construct($data)
     {
         $this->data = $data;
+
     }
 
     public function build()
     {
+        // $viewPath = base_path('app\Modules\Notification\Common\View\Mail\email_code.blade.php');
 
-        $viewPath = base_path('app\Modules\Notification\Common\View\Mail\email_code.blade.php');
-
-        $status =  $this->subject('Subject of the email')
+        return $this->subject('Subject of the email')
             ->view('email_code') // Используйте только название файла без расширения и пути
             ->with([
                 'message' => $this->data,
             ]);
 
         Log::info($status);
-
-        return $status;
     }
 }

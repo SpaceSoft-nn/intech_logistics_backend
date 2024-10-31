@@ -82,6 +82,8 @@ class RegistrationInteractor
             //Проверяем подтверждён ли phone/email
             $model_confirm = $this->isAccessNotification(email: $dto->email, phone: $dto->phone);
 
+            dd($model_confirm);
+
             //Если нет выкидываем массив с сообщением
             if(empty($model_confirm['data'])) { return $this->arrayResponseConfrimNotification(); }
         }

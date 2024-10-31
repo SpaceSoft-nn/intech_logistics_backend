@@ -13,15 +13,15 @@ class OrderUnitCreateDTO implements Arrayable
 
     public function __construct(
 
-        public readonly string $start_adress_id,
-        public readonly string $end_adress_id,
+        public readonly string $start_Address_id,
+        public readonly string $end_Address_id,
         public readonly string $start_date_delivery,
         public readonly string $end_date_delivery,
         public readonly string $organization_id,
         public readonly string $end_date_order,
         public readonly string $type_load_truck,
         public readonly int $order_total, #TODO Учитывать работу с деньгами
-        public ?array $adress_array,
+        public ?array $Address_array,
         public ?string $product_type,
         public ?int $body_volume,
         public ?StatusOrderUnitEnum $order_status = StatusOrderUnitEnum::draft,
@@ -33,8 +33,8 @@ class OrderUnitCreateDTO implements Arrayable
 
     public static function make(
 
-        string $start_adress_id,
-        string $end_adress_id,
+        string $start_Address_id,
+        string $end_Address_id,
         string $start_date_delivery,
         string $end_date_delivery,
         string $organization_id,
@@ -47,13 +47,13 @@ class OrderUnitCreateDTO implements Arrayable
         ?int $body_volume = null,
         ?StatusOrderUnitEnum $order_status = null,
         ?string $description= null,
-        ?array $adress_array = null, // Учесть если у нас будет массив адрессов
+        ?array $Address_array = null, // Учесть если у нас будет массив адрессов
 
     ) : self {
 
         return new self(
-            start_adress_id: $start_adress_id,
-            end_adress_id: $end_adress_id,
+            start_Address_id: $start_Address_id,
+            end_Address_id: $end_Address_id,
             start_date_delivery: $start_date_delivery,
             end_date_delivery: $end_date_delivery,
             organization_id: $organization_id,
@@ -66,7 +66,7 @@ class OrderUnitCreateDTO implements Arrayable
             order_status: $order_status,
             user_id: $user_id,
             contractors_id: $contractors_id,
-            adress_array: $adress_array,
+            Address_array: $Address_array,
         );
 
     }
@@ -75,8 +75,8 @@ class OrderUnitCreateDTO implements Arrayable
     {
         return [
 
-            "start_adress_id" => $this->start_adress_id,
-            "end_adress_id" => $this->end_adress_id,
+            "start_Address_id" => $this->start_Address_id,
+            "end_Address_id" => $this->end_Address_id,
             "start_date_delivery" => $this->start_date_delivery,
             "end_date_delivery" => $this->end_date_delivery,
             "organization_id" => $this->organization_id,
@@ -89,7 +89,7 @@ class OrderUnitCreateDTO implements Arrayable
             "order_status" => $this->order_status,
             "user_id" => $this->user_id,
             "contractors_id" => $this->contractors_id,
-            "adress_array" => $this->adress_array,
+            "Address_array" => $this->Address_array,
 
         ];
     }

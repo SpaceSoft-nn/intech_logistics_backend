@@ -43,6 +43,7 @@ class SendNotificationDriverAction
             );
         }
 
+
         //использования паттерна стратегии для выбора логики драйвера
         switch($this->driver){
 
@@ -72,7 +73,9 @@ class SendNotificationDriverAction
     private function driverContextStrategy(NotificationDriverEnum $enum) : bool
     {
 
+
         $driver = $this->notifyService->getDriverFactory($enum);
+
 
         $context = new DriverContextStrategy($driver);
         $context->send($this->dto);

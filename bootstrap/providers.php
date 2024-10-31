@@ -13,7 +13,7 @@ return [
     App\Modules\IndividualFace\App\Providers\IndividualFaceServiceProvider::class,
     App\Modules\Transport\App\Providers\TransportServiceProvider::class,
     App\Modules\PalletSpace\App\Providers\PalletSpaceServiceProvider::class,
-    App\Modules\Adress\App\Providers\AdressServiceProvider::class,
+    App\Modules\Address\App\Providers\AddressServiceProvider::class,
     App\Modules\OrderUnit\App\Providers\OrderUnitServiceProvider::class,
     App\Modules\Transfer\App\Providers\TransferServiceProvider::class,
     App\Modules\Matrix\App\Providers\MatrixServiceProvider::class,
@@ -22,7 +22,7 @@ return [
 
 
         #Interactor Service
-    App\Modules\InteractorModules\AdressOrder\App\Providers\AdressOrderServiceProvide::class,
+    App\Modules\InteractorModules\AddressOrder\App\Providers\AddressOrderServiceProvide::class,
     App\Modules\InteractorModules\OrganizationOrderInvoice\App\Providers\OrganizationOrderInvoiceServiceProvider::class,
 
         #Auth Service

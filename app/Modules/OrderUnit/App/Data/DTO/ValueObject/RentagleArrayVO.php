@@ -25,18 +25,18 @@ class RentagleArrayVO
 
     ) : self {
 
-        //Получаем репозиторий с работой промежуточной таблицы Adress/OrderUnit
+        //Получаем репозиторий с работой промежуточной таблицы Address/OrderUnit
         $rep = app(OrderUnitRepository::class);
 
         //Получаем начальный адрес отправки и конечненый (логика задана по приоритетности)
-        $adress_start = $rep->firstPivotPriorityAdress($order);
-        $adress_end = $rep->lastPivotPriorityAdress($order);
+        $Address_start = $rep->firstPivotPriorityAddress($order);
+        $Address_end = $rep->lastPivotPriorityAddress($order);
 
         return new self(
-            startLat: $adress_start->latitude,
-            startLng: $adress_start->longitude,
-            endLat: $adress_end->latitude,
-            endLng: $adress_end->longitude,
+            startLat: $Address_start->latitude,
+            startLng: $Address_start->longitude,
+            endLat: $Address_end->latitude,
+            endLng: $Address_end->longitude,
         );
 
     }

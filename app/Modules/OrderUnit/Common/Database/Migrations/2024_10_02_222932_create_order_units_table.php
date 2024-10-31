@@ -43,7 +43,7 @@ return new class extends Migration
             $table->boolean('add_load_space')->default(false)->comment('Возможен ли догруз');
             $table->boolean('change_price')->default(false)->comment('Возможна изменения цены (торг)');
             $table->boolean('change_time')->default(false)->comment('Возможна Изменение времени');
-            $table->boolean('adress_is_array')->comment('Если у нас больше двух адрессов');
+            $table->boolean('Address_is_array')->comment('Если у нас больше двух адрессов');
 
 
             $table->timestamps();

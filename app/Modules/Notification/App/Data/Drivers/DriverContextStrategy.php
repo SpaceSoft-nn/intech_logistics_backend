@@ -21,6 +21,5 @@ class DriverContextStrategy
     public function send(BaseDTO $dto) : void
     {
         $this->strategy->send($dto);
-
     }
 }

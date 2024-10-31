@@ -105,13 +105,13 @@ final class CoordinateCheckerInteractor
         //подготавливаем наш массив к функции
         $cordinstes = $orders->flatMap(function($order) {
 
-            $adress_start = $this->repOrderUnit->firstPivotPriorityAdress($order);
-            $adress_end =  $this->repOrderUnit->lastPivotPriorityAdress($order);
+            $Address_start = $this->repOrderUnit->firstPivotPriorityAddress($order);
+            $Address_end =  $this->repOrderUnit->lastPivotPriorityAddress($order);
 
             return [
                 $order->id => [
-                    ['lat' => $adress_start->latitude , 'lng' => $adress_start->longitude],
-                    ['lat' => $adress_end->latitude , 'lng' => $adress_end->longitude],
+                    ['lat' => $Address_start->latitude , 'lng' => $Address_start->longitude],
+                    ['lat' => $Address_end->latitude , 'lng' => $Address_end->longitude],
                 ]
             ];
 

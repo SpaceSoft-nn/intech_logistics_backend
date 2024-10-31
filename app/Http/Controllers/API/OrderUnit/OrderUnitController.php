@@ -49,8 +49,6 @@ class OrderUnitController extends Controller
         */
         $orders = OrderUnit::all();
 
-        $st = new OrderUnitCollection($orders);
-
         return response()->json(array_success(OrderUnitCollection::make($orders), 'Return Orders.'), 200);
     }
 

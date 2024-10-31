@@ -765,7 +765,10 @@
                                 "schema": {
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/components/schemas/OrderUnitResource"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/OrderUnitResource"
+                                            }
                                         },
                                         "message": {
                                             "type": "string",
@@ -895,7 +898,12 @@
                                                         "description": "Дата в формате 'дд.мм.гггг'.",
                                                         "type": "string",
                                                         "format": "date",
-                                                        "example": "07.01.2024"
+                                                        "example": "07.01.2024",
+                                                        "allOf": [
+                                                            {
+                                                                "$ref": "#/components/schemas/OrganizationResource"
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 "example": [
@@ -917,8 +925,151 @@
                     }
                 },
                 "responses": {
+                    "201": {
+                        "description": "Успешное создание заказа.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OrderUnitResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return create Order."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/{uuid}": {
+            "get": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Получить заказ по uuid.",
+                "operationId": "80f1baec263398c3fc1d39b36e8da062",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
                     "200": {
-                        "description": "Успешное возврат созданного Заказа.",
+                        "description": "Успешный возврат заказа",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "oneOf": [
+                                                {
+                                                    "$ref": "#/components/schemas/OrderUnitResource"
+                                                }
+                                            ],
+                                            "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return Order."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/get-schem": {
+            "post": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Получить все заказы которые входят в вектор движения Главного заказа",
+                "operationId": "6b495ec03837a5b38c46cb99abee5048",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "main_order": {
+                                                "description": "ID основного заказа, обязательное поле",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "550e8400-e29b-41d4-a716-446655440000"
+                                            },
+                                            "search_distance": {
+                                                "description": "Расстояние для поиска, необязательное поле - по стандарту стоит 100 км (Поиска) - (Указывать в Километрах)",
+                                                "type": "integer",
+                                                "example": 10
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат заказов входящие в область.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -959,13 +1110,13 @@
                 }
             }
         },
-        "/api/orders/algorithm": {
+        "/api/orders/select-offers": {
             "post": {
                 "tags": [
                     "Order Unit"
                 ],
-                "summary": "Получить все заказы которые входят в вектор движения Главного заказа",
-                "operationId": "2d6992478e14d853b93738961bd246a8",
+                "summary": "Получить сформированную цену в зависимости от параметров Заказа",
+                "operationId": "d6300830c99f39637d5a52f77212e2c7",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -973,16 +1124,46 @@
                                 "allOf": [
                                     {
                                         "properties": {
-                                            "main_order": {
-                                                "description": "ID основного заказа, обязательное поле",
+                                            "start_address_id": {
+                                                "description": "UUID адреса начала (обязательное поле, должен существовать в таблице addresses).",
                                                 "type": "string",
                                                 "format": "uuid",
-                                                "example": "550e8400-e29b-41d4-a716-446655440000"
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
                                             },
-                                            "search_distance": {
-                                                "description": "Расстояние для поиска, необязательное поле - по стандарту стоит 100 км (Поиска) - (Указывать в Километрах)",
-                                                "type": "integer",
-                                                "example": 10
+                                            "end_address_id": {
+                                                "description": "UUID адреса окончания (обязательное поле, должен существовать в таблице addresses).",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "organization_id": {
+                                                "description": "UUID организации (обязательное поле, должен существовать в таблице organizations).",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "end_date_order": {
+                                                "description": "Дата окончания заказа (обязательное поле).",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-12-31"
+                                            },
+                                            "product_type": {
+                                                "description": "Тип продукта (обязательное поле, максимум 255 символов).",
+                                                "type": "string",
+                                                "example": "Продукты питания"
+                                            },
+                                            "body_volume": {
+                                                "description": "Объём продукта (обязательное поле, минимум 1).",
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": 100.5
+                                            },
+                                            "description": {
+                                                "description": "Описание (необязательное поле, максимум 1000 символов).",
+                                                "type": "string",
+                                                "example": "Это пример описания заказа.",
+                                                "nullable": true
                                             }
                                         },
                                         "type": "object"
@@ -1892,12 +2073,6 @@
     },
     "components": {
         "schemas": {
-            "OrdeUnitController": {
-                "description": "Дата в формате 'дд.мм.гггг'.",
-                "type": "string",
-                "format": "date",
-                "example": "07.01.2024"
-            },
             "OrderUnitResource": {
                 "title": "Json Ресурс Order Unit",
                 "properties": {
@@ -2180,81 +2355,76 @@
                 },
                 "type": "object"
             },
-            "BearerToken": {
-                "title": "Bearer Token Object",
-                "type": "object",
+            "OrdeUnitController": {
+                "description": "Дата в формате 'дд.мм.гггг'.",
+                "type": "string",
+                "format": "date",
+                "example": "07.01.2024",
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/OrganizationResource"
-                    },
-                    {
-                        "properties": {
-                            "access_token": {
-                                "type": "string",
-                                "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MTQwMDMwNTcsImV4cCI6MTcxNDAwNjY1NywibmJmIjoxNzE0MDAzMDU3LCJqdGkiOiJaampTNWRmOHZtdHNZbWJ0Iiwic3ViIjoiMSIsInBydiI6IjRhNmUyNTJkNDljYzM1ZjlhNmQyODk3ZmRlNGY5MzE0NmU3YzgwMmMifQ.6J4NAHBKlRIG5ZAtgIwXHuToFnG1mCCXwgxrf6rL9DY"
-                            },
-                            "token_type": {
-                                "type": "number",
-                                "example": "Bearer"
-                            },
-                            "expires_in": {
-                                "type": "integer",
-                                "example": "3600"
-                            }
-                        },
-                        "type": "object"
                     }
                 ]
             },
+            "BearerToken": {
+                "title": "Bearer Token Object",
+                "properties": {
+                    "access_token": {
+                        "type": "string",
+                        "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MTQwMDMwNTcsImV4cCI6MTcxNDAwNjY1NywibmJmIjoxNzE0MDAzMDU3LCJqdGkiOiJaampTNWRmOHZtdHNZbWJ0Iiwic3ViIjoiMSIsInBydiI6IjRhNmUyNTJkNDljYzM1ZjlhNmQyODk3ZmRlNGY5MzE0NmU3YzgwMmMifQ.6J4NAHBKlRIG5ZAtgIwXHuToFnG1mCCXwgxrf6rL9DY"
+                    },
+                    "token_type": {
+                        "type": "number",
+                        "example": "Bearer"
+                    },
+                    "expires_in": {
+                        "type": "integer",
+                        "example": "3600"
+                    }
+                },
+                "type": "object"
+            },
             "UserResource": {
                 "title": "User Resource",
-                "type": "object",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/OrganizationResource"
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
                     },
-                    {
-                        "properties": {
-                            "id": {
-                                "type": "string",
-                                "format": "uuid"
-                            },
-                            "first_name": {
-                                "type": "string"
-                            },
-                            "last_name": {
-                                "type": "string"
-                            },
-                            "father_name": {
-                                "type": "string"
-                            },
-                            "role": {
-                                "type": "string",
-                                "enum": [
-                                    "admin",
-                                    "manager",
-                                    "observer"
-                                ]
-                            },
-                            "auth": {
-                                "type": "boolean"
-                            },
-                            "personal_area_id": {
-                                "type": "string",
-                                "format": "uuid"
-                            },
-                            "email_id": {
-                                "type": "string",
-                                "format": "uuid"
-                            },
-                            "phone_id": {
-                                "type": "string",
-                                "format": "uuid"
-                            }
-                        },
-                        "type": "object"
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "father_name": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "admin",
+                            "manager",
+                            "observer"
+                        ]
+                    },
+                    "auth": {
+                        "type": "boolean"
+                    },
+                    "personal_area_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "email_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "phone_id": {
+                        "type": "string",
+                        "format": "uuid"
                     }
-                ]
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {

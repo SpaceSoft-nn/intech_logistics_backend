@@ -5,13 +5,12 @@ namespace App\Modules\InteractorModules\AddressOrder\App\Data\DTO;
 use App\Modules\Address\Domain\Models\Address;
 use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use Illuminate\Support\Collection;
 
 class OrderToAddressDTO
 {
     public function __construct(
 
-        public Address $Address,
+        public Address $address,
         public OrderUnit $order,
         public TypeStateAddressEnum $type_status,
         public string $date,
@@ -21,7 +20,7 @@ class OrderToAddressDTO
 
     public static function make(
 
-        Address $Address,
+        Address $address,
         OrderUnit $order,
         TypeStateAddressEnum $type_status,
         string $date,
@@ -30,7 +29,7 @@ class OrderToAddressDTO
     ) : self {
 
         return new self(
-            Address: $Address,
+            address: $address,
             order: $order,
             type_status: $type_status,
             date: $date,

@@ -66,7 +66,7 @@ class OrderUnitFactory extends Factory
 
             LinkOrderToAddressAction::run(
                 OrderToAddressDTO::make(
-                    Address: $Addresses[0],
+                    address: $Addresses[0],
                     order: $orderUnit,
                     type_status: TypeStateAddressEnum::sending,
                     date: now(),
@@ -75,7 +75,7 @@ class OrderUnitFactory extends Factory
 
             LinkOrderToAddressAction::run(
                 OrderToAddressDTO::make(
-                    Address: $Addresses[1],
+                    address: $Addresses[1],
                     order: $orderUnit,
                     type_status: TypeStateAddressEnum::coming,
                     date: now(),

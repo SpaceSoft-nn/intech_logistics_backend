@@ -22,7 +22,7 @@ class LinkOrderToAddressAction
          /**
             * @var Address
             */
-            $Address = $dto->Address;
+            $address = $dto->address;
 
             /**
             * @var OrderUnit
@@ -34,21 +34,21 @@ class LinkOrderToAddressAction
             */
             $type_status = $dto->type_status;
 
-            $Address->order_units()->syncWithoutDetaching([$order->id => [
+            $address->order_units()->syncWithoutDetaching([$order->id => [
                 'data_time' => $dto->date,
                 'type' => $type_status,
                 'priority' => $dto->priority,
             ]]);
 
             return true;
-            
+
 
         try {
 
             /**
             * @var Address
             */
-            $Address = $dto->Address;
+            $address = $dto->address;
 
             /**
             * @var OrderUnit
@@ -60,7 +60,7 @@ class LinkOrderToAddressAction
             */
             $type_status = $dto->type_status;
 
-            $Address->order_units()->syncWithoutDetaching([$order->id => [
+            $address->order_units()->syncWithoutDetaching([$order->id => [
                 'data_time' => $dto->date,
                 'type' => $type_status,
                 'priority' => $dto->priority,

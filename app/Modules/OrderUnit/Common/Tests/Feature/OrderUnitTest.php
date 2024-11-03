@@ -7,7 +7,6 @@ use App\Modules\InteractorModules\AddressOrder\App\Data\DTO\OrderToAddressDTO;
 use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
 use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoUnitAction;
 use App\Modules\OrderUnit\Domain\Interactor\Order\CreateOrderUnitInteractor;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
@@ -176,7 +175,7 @@ class OrderUnitTest extends TestCase
         /**
         * @var Address
         */
-        $Addresses = Address::factory()->count(2)->create();
+        $addresses = Address::factory()->count(2)->create();
 
         /**
         * @var Organization
@@ -185,15 +184,15 @@ class OrderUnitTest extends TestCase
 
         $order = $interactor->execute(
             OrderUnitCreateDTO::make(
-                start_Address_id: $Addresses[0]->id,
-                end_Address_id: $Addresses[1]->id,
+                start_address_id: $addresses[0]->id,
+                end_address_id: $addresses[1]->id,
                 start_date_delivery: now(),
                 end_date_delivery: now(),
                 organization_id: $organization->id,
                 end_date_order: now(),
                 type_load_truck: "ftl",
                 order_total: 80000,
-                Address_array: null,
+                address_array: null,
                 product_type: 'Печеньки',
                 body_volume: 70,
                 order_status: null,
@@ -218,7 +217,7 @@ class OrderUnitTest extends TestCase
         /**
         * @var Address
         */
-        $Addresses = Address::factory()->count(4)->create();
+        $addresses = Address::factory()->count(4)->create();
 
         /**
         * @var Organization
@@ -231,17 +230,17 @@ class OrderUnitTest extends TestCase
         */
         $order = $interactor->execute(
             OrderUnitCreateDTO::make(
-                start_Address_id: $Addresses[0]->id,
-                end_Address_id: $Addresses[1]->id,
+                start_address_id: $addresses[0]->id,
+                end_address_id: $addresses[1]->id,
                 start_date_delivery: now(),
                 end_date_delivery: now(),
                 organization_id: $organization->id,
                 end_date_order: now(),
                 type_load_truck: "ltl",
                 order_total: 80000,
-                Address_array: [
-                    ["{$Addresses[2]->id}" => now(),],
-                    ["{$Addresses[3]->id}" => now(),],
+                address_array: [
+                    ["{$addresses[2]->id}" => now(),],
+                    ["{$addresses[3]->id}" => now(),],
                 ],
                 product_type: 'Печеньки',
                 body_volume: 70,

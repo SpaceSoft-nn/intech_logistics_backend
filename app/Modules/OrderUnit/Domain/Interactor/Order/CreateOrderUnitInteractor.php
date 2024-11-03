@@ -76,7 +76,7 @@ class CreateOrderUnitInteractor
             add_load_space: $this->filterIsLtlType($dto->type_load_truck),
             change_price: false,
             change_time: false,
-            Address_is_array: $this->filterIsArrayAddress($dto->Address_array),
+            address_is_array: $this->filterIsArrayAddress($dto->address_array),
 
         );
 
@@ -102,15 +102,15 @@ class CreateOrderUnitInteractor
         #TODO Проблема ножества запросов (изменить логику)
         {
             //получаем связку главного вектора движение
-            $Address_start_main = $this->getAddress($dto->start_Address_id);
-            $Address_end_main = $this->getAddress($dto->end_Address_id);
+            $address_start_main = $this->getAddress($dto->start_address_id);
+            $address_end_main = $this->getAddress($dto->end_address_id);
         }
 
         {
             //Начало главного адресс
             $status = LinkOrderToAddressAction::run(
                 OrderToAddressDTO::make(
-                    Address: $Address_start_main,
+                    address: $address_start_main,
                     order: $order,
                     type_status: TypeStateAddressEnum::sending,
                     date: $dto->start_date_delivery,
@@ -123,7 +123,7 @@ class CreateOrderUnitInteractor
             //Конец главного адресса
             $status = LinkOrderToAddressAction::run(
                 OrderToAddressDTO::make(
-                    Address: $Address_end_main,
+                    address: $address_end_main,
                     order: $order,
                     type_status: TypeStateAddressEnum::coming,
                     date: $dto->end_date_delivery,
@@ -138,18 +138,18 @@ class CreateOrderUnitInteractor
 
                 $flag = 2;
 
-                foreach ($dto->Address_array as $subArray) {
+                foreach ($dto->address_array as $subArray) {
 
                     if( !empty($subArray) ) {
 
                         //Flag приоритености, делаем его 2, т.к 1 - будет главным адрессом движения.
                         foreach ($subArray as $uuid => $date) {
 
-                            $Address = $this->getAddress($uuid);
+                            $address = $this->getAddress($uuid);
 
                             $status = LinkOrderToAddressAction::run(
                                 OrderToAddressDTO::make(
-                                    Address: $Address,
+                                    address: $address,
                                     order: $order,
                                     type_status: TypeStateAddressEnum::coming, #TODO - Нужно потом указывать не стандартное (в массиве получать адресс прибытия это или отбытия в валидации)
                                     date: $date,

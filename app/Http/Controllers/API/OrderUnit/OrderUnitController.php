@@ -52,9 +52,9 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OrderUnitCollection::make($orders), 'Return Orders.'), 200);
     }
 
-     /**
-     * Вернуть все заказы
-     */
+    /**
+    * Вернуть 1 заказ
+    */
     public function show(OrderUnit $orderUnit)
     {
         return response()->json(array_success(OrderUnitResource::make($orderUnit), 'Return Order.'), 200);

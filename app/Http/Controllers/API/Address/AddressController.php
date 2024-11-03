@@ -8,7 +8,6 @@ use App\Modules\Address\Domain\Actions\Address\CreateAddressAction;
 use App\Modules\Address\Domain\Models\Address;
 use App\Modules\Address\Domain\Requests\Address\AddressCreateRequest;
 use App\Modules\Address\Domain\Resources\AddressResource;
-use Illuminate\Http\Request;
 
 use function App\Helpers\array_success;
 

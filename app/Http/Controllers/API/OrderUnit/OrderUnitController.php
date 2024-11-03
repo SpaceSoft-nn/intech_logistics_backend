@@ -97,15 +97,15 @@ class OrderUnitController extends Controller
 
         $order = $service->createOrderUnit(
             OrderUnitCreateDTO::make(
-                start_Address_id: $validated['start_Address_id'],
-                end_Address_id: $validated['end_Address_id'],
+                start_address_id: $validated['start_address_id'],
+                end_address_id: $validated['end_address_id'],
                 start_date_delivery: $validated['start_date_delivery'],
                 end_date_delivery: $validated['end_date_delivery'],
                 organization_id: $validated['organization_id'],
                 end_date_order: $validated['end_date_order'],
                 type_load_truck: $validated['type_load_truck'],
                 order_total: $validated['order_total'],
-                Address_array: $validated['address_array'] ?? null,
+                address_array: $validated['address_array'] ?? null,
                 product_type: $validated['product_type'] ?? null,
                 body_volume: $validated['body_volume'] ?? null,
                 user_id: $validated['user_id'] ?? null,

@@ -46,7 +46,7 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 });
 
     //Address
-Route::get('/addresses/{addresses}', [AddressController:: class, 'show'])->whereUuid('addresses');
+Route::get('/addresses/{address}', [AddressController:: class, 'show'])->whereUuid('address');
 Route::post('/addresses', [AddressController:: class, 'create']);
 
     //orderUnit

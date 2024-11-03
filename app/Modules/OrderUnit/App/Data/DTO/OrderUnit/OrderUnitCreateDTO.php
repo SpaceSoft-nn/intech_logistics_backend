@@ -4,7 +4,6 @@ namespace App\Modules\OrderUnit\App\Data\DTO\OrderUnit;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use Illuminate\Contracts\Support\Arrayable;
 
 class OrderUnitCreateDTO implements Arrayable

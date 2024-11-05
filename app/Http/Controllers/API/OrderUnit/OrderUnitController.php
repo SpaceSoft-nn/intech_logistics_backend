@@ -266,4 +266,9 @@ class OrderUnitController extends Controller
             ? response()->json(array_success(null, $result->message), 200)
             : response()->json(array_success(null, $result->message), 403);
     }
+
+    public function createMgx()
+    {
+        MgxCreateAction::run()
+    }
 }

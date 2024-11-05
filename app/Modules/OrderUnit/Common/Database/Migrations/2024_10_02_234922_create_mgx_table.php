@@ -14,9 +14,9 @@ return new class extends Migration
 
             $table->uuid('id')->primary();
 
-            $table->decimal('length', 10, 2)->nullable()->comment('Длина'); // Ширина
-            $table->decimal('width', 10, 2)->nullable()->comment('Ширина'); // Длина
-            $table->decimal('height', 10, 2)->nullable()->comment('Высота'); // Высота
+            $table->decimal('length', 10, 2)->comment('Длина'); // Ширина
+            $table->decimal('width', 10, 2)->comment('Ширина'); // Длина
+            $table->decimal('height', 10, 2)->comment('Высота'); // Высота
             $table->decimal('weight', 10, 2)->comment('Вес'); // Вес
 
             $table->timestamps();

@@ -11,14 +11,12 @@ use function App\Helpers\Mylog;
 class MgxCreateAction
 {
 
-    private function __construct(){ }
-
     public static function make(MgxVO $vo) : ?Mgx
     {
-        return self::run($vo);
+        return (new self($vo))->run($vo);
     }
 
-    private static function run(MgxVO $vo) : ?MgxVO
+    private function run(MgxVO $vo) : ?MgxVO
     {
 
         try {

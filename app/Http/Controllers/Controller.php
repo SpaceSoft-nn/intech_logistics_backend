@@ -25,7 +25,7 @@ namespace App\Http\Controllers;
 *    schema="OrderUnitResource",
 *    title="Json Ресурс Order Unit",
 *    @OA\Property(property="id", type="string", format="uuid"),
-*    @OA\Property(property="delivery_start", type="string", format="date-time"),
+*    @OA\Property(property="end_date_order", type="string", format="date-time"),
 *    @OA\Property(property="delivery_end", type="string", format="date-time"),
 *    @OA\Property(property="address_start_id", ref="#/components/schemas/AddressResource"),
 *    @OA\Property(property="address_end_id", ref="#/components/schemas/AddressResource"),

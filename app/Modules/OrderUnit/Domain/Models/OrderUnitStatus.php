@@ -2,32 +2,30 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
-use App\Modules\OrderUnit\Domain\Factories\MgxFactory;
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Mgx extends Model
+class OrderUnitStatus extends Model
 {
 
     use HasFactory, HasUuids;
 
-    protected $table = 'mgxs';
+    protected $table = 'status_order';
 
-    protected  static function newFactory()
-    {
-        return MgxFactory::new();
-    }
+    // protected static function newFactory()
+    // {
+    //     return OrderUnitFactory::new();
+    // }
 
     protected $fillable = [
 
-        "length",
-        "width",
-        "height",
-        "weight",
-        "order_unit_id",
+        'order_unit_id',
+        'date',
+        'status',
 
     ];
 
@@ -35,6 +33,7 @@ class Mgx extends Model
         'id',
         'created_at',
         'updated_at',
+
     ];
 
     protected $hidden = [
@@ -45,12 +44,14 @@ class Mgx extends Model
     {
         return [
 
+            'status' => StatusOrderUnitEnum::class,
+
         ];
     }
 
-
-    public function cargo_good(): HasOne
+    public function order_unit(): BelongsTo
     {
-        return $this->hasOne(CargoGood::class);
+        return $this->belongsTo(OrderUnit::class);
     }
+
 }

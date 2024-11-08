@@ -15,31 +15,40 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->date('end_date_order')->nullable()->comment('До какой даты заказ будет активен');
-
             $table->string('body_volume')->comment('Общий объём заказа');
-
             $table->string('order_total')->comment('Цена/Выплата за заказ');
-            $table->string('order_status')->default(StatusOrderUnitEnum::draft)->comment('status order');
             $table->string('description')->nullable();
-            $table->string('product_type')->nullable()->comment('Тип товара');
+
+
+            $table->string('transport_type')->comment('Тип траспортного средства');
+
+
+            //unsignedSmallInteger - когда-нибудь может быть проблема с этим типам
+            $table->unsignedSmallInteger('cargo_unit_sum')->comment('Общее количество паллетов в заказе');
+
 
             $table->string('type_load_truck')->comment('Тип загрузки трака: LTL, FTL, Custom...');
 
-            $table->uuid('user_id')
+            //Связи
+            $table->uuid('user_id')->comment('Пользователь создавший заказ')
                 ->nullable()
                 ->constrained('users')->noActionOnDelete();
 
-            $table->uuid('organization_id')
+            $table->uuid('organization_id')->comment('Организация к которой привязан заказ')
                 ->constrained('organizations')->noActionOnDelete();
 
             $table->uuid('contractor_id')->comment('Выбранный подрядчик на заказ.')->nullable()
                 ->constrained('organizations')->noActionOnDelete();
+
+            // $table->string('order_status')->default(StatusOrderUnitEnum::draft)->comment('status order');
+
 
                 //служебнеы поля
             $table->boolean('add_load_space')->default(false)->comment('Возможен ли догруз');
             $table->boolean('change_price')->default(false)->comment('Возможна изменения цены (торг)');
             $table->boolean('change_time')->default(false)->comment('Возможна Изменение времени');
             $table->boolean('address_is_array')->comment('Если у нас больше двух адрессов');
+            $table->boolean('goods_is_array')->comment('Если у заказа больше одного груза');
 
 
             $table->timestamps();

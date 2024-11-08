@@ -15,12 +15,8 @@ return new class extends Migration
 
             $table->uuid('id')->primary();
 
-            $table->uuid('pallets_space_id')
-                ->nullable()
-                ->constrained('pallets_space')->noActionOnDelete();
-
-            $table->string('customer_pallets_space')->nullable();
-            $table->text('description');
+            $table->string('pallets_space')->comment('Тип Паллета');
+            $table->boolean('customer_pallets_space')->default(false)->comment('Если тип паллета = custom');
 
             $table->timestamps();
 

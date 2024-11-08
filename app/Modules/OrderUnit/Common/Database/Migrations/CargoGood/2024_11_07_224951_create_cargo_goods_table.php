@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //Грузы
         Schema::create('cargo_goods', function (Blueprint $table) {
 
             $table->uuid('id');
@@ -22,11 +23,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('cargo_units_count')->comment('Количество паллетов');
             $table->unsignedSmallInteger('body_bolume')->comment('Общий объём паллетов');
 
-            $table->uuid('mgx_id')->comment('Масса-габаритные характеристики')
-                ->nullable()
-                ->constrained('mgxs')->noActionOnDelete();
-
-            $table->text('description');
+            $table->text('description')->nullable();
 
             $table->timestamps();
 

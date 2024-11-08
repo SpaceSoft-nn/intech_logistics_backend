@@ -21,9 +21,8 @@ class CargoUnit extends Model
 
     protected $fillable = [
 
-        "pallets_space_id",
+        "pallets_space",
         "customer_pallets_space",
-        "description",
 
     ];
 
@@ -44,14 +43,15 @@ class CargoUnit extends Model
         ];
     }
 
+
     /**
-    * Связь с заказом многие ко многим
+ * Связь паллетов с грузами
     * @return BelongsToMany
     */
-    public function order_units(): BelongsToMany
+    public function cargo_goods(): BelongsToMany
     {
         //TODO Может быть баг - потом проверить
-        return $this->belongsToMany(OrderUnit::class, 'order_unit_cargo_unit', 'cargo_unit_id' , 'order_unit_id')->withPivot('factor');
+        return $this->belongsToMany(CargoGood::class, 'cargo_good_cargo_unit', 'cargo_unit_id' , 'cargo_good_id')->withPivot('factor');
     }
 
 

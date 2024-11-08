@@ -28,6 +28,9 @@ return new class extends Migration
             $table->integer('priority')->default(null)->comment('Приоритетность - с помощью этого поля поймём вектор движение между адрессами');
 
             $table->timestamps();
+
+            // Здесь мы создаем составной уникальный ключ
+            $table->unique(['order_unit_id', 'address_id']);
         });
     }
 

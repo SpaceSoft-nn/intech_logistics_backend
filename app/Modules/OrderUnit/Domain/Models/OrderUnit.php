@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class OrderUnit extends Model
 {
@@ -84,6 +85,14 @@ class OrderUnit extends Model
     }
 
 
+    /**
+     * Вернуть все возможные статусы которые были
+     * @return HasMany
+     */
+    public function order_unit_statuses(): HasMany
+    {
+        return $this->hasMany(OrderUnitStatus::class);
+    }
 
     /**
      * Связь с паллетами многие ко многим

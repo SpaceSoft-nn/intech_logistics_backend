@@ -20,7 +20,9 @@ class OrderUnitServiceProvider extends ServiceProvider
 
         if($this->app->runningInConsole()){
 
-            $this->loadMigrationsFrom(dirname(__DIR__) . '/..' . '/Common' . '/Database' . "/Migrations");
+            $this->loadMigrationsFrom(dirname(__DIR__) . '/..' . '/Common' . '/Database' . "/Migrations" . "/Agreement");
+            $this->loadMigrationsFrom(dirname(__DIR__) . '/..' . '/Common' . '/Database' . "/Migrations" . "/CargoGood");
+            $this->loadMigrationsFrom(dirname(__DIR__) . '/..' . '/Common' . '/Database' . "/Migrations" . "/OrderUnit");
 
         }
     }

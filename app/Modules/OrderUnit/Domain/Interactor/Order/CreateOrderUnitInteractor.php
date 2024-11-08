@@ -134,7 +134,7 @@ class CreateOrderUnitInteractor
 
         {
 
-            if(!empty($dto->Address_array)) {
+            if(!empty($dto->address_array)) {
 
                 $flag = 2;
 

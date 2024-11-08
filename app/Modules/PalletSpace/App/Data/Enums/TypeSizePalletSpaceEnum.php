@@ -4,5 +4,7 @@ namespace App\Modules\PalletSpace\App\Data\Enums;
 
 enum TypeSizePalletSpaceEnum : string
 {
-    case eur = "1100x1100";
+    case eur = "Паллет EUR";
+    case fin = "Паллет FIN";
+    case ico = "Паллет ECO";
 }

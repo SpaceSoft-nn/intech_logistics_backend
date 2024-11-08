@@ -21,6 +21,7 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+
         $json_token = $this->authService->attemptUserAuth(
             UserAttemptDTO::make(
                 password: $request->password,

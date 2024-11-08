@@ -124,7 +124,7 @@ class AuthSanctum implements AuthInterface
     /**
      * @param UserAttemptDTO $credentials
      *
-     * @return bool
+     * @return bool|array
      */
     private function checkUserAuth(BaseDTO $credentials) : bool|array
     {

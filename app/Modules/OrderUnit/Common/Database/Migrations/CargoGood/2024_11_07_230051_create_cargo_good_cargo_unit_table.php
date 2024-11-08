@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cargo_good_cargo_unit', function (Blueprint $table) {
 
-            $table->id('id')->primary();
+            $table->id('id');
 
             $table->uuid('cargo_good_id')
                 ->constrained('cargo_goods')->noActionOnDelete();
@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->decimal('factor', 10, 2)->default(1);
 
-            $table->primary(['order_unit_id', 'cargo_unit_id']);
+            $table->primary(['cargo_good_id', 'cargo_unit_id']);
 
             $table->timestamps();
 

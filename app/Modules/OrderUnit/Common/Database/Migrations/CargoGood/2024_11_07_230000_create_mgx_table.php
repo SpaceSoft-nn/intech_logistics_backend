@@ -19,11 +19,11 @@ return new class extends Migration
             $table->decimal('height', 10, 2)->comment('Высота'); // Высота
             $table->decimal('weight', 10, 2)->comment('Вес'); // Вес
 
-            $table->foreignId('cargo_good_id')
+            $table->uuid('cargo_good_id')
                 ->constrained('cargo_goods') // Устанавливаем связь с таблицей cargo_goods
                 ->onDelete('cascade') // Удаляем mgx при удалении cargo_good
                 ->unique(); // Это гарантирует, что каждый cargo_good может иметь только одну запись в mgx
-
+          
             $table->timestamps();
 
         });

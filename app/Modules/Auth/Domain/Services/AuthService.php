@@ -42,7 +42,7 @@ class AuthService implements AuthServiceInterface
      *
      * @return bool|array
      */
-    public function attemptUserAuth(BaseDTO $data) : ?array
+    public function attemptUserAuth(BaseDTO $data) : bool|array
     {
         return AttemptUserAuthAction::make($this->serviceAuth)->run($data);
     }

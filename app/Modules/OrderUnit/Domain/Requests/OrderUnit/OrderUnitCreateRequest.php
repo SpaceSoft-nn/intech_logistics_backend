@@ -6,6 +6,7 @@ use App\Modules\Address\Domain\Rules\ArrayAddressRule;
 use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
+use App\Modules\OrderUnit\Domain\Rule\ArrayCargoGoodRule;
 use Illuminate\Validation\Rule;
 
 class OrderUnitCreateRequest extends ApiRequest
@@ -28,15 +29,17 @@ class OrderUnitCreateRequest extends ApiRequest
 
         return [
 
-            "start_Address_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс начало.
-            "end_Address_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс окончания.
+            //Работа с Адрессами
+            "start_address_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс начало.
+            "end_address_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс окончания.
 
             "start_date_delivery" => ['required', 'date'], // Дата начала заказа
             "end_date_delivery" => ['required', 'date'], // Дата окончания заказа
 
+
             //массивы
             'address_array' => ['nullable', new ArrayAddressRule()], //массив заказов
-            'goods_array' => ['required', new ArrayAddressRule()], //массив грузов
+            'goods_array' => ['required', new ArrayCargoGoodRule()], //массив грузов
 
             'type_transport_weight'  => ['required', Rule::in($typeTransportWeight)], //Выбор транспорта по габаритам
 

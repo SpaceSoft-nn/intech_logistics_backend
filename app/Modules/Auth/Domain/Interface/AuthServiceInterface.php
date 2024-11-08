@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 interface AuthServiceInterface
 {
     public function getUserAuth() : ?Model;
-    public function attemptUserAuth(BaseDTO $data) : ?array;
+    public function attemptUserAuth(BaseDTO $data) : bool|array;
     public function logout() : bool;
     public function refresh() : ?array;
     public function loginUser(Model $model) : ?array;

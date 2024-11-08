@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('order_unit_cargo_good', function (Blueprint $table) {
 
-            $table->id('id')->primary();
+            $table->id('id');
 
             $table->uuid('order_unit_id')
                 ->constrained('order_units')->noActionOnDelete();

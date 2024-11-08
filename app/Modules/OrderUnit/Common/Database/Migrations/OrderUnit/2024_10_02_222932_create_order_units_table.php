@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('description')->nullable();
 
 
-            $table->string('transport_type')->comment('Тип траспортного средства');
+            $table->string('type_transport_weight')->comment('Тип траспортного средства');
 
 
-            //unsignedSmallInteger - когда-нибудь может быть проблема с этим типам
+            //unsignedSmallInteger - будел ли проблема с этим типом?
             $table->unsignedSmallInteger('cargo_unit_sum')->comment('Общее количество паллетов в заказе');
 
 

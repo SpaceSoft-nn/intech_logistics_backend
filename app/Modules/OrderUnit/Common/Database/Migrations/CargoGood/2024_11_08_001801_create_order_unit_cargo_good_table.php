@@ -26,6 +26,32 @@ return new class extends Migration
             $table->timestamps();
 
         });
+
+        //Создание функции для триггера goods_is_array
+        DB::unprepared(
+            "CREATE OR REPLACE FUNCTION update_goods_is_array() RETURNS TRIGGER AS $$
+            BEGIN
+                IF (SELECT COUNT(*) FROM order_unit_cargo_good WHERE order_unit_id = NEW.order_unit_id) > 1 THEN
+                    UPDATE order_units
+                    SET goods_is_array = TRUE
+                    WHERE id = NEW.order_unit_id;
+                ELSE
+                    UPDATE order_units
+                    SET goods_is_array = FALSE
+                    WHERE id = NEW.order_unit_id;
+                END IF;
+                RETURN NEW;
+            END;
+            $$ LANGUAGE plpgsql;"
+        );
+
+        // Создание триггера для изменение goods_is_array
+        DB::unprepared(
+            "CREATE TRIGGER update_goods_is_array_trigger
+            BEFORE INSERT OR UPDATE ON order_unit_cargo_good
+            FOR EACH ROW
+            EXECUTE FUNCTION update_goods_is_array();"
+        );
     }
 
     /**

@@ -13,7 +13,7 @@ class UserLoginRequest extends ApiRequest
     protected $stopOnFirstFailure = true;
 
     public function authorize(): bool
-    {
+    {   
         return true;
     }
 
@@ -34,7 +34,7 @@ class UserLoginRequest extends ApiRequest
         return [
             'email' => (new EmailRule)->toArray(),
             'phone' => (new PhoneRule)->toArray(),
-            'password' => ['required', 'string', Password::defaults()],
+            'password' => ['required', 'string'],
         ];
     }
 

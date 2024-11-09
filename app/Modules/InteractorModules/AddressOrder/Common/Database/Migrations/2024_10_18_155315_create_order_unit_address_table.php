@@ -32,6 +32,35 @@ return new class extends Migration
             // Здесь мы создаем составной уникальный ключ
             $table->unique(['order_unit_id', 'address_id']);
         });
+
+        //Создание функции для триггера address_is_array
+        DB::unprepared(
+            "CREATE OR REPLACE FUNCTION update_address_is_array()
+            RETURNS TRIGGER AS $$
+            BEGIN
+                IF (SELECT COUNT(*) FROM order_unit_address WHERE order_unit_id = NEW.order_unit_id) > 1 THEN
+                    UPDATE order_units
+                    SET address_is_array = TRUE
+                    WHERE id = NEW.order_unit_id;
+                ELSE
+                    UPDATE order_units
+                    SET address_is_array = FALSE
+                    WHERE id = NEW.order_unit_id;
+                END IF;
+                RETURN NEW;
+            END;
+            $$ LANGUAGE plpgsql;"
+        );
+
+
+        // Создание триггера для изменение address_is_array
+        DB::unprepared(
+            "CREATE TRIGGER update_address_is_array_trigger
+            BEFORE INSERT OR UPDATE ON order_unit_address
+            FOR EACH ROW
+            EXECUTE FUNCTION update_address_is_array();"
+        );
+
     }
 
     /**

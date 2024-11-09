@@ -3,6 +3,7 @@
 namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
+use Arr;
 use Illuminate\Contracts\Support\Arrayable;
 
 class MgxVO implements Arrayable
@@ -43,5 +44,22 @@ class MgxVO implements Arrayable
             "height" => $this->height,
             "weight" => $this->weight,
         ];
+    }
+
+    public static function fromArrayToObject(array $data): self
+    {
+
+        $length = Arr::get($data, "length");
+        $width = Arr::get($data, "width");
+        $height = Arr::get($data, "height");
+        $weight = Arr::get($data, "weight");
+
+
+        return new self(
+            length: $length,
+            width: $width,
+            height: $height,
+            weight: $weight,
+        );
     }
 }

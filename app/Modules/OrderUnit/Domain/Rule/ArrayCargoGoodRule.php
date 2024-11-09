@@ -2,7 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Rule;
 
-use App\Modules\PalletSpace\App\Data\Enums\TypeSizePalletSpaceEnum;
+use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -39,7 +39,7 @@ class ArrayCargoGoodRule implements ValidationRule
                 'integer' => ":attribute должно быть целым числом.",
                 'min' => ":attribute должно быть не менее 1."
             ],
-            'body_bolume' => [
+            'body_volume' => [
                 'required' => "Поле :attribute обязательно для заполнения.",
                 'numeric' => ":attribute должен быть числом.",
                 'min' => ":attribute должен быть не менее 0." // возможно, 0 допустимо
@@ -59,20 +59,20 @@ class ArrayCargoGoodRule implements ValidationRule
             $validatorGood = Validator::make(
 
                 [
-                    'name_value' => $key['name_value'],
-                    'product_type' => $key['product_type'],
-                    'type_pallet' => $key['type_pallet'],
-                    'cargo_units_count' => $key['cargo_units_count'],
-                    'body_bolume' => $key['body_bolume'],
-                    'description' => $key['description'],
-                    'mgx' => $key['mgx'],
+                    'name_value' => $key['name_value'] ?? null,
+                    'product_type' => $key['product_type'] ?? null,
+                    'type_pallet' => $key['type_pallet'] ?? null,
+                    'cargo_units_count' => $key['cargo_units_count'] ?? null,
+                    'body_volume' => $key['body_volume'] ?? null,
+                    'description' => $key['description'] ?? null,
+                    'mgx' => $key['mgx'] ?? null,
                 ],
 
                 [
                     'product_type' => ['required' ,'string'],
                     'type_pallet' => ['required', 'string', Rule::in($typeTransportWeight)],
                     'cargo_units_count' => ['required', 'integer', 'min:1'],
-                    'body_bolume' => ['required','numeric', 'min:0'],
+                    'body_volume' => ['required','numeric', 'min:0'],
                     'name_value' => ['nullable', 'string', 'max:100'],
                     'description' => ['nullable', 'string' , 'max:500'],
                     'mgx' => ['nullable', 'array', new ArrayCargoMgxRule()],

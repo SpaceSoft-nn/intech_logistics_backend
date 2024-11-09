@@ -5,6 +5,7 @@ namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit;
 use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
+use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use Arr;
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -14,40 +15,47 @@ class OrderUnitVO implements Arrayable
 
     public function __construct(
 
-
-        public readonly string $body_volume,
-        public readonly string $order_total,
-        public readonly string $organization_id,
-        public readonly TypeLoadingTruckMethod $type_load_truck,
         public readonly string $end_date_order,
-        public ?string $description,
-        public ?string $product_type,
+        public readonly ?float $body_volume,
+        public readonly string $order_total,
+        
+
+
+        public readonly TypeTransportWeight $type_transport_weight,
+        public readonly TypeLoadingTruckMethod $type_load_truck,
         public ?StatusOrderUnitEnum $order_status,
+
+        public ?string $description,
+
+        public readonly string $organization_id,
         public ?string $user_id,
         public ?string $contractors_id,
+
         public ?bool $add_load_space,
         public ?bool $change_price,
         public ?bool $change_time,
-        public ?bool $address_is_array,
 
     ) {}
 
     public static function make(
 
-        string $body_volume,
+        ?float $body_volume,
         string $order_total,
-        string $description,
-        string $organization_id,
-        string $type_load_truck,
         string $end_date_order,
-        ?string $product_type = null,
-        ?StatusOrderUnitEnum $order_status = null,
+
+        string $type_load_truck,
+        string $type_transport_weight,
+
+        ?string $description = null,
+        ?string $order_status = null,
+
         ?string $user_id = null,
         ?string $contractors_id = null,
-        ?bool $add_load_space = null,
+        ?string $organization_id,
+
+        bool $add_load_space,
         ?bool $change_price = null,
         ?bool $change_time = null,
-        ?bool $address_is_array = false,
 
     ) : self {
 
@@ -57,19 +65,48 @@ class OrderUnitVO implements Arrayable
             order_total: $order_total,
             description: $description,
             end_date_order: $end_date_order,
-            product_type: $product_type,
+
             type_load_truck: TypeLoadingTruckMethod::stringByCaseToObject($type_load_truck),
-            order_status: $order_status,
+            type_transport_weight: TypeTransportWeight::stringByCaseToObject($type_transport_weight),
+            order_status: StatusOrderUnitEnum::stringByCaseToObject($order_status),
+
             user_id: $user_id,
             contractors_id: $contractors_id,
             organization_id: $organization_id,
-            add_load_space: $add_load_space,
+
+            add_load_space: $add_load_space, //TODO нужно переносить в триггер
             change_price: $change_price,
             change_time: $change_time,
-            address_is_array: $address_is_array,
 
         );
 
+    }
+
+
+    /**
+     * VO - Должен сохранять иммутабельность, поэтому делаем новый объект с заполненным полям
+     * @return self
+     */
+    public function withBodyVolume(float $body_volume) : self
+    {
+        return new self (
+            body_volume: $body_volume,
+            order_total: $this->order_total,
+            description: $this->description,
+            end_date_order: $this->end_date_order,
+
+            type_load_truck: $this->type_load_truck,
+            type_transport_weight: $this->type_transport_weight,
+            order_status: $this->order_status,
+
+            user_id: $this->user_id,
+            contractors_id: $this->contractors_id,
+            organization_id: $this->organization_id,
+
+            add_load_space: $this->add_load_space, //TODO нужно переносить в триггер
+            change_price: $this->change_price,
+            change_time: $this->change_time,
+        );
     }
 
 
@@ -81,16 +118,19 @@ class OrderUnitVO implements Arrayable
             "body_volume" => $this->body_volume,
             "order_total" => $this->order_total,
             "description" => $this->description,
-            "product_type" => $this->product_type,
-            "type_load_truck" => $this->type_load_truck,
-            "order_status" => $this->order_status,
+
+            "type_load_truck" => $this->type_load_truck?->value,
+            "type_transport_weight" => $this->type_transport_weight?->value,
+            "order_status" => $this->order_status?->value,
+
             "user_id" => $this->user_id,
             "contractors_id" => $this->contractors_id,
             "organization_id" => $this->organization_id,
+
+            //служебные
             "add_load_space" => $this->add_load_space,
             "change_price" => $this->change_price,
             "change_time" => $this->change_time,
-            "address_is_array" => $this->address_is_array,
 
         ];
     }
@@ -99,34 +139,39 @@ class OrderUnitVO implements Arrayable
     {
 
         $end_date_order = Arr::get($data, "end_date_order");
-        $body_volume = Arr::get($data, "body_volume");
+        $body_volume = Arr::get($data, "body_volume", null);
         $order_total = Arr::get($data, "order_total");
-        $organization_id = Arr::get($data, "organization_id");
-        $type_load_truck = Arr::get($data, "type_load_truck");
         $description = Arr::get($data, "description", null);
-        $product_type = Arr::get($data, "product_type", null);
+
+        $type_load_truck = Arr::get($data, "type_load_truck");
+        $type_transport_weight = Arr::get($data, "type_transport_weight");
         $order_status = Arr::get($data, "order_status", null);
+
+
         $user_id = Arr::get($data, "user_id", null);
         $contractors_id = Arr::get($data, "contractors_id", null);
+        $organization_id = Arr::get($data, "organization_id", null);
+
         $change_price = Arr::get($data, "change_price", null);
         $change_time = Arr::get($data, "change_time", null);
-        $address_is_array = Arr::get($data, "address_is_array", null);
 
-        return new self(
+        return static::make(
             end_date_order: $end_date_order,
             body_volume: $body_volume,
             order_total: $order_total,
             description: $description,
-            product_type: $product_type,
-            type_load_truck: TypeLoadingTruckMethod::stringByCaseToObject($type_load_truck),
+
+            type_load_truck: $type_load_truck,
+            type_transport_weight: $type_transport_weight,
             order_status: $order_status,
+
             user_id: $user_id,
             contractors_id: $contractors_id,
             organization_id: $organization_id,
+
             add_load_space: self::filterEnumTypeLoad($type_load_truck),
             change_price: $change_price,
             change_time: $change_time,
-            address_is_array: $address_is_array,
         );
     }
 

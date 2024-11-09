@@ -4,6 +4,9 @@ namespace App\Modules\OrderUnit\Domain\Requests\OrderUnit;
 
 use App\Modules\Address\Domain\Rules\ArrayAddressRule;
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\MgxVO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Rule\ArrayCargoGoodRule;
@@ -13,6 +16,9 @@ class OrderUnitCreateRequest extends ApiRequest
 {
 
     protected $stopOnFirstFailure = true;
+
+    //Сохраняем состояние валидации 1 раз, что бы не вызывать её множество раз при создании VO
+    private array $validatedData = [];
 
     public function authorize(): bool
     {
@@ -55,6 +61,44 @@ class OrderUnitCreateRequest extends ApiRequest
             "description" => ['nullable', 'string', 'max:1000'], //Описание
 
         ];
+    }
+
+    /**
+    * Получить или сохранить валидированные данные.
+    *
+    * @return array
+    */
+    private function getValidatedData(): array
+    {
+        if (empty($this->validatedData)) {
+            $this->validatedData = $this->validated();
+        }
+
+        return $this->validatedData;
+    }
+
+    /**
+    * @return OrderUnitVO
+    */
+    public function createOrderUnitVO(): OrderUnitVO
+    {
+        return OrderUnitVO::fromArrayToObject($this->getValidatedData());
+    }
+
+    /**
+    * @return ?CargoGoodVO[]
+    */
+    public function createCargoGoodVO(): ?array
+    {
+        return CargoGoodVO::fromArrayToObject($this->getValidatedData());
+    }
+
+      /**
+    * @return MgxVO
+    */
+    public function createMgxVO(): MgxVO
+    {
+        return MgxVO::fromArrayToObject($this->getValidatedData());
     }
 
 }

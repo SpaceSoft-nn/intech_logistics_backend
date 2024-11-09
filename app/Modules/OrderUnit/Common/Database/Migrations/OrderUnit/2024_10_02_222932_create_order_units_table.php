@@ -47,6 +47,8 @@ return new class extends Migration
             $table->boolean('add_load_space')->default(false)->comment('Возможен ли догруз');
             $table->boolean('change_price')->default(false)->comment('Возможна изменения цены (торг)');
             $table->boolean('change_time')->default(false)->comment('Возможна Изменение времени');
+
+                //Нужно делать триггер (если адрессов или грузов больше 1, то устанавливать через триггер bool:true)
             $table->boolean('address_is_array')->comment('Если у нас больше двух адрессов');
             $table->boolean('goods_is_array')->comment('Если у заказа больше одного груза');
 
@@ -54,6 +56,8 @@ return new class extends Migration
             $table->timestamps();
 
         });
+
+    
     }
 
     public function down(): void

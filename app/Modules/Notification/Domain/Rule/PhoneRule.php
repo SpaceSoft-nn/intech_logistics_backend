@@ -10,3 +10,4 @@ class PhoneRule
     protected array $rules = ["required_without_all:email", "exclude_with:email", "numeric", "regex:/^(7|8)(\d{10})$/"];
 
 }
+

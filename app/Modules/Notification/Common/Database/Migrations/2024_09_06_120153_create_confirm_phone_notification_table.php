@@ -23,8 +23,8 @@ return new class extends Migration
             $table->timestamps();
         });
 
-         //Создание функции для триггера
-         DB::unprepared(
+        //Создание функции для триггера
+        DB::unprepared(
             "CREATE OR REPLACE FUNCTION check_phone_code_exists() -- устанавливаем функцию, или перезаписываем если существует
             RETURNS TRIGGER AS $$
             DECLARE

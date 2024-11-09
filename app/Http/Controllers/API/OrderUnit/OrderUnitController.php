@@ -13,6 +13,8 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\Organ
 use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdateAction;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
@@ -95,7 +97,19 @@ class OrderUnitController extends Controller
 
         $validated = $request->validated();
 
-        dd($validated);
+        // /**
+        // * @var OrderUnitVO
+        // */
+        // $orderUnitVO = $request->createOrderUnitVO();
+
+        /**
+        * @var ?CargoGoodVO[]
+        */
+        $cargoGoodVO = $request->createCargoGoodVO();
+
+        dd($cargoGoodVO);
+
+        // dd($validated);
 
         $order = $service->createOrderUnit(
             OrderUnitCreateDTO::make(

@@ -2,6 +2,7 @@
 
 namespace App\Modules\OrderUnit\App\Data\Enums;
 
+use Exception;
 
 //Тип транспортного средства
 enum TypeTransportWeight : string
@@ -21,6 +22,25 @@ enum TypeTransportWeight : string
             TypeTransportWeight::extraLarge => 'Очень большая категория груза:' . TypeTransportWeight::extraLarge->value,
             TypeTransportWeight::superSize => 'Сверх крупная категория груза:' . TypeTransportWeight::superSize->value,
             default => throw new \LogicException("Не правильный тип в функции getWeightCategoryDescription() -> TypeTransportWeight", 500),
+        };
+    }
+
+
+    /**
+    * Получить значение case в string и прислать объект
+    * @param string $value
+    *
+    * @return ?self
+    */
+    public static function stringByCaseToObject(?string $value) : self
+    {
+        return match ($value) {
+            "small" => TypeTransportWeight::small,
+            "medium" => TypeTransportWeight::medium,
+            "large" => TypeTransportWeight::large,
+            "extraLarge" => TypeTransportWeight::extraLarge,
+            "superSize" => TypeTransportWeight::superSize,
+            default => throw new Exception('Ошибка преобразование Enum TypeTransportWeight', 500),
         };
     }
 

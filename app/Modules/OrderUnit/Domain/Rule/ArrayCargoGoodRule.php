@@ -24,11 +24,35 @@ class ArrayCargoGoodRule implements ValidationRule
 
         $typeTransportWeight = array_column(TypeSizePalletSpaceEnum::cases(), 'name');
 
-        // $messageBagMgx = [
-        //     'mgx.array' => 'Поле MGX должно быть массивом.',
-        //     'mgx.height' => 'Поле MGX должно быть массивом.',
-        //     'mgx.array' => 'Поле MGX должно быть массивом.',
-        // ];
+        $messageBagGood = [
+           'product_type' => [
+                'required' => "Поле :attribute обязательно для заполнения.",
+                'string' => ":attribute должен быть строкой."
+            ],
+            'type_pallet' => [
+                'required' => "Поле :attribute обязательно для заполнения.",
+                'string' => ":attribute должен быть строкой.",
+                'in' => "Выбранный :attribute недействителен." // если значение не содержится в массиве $typeTransportWeight
+            ],
+            'cargo_units_count' => [
+                'required' => "Поле :attribute обязательно для заполнения.",
+                'integer' => ":attribute должно быть целым числом.",
+                'min' => ":attribute должно быть не менее 1."
+            ],
+            'body_bolume' => [
+                'required' => "Поле :attribute обязательно для заполнения.",
+                'numeric' => ":attribute должен быть числом.",
+                'min' => ":attribute должен быть не менее 0." // возможно, 0 допустимо
+            ],
+            'name_value' => [
+                'string' => ":attribute должно быть строкой.",
+                'max' => ":attribute не должно превышать 100 символов." // если передан не null и превышает 100 символов
+            ],
+            'description' => [
+                'string' => ":attribute должен быть строкой.",
+                'max' => ":attribute не должнен превышать 500 символов." // если передан не null и превышает 500 символов
+            ],
+        ];
 
         foreach($value as $key){
 
@@ -52,26 +76,7 @@ class ArrayCargoGoodRule implements ValidationRule
                     'name_value' => ['nullable', 'string', 'max:100'],
                     'description' => ['nullable', 'string' , 'max:500'],
                     'mgx' => ['nullable', 'array', new ArrayCargoMgxRule()],
-                ],
-
-                [
-                    'mgx.length.required' => 'Поле Длина обязательно для заполнения.',
-                    'mgx.length.numeric' => 'Поле Длина должно быть числом.',
-                    'mgx.length.min' => 'Поле Длина должно быть не меньше 0.',
-
-                    'mgx.width.required' => 'Поле Ширина обязательно для заполнения.',
-                    'mgx.width.numeric' => 'Поле Ширина должно быть числом.',
-                    'mgx.width.min' => 'Поле Ширина должно быть не меньше 0.',
-
-                    'mgx.height.required' => 'Поле Высота обязательно для заполнения.',
-                    'mgx.height.numeric' => 'Поле Высота должно быть числом.',
-                    'mgx.height.min' => 'Поле Высота должно быть не меньше 0.',
-
-                    'mgx.weight.required' => 'Поле Вес обязательно для заполнения.',
-                    'mgx.weight.numeric' => 'Поле Вес должно быть числом.',
-                    'mgx.weight.min' => 'Поле Вес должно быть не меньше 0.',
-                ]
-            );
+                ], $messageBagGood );
 
 
             if ($validatorGood->fails()) {

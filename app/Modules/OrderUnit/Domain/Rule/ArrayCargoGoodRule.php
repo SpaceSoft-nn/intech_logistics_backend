@@ -21,41 +21,68 @@ class ArrayCargoGoodRule implements ValidationRule
             return;
         }
 
-        $messagesBagError = [
-            'key.uuid' => 'Указанный :attribute ключ не является корректным UUID.',
-            'key.date' => 'Указанное :attribute значение ключа не является верным форматом DATE',
-        ];
 
         $typeTransportWeight = array_column(TypeSizePalletSpaceEnum::cases(), 'name');
 
-        foreach($value as $subArray){
+        // $messageBagMgx = [
+        //     'mgx.array' => 'Поле MGX должно быть массивом.',
+        //     'mgx.height' => 'Поле MGX должно быть массивом.',
+        //     'mgx.array' => 'Поле MGX должно быть массивом.',
+        // ];
 
-            dd($subArray);
+        foreach($value as $key){
 
-            $validator = Validator::make(
+            $validatorGood = Validator::make(
+
                 [
-                    'name_value' => $date,
-                    'product_type' => $date,
-                    'cargo_units_count' => $date,
-                    'body_bolume' => $date,
-                    'description' => $date,
+                    'name_value' => $key['name_value'],
+                    'product_type' => $key['product_type'],
+                    'type_pallet' => $key['type_pallet'],
+                    'cargo_units_count' => $key['cargo_units_count'],
+                    'body_bolume' => $key['body_bolume'],
+                    'description' => $key['description'],
+                    'mgx' => $key['mgx'],
                 ],
-                [
-                    'product_type' => 'required|string',
-                    'type_pallet' => ['required', 'string', Rule::in($typeTransportWeight)],
-                    'cargo_units_count' => 'required|integer|min:1',
-                    'body_bolume' => 'required|numeric|min:0',
-                    'name_value' => 'nullable|string|max:100',
-                    'description' => 'nullable|string|max:500',
-                ]
-            ,$messagesBagError);
 
-            if ($validator->fails()) {
+                [
+                    'product_type' => ['required' ,'string'],
+                    'type_pallet' => ['required', 'string', Rule::in($typeTransportWeight)],
+                    'cargo_units_count' => ['required', 'integer', 'min:1'],
+                    'body_bolume' => ['required','numeric', 'min:0'],
+                    'name_value' => ['nullable', 'string', 'max:100'],
+                    'description' => ['nullable', 'string' , 'max:500'],
+                    'mgx' => ['nullable', 'array', new ArrayCargoMgxRule()],
+                ],
+
+                [
+                    'mgx.length.required' => 'Поле Длина обязательно для заполнения.',
+                    'mgx.length.numeric' => 'Поле Длина должно быть числом.',
+                    'mgx.length.min' => 'Поле Длина должно быть не меньше 0.',
+
+                    'mgx.width.required' => 'Поле Ширина обязательно для заполнения.',
+                    'mgx.width.numeric' => 'Поле Ширина должно быть числом.',
+                    'mgx.width.min' => 'Поле Ширина должно быть не меньше 0.',
+
+                    'mgx.height.required' => 'Поле Высота обязательно для заполнения.',
+                    'mgx.height.numeric' => 'Поле Высота должно быть числом.',
+                    'mgx.height.min' => 'Поле Высота должно быть не меньше 0.',
+
+                    'mgx.weight.required' => 'Поле Вес обязательно для заполнения.',
+                    'mgx.weight.numeric' => 'Поле Вес должно быть числом.',
+                    'mgx.weight.min' => 'Поле Вес должно быть не меньше 0.',
+                ]
+            );
+
+
+            if ($validatorGood->fails()) {
+
+
                 //Здесь будут использованы пользовательские сообщения
-                $errors = $validator->errors()->all();
+                $errors = $validatorGood->errors()->all();
                 $fail(implode(', ', $errors));
                 return;
             }
+
 
         }
 

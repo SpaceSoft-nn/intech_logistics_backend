@@ -43,7 +43,8 @@ class OrderUnitCreateRequest extends ApiRequest
 
             'type_transport_weight'  => ['required', Rule::in($typeTransportWeight)], //Выбор транспорта по габаритам
 
-            "organization_id" => ['required', 'uuid', "exists:organizations,id"], //организация к которой принадлежит заказ
+            //"organization_id" => ['required', 'uuid', "exists:organizations,id"], //организация к которой принадлежит заказ
+            "organization_id" => ['required', 'uuid'], //организация к которой принадлежит заказ
 
             "end_date_order" => ['required', 'date'], //Дата окончание order
 

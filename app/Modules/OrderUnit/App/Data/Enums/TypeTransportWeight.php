@@ -6,26 +6,25 @@ namespace App\Modules\OrderUnit\App\Data\Enums;
 //Тип транспортного средства
 enum TypeTransportWeight : string
 {
-    case Small = '1.5 - 3 тонны';
-    case Medium = '5 - 10 тонн';
-    case Large = '10 - 20 тонн';
-    case ExtraLarge = '20 - 40 тонн';
-    case SuperSize = 'Более 40 тонн';
+    case small = '1.5 - 3 тонны';
+    case medium = '5 - 10 тонн';
+    case large = '10 - 20 тонн';
+    case extraLarge = '20 - 40 тонн';
+    case superSize = 'Более 40 тонн';
 
     // Пример использования
     function getWeightCategoryDescription(TypeTransportWeight $category): string {
         return match($category) {
-            TypeTransportWeight::Small => 'Маленькая категория груза:' . TypeTransportWeight::Small->value,
-            TypeTransportWeight::Medium => 'Средняя категория груза:' . TypeTransportWeight::Medium->value,
-            TypeTransportWeight::Large => 'Большая категория груза:' . TypeTransportWeight::Large->value,
-            TypeTransportWeight::ExtraLarge => 'Очень большая категория груза:' . TypeTransportWeight::ExtraLarge->value,
-            TypeTransportWeight::SuperSize => 'Сверх крупная категория груза:' . TypeTransportWeight::SuperSize->value,
+            TypeTransportWeight::small => 'Маленькая категория груза:' . TypeTransportWeight::small->value,
+            TypeTransportWeight::medium => 'Средняя категория груза:' . TypeTransportWeight::medium->value,
+            TypeTransportWeight::large => 'Большая категория груза:' . TypeTransportWeight::large->value,
+            TypeTransportWeight::extraLarge => 'Очень большая категория груза:' . TypeTransportWeight::extraLarge->value,
+            TypeTransportWeight::superSize => 'Сверх крупная категория груза:' . TypeTransportWeight::superSize->value,
             default => throw new \LogicException("Не правильный тип в функции getWeightCategoryDescription() -> TypeTransportWeight", 500),
         };
     }
 
 }
-
 
 
 // ### Самые распространенные грузоподъемности в России:

@@ -93,12 +93,5 @@ class OrderUnitCreateRequest extends ApiRequest
         return CargoGoodVO::fromArrayToObject($this->getValidatedData());
     }
 
-      /**
-    * @return MgxVO
-    */
-    public function createMgxVO(): MgxVO
-    {
-        return MgxVO::fromArrayToObject($this->getValidatedData());
-    }
 
 }

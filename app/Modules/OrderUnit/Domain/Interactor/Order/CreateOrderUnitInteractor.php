@@ -31,19 +31,19 @@ class CreateOrderUnitInteractor
         $order = DB::transaction(function($pdo) use($dto)  {
 
             /**
-             * Получаем созданный заказ
-            * @var OrderUnit
-            */
-            $order = $this->createOrderUnit($dto->orderUnitVO);
-
-            /**
             * @var OrderUnitAddressDTO
             */
             $orderUnitAddressDTO = $dto->orderUnitAddressDTO;
 
+            /**
+             * Получаем созданный заказ
+            * @var OrderUnit
+            */
+            $order = $this->createOrderUnit($dto->orderUnitVO);
+            //Запускаем привязку аддресов
             $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
 
-            dd($order, $order->addresses);
+            dd($order->refresh(), $order->addresses->toArray());
 
             return $order;
         });

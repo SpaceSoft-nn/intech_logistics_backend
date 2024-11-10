@@ -4,7 +4,6 @@ namespace App\Modules\OrderUnit\Domain\Models;
 
 use App\Modules\Address\Domain\Models\Address;
 use App\Modules\InteractorModules\AddressOrder\Domain\Models\OrderUnitAddress;
-use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
@@ -115,7 +114,7 @@ class OrderUnit extends Model
 
     public function addresses(): BelongsToMany
     {
-        return $this->belongsToMany(Address::class, 'order_unit_Address', 'order_unit_id' , 'Address_id' )
+        return $this->belongsToMany(Address::class, 'order_unit_address', 'order_unit_id' , 'address_id' )
             ->using(OrderUnitAddress::class)
             ->withPivot(['data_time', 'type', 'priority'])
             ->withTimestamps();

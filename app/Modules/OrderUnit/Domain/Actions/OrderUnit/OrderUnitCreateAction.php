@@ -24,16 +24,10 @@ class OrderUnitCreateAction
     {
         #TODO Отлавливать ошибки
 
-        $order = OrderUnit::create($vo->toArrayNotNull());
-
-        dd($order);
-
         try {
 
 
             $order = OrderUnit::create($vo->toArrayNotNull());
-
-            dd($order);
 
         } catch (\Throwable $th) {
 

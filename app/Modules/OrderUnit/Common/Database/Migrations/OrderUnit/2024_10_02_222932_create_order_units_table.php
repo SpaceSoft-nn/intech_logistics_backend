@@ -48,8 +48,8 @@ return new class extends Migration
             $table->boolean('change_time')->default(false)->comment('Возможна Изменение времени');
 
                 //Нужно делать триггер (если адрессов или грузов больше 1, то устанавливать через триггер bool:true)
-            $table->boolean('address_is_array')->comment('Если у нас больше двух адрессов');
-            $table->boolean('goods_is_array')->comment('Если у заказа больше одного груза');
+            $table->boolean('address_is_array')->default(false)->comment('Если у нас больше двух адрессов');
+            $table->boolean('goods_is_array')->default(false)->comment('Если у заказа больше одного груза');
 
 
             $table->timestamps();

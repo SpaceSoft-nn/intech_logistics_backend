@@ -33,7 +33,6 @@ return new class extends Migration
             $table->unique(['order_unit_id', 'address_id']);
         });
 
-        //Создание функции для триггера address_is_array
         DB::unprepared(
             "CREATE OR REPLACE FUNCTION update_address_is_array()
             RETURNS TRIGGER AS $$

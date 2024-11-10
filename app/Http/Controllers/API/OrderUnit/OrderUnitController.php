@@ -97,26 +97,28 @@ class OrderUnitController extends Controller
 
         $validated = $request->validated();
 
-        // /**
-        // * @var OrderUnitVO
-        // */
-        // $orderUnitVO = $request->createOrderUnitVO();
+        /**
+        * @var OrderUnitVO
+        */
+        $orderUnitVO = $request->createOrderUnitVO();
 
         /**
         * @var ?CargoGoodVO[]
         */
         $cargoGoodVO = $request->createCargoGoodVO();
 
-        dd($cargoGoodVO);
+        dd($cargoGoodVO, $orderUnitVO);
 
         // dd($validated);
 
         $order = $service->createOrderUnit(
             OrderUnitCreateDTO::make(
+
                 start_address_id: $validated['start_address_id'],
                 end_address_id: $validated['end_address_id'],
                 start_date_delivery: $validated['start_date_delivery'],
                 end_date_delivery: $validated['end_date_delivery'],
+
                 organization_id: $validated['organization_id'],
                 end_date_order: $validated['end_date_order'],
                 type_load_truck: $validated['type_load_truck'],

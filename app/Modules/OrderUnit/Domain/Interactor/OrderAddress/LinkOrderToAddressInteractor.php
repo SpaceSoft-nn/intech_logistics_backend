@@ -1,97 +1,38 @@
 <?php
 
-namespace App\Modules\OrderUnit\Domain\Interactor\Order;
+namespace App\Modules\OrderUnit\Domain\Interactor\OrderAddress;
 
 use App\Modules\Address\Domain\Models\Address;
 use App\Modules\InteractorModules\AddressOrder\App\Data\DTO\OrderToAddressDTO;
 use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
 use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitCreateAction;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use DB;
 use Exception;
 
-class CreateOrderUnitInteractor
+class LinkOrderToAddressInteractor
 {
 
-    public static function execute(OrderUnitCreateDTO $dto) : ?OrderUnit
+    public static function execute(OrderUnit $order) : ?OrderUnit
     {
-        return (new self())->run($dto);
+        return (new self())->run($order);
     }
 
-    private function run(OrderUnitCreateDTO $dto) : ?OrderUnit
+    private function run(OrderUnit $order) : ?OrderUnit
     {
 
         try {
 
-            #TODO Нужно использовать паттерн цепочка обязаностей (handler)
-            $order = DB::transaction(function($pdo) use($dto)  {
-
-                /**
-                * @var OrderUnit
-                */
-                $order = $this->createOrderUnit($dto);
-                $this->linkOrderToAddress($order, $dto);
-
-                return $order;
-            });
+            $this->linkOrderToAddress($order, $dto);
 
         } catch (\Throwable $th) {
 
-            throw new Exception('Ошибка в CreateOrderUnitInteractor', 500);
+            throw new Exception('Ошибка в LinkOrderToAddressInteractor', 500);
 
         }
 
         return $order;
-    }
-
-    /**
-     * Создаём OrderUnitVO и заполняем bool поля в зависимости от данных
-     * @param OrderUnitCreateDTO $dto
-     *
-     * @return ?OrderUnitVO
-     */
-    private function createOrderUnitVO(OrderUnitCreateDTO $dto) : ?OrderUnitVO
-    {
-        /**
-        * @var OrderUnitVO
-        */
-        $vo = OrderUnitVO::make(
-
-            body_volume: $dto->body_volume,
-            order_total: $dto->order_total,
-            description: $dto->description,
-            organization_id: $dto->organization_id,
-            type_load_truck: $dto->type_load_truck,
-            end_date_order: $dto->end_date_order,
-            product_type: $dto->product_type,
-            order_status: $dto->order_status,
-            user_id: $dto->user_id,
-            contractors_id: $dto->contractors_id,
-
-            //bool значения
-            add_load_space: $this->filterIsLtlType($dto->type_load_truck),
-            change_price: false,
-            change_time: false,
-            address_is_array: $this->filterIsArrayAddress($dto->address_array),
-
-        );
-
-        return $vo;
-
-    }
-
-    private function createOrderUnit(OrderUnitCreateDTO $dto) : ?OrderUnit
-    {
-        /**
-        * @var OrderUnitVO
-        */
-        $vo = $this->createOrderUnitVO($dto);
-
-        return OrderUnitCreateAction::make($vo);
     }
 
     private function linkOrderToAddress(OrderUnit $order, OrderUnitCreateDTO $dto)
@@ -185,16 +126,6 @@ class CreateOrderUnitInteractor
 
     }
 
-    /**
-     * Проверяем, пустой ли массив адрессов
-     * @param ?array $arrAddress
-     *
-     * @return bool
-     */
-    private function filterIsArrayAddress(?array $arrAddress = null) : bool
-    {
-        return empty($arrAddress) ? false : true;
-    }
 
     /**
      * Проверяем, пустой ли массив адрессов

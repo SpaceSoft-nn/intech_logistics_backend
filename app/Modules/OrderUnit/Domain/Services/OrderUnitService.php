@@ -71,7 +71,6 @@ class OrderUnitService
     public function calcultBodyBolumeOrders(array|Collection $arr) : float
     {
 
-
         $total = 0;
 
         if( !($arr instanceof Collection) ) {  $arrayOrders = $this->repOrder->getAll($arr); }

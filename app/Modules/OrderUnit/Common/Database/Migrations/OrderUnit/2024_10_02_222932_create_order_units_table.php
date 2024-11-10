@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->date('end_date_order')->nullable()->comment('До какой даты заказ будет активен');
-            $table->string('body_volume')->comment('Общий объём заказа');
+            $table->string('body_volume')->nullable()->comment('Общий объём заказа'); #TODO убрать ->nullable()
             $table->string('order_total')->comment('Цена/Выплата за заказ');
             $table->string('description')->nullable();
 
@@ -24,7 +24,7 @@ return new class extends Migration
 
 
             //unsignedSmallInteger - будел ли проблема с этим типом?
-            $table->unsignedSmallInteger('cargo_unit_sum')->comment('Общее количество паллетов в заказе');
+            $table->unsignedSmallInteger('cargo_unit_sum')->nullable()->comment('Общее количество паллетов в заказе'); #TODO убрать ->nullable()
 
 
             $table->string('type_load_truck')->comment('Тип загрузки трака: LTL, FTL, Custom...');
@@ -42,7 +42,6 @@ return new class extends Migration
 
             // $table->string('order_status')->default(StatusOrderUnitEnum::draft)->comment('status order');
 
-
                 //служебнеы поля
             $table->boolean('add_load_space')->default(false)->comment('Возможен ли догруз');
             $table->boolean('change_price')->default(false)->comment('Возможна изменения цены (торг)');
@@ -57,7 +56,7 @@ return new class extends Migration
 
         });
 
-    
+
     }
 
     public function down(): void

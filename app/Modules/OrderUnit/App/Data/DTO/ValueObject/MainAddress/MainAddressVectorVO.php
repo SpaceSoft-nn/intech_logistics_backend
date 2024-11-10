@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\OrderUnit\App\Data\DTO\OrderUnit;
+namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject\MainAddress;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
 use Arr;

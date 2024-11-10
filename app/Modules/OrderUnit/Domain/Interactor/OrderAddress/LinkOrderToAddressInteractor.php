@@ -6,7 +6,8 @@ use App\Modules\Address\Domain\Models\Address;
 use App\Modules\InteractorModules\AddressOrder\App\Data\DTO\OrderToAddressDTO;
 use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
 use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
-use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\MainAddress\MainAddressVectorVO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Exception;
@@ -14,12 +15,12 @@ use Exception;
 class LinkOrderToAddressInteractor
 {
 
-    public static function execute(OrderUnit $order) : ?OrderUnit
+    public static function execute(OrderUnit $order, OrderUnitAddressDTO $dto) : ?OrderUnit
     {
-        return (new self())->run($order);
+        return (new self())->run($order, $dto);
     }
 
-    private function run(OrderUnit $order) : ?OrderUnit
+    private function run(OrderUnit $order, OrderUnitAddressDTO $dto) : ?OrderUnit
     {
 
         try {
@@ -35,16 +36,26 @@ class LinkOrderToAddressInteractor
         return $order;
     }
 
-    private function linkOrderToAddress(OrderUnit $order, OrderUnitCreateDTO $dto)
+    private function linkOrderToAddress(OrderUnit $order, OrderUnitAddressDTO $dto)
     {
 
         $status = false;
 
+        /**
+        * @var MainAddressVectorVO
+        */
+        $dtoMainVector = $dto->mainAddressVectorVO;
+
+        /**
+        * @var array
+        */
+        $addressArray = $dto->addressArray;
+
         #TODO Проблема множества запросов (изменить логику)
         {
             //получаем связку главного вектора движение
-            $address_start_main = $this->getAddress($dto->start_address_id);
-            $address_end_main = $this->getAddress($dto->end_address_id);
+            $address_start_main = $this->getAddress($dtoMainVector->start_address_id);
+            $address_end_main = $this->getAddress($dtoMainVector->end_address_id);
         }
 
         {
@@ -54,7 +65,7 @@ class LinkOrderToAddressInteractor
                     address: $address_start_main,
                     order: $order,
                     type_status: TypeStateAddressEnum::sending,
-                    date: $dto->start_date_delivery,
+                    date: $dtoMainVector->start_date_delivery,
                     priority: 1,
                 ),
             );
@@ -67,7 +78,7 @@ class LinkOrderToAddressInteractor
                     address: $address_end_main,
                     order: $order,
                     type_status: TypeStateAddressEnum::coming,
-                    date: $dto->end_date_delivery,
+                    date: $dtoMainVector->end_date_delivery,
                     priority: 1,
                 ),
             );
@@ -79,7 +90,7 @@ class LinkOrderToAddressInteractor
 
                 $flag = 2;
 
-                foreach ($dto->address_array as $subArray) {
+                foreach ($addressArray as $subArray) {
 
                     if( !empty($subArray) ) {
 

@@ -4,8 +4,8 @@ namespace App\Modules\OrderUnit\Domain\Requests\OrderUnit;
 
 use App\Modules\Address\Domain\Rules\ArrayAddressRule;
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\MgxVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
@@ -44,7 +44,7 @@ class OrderUnitCreateRequest extends ApiRequest
 
 
             //массивы
-            'address_array' => ['nullable', new ArrayAddressRule()], //массив заказов
+            'address_array' => ['nullable', new ArrayAddressRule()], //массив аддрессов (Главный вектор и промежуточные адресса Догрузы/Выгрузы)
             'goods_array' => ['required', new ArrayCargoGoodRule()], //массив грузов
 
             'type_transport_weight'  => ['required', Rule::in($typeTransportWeight)], //Выбор транспорта по габаритам
@@ -93,5 +93,9 @@ class OrderUnitCreateRequest extends ApiRequest
         return CargoGoodVO::fromArrayToObject($this->getValidatedData());
     }
 
+    public function createOrderUnitAddressDTO() : OrderUnitAddressDTO
+    {
+        return OrderUnitAddressDTO::fromArrayToObject($this->getValidatedData());
+    }
 
 }

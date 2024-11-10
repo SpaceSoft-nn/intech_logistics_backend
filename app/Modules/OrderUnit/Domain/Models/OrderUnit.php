@@ -6,6 +6,7 @@ use App\Modules\Address\Domain\Models\Address;
 use App\Modules\InteractorModules\AddressOrder\Domain\Models\OrderUnitAddress;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
+use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transfer\Domain\Models\Transfer;
@@ -37,6 +38,9 @@ class OrderUnit extends Model
         "order_total",
         "description",
 
+        "type_transport_weight",
+        "cargo_unit_sum",
+
         "product_type",
         "type_load_truck",
         "order_status",
@@ -45,13 +49,12 @@ class OrderUnit extends Model
         "organization_id",
         "contractor_id",
 
-        "mgx_id",
-
         //bool
         "add_load_space",
         "change_price",
         "change_time",
         "address_is_array",
+        "goods_is_array",
 
     ];
 
@@ -73,14 +76,14 @@ class OrderUnit extends Model
         return [
 
             "type_load_truck" => TypeLoadingTruckMethod::class,
-
-            'order_status' => StatusOrderUnitEnum::class,
-
+            "type_transport_weight" => TypeTransportWeight::class,
             'end_date_order' => "datetime",
 
             'add_load_space' => "boolean",
             'change_price' => "boolean",
             'change_time' => "boolean",
+            'address_is_array' => "boolean",
+            'goods_is_array' => "boolean",
         ];
     }
 

@@ -11,6 +11,7 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Requests\AddCo
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
 use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
@@ -95,8 +96,6 @@ class OrderUnitController extends Controller
         OrderUnitService $service
     ) {
 
-        $validated = $request->validated();
-
         /**
         * @var OrderUnitVO
         */
@@ -107,28 +106,17 @@ class OrderUnitController extends Controller
         */
         $cargoGoodVO = $request->createCargoGoodVO();
 
-        dd($cargoGoodVO, $orderUnitVO);
+        /**
+        * @var OrderUnitAddressDTO
+        */
+        $orderUnitAddressDTO = $request->createOrderUnitAddressDTO();
 
-        // dd($validated);
 
         $order = $service->createOrderUnit(
             OrderUnitCreateDTO::make(
-
-                start_address_id: $validated['start_address_id'],
-                end_address_id: $validated['end_address_id'],
-                start_date_delivery: $validated['start_date_delivery'],
-                end_date_delivery: $validated['end_date_delivery'],
-
-                organization_id: $validated['organization_id'],
-                end_date_order: $validated['end_date_order'],
-                type_load_truck: $validated['type_load_truck'],
-                order_total: $validated['order_total'],
-                address_array: $validated['address_array'] ?? null,
-                product_type: $validated['product_type'] ?? null,
-                body_volume: $validated['body_volume'] ?? null,
-                user_id: $validated['user_id'] ?? null,
-                contractors_id: $validated['contractors_id'] ?? null,
-                description: $validated['description'] ?? null,
+                orderUnitVO: $orderUnitVO,
+                orderUnitAddressDTO: $orderUnitAddressDTO,
+                cargoGoodVO : $cargoGoodVO,
             )
         );
 

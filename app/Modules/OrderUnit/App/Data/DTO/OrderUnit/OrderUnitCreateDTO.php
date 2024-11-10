@@ -2,15 +2,13 @@
 
 namespace App\Modules\OrderUnit\App\Data\DTO\OrderUnit;
 
-use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
-use Illuminate\Contracts\Support\Arrayable;
 use InvalidArgumentException;
 
 use function App\Helpers\Mylog;
 
-class OrderUnitCreateDTO
+final readonly class OrderUnitCreateDTO
 {
 
     /**
@@ -20,9 +18,9 @@ class OrderUnitCreateDTO
     */
     public function __construct(
 
-        OrderUnitVO $orderUnitVO,
-        MainAddressVectorVO $mainAddressVectorVO,
-        ?array $cargoGoodVO,
+        public OrderUnitVO $orderUnitVO,
+        public OrderUnitAddressDTO $orderUnitAddressDTO,
+        public ?array $cargoGoodVO,
 
     ) {
 
@@ -38,14 +36,14 @@ class OrderUnitCreateDTO
     public static function make(
 
         OrderUnitVO $orderUnitVO,
-        MainAddressVectorVO $mainAddressVectorVO,
+        OrderUnitAddressDTO $orderUnitAddressDTO,
         ?array $cargoGoodVO = null,
 
     ) : self {
 
         return new self(
             orderUnitVO: $orderUnitVO,
-            mainAddressVectorVO: $mainAddressVectorVO,
+            orderUnitAddressDTO: $orderUnitAddressDTO,
             cargoGoodVO: $cargoGoodVO,
         );
 

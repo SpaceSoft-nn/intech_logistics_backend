@@ -3,15 +3,17 @@
 namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
+use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
 use Illuminate\Contracts\Support\Arrayable;
 
-class CargoUnitVO implements Arrayable
+final readonly class CargoUnitVO implements Arrayable
 {
+    use FilterArrayTrait;
 
     public function __construct(
 
-        public readonly string $pallets_space,
-        public readonly bool $customer_pallets_space,
+        public  TypeSizePalletSpaceEnum $pallets_space,
+        public  bool $customer_pallets_space,
 
     ) {}
 
@@ -25,7 +27,7 @@ class CargoUnitVO implements Arrayable
 
         return new self(
 
-            pallets_space : $pallets_space,
+            pallets_space : TypeSizePalletSpaceEnum::stringByCaseToObject($pallets_space),
             customer_pallets_space: $customer_pallets_space,
 
         );
@@ -36,8 +38,8 @@ class CargoUnitVO implements Arrayable
     public function toArray() : array
     {
         return [
-            "pallets_space" => $this->pallets_space ,
-            "customer_pallets_space" => $this->customer_pallets_space ,
+            "pallets_space" => $this->pallets_space?->value,
+            "customer_pallets_space" => $this->customer_pallets_space,
         ];
     }
 }

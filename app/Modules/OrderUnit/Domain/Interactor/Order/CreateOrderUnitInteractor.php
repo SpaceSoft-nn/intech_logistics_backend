@@ -6,16 +6,18 @@ use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitCreateAction;
-use App\Modules\OrderUnit\Domain\Interactor\OrderAddress\LinkOrderToAddressInteractor;
+use App\Modules\OrderUnit\Domain\Interactor\OrderAddress\LinkOrderUnitToAddressInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use DB;
 use Exception;
+
+use function App\Helpers\Mylog;
 
 class CreateOrderUnitInteractor
 {
 
     public function __construct(
-        private LinkOrderToAddressInteractor $orderToAddressInteractor,
+        private LinkOrderUnitToAddressInteractor $orderToAddressInteractor,
     ) { }
 
     public function execute(OrderUnitCreateDTO $dto) : ?OrderUnit
@@ -25,28 +27,6 @@ class CreateOrderUnitInteractor
 
     private function run(OrderUnitCreateDTO $dto) : ?OrderUnit
     {
-
-
-        #TODO Нужно использовать паттерн цепочка обязаностей (handler)
-        $order = DB::transaction(function($pdo) use($dto)  {
-
-            /**
-            * @var OrderUnitAddressDTO
-            */
-            $orderUnitAddressDTO = $dto->orderUnitAddressDTO;
-
-            /**
-             * Получаем созданный заказ
-            * @var OrderUnit
-            */
-            $order = $this->createOrderUnit($dto->orderUnitVO);
-            //Запускаем привязку аддресов
-            $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
-
-            dd($order->refresh()->toArray(), $order->addresses->toArray());
-
-            return $order;
-        });
 
         try {
 
@@ -64,19 +44,26 @@ class CreateOrderUnitInteractor
                 */
                 $orderUnitAddressDTO = $dto->orderUnitAddressDTO;
 
+
                 $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
 
-                dd($order, $order->addresses);
-
-                return $order;
+                return $order->refresh();
             });
 
 
-        } catch (\Throwable $th) {
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $th) {
 
+            $message = $th->getMessage();
+
+            Mylog('Ошибка в CreateOrderUnitInteractor: при ModelNotFoundException ' . $th);
+            throw new \Illuminate\Database\Eloquent\ModelNotFoundException($message, 404);
+        }
+        catch (\Throwable $th) {
+            Mylog('Ошибка в CreateOrderUnitInteractor: ' . $th);
             throw new Exception('Ошибка в CreateOrderUnitInteractor', 500);
 
         }
+
 
         return $order;
     }

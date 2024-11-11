@@ -19,29 +19,6 @@ class LinkOrderToAddressAction
      */
     public static function run(OrderToAddressDTO $dto) : bool
     {
-         /**
-            * @var Address
-            */
-            $address = $dto->address;
-
-            /**
-            * @var OrderUnit
-            */
-            $order = $dto->order;
-
-            /**
-            * @var TypeStateAddressEnum
-            */
-            $type_status = $dto->type_status;
-
-            $address->order_units()->syncWithoutDetaching([$order->id => [
-                'data_time' => $dto->date,
-                'type' => $type_status,
-                'priority' => $dto->priority,
-            ]]);
-
-            return true;
-
 
         try {
 

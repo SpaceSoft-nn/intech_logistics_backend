@@ -13,14 +13,14 @@ final readonly class OrderUnitCreateDTO
 
     /**
      * @param OrderUnitVO $orderUnitVO
-     * @param ?CargoGoodVO[] $cargoGoodVO
+     * @param CargoGoodVO[] $cargoGoodVO
      * @param MainAddressVectorVO $mainAddressVectorVO
     */
     public function __construct(
 
         public OrderUnitVO $orderUnitVO,
         public OrderUnitAddressDTO $orderUnitAddressDTO,
-        public ?array $cargoGoodVO,
+        public array $cargoGoodVO,
 
     ) {
 
@@ -37,7 +37,7 @@ final readonly class OrderUnitCreateDTO
 
         OrderUnitVO $orderUnitVO,
         OrderUnitAddressDTO $orderUnitAddressDTO,
-        ?array $cargoGoodVO = null,
+        array $cargoGoodVO,
 
     ) : self {
 

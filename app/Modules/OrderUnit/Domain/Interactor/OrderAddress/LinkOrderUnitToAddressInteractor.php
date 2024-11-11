@@ -8,14 +8,13 @@ use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnu
 use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\MainAddress\MainAddressVectorVO;
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use function App\Helpers\Mylog;
 
-class LinkOrderToAddressInteractor
+class LinkOrderUnitToAddressInteractor
 {
 
     public static function execute(OrderUnit $order, OrderUnitAddressDTO $dto) : bool
@@ -90,17 +89,18 @@ class LinkOrderToAddressInteractor
 
                     if( !empty($subArray) ) {
 
-                        $address = $this->getAddress($subArray['id'] ?? null);
+                        $address = $this->getAddress($subArray['id']);
 
                         $status = LinkOrderToAddressAction::run(
                             OrderToAddressDTO::make(
                                 address: $address,
                                 order: $order,
                                 type_status: TypeStateAddressEnum::stringByCaseToObject($subArray['type']),
-                                date: $subArray['date'],
+                                date: $subArray['date'] ?? null,
                                 priority: $flag++, //постфиксный инкримент
                             ),
                         );
+
                     }
 
 
@@ -117,9 +117,7 @@ class LinkOrderToAddressInteractor
     {
 
         try {
-
             $address = Address::findOrFail($address_id);
-
 
         } catch (ModelNotFoundException $th) {
             Mylog("Ошибка в получении Адресса {$address_id}");
@@ -127,19 +125,6 @@ class LinkOrderToAddressInteractor
         }
 
         return $address;
-    }
-
-
-    /**
-     * Проверяем, пустой ли массив адрессов
-     * @param ?array $arrAddress
-     *
-     * @return bool
-    */
-    private function filterIsLtlType(string $type_load_truck) : bool
-    {
-
-        return TypeLoadingTruckMethod::ltl === TypeLoadingTruckMethod::stringByCaseToObject($type_load_truck);
     }
 
 }

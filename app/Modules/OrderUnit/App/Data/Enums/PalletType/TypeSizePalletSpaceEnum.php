@@ -8,7 +8,7 @@ enum TypeSizePalletSpaceEnum : string
 {
     case eur = "Паллет EUR";
     case fin = "Паллет FIN";
-    case eco = "Паллет ECO";
+    case ecom = "Паллет ECOM";
 
     /**
     * Получить значение case в string и прислать объект
@@ -21,7 +21,7 @@ enum TypeSizePalletSpaceEnum : string
         return match ($value) {
             "eur" => TypeSizePalletSpaceEnum::eur,
             "fin" => TypeSizePalletSpaceEnum::fin,
-            "eco" => TypeSizePalletSpaceEnum::eco,
+            "eco" => TypeSizePalletSpaceEnum::ecom,
             default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
         };
     }

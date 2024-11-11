@@ -2,6 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
+use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
 use App\Modules\OrderUnit\Domain\Factories\CargoUnitFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -39,7 +40,7 @@ class CargoUnit extends Model
     protected function casts(): array
     {
         return [
-
+            'pallets_space' => TypeSizePalletSpaceEnum::class,
         ];
     }
 

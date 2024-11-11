@@ -43,7 +43,7 @@ class CreateOrderUnitInteractor
             //Запускаем привязку аддресов
             $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
 
-            dd($order->refresh(), $order->addresses->toArray());
+            dd($order->refresh()->toArray(), $order->addresses->toArray());
 
             return $order;
         });

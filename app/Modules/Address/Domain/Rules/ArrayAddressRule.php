@@ -2,19 +2,21 @@
 
 namespace App\Modules\Address\Domain\Rules;
 
+use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ArrayAddressRule implements ValidationRule
 {
 
-    public function validate(string $attribute, mixed $value, Closure $fail): void
+    public function validate(string $attribute, mixed $values, Closure $fail): void
     {
 
         // Проверяем, что значение является массивом
-        if (!is_array($value)) {
+        if (!is_array($values)) {
             $fail('Ошибка :attribute должен быть массивом.');
             return;
         }
@@ -24,33 +26,34 @@ class ArrayAddressRule implements ValidationRule
             'key.date' => 'Указанное :attribute значение ключа не является верным форматом DATE',
         ];
 
+        $typeStateAddressArray = array_column(TypeStateAddressEnum::cases(), 'name');
 
-        foreach($value as $subArray){
+
+        foreach($values as $value){
 
             // Проверяем, что значение в массиве является массивом
-            if (!is_array($subArray)) {
-                $fail("Ошибка :attribute должен быть массивом и содержать в себе массив адрессов, пример: [ [ uuid1 => date1 ], [ uuid2 => date2 ], [ uuid2 => date2 ] ]");
+            if (!is_array($value)) {
+                $fail("Ошибка :attribute должен быть массивом и содержать в себе массив адрессов, пример: [ [ id => 'uuid', date => '01.01.2025', type => 'enum_value' ], [ id => 'uuid', date => '01.01.2025', type => 'enum_value' ] ]");
                 return;
             }
 
-            foreach ($subArray as $uuid => $date) {
 
-                $validator = Validator::make(
-                    ['uuid' => $uuid, 'date' => $date],
-                    [
-                        'uuid' => 'required|uuid',
-                        'date' => 'required|date',
-                    ]
-                ,$messagesBagError);
+            $validator = Validator::make(
+                ['id' => $value['id'] ?? null, 'date' => $value['date'] ?? null, 'type' => $value['type'] ?? null],
+                [
+                    'id' => ['required', 'uuid'],
+                    'date' => ['required', 'date'],
+                    'type' => ['required', Rule::in($typeStateAddressArray)],
+                ]
+            ,$messagesBagError);
 
-                if ($validator->fails()) {
-                    //Здесь будут использованы пользовательские сообщения
-                    $errors = $validator->errors()->all();
-                    $fail(implode(', ', $errors));
-                    return;
-                }
-
+            if ($validator->fails()) {
+                //Здесь будут использованы пользовательские сообщения
+                $errors = $validator->errors()->all();
+                $fail(implode(', ', $errors));
+                return;
             }
+
 
         }
 

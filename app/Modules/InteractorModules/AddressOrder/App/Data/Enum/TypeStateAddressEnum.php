@@ -19,4 +19,19 @@ enum TypeStateAddressEnum : string
         };
     }
 
+     /**
+     * Получить значение case в string и прислать объект
+     * @param string $value
+     *
+     * @return self
+     */
+    public static function stringByCaseToObject(string $value) : self
+    {
+        return match ($value) {
+            "sending" => TypeStateAddressEnum::sending,
+            "coming" => TypeStateAddressEnum::coming,
+            default => throw new Exception('Ошибка приобрезование Enum TypeStateAddressEnum', 500),
+        };
+    }
+
 }

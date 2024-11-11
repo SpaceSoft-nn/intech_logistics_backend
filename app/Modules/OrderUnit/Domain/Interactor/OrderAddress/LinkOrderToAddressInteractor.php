@@ -11,32 +11,24 @@ use App\Modules\OrderUnit\App\Data\DTO\ValueObject\MainAddress\MainAddressVector
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+use function App\Helpers\Mylog;
 
 class LinkOrderToAddressInteractor
 {
 
-    public static function execute(OrderUnit $order, OrderUnitAddressDTO $dto) : ?OrderUnit
+    public static function execute(OrderUnit $order, OrderUnitAddressDTO $dto) : bool
     {
         return (new self())->run($order, $dto);
     }
 
-    private function run(OrderUnit $order, OrderUnitAddressDTO $dto) : ?OrderUnit
+    private function run(OrderUnit $order, OrderUnitAddressDTO $dto) : bool
     {
-
-        try {
-
-            $this->linkOrderToAddress($order, $dto);
-
-        } catch (\Throwable $th) {
-
-            throw new Exception('Ошибка в LinkOrderToAddressInteractor', 500);
-
-        }
-
-        return $order;
+       return $this->linkOrderToAddress($order, $dto);
     }
 
-    private function linkOrderToAddress(OrderUnit $order, OrderUnitAddressDTO $dto)
+    private function linkOrderToAddress(OrderUnit $order, OrderUnitAddressDTO $dto) : bool
     {
 
         $status = false;
@@ -85,33 +77,32 @@ class LinkOrderToAddressInteractor
         }
 
         {
+            /**
+            * @var ?array
+            */
+            $addressArray = $dto->addressArray;
+            if(!empty($addressArray)) {
 
-            if(!empty($dto->address_array)) {
-
+                //Flag приоритености, делаем его 2, т.к 1 - будет главным адрессом движения.
                 $flag = 2;
 
                 foreach ($addressArray as $subArray) {
 
                     if( !empty($subArray) ) {
 
-                        //Flag приоритености, делаем его 2, т.к 1 - будет главным адрессом движения.
-                        foreach ($subArray as $uuid => $date) {
+                        $address = $this->getAddress($subArray['id'] ?? null);
 
-                            $address = $this->getAddress($uuid);
-
-                            $status = LinkOrderToAddressAction::run(
-                                OrderToAddressDTO::make(
-                                    address: $address,
-                                    order: $order,
-                                    type_status: TypeStateAddressEnum::coming, #TODO - Нужно потом указывать не стандартное (в массиве получать адресс прибытия это или отбытия в валидации)
-                                    date: $date,
-                                    priority: $flag++,
-                                ),
-                            );
-
-                        }
-
+                        $status = LinkOrderToAddressAction::run(
+                            OrderToAddressDTO::make(
+                                address: $address,
+                                order: $order,
+                                type_status: TypeStateAddressEnum::stringByCaseToObject($subArray['type']),
+                                date: $subArray['date'],
+                                priority: $flag++, //постфиксный инкримент
+                            ),
+                        );
                     }
+
 
                 }
 
@@ -122,19 +113,20 @@ class LinkOrderToAddressInteractor
         return $status;
     }
 
-    private function getAddress(string $address_id) : ?Address
+    private function getAddress(?string $address_id) : ?Address
     {
 
         try {
 
-            return Address::findOrFail($address_id);
+            $address = Address::findOrFail($address_id);
 
-        } catch (\Throwable $th) {
 
-            throw new Exception("Адресс: {$address_id} не найден.", 404);
-
+        } catch (ModelNotFoundException $th) {
+            Mylog("Ошибка в получении Адресса {$address_id}");
+            throw new ModelNotFoundException("Адресс: {$address_id} не найден.", 404);
         }
 
+        return $address;
     }
 
 

@@ -65,6 +65,7 @@ final readonly class CargoGoodVO implements Arrayable
     }
 
     /**
+     * Класс для создание массива CargoGoodVO, сразу при валидации create OrderUnit
      * @param array $data
      *
      * @return ?CargoGoodVO[]

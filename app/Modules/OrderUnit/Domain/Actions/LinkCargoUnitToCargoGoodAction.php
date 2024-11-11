@@ -8,7 +8,7 @@ use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 
 use function App\Helpers\Mylog;
 
-class LinkOrderUnitToCargoGoodAction
+class LinkCargoUnitToCargoGoodAction
 {
     /**
      * @param OrderUnitToCargoGood $dto
@@ -42,7 +42,7 @@ class LinkOrderUnitToCargoGoodAction
             throw new \Exception('Ошибка в связывании LinkOrderUnitToCargoGoodAction', 500);
 
         }
-        
+
         return false;
     }
 }

@@ -58,7 +58,6 @@ final readonly class CargoGoodVO implements Arrayable
             "cargo_units_count" => $this->cargo_units_count,
             "body_volume" => $this->body_volume,
             "type_pallet" => $this->type_pallet?->value,
-            'mgx' => $this->mgx->toArray(),
             "name_value" => $this->name_value,
             "description" => $this->description,
         ];

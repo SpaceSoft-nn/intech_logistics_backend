@@ -30,36 +30,40 @@ class CreateOrderUnitInteractor
     private function run(OrderUnitCreateDTO $dto) : ?OrderUnit
     {
 
+        #TODO Нужно использовать паттерн цепочка обязаностей (handler)
+        $order = DB::transaction(function($pdo) use($dto)  {
+
+            /**
+            * Получаем созданный заказ
+            * @var OrderUnit
+            */
+            $order = $this->createOrderUnit($dto->orderUnitVO);
+
+            { //Линковка заказа и Адрессов
+                /**
+                * @var OrderUnitAddressDTO
+                */
+                $orderUnitAddressDTO = $dto->orderUnitAddressDTO;
+                $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
+            }
+
+
+            //Нужно получать актуальное состояние что бы с ним работать корректно во стальных сервесах
+            $order = $order->refresh();
+
+
+            { //Создание CargoGoods[] и линковака с Order
+                $this->orderToCargoGoodInteractor->execute($order, $dto->cargoGoodVO);
+            }
+
+            dd($order->cargo_goods[1]);
+
+            return $order;
+        });
+
         try {
 
-            #TODO Нужно использовать паттерн цепочка обязаностей (handler)
-            $order = DB::transaction(function($pdo) use($dto)  {
 
-                /**
-                * Получаем созданный заказ
-                * @var OrderUnit
-                */
-                $order = $this->createOrderUnit($dto->orderUnitVO);
-
-                { //Линковка заказа и Адрессов
-                    /**
-                    * @var OrderUnitAddressDTO
-                    */
-                    $orderUnitAddressDTO = $dto->orderUnitAddressDTO;
-                    $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
-                }
-
-
-                //Нужно получать актуальное состояние что бы с ним работать корректно во стальных сервесах
-                $order = $order->refresh();
-
-
-                { //Создание CargoGoods[] и линковака с Order
-                    $this->orderToCargoGoodInteractor->execute($order, $dto->cargoGoodVO);
-                }
-
-                return $order;
-            });
 
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $th) {

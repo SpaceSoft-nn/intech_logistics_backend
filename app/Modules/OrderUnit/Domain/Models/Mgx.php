@@ -27,7 +27,7 @@ class Mgx extends Model
         "width",
         "height",
         "weight",
-        "order_unit_id",
+        "cargo_good_id",
 
     ];
 
@@ -48,9 +48,8 @@ class Mgx extends Model
         ];
     }
 
-
-    public function cargo_good(): HasOne
+    public function cargo_good(): BelongsTo
     {
-        return $this->hasOne(CargoGood::class);
+        return $this->belongsTo(CargoGood::class);
     }
 }

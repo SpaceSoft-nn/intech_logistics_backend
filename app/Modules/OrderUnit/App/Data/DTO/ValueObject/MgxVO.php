@@ -14,17 +14,28 @@ final readonly class MgxVO implements Arrayable
         public float $width,
         public float $length,
         public float $height,
-        public string $cargo_good_id,
         public ?float $weight, //вес кг
+        public ?string $cargo_good_id,
     ) {}
+
+    public function withCargoGoodId(string $cargo_good_id) : self
+    {
+        return new self (
+            width: $this->width,
+            length: $this->length,
+            height: $this->height,
+            cargo_good_id: $cargo_good_id,
+            weight: $this->weight,
+        );
+    }
 
     public static function make(
 
         float $length,
         float $height,
         float $width,
-        string $cargo_good_id,
         ?float $weight = null,
+        ?string $cargo_good_id = null,
 
     ) : self {
 
@@ -48,6 +59,24 @@ final readonly class MgxVO implements Arrayable
             "cargo_good_id" => $this->cargo_good_id,
             "weight" => $this->weight,
         ];
+    }
+
+    public static function fromArrayToObject(array $data): self
+    {
+        $length = Arr::get($data, "length");
+        $width = Arr::get($data, "width");
+        $height = Arr::get($data, "height");
+        $cargo_good_id = Arr::get($data, "cargo_good_id", null);
+        $weight = Arr::get($data, "weight", null);
+
+
+        return new self(
+            length: $length,
+            width: $width,
+            height: $height,
+            cargo_good_id: $cargo_good_id,
+            weight: $weight,
+        );
     }
 
 }

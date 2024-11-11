@@ -10,13 +10,13 @@ use Exception;
 
 use function App\Helpers\Mylog;
 
-class CreateCargoGoodAction
+class CreateCargoGoodAndMgxAction
 {
 
     /**
      * @param CargoGoodVO $vo
      *
-     * @return CargoGood|null
+     * @return CargoGood
      */
     public static function make(CargoGoodVO $vo) : CargoGood
     {
@@ -30,22 +30,25 @@ class CreateCargoGoodAction
     private function run(CargoGoodVO $vo) : CargoGood
     {
 
-        if(isset($vo->mgx))
-        {
-            MgxCreateAction::make(
-                MgxVO::make(
-                    
-                )
-            );
-        }
-
         try {
 
             $сargoGood = CargoGood::create($vo->toArrayNotNull());
 
+            /**
+             * @var ?MgxVO
+            */
+            $mgx = $vo->mgx;
+
+            if(isset($mgx))
+            {
+                $mgx = MgxCreateAction::make($mgx->withCargoGoodId($сargoGood->id));
+            }
+
+
+
         } catch (\Throwable $th) {
 
-            Mylog('Ошибка в Action CreateCargoGoodAction, при создании модели');
+            Mylog('Ошибка в Action CreateCargoGoodAndMgxAction, при создании модели');
             throw new Exception('Ошибка в CreateCargoGoodAction', 500);
 
         }

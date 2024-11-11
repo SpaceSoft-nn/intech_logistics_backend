@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\OrderUnit\App\Data\DTO\CargoUnitToCargoGood;
+namespace App\Modules\OrderUnit\App\Data\DTO\OrderUnitToCargoGood;
 
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;

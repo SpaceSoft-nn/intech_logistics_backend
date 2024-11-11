@@ -2,8 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Interactor\CargoGood;
 
-use App\Modules\OrderUnit\App\Data\DTO\CargoUnitToCargoGood\CargoUnitToCargoGood;
-use App\Modules\OrderUnit\App\Data\DTO\CargoUnitToCargoGood\OrderUnitToCargoGoodDTO;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnitToCargoGood\OrderUnitToCargoGoodDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoGoodAction;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;

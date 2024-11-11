@@ -2,7 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Actions;
 
-use App\Modules\OrderUnit\App\Data\DTO\CargoUnitToCargoGood\OrderUnitToCargoGoodDTO;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnitToCargoGood\OrderUnitToCargoGoodDTO;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 

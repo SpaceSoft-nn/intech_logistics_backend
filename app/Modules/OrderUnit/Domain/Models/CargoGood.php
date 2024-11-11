@@ -6,8 +6,8 @@ namespace App\Modules\OrderUnit\Domain\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CargoGood extends Model
 {
@@ -26,7 +26,7 @@ class CargoGood extends Model
         "product_type",
 
         "cargo_units_count",
-        "body_bolume",
+        "body_volume",
 
         "description",
 
@@ -69,9 +69,10 @@ class CargoGood extends Model
         return $this->belongsToMany(CargoUnit::class, 'order_unit_cargo_good', 'cargo_good_id' , 'order_unit_id');
     }
 
-    public function mgx(): BelongsTo
+
+    public function mgx(): HasOne
     {
-        return $this->belongsTo(Mgx::class);
+        return $this->hasOne(Mgx::class);
     }
 
 }

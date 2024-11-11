@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->primary(['order_unit_id', 'cargo_good_id']);
 
-            $table->timestamps();
+            $table->timestamps(); // не будет работать
 
         });
 
@@ -31,7 +31,7 @@ return new class extends Migration
         DB::unprepared(
             "CREATE OR REPLACE FUNCTION update_goods_is_array() RETURNS TRIGGER AS $$
             BEGIN
-                IF (SELECT COUNT(*) FROM order_unit_cargo_good WHERE order_unit_id = NEW.order_unit_id) > 1 THEN
+                IF (SELECT COUNT(*) FROM order_unit_cargo_good WHERE order_unit_id = COALESCE(NEW.order_unit_id, OLD.order_unit_id) ) > 1 THEN
                     UPDATE order_units
                     SET goods_is_array = TRUE
                     WHERE id = NEW.order_unit_id;
@@ -48,7 +48,7 @@ return new class extends Migration
         // Создание триггера для изменение goods_is_array
         DB::unprepared(
             "CREATE TRIGGER update_goods_is_array_trigger
-            BEFORE INSERT OR UPDATE ON order_unit_cargo_good
+            AFTER INSERT OR UPDATE OR DELETE ON order_unit_cargo_good
             FOR EACH ROW
             EXECUTE FUNCTION update_goods_is_array();"
         );

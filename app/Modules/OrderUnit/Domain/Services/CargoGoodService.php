@@ -13,4 +13,6 @@ class CargoGoodService
     {
         return CreateCargoGoodAndMgxAction::make($vo);
     }
+
+
 }

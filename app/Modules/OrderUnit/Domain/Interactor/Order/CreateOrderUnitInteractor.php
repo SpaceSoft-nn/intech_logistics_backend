@@ -56,7 +56,9 @@ class CreateOrderUnitInteractor
                 $this->orderToCargoGoodInteractor->execute($order, $dto->cargoGoodVO);
             }
 
-            dd($order->cargo_goods[1]);
+            {
+                
+            }
 
             return $order;
         });

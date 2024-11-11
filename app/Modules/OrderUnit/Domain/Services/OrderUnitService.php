@@ -5,6 +5,7 @@ namespace App\Modules\OrderUnit\Domain\Services;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Interactor\Order\CreateOrderUnitInteractor;
+use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Exception;
 use Illuminate\Support\Collection;
@@ -87,6 +88,68 @@ class OrderUnitService
                     $total += (float) $body_volume; // Приводим к числу с плавающей точкой и добавляем к общей сумме
                 } else {
                     throw new Exception('Не верный формат цены у Заказа.', 400);
+                }
+            }
+
+        } else {
+            throw new Exception('Заказы не были найдены.', 404);
+        }
+
+        return $total;
+    }
+
+    #TODO Вынести эту логику в отдельный класс
+    /**
+     * Посчитать общий объём всек CargoGood для заказа
+     * @param Collection<СargoGood> $arr
+     *
+     * @return [type]
+     */
+    public function calculateBodyVolumeOfCargoGood(Collection $arr) : float
+    {
+        $total = 0;
+
+        if($arr) {
+
+            foreach ($arr as $value) {
+
+                $body_volume = trim($value->body_volume); // Убираем пробелы по краям
+                if (is_numeric($body_volume)) {
+
+                    $total += (float) $body_volume; // Приводим к числу с плавающей точкой и добавляем к общей сумме
+                } else {
+                    throw new Exception('Не верный формат объём у Груза.', 400);
+                }
+            }
+
+        } else {
+            throw new Exception('Заказы не были найдены.', 404);
+        }
+
+        return $total;
+    }
+
+    #TODO Вынести эту логику в отдельный класс
+    /**
+     * Посчитать общий объём всех паллетов для заказа в зависимости от грузов
+     * @param Collection<СargoGood> $arr
+     *
+     * @return int
+     */
+    public function calculateCargoUnitsSumOfCargoGood(Collection $arr) : int
+    {
+        $total = 0;
+
+        if($arr) {
+
+            foreach ($arr as $value) {
+
+                $cargo_units_count = trim($value->cargo_units_count); // Убираем пробелы по краям
+                if (is_numeric($cargo_units_count)) {
+
+                    $total += (float) $cargo_units_count; // Приводим к числу с плавающей точкой и добавляем к общей сумме
+                } else {
+                    throw new Exception('Не верный формат количества паллетов у Груза.', 400);
                 }
             }
 

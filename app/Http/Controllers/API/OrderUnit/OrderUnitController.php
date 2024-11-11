@@ -120,7 +120,10 @@ class OrderUnitController extends Controller
             )
         );
 
-        dd($order);
+
+        dd($service->calculateCargoUnitsSumOfCargoGood($order->cargo_goods));
+
+        dd($order->refresh());
 
         return response()->json(array_success(OrderUnitResource::make($order), 'Return create Order.'), 201);
     }

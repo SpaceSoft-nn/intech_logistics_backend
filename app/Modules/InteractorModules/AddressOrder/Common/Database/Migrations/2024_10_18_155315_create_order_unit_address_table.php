@@ -37,7 +37,7 @@ return new class extends Migration
             "CREATE OR REPLACE FUNCTION update_address_is_array()
             RETURNS TRIGGER AS $$
             BEGIN
-                IF (SELECT COUNT(*) FROM order_unit_address WHERE order_unit_id = NEW.order_unit_id) > 1 THEN
+                IF (SELECT COUNT(*) FROM order_unit_address WHERE order_unit_id = COALESCE(NEW.order_unit_id, OLD.order_unit_id) ) ) > 1 THEN
                     UPDATE order_units
                     SET address_is_array = TRUE
                     WHERE id = NEW.order_unit_id;
@@ -55,7 +55,7 @@ return new class extends Migration
         // Создание триггера для изменение address_is_array
         DB::unprepared(
             "CREATE TRIGGER update_address_is_array_trigger
-            BEFORE INSERT OR UPDATE ON order_unit_address
+            AFTER INSERT OR UPDATE OR DELETE ON order_unit_address
             FOR EACH ROW
             EXECUTE FUNCTION update_address_is_array();"
         );

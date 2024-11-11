@@ -120,6 +120,16 @@ class OrderUnit extends Model
             ->withTimestamps();
     }
 
+    /**
+    * Связь с заказом многие ко многим
+    * @return BelongsToMany
+    */
+    public function cargo_goods(): BelongsToMany
+    {
+        //TODO Может быть баг - потом проверить
+        return $this->belongsToMany(CargoGood::class, 'order_unit_cargo_good', 'order_unit_id' , 'cargo_good_id');
+    }
+
     public function mgx(): BelongsTo
     {
         return $this->belongsTo(Mgx::class);
@@ -139,5 +149,6 @@ class OrderUnit extends Model
     {
         return $this->belongsTo(Organization::class, 'contractor_id');
     }
+
 
 }

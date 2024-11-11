@@ -2,7 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Actions;
 
-use App\Modules\OrderUnit\App\Data\DTO\OrderUnitToCargoGood\OrderUnitToCargoGood;
+use App\Modules\OrderUnit\App\Data\DTO\CargoUnitToCargoGood\CargoUnitToCargoGoodDTO;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 
@@ -11,11 +11,11 @@ use function App\Helpers\Mylog;
 class LinkCargoUnitToCargoGoodAction
 {
     /**
-     * @param OrderUnitToCargoGood $dto
+     * @param CargoUnitToCargoGoodDTO $dto
      *
      * @return bool
      */
-    public static function run(OrderUnitToCargoGood $dto) : bool
+    public static function run(CargoUnitToCargoGoodDTO $dto) : bool
     {
         /**
         * @var CargoGood

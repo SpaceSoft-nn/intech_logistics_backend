@@ -46,7 +46,7 @@ class CargoUnit extends Model
 
 
     /**
- * Связь паллетов с грузами
+    * Связь паллетов с грузами
     * @return BelongsToMany
     */
     public function cargo_goods(): BelongsToMany
@@ -54,6 +54,8 @@ class CargoUnit extends Model
         //TODO Может быть баг - потом проверить
         return $this->belongsToMany(CargoGood::class, 'cargo_good_cargo_unit', 'cargo_unit_id' , 'cargo_good_id')->withPivot('factor');
     }
+
+
 
 
 }

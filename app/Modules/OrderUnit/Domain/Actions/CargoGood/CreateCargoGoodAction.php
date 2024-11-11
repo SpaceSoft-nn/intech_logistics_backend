@@ -3,6 +3,8 @@
 namespace App\Modules\OrderUnit\Domain\Actions\CargoGood;
 
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\MgxVO;
+use App\Modules\OrderUnit\Domain\Actions\MGX\MgxCreateAction;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use Exception;
 
@@ -28,14 +30,23 @@ class CreateCargoGoodAction
     private function run(CargoGoodVO $vo) : CargoGood
     {
 
+        if(isset($vo->mgx))
+        {
+            MgxCreateAction::make(
+                MgxVO::make(
+                    
+                )
+            );
+        }
+
         try {
 
-            $сargoGood = CargoGood::createOrFail($vo->toArrayNotNull());
+            $сargoGood = CargoGood::create($vo->toArrayNotNull());
 
         } catch (\Throwable $th) {
 
             Mylog('Ошибка в Action CreateCargoGoodAction, при создании модели');
-            throw new Exception('Ошибка в AgreementOrderAcceptCreateAction', 500);
+            throw new Exception('Ошибка в CreateCargoGoodAction', 500);
 
         }
 

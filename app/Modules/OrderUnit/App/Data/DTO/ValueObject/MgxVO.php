@@ -6,22 +6,24 @@ use App\Modules\Base\Traits\FilterArrayTrait;
 use Arr;
 use Illuminate\Contracts\Support\Arrayable;
 
-class MgxVO implements Arrayable
+final readonly class MgxVO implements Arrayable
 {
     use FilterArrayTrait;
 
     public function __construct(
-        public readonly float $width,
-        public ?float $length,
-        public ?float $height,
-        public ?float $weight,
+        public float $width,
+        public float $length,
+        public float $height,
+        public string $cargo_good_id,
+        public ?float $weight, //вес кг
     ) {}
 
     public static function make(
 
+        float $length,
+        float $height,
         float $width,
-        ?float $length = null,
-        ?float $height = null,
+        string $cargo_good_id,
         ?float $weight = null,
 
     ) : self {
@@ -30,6 +32,7 @@ class MgxVO implements Arrayable
             length: $length,
             width: $width,
             height: $height,
+            cargo_good_id: $cargo_good_id,
             weight: $weight,
         );
 
@@ -42,24 +45,9 @@ class MgxVO implements Arrayable
             "length" => $this->length,
             "width" => $this->width,
             "height" => $this->height,
+            "cargo_good_id" => $this->cargo_good_id,
             "weight" => $this->weight,
         ];
     }
 
-    public static function fromArrayToObject(array $data): self
-    {
-
-        $length = Arr::get($data, "length");
-        $width = Arr::get($data, "width");
-        $height = Arr::get($data, "height");
-        $weight = Arr::get($data, "weight");
-
-
-        return new self(
-            length: $length,
-            width: $width,
-            height: $height,
-            weight: $weight,
-        );
-    }
 }

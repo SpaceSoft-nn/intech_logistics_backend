@@ -6,6 +6,7 @@ use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitCreateAction;
+use App\Modules\OrderUnit\Domain\Interactor\CargoGood\LinkOrderUnitToCargoGoodInteractor;
 use App\Modules\OrderUnit\Domain\Interactor\OrderAddress\LinkOrderUnitToAddressInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use DB;
@@ -18,6 +19,7 @@ class CreateOrderUnitInteractor
 
     public function __construct(
         private LinkOrderUnitToAddressInteractor $orderToAddressInteractor,
+        private LinkOrderUnitToCargoGoodInteractor $orderToCargoGoodInteractor,
     ) { }
 
     public function execute(OrderUnitCreateDTO $dto) : ?OrderUnit
@@ -34,20 +36,29 @@ class CreateOrderUnitInteractor
             $order = DB::transaction(function($pdo) use($dto)  {
 
                 /**
-                 * Получаем созданный заказ
+                * Получаем созданный заказ
                 * @var OrderUnit
                 */
                 $order = $this->createOrderUnit($dto->orderUnitVO);
 
-                /**
-                * @var OrderUnitAddressDTO
-                */
-                $orderUnitAddressDTO = $dto->orderUnitAddressDTO;
+                { //Линковка заказа и Адрессов
+                    /**
+                    * @var OrderUnitAddressDTO
+                    */
+                    $orderUnitAddressDTO = $dto->orderUnitAddressDTO;
+                    $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
+                }
 
 
-                $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
+                //Нужно получать актуальное состояние что бы с ним работать корректно во стальных сервесах
+                $order = $order->refresh();
 
-                return $order->refresh();
+
+                { //Создание CargoGoods[] и линковака с Order
+                    $this->orderToCargoGoodInteractor->execute($order, $dto->cargoGoodVO);
+                }
+
+                return $order;
             });
 
 
@@ -59,6 +70,11 @@ class CreateOrderUnitInteractor
             throw new \Illuminate\Database\Eloquent\ModelNotFoundException($message, 404);
         }
         catch (\Throwable $th) {
+
+            $message = $th->getMessage();
+
+            dd($message);
+
             Mylog('Ошибка в CreateOrderUnitInteractor: ' . $th);
             throw new Exception('Ошибка в CreateOrderUnitInteractor', 500);
 

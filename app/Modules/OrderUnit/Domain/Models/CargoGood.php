@@ -66,7 +66,7 @@ class CargoGood extends Model
     public function order_units(): BelongsToMany
     {
         //TODO Может быть баг - потом проверить
-        return $this->belongsToMany(CargoUnit::class, 'order_unit_cargo_good', 'cargo_good_id' , 'order_unit_id')->withPivot('factor');
+        return $this->belongsToMany(CargoUnit::class, 'order_unit_cargo_good', 'cargo_good_id' , 'order_unit_id');
     }
 
     public function mgx(): BelongsTo

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\OrderUnit\App\Data\DTO\OrderUnitToCargoGood;
+namespace App\Modules\OrderUnit\App\Data\DTO\CargoUnitToCargoGood;
 
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
@@ -9,7 +9,7 @@ use InvalidArgumentException;
 
 use function App\Helpers\Mylog;
 
-final readonly class OrderUnitToCargoGood
+final readonly class CargoUnitToCargoGoodDTO
 {
 
     public function __construct(

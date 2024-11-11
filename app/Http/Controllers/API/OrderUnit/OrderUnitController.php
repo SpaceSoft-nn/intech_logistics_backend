@@ -120,6 +120,8 @@ class OrderUnitController extends Controller
             )
         );
 
+        dd($order);
+
         return response()->json(array_success(OrderUnitResource::make($order), 'Return create Order.'), 201);
     }
 

@@ -54,6 +54,8 @@ final class LinkOrderUnitToCargoGoodInteractor
                 $this->linkOrderToCargoGood($order, $cargoGoods);
             }
 
+            $this->serviceCargoGood->isTrueCalculateBodyVolumeGeneral($cargoGoods[0]);
+
             return true;
         });
 

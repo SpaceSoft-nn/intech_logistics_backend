@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\PalletSpace\App\Data\Enums;
+namespace App\Modules\OrderUnit\App\Data\Enums\PalletTypeSize;
 
 enum TypeSizePalletSpaceEnum : string
 {

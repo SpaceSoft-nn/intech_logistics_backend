@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\PalletSpace\Common\Helpers;
+namespace App\Modules\OrderUnit\Common\Helpers\Pallets;
 
 class PalletSize
 {

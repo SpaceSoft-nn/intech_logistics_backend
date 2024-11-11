@@ -14,5 +14,12 @@ class CargoGoodService
         return CreateCargoGoodAndMgxAction::make($vo);
     }
 
-
+    /**
+     * Подсчитывает общий объём груза и Общий Объём паллета, и присылаем true, если объём удовлетворяет, объёму паллета
+     * @return [type]
+     */
+    public function isTrueCalculateBodyVolumeGeneral(CargoGood $cargoGood) : bool
+    {
+        dd($cargoGood);
+    }
 }

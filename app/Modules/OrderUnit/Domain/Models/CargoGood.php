@@ -2,7 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
-
+use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +25,8 @@ class CargoGood extends Model
         "name_value",
         "product_type",
 
+        "type_pallet",
+
         "cargo_units_count",
         "body_volume",
 
@@ -45,7 +47,7 @@ class CargoGood extends Model
     protected function casts(): array
     {
         return [
-
+            "pallet_type" => TypeSizePalletSpaceEnum::class,
         ];
     }
 

@@ -2,11 +2,15 @@
 
 namespace App\Modules\OrderUnit\Domain\Interactor\CargoGood;
 
-use App\Modules\Base\Error\BusinessException;
+use App\Modules\OrderUnit\App\Data\DTO\CargoUnitToCargoGood\CargoUnitToCargoGoodDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnitToCargoGood\OrderUnitToCargoGoodDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoUnitVO;
+use App\Modules\OrderUnit\Domain\Actions\CargoUnit\CreateCargoUnitAction;
+use App\Modules\OrderUnit\Domain\Actions\LinkCargoUnitToCargoGoodAction;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoGoodAction;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
+use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Services\CargoGoodService;
 use App\Modules\OrderUnit\Domain\Services\MgxValidationService;
@@ -56,26 +60,86 @@ final class LinkOrderUnitToCargoGoodInteractor
                 $this->linkOrderToCargoGood($order, $cargoGoods);
             }
 
-            // //проверяем что у груза есть mgx
-            // $this->serviceCargoGood->isTrueCalculateBodyVolumeGeneral($cargoGoods[0]);
+            //Отправляем каждый CargoGood на валидацию Mgx
+            foreach ($cargoGoods as $cargoGood) {
 
-            // $this->serviceCargoGood->checkSizeIsTrueLength($cargoGoods[0]);
+                if(isset($cargoGood->mgx)) {
 
-            $serviceValidationMgx = new MgxValidationService($cargoGoods[0]);
+                    //создаём сервес валидации и указываем cargoGood
+                    $serviceValidationMgx = new MgxValidationService($cargoGood);
+                    //Запускаем сервес валидации
+                    $serviceValidationMgx->runVlidationMgx();
 
-            // dd($serviceValidationMgx->checkSizeIsTrueLength());
+                    //Получаем количество слоев для одного паллета.
+                    $countLayers = $serviceValidationMgx->returnLayerCount();
 
-            // dd($serviceValidationMgx->checkSizeIsTrueMaxHeight());
+                    {  //создание CargoUnit и привязка к CargoGood + учитывание слоев в паллете
 
-            // dd($serviceValidationMgx->checkSizeIsTrueHeight());
+                        for ( $i = 0; $i < $cargoGood->cargo_units_count; $i++) {
 
-            dd($serviceValidationMgx->checkSizeIsTrueHeight());
+                            /**
+                            * @var CargoUnit
+                            */
+                            $cargoUnit = $this->CreateCargoUnit(CargoUnitVO::make(
+                                pallets_space: $cargoGood->type_pallet->value,
+                                customer_pallets_space: false,
+                            ));
+
+                            for ( $j = 0; $j < $countLayers; $j++) {
+
+                                $this->LinkCargoUnitToCargoGood(CargoUnitToCargoGoodDTO::make(
+                                    cargoGood: $cargoGood,
+                                    cargoUnit: $cargoUnit,
+                                    factor: $serviceValidationMgx->factorFillingHeight(),
+                                ));
+
+                            }
+
+                        }
+
+
+                        dd($cargoGood->cargo_units);
+
+                    }
+
+                } else {
+
+
+
+                }
+
+
+
+            }
+
 
 
             return true;
         });
 
         return true;
+    }
+
+    /**
+     * Линкуем CargoUnit и CargoGood
+     * @param CargoUnitToCargoGoodDTO $dto
+     *
+     * @return bool
+     */
+    private function LinkCargoUnitToCargoGood(CargoUnitToCargoGoodDTO $dto) : bool
+    {
+        return LinkCargoUnitToCargoGoodAction::run($dto);
+    }
+
+    /**
+    * Создаём CargoUnit
+    * @param CargoUnitVO $vo
+    *
+    * @return CargoUnit
+    */
+    private function CreateCargoUnit(CargoUnitVO $vo) : CargoUnit
+    {
+        return CreateCargoUnitAction::make($vo);
     }
 
     /**

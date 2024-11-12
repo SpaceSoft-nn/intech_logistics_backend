@@ -21,9 +21,7 @@ return new class extends Migration
             $table->uuid('cargo_unit_id')
                 ->constrained('cargo_units')->noActionOnDelete();
 
-            $table->decimal('factor', 10, 2)->default(1);
-
-            $table->primary(['cargo_good_id', 'cargo_unit_id']);
+            $table->decimal('factor', 5, 2)->default(100)->check('factor <= 100');
 
             $table->timestamps();
 

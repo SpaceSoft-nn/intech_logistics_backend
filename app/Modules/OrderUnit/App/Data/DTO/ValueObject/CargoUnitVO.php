@@ -27,7 +27,7 @@ final readonly class CargoUnitVO implements Arrayable
 
         return new self(
 
-            pallets_space : TypeSizePalletSpaceEnum::stringByCaseToObject($pallets_space),
+            pallets_space : TypeSizePalletSpaceEnum::stringValueToObject($pallets_space),
             customer_pallets_space: $customer_pallets_space,
 
         );

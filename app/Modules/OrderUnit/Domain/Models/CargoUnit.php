@@ -52,7 +52,10 @@ class CargoUnit extends Model
     public function cargo_goods(): BelongsToMany
     {
         //TODO Может быть баг - потом проверить
-        return $this->belongsToMany(CargoGood::class, 'cargo_good_cargo_unit', 'cargo_unit_id' , 'cargo_good_id')->withPivot('factor');
+        return $this->belongsToMany(CargoGood::class, 'cargo_good_cargo_unit', 'cargo_unit_id' , 'cargo_good_id')
+            ->using(CargoUnitCargoGood::class)
+            ->withPivot('factor')
+            ->withTimestamps();
     }
 
 

@@ -30,12 +30,12 @@ class CreateCargoUnitAction
 
         try {
 
-            $сargoUnit = CargoUnit::createOrFail($vo->toArrayNotNull());
+            $сargoUnit = CargoUnit::create($vo->toArrayNotNull());
 
         } catch (\Throwable $th) {
 
             Mylog('Ошибка в Action CreateCargoUnitAction, при создании модели');
-            throw new Exception('Ошибка в AgreementOrderAcceptCreateAction', 500);
+            throw new Exception('Ошибка в CreateCargoUnitAction', 500);
 
         }
 

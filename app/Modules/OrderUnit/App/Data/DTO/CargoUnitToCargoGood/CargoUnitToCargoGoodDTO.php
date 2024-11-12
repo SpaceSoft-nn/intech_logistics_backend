@@ -19,10 +19,12 @@ final readonly class CargoUnitToCargoGoodDTO
         public float $factor,
 
     ) {
+
+
         // Проверка значения $factor
-        if ($this->factor <= 1) {
-            Mylog('Ошибка в OrderUnitToCargoGood, значение factor не должно быть больше 1');
-            throw new InvalidArgumentException('Значение factor должно быть больше 1.');
+        if (! ($this->factor <= 100) ) {
+            Mylog('Ошибка в OrderUnitToCargoGood, значение factor не должно быть больше 100');
+            throw new InvalidArgumentException('Значение factor не должно быть больше 100.');
         }
     }
 

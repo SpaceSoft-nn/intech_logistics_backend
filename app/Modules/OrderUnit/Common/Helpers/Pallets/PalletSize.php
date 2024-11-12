@@ -151,16 +151,15 @@ class PalletSize
 
     }
 
-      /**
-     * Функция для подсчета количество паллетов в зависимости от размера и параметров
-     * @param CargoGood $cargoGood
-     * @param string $sizeName
-     *
-     * @return int
-     */
-    private function calculateLayerPalletOfheight(CargoGood $cargoGood, string $sizeName) : int
+    /**
+    * Функция для подсчета количество паллетов в зависимости от размера и параметров (надо брать целую часть, дробная для гибкости)
+    * @param CargoGood $cargoGood
+    * @param string $sizeName
+    *
+    * @return float
+    */
+    public function calculateLayerPalletOfheight(CargoGood $cargoGood) : float
     {
-
         /**
         * @var Mgx
         */
@@ -169,9 +168,13 @@ class PalletSize
         $count = $this->height / $mgx->height;
 
 
+        if($count < 2) {
 
+            Mylog('Ошибка в методе calculateLayerPalletOfheight() в классе PalletSize: Слой не может быть равен меньше 2 (при подсчетах) - делать сначала проверку во внешнем сервесе, что слой может быть больше 2.');
+            throw new Exception('calculateLayerPalletOfheight Слой не может быть равен меньше 2 (при подсчетах)', 500);
+        }
 
-
+        return $count;
     }
 
     /**

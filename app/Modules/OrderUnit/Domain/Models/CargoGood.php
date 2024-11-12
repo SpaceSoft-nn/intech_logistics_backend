@@ -58,7 +58,10 @@ class CargoGood extends Model
     public function cargo_units(): BelongsToMany
     {
         //TODO Может быть баг - потом проверить
-        return $this->belongsToMany(CargoUnit::class, 'cargo_good_cargo_unit', 'cargo_good_id' , 'cargo_unit_id')->withPivot('factor');
+        return $this->belongsToMany(CargoUnit::class, 'cargo_good_cargo_unit', 'cargo_good_id' , 'cargo_unit_id')
+                    ->using(CargoUnitCargoGood::class)
+                    ->withPivot('factor')
+                    ->withTimestamps();
     }
 
     /**

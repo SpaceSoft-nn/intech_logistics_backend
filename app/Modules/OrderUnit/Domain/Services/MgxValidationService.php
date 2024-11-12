@@ -20,6 +20,7 @@ class MgxValidationService
 {
     private PalletSize $sizePallet;
 
+
     public function __construct(
         public CargoGood $cargoGood,
     ) {
@@ -42,6 +43,57 @@ class MgxValidationService
         }
 
     }
+
+    /**
+     * Получаем количество слоев для упаковки груза в 1 паллет.
+     * @return int
+     */
+    public function returnLayerCount() : int
+    {
+        return $this->returnCountSizePalletHeightLayer();
+    }
+
+    /**
+     * Запуск валидационной логики
+     * @return bool
+     */
+    public function runVlidationMgx() : bool
+    {
+
+        #TODO Желательно всё это засунуть в паттерн хэндлер
+        //Проверяем удовлетворяет ли объём mgx, объему паллета
+
+        //проверяем по длине
+        $this->checkSizeIsTrueLength();
+
+        //проверяем по ширине
+        $this->checkSizeIsTrueWidth();
+
+        {
+            //проверяем по максимальной высоте
+            $this->checkSizeIsTrueMaxHeight();
+
+            //проверяем по высоте паллета
+            $this->checkSizeIsTrueHeight();
+        }
+
+
+        return true;
+
+    }
+
+    /**
+     * Получаем Factor заполнения слоя у паллета формально в %
+     * @return float
+     */
+    public function factorFillingHeight() : float
+    {
+        $factor = (100 * $this->cargoGood->mgx->height) / $this->sizePallet->height;
+
+        return $factor;
+    }
+
+
 
      /**
      * Подсчитывает общий объём груза и Общий Объём паллета, и присылаем true, если объём удовлетворяет, объёму паллета
@@ -172,14 +224,14 @@ class MgxValidationService
      * Возвращаем количество слоев которые нужно для того что бы уместить весь груз в 1 паллете
      * @return int
      */
-    public function returnCountSizePalletHeightLayer() : ?int
+    public function returnCountSizePalletHeightLayer() : int
     {
-        $status = $this->sizePallet->isTrueOnePalletToHeight($this->cargoGood);
+        //возвращаем 1 слой - если в 1 паллете в зависимости от высоты груза, не возможно расположить груз по слоям.
+        if(!$this->sizePallet->isTrueOnePalletToHeight($this->cargoGood)) { return 1; }
 
-        //возаращаем NULL - если в 1 паллете в зависимости от высоты груза, не возможно расположить груз по слоям.
-        if(!$status) { return null; }
+        $count = $this->sizePallet->calculateLayerPalletOfheight($this->cargoGood);
 
-        
+        return $count;
     }
 
     /**

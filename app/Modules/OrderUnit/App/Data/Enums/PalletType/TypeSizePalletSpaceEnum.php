@@ -25,4 +25,20 @@ enum TypeSizePalletSpaceEnum : string
             default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
         };
     }
+
+    /**
+    * Получить значение case и преборазовываем в объект
+    * @param string $value
+    *
+    * @return self
+    */
+    public static function stringValueToObject(string $value) : self
+    {
+        return match ($value) {
+            "Паллет EUR" => TypeSizePalletSpaceEnum::eur,
+            "Паллет FIN" => TypeSizePalletSpaceEnum::fin,
+            "Паллет ECOM" => TypeSizePalletSpaceEnum::ecom,
+            default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
+        };
+    }
 }

@@ -109,8 +109,9 @@ class MgxValidationService
         }
     }
 
+    #TODO - Под данный тип паллета с такой высотой может не подходить, выбрать надо кастом - делать ли эту логику
     /**
-    * Проверяем что Указанные MGX, подходят под размеры паллета по ширине
+    * Проверяем что Указанные MGX, подходят под размеры паллета по Высоте т.е не больше 1.8 метров к примеру
     * @param CargoGood $this->cargoGood
     * @return bool
     */
@@ -121,14 +122,20 @@ class MgxValidationService
         */
         $mgx = $this->cargoGood->mgx;
 
-        if($this->sizePallet->сompareWidthOfMgx($mgx))
-        {
+        if($this->sizePallet->сompareHeightOfMgx($mgx)) {
 
             return true;
 
         } else {
 
-            return $this->messageError('width');
+            $dataInfo = [
+                'model' => 'mgx',
+                'error' => "height",
+                'message' => "Указанные Массогабаритные-Характеристики по `Height` у груза: '{$this->cargoGood->product_type}', не подходят под данный тип паллета, максимальная высота для данного типа паллета: {$this->sizePallet->height}, у вас указана: {$mgx->height} .",
+            ];
+
+            //выкидываем ошибку и описание
+            throw new BusinessException($dataInfo, 422);
 
         }
     }
@@ -149,6 +156,7 @@ class MgxValidationService
         {
             return true;
         } else {
+
             $dataInfo = [
                 'model' => 'mgx',
                 'error' => "height",
@@ -158,6 +166,20 @@ class MgxValidationService
             //выкидываем ошибку и описание
             throw new BusinessException($dataInfo, 422);
         }
+    }
+
+    /**
+     * Возвращаем количество слоев которые нужно для того что бы уместить весь груз в 1 паллете
+     * @return int
+     */
+    public function returnCountSizePalletHeightLayer() : ?int
+    {
+        $status = $this->sizePallet->isTrueOnePalletToHeight($this->cargoGood);
+
+        //возаращаем NULL - если в 1 паллете в зависимости от высоты груза, не возможно расположить груз по слоям.
+        if(!$status) { return null; }
+
+        
     }
 
     /**

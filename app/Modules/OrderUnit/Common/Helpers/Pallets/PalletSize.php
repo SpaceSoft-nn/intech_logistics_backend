@@ -43,8 +43,9 @@ class PalletSize
         return $model->width < $this->width;
     }
 
+    #TODO Если не убирается, значит человеку указываем что паллет будет кастомный?
     /**
-    * Проверяем что модель по height, убираетя по высоте в паллет
+    * Проверяем что модель по height, убираетcя по высоте в паллет
     * @param Mgx $model
     * @return bool
     */
@@ -89,7 +90,8 @@ class PalletSize
 
             case 'height':
             {
-                dd('Нужно ли это здесь?');
+
+
                 break;
             }
 
@@ -104,6 +106,13 @@ class PalletSize
         }
     }
 
+    /**
+     * Функция для подсчета количество паллетов в зависимости от размера и параметров
+     * @param CargoGood $cargoGood
+     * @param string $sizeName
+     *
+     * @return int
+     */
     private function calculateCountPallet(CargoGood $cargoGood, string $sizeName) : int
     {
 
@@ -141,6 +150,61 @@ class PalletSize
 
 
     }
+
+      /**
+     * Функция для подсчета количество паллетов в зависимости от размера и параметров
+     * @param CargoGood $cargoGood
+     * @param string $sizeName
+     *
+     * @return int
+     */
+    private function calculateLayerPalletOfheight(CargoGood $cargoGood, string $sizeName) : int
+    {
+
+        /**
+        * @var Mgx
+        */
+        $mgx = $cargoGood->mgx;
+
+        $count = $this->height / $mgx->height;
+
+
+
+
+
+    }
+
+    /**
+    * Проверяем сможет ли убраться груз в 1 паллет как слой в высоту
+    * @param CargoGood $cargoGood
+    * @param string $sizeName
+    *
+    * @return int
+    */
+    public function isTrueOnePalletToHeight(CargoGood $cargoGood) : bool
+    {
+
+        /**
+        * @var Mgx
+        */
+        $mgx = $cargoGood->mgx;
+
+        try {
+
+            $status = $this->height / $mgx->height;
+
+            return $status > 2 ? true : false;
+
+        } catch (\Throwable $th) {
+
+            Mylog('Ошибка в PalletSize в методе calculateCountPallet, возможно бесконечный цикл! ' . $th);
+            throw new Exception('Ошибка в PalletSize в методе calculateCountPallet', 500);
+        }
+
+    }
+
+
+
 
     /**
      * Проверяем убирается ли по объёму указаный груз в 1 паллет (по объёмеу)

@@ -69,6 +69,8 @@ final class LinkOrderUnitToCargoGoodInteractor
 
             // dd($serviceValidationMgx->checkSizeIsTrueHeight());
 
+            dd($serviceValidationMgx->checkSizeIsTrueHeight());
+
 
             return true;
         });

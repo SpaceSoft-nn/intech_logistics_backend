@@ -12,7 +12,6 @@ return [
     App\Modules\Permission\App\Providers\PerrmissionServoceProvider::class, // Сервес прав по бинарной таблице
     App\Modules\IndividualFace\App\Providers\IndividualFaceServiceProvider::class,
     App\Modules\Transport\App\Providers\TransportServiceProvider::class,
-    App\Modules\PalletSpace\App\Providers\PalletSpaceServiceProvider::class,
     App\Modules\Address\App\Providers\AddressServiceProvider::class,
     App\Modules\OrderUnit\App\Providers\OrderUnitServiceProvider::class,
     App\Modules\Transfer\App\Providers\TransferServiceProvider::class,

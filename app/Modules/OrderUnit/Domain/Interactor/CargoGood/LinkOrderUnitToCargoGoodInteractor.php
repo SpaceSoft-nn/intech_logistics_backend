@@ -2,6 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Interactor\CargoGood;
 
+use App\Modules\Base\Error\BusinessException;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnitToCargoGood\OrderUnitToCargoGoodDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoGoodAction;
@@ -54,7 +55,10 @@ final class LinkOrderUnitToCargoGoodInteractor
                 $this->linkOrderToCargoGood($order, $cargoGoods);
             }
 
+            //проверяем что у груза есть mgx
             $this->serviceCargoGood->isTrueCalculateBodyVolumeGeneral($cargoGoods[0]);
+
+            throw new BusinessException('Сообщение ошибки', 422);
 
             return true;
         });

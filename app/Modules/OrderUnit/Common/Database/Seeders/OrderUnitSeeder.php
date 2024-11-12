@@ -25,7 +25,6 @@ class OrderUnitSeeder extends Seeder
     ) { }
 
 
-
     public function run(): void
     {
         $this->createOrderUnit();
@@ -44,11 +43,6 @@ class OrderUnitSeeder extends Seeder
         $startData = add_time_random($end_date_order, 2);
         $endData = add_time_random($startData);
 
-
-        /**
-        * @var PalletSpace
-        */
-        $pallet = PalletSpace::factory()->create();
 
         {
 

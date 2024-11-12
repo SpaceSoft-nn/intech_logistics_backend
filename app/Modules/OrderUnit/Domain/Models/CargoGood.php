@@ -47,7 +47,7 @@ class CargoGood extends Model
     protected function casts(): array
     {
         return [
-            "pallet_type" => TypeSizePalletSpaceEnum::class,
+            "type_pallet" => TypeSizePalletSpaceEnum::class,
         ];
     }
 

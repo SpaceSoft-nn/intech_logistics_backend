@@ -21,12 +21,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (Exception $ex) {
 
             //Для ошибок Exception - и коде 500, присылаем минимальную информацию
-            if($ex->getCode() === 500)
-            {
-                return response()->json([
-                    'message' => 'Внутренняя Ошибка Сервера'
-                ], 500);
-            }
+            // if($ex->getCode() === 500)
+            // {
+            //     return response()->json([
+            //         'message' => 'Внутренняя Ошибка Сервера'
+            //     ], 500);
+            // }
 
         });
 

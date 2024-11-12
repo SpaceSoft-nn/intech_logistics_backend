@@ -9,6 +9,7 @@ use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoGoodAction;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Services\CargoGoodService;
+use App\Modules\OrderUnit\Domain\Services\MgxValidationService;
 use DB;
 use Exception;
 
@@ -55,10 +56,19 @@ final class LinkOrderUnitToCargoGoodInteractor
                 $this->linkOrderToCargoGood($order, $cargoGoods);
             }
 
-            //проверяем что у груза есть mgx
-            $this->serviceCargoGood->isTrueCalculateBodyVolumeGeneral($cargoGoods[0]);
+            // //проверяем что у груза есть mgx
+            // $this->serviceCargoGood->isTrueCalculateBodyVolumeGeneral($cargoGoods[0]);
 
-            throw new BusinessException('Сообщение ошибки', 422);
+            // $this->serviceCargoGood->checkSizeIsTrueLength($cargoGoods[0]);
+
+            $serviceValidationMgx = new MgxValidationService($cargoGoods[0]);
+
+            // dd($serviceValidationMgx->checkSizeIsTrueLength());
+
+            // dd($serviceValidationMgx->checkSizeIsTrueMaxHeight());
+
+            // dd($serviceValidationMgx->checkSizeIsTrueHeight());
+
 
             return true;
         });

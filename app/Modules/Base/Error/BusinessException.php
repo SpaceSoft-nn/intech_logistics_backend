@@ -2,13 +2,11 @@
 namespace App\Modules\Base\Error;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Http\JsonResponse;
 
-class BusinessException extends \Exception
+class BusinessException extends \RuntimeException
 {
     /**
-    * @var string
+    * @var string[]|string
     */
     private $messageCustom;
 
@@ -17,19 +15,25 @@ class BusinessException extends \Exception
     */
     private ?int $codeCustom;
 
-    public function __construct(string $messageCustom, $codeCustom = 400)
+    public function __construct(string|array $messageCustom, $codeCustom = 400)
     {
         $this->messageCustom = $messageCustom;
         $this->codeCustom = $codeCustom;
         parent::__construct("Business exception", $this->codeCustom);
     }
 
-    public function getCustomMessage(): string
+    /**
+     * @return string|string[]
+     */
+    public function getCustomMessage(): string|array
     {
         return $this->messageCustom;
     }
 
-    public function getCustomCode(): string
+    /**
+     * @return string|string[]
+     */
+    public function getCustomCode(): string|array
     {
         return $this->messageCustom;
     }
@@ -42,7 +46,7 @@ class BusinessException extends \Exception
         {
             $json = [
                 'success' => false,
-                'error' => $this->getCustomMessage(),
+                'info' => $this->getCustomMessage(),
             ];
 
             return response()->json($json, $this->getCode());

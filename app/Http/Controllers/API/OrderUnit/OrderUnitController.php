@@ -66,7 +66,7 @@ class OrderUnitController extends Controller
      * Поски цены для заказа (временно на рандоме)
      * @param OrderUnitSelectPriceRequest $request
      *
-     * @return [type]
+     * @return void
      */
     public function selectPrice(OrderUnitSelectPriceRequest $request)
     {

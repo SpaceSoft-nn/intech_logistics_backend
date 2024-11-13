@@ -2,6 +2,7 @@
 
 namespace App\Modules\Organization\App\Data\Enums;
 
+use Exception;
 use InvalidArgumentException;
 
 enum TypeCabinetEnum : string
@@ -26,6 +27,23 @@ enum TypeCabinetEnum : string
                 "Не правильный аргумент в функции: [{$value}] не поддерживается" , 500
             ),
 
+        };
+    }
+
+    /**
+    * Получить значение case в string и прислать объект
+    * @param string $value
+    *
+    * @return self
+    */
+    public static function stringByCaseToObject(string $value) : self
+    {
+
+        return match ($value) {
+            "customer" => TypeCabinetEnum::customer,
+            "store_space" => TypeCabinetEnum::store_space,
+            "сarrier" => TypeCabinetEnum::сarrier,
+            default => throw new Exception('Ошибка приобрезование Enum TypeCabinetEnum', 500),
         };
     }
 }

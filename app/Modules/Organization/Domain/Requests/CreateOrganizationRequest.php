@@ -24,11 +24,16 @@ class CreateOrganizationRequest extends ApiRequest
         * @var User
         */
         $user = $auth->getUserAuth();
+
+        if(is_null($user)) { return false; }
+
         return UserRoleEnum::onlyAdmin($user->role);
     }
 
     public function rules(): array
     {
+
+        $typeTransportWeight = array_column(TypeCabinetEnum::cases(), 'name');
 
         $rules = [
 
@@ -42,7 +47,7 @@ class CreateOrganizationRequest extends ApiRequest
             'industry' => ['nullable', 'string'],
             'founded_date' => ['nullable', 'date'],
             'inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/'],
-            'type_cabinet' => ['required' , Rule::enum(TypeCabinetEnum::class)],
+            'type_cabinet' => ['required' , Rule::in($typeTransportWeight)],
 
         ];
 
@@ -53,7 +58,7 @@ class CreateOrganizationRequest extends ApiRequest
         }
 
         // если ИП, добавляем огрнип
-        if( strtolower($this->input('type')) == strtolower(OrganizationEnum::ie->value))
+        if( strtolower($this->input('type')) == strtolower(OrganizationEnum::ie->value) )
         {
             $rules['registration_number_individual'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule)];
         }
@@ -63,7 +68,7 @@ class CreateOrganizationRequest extends ApiRequest
 
     public function getValueObject(): OrganizationVO
     {
-        return OrganizationVO::fromArray($this->validated());
+        return OrganizationVO::fromArrayToObject($this->validated());
     }
 
     /**
@@ -72,7 +77,7 @@ class CreateOrganizationRequest extends ApiRequest
      */
     public function getTypeCabinet() : TypeCabinetEnum
     {
-        return TypeCabinetEnum::returnObjectByString(Arr::get($this->validated(), 'type_cabinet' , null));
+        return TypeCabinetEnum::stringByCaseToObject(Arr::get($this->validated(), 'type_cabinet' , null));
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Modules\Organization\Domain\Models;
 
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
+use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use App\Modules\Organization\Domain\Factories\OrganizationFactory;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -79,6 +80,8 @@ class Organization extends Model
         'phone',
         'email',
 
+        'type_cabinet',
+
         'remuved',
         'type',
 
@@ -99,6 +102,7 @@ class Organization extends Model
     {
         return [
             'type' => OrganizationEnum::class,
+            'type_cabinet' => TypeCabinetEnum::class,
             'founded_date' => 'datetime',
         ];
     }

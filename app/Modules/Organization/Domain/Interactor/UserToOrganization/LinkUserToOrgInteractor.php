@@ -23,6 +23,7 @@ class LinkUserToOrgInteractor
         //Создаём организацию
         $organization = app(IRepository::class)->save($dto->organizationVO);
 
+
         //Привязываем к user
         $status = LinkUserToOrganizationAction::run(LinkUserToOrganizationDTO::make($dto->user, $organization, $dto->type_cabinet));
 

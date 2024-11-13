@@ -5,7 +5,7 @@ namespace App\Modules\Organization\Domain\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class OgrnepRule implements ValidationRule
+class   OgrnepRule implements ValidationRule
 {
     /**
      * Run the validation rule.
@@ -20,9 +20,9 @@ class OgrnepRule implements ValidationRule
         }
     }
 
+
     private function validateOGRNEP($ogrn) : bool
     {
-
         if (strlen($ogrn) !== 15) {
             return false;
         }

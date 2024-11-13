@@ -5,10 +5,11 @@ namespace App\Modules\Organization\App\Data\DTO\ValueObject;
 use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\Organization\App\Data\DTO\Base\BaseDTO;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
+use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 
-class OrganizationVO extends BaseDTO implements Arrayable
+final class OrganizationVO extends BaseDTO implements Arrayable
 {
     use FilterArrayTrait;
 
@@ -25,6 +26,7 @@ class OrganizationVO extends BaseDTO implements Arrayable
 
         public readonly ?bool $remuved,
         public readonly OrganizationEnum $type,
+        // public readonly TypeCabinetEnum $type_cabinet,
 
         public readonly ?string $phone,
         public readonly ?string $email,
@@ -49,6 +51,7 @@ class OrganizationVO extends BaseDTO implements Arrayable
         string $founded_date,
         OrganizationEnum $type,
         string $inn,
+        // string $type_cabinet,
         ?string $owner_id,
         ?string $website = null,
         ?string $description = null,
@@ -68,6 +71,7 @@ class OrganizationVO extends BaseDTO implements Arrayable
             description: $description,
             industry: $industry,
             founded_date: $founded_date,
+            // type_cabinet: TypeCabinetEnum::stringByCaseToObject($type_cabinet),
             phone: $phone,
             email: $email,
             remuved: $remuved,
@@ -79,9 +83,10 @@ class OrganizationVO extends BaseDTO implements Arrayable
         );
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArrayToObject(array $data): self
     {
-        return new self(
+
+        return self::make(
             owner_id: Arr::get($data, 'owner_id', null),
             name: Arr::get($data, 'name' , null),
             address: Arr::get($data, 'address'),
@@ -90,6 +95,7 @@ class OrganizationVO extends BaseDTO implements Arrayable
             website: Arr::get($data, 'website' , null),
             type: OrganizationEnum::returnObjectByString(Arr::get($data, 'type', null)),
             description: Arr::get($data, 'description' , null),
+            // type_cabinet: Arr::get($data, 'type_cabinet'),
             industry: Arr::get($data, 'industry' , null),
             founded_date: Arr::get($data, 'founded_date' , null),
             remuved: Arr::get($data, 'remuved' , null),
@@ -112,6 +118,8 @@ class OrganizationVO extends BaseDTO implements Arrayable
             "founded_date" => $this->founded_date,
             "website" => $this->website,
             "description" => $this->description,
+
+            // "type_cabinet" => $this->type_cabinet?->value,
 
             "remuved" => $this->remuved,
             "type" => $this->type,

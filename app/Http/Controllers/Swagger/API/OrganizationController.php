@@ -24,7 +24,7 @@ namespace App\Http\Controllers\Swagger\API;
  *             @OA\Property(property="industry", type="string", nullable=true, description="Industry type", example="Technology"),
  *             @OA\Property(property="founded_date", type="string", format="date", nullable=true, description="Date the organization was founded", example="2020-01-01"),
  *             @OA\Property(property="inn", type="string", description="INN number; either 10 or 12 digits", pattern="^(([0-9]{12})|([0-9]{10}))?$", example="1234567890"),
- *             @OA\Property(property="type_cabinet", type="string", description="Тип кабинета", enum={"Заказчик", "Склад", "Перевозчик"} ),
+ *             @OA\Property(property="type_cabinet", type="string", description="**Тип кабинета: Заказчик, Склад, Перевозчик**", enum={"customer", "store_space", "сarrier"} ),
  *             @OA\Property(
  *                 property="kpp",
  *                 type="string",

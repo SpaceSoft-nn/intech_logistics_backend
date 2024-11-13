@@ -43,6 +43,7 @@ class OrganizationController
         //Устанавливаем user к organization
         $orgVO->addOwner($user->id);
 
+        //TODO Будет двойная валидация если вызвать $request->getTypeCabinet(), исправить
         $organization = $this->service->createOrganization(
             OrganizationCreateDTO::make($orgVO, $user, $request->getTypeCabinet())
         );

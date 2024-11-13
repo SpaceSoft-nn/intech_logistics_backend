@@ -1858,12 +1858,12 @@
                                         "example": "1234567890"
                                     },
                                     "type_cabinet": {
-                                        "description": "Тип кабинета",
+                                        "description": "**Тип кабинета: Заказчик, Склад, Перевозчик**",
                                         "type": "string",
                                         "enum": [
-                                            "Заказчик",
-                                            "Склад",
-                                            "Перевозчик"
+                                            "customer",
+                                            "store_space",
+                                            "сarrier"
                                         ]
                                     },
                                     "kpp": {

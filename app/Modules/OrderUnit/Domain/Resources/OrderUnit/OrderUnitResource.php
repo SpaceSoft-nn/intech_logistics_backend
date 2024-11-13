@@ -23,8 +23,8 @@ class OrderUnitResource extends JsonResource
             "description" => $this->description,
 
             "type_transport_weight" => $this->type_load_truck,
-            "cargo_unit_sum" => $this->end_date_order,
-            "type_load_truck" => $this->end_date_order,
+            "cargo_unit_sum" => $this->cargo_unit_sum,
+            "type_load_truck" => $this->type_load_truck,
 
             'cargo_goods' => CargoGoodCollection::make($this->cargo_goods),
             'address_array' => AddressCollection::make($this->addresses),

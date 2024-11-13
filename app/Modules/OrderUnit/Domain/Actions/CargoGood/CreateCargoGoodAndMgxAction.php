@@ -4,7 +4,7 @@ namespace App\Modules\OrderUnit\Domain\Actions\CargoGood;
 
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\MgxVO;
-use App\Modules\OrderUnit\Domain\Actions\MGX\MgxCreateAction;
+use App\Modules\OrderUnit\Domain\Actions\Mgx\MgxCreateAction;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use Exception;
 

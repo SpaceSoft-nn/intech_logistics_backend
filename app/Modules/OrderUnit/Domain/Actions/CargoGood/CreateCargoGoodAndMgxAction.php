@@ -30,6 +30,7 @@ class CreateCargoGoodAndMgxAction
     */
     private function run(CargoGoodVO $vo) : CargoGood
     {
+        
         try {
 
             $сargoGood = CargoGood::create($vo->toArrayNotNull());
@@ -43,8 +44,6 @@ class CreateCargoGoodAndMgxAction
             {
                 $mgx = MgxCreateAction::make($mgx->withCargoGoodId($сargoGood->id));
             }
-
-
 
         } catch (\Throwable $th) {
 

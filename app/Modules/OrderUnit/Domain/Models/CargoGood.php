@@ -59,7 +59,7 @@ class CargoGood extends Model
     {
         //TODO Может быть баг - потом проверить
         return $this->belongsToMany(CargoUnit::class, 'cargo_good_cargo_unit', 'cargo_good_id' , 'cargo_unit_id')
-                    ->using(CargoUnitCargoGood::class)
+                    ->using(CargoUnitCargoGoodPivot::class)
                     ->withPivot('factor')
                     ->withTimestamps();
     }

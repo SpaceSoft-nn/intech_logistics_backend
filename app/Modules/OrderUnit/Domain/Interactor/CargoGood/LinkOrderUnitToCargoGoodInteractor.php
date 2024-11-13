@@ -11,6 +11,7 @@ use App\Modules\OrderUnit\Domain\Actions\LinkCargoUnitToCargoGoodAction;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoGoodAction;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
+use App\Modules\OrderUnit\Domain\Models\CargoUnitCargoGoodPivot;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Services\CargoGoodService;
 use App\Modules\OrderUnit\Domain\Services\MgxValidationService;
@@ -60,13 +61,16 @@ final class LinkOrderUnitToCargoGoodInteractor
                 $this->linkOrderToCargoGood($order, $cargoGoods);
             }
 
-            //Отправляем каждый CargoGood на валидацию Mgx
+            //Отправляем каждый CargoGood на валидацию Mgx + создание cargo_unit + factor высоты
             foreach ($cargoGoods as $cargoGood) {
+
+
 
                 if(isset($cargoGood->mgx)) {
 
                     //создаём сервес валидации и указываем cargoGood
                     $serviceValidationMgx = new MgxValidationService($cargoGood);
+
                     //Запускаем сервес валидации
                     $serviceValidationMgx->runVlidationMgx();
 
@@ -97,14 +101,28 @@ final class LinkOrderUnitToCargoGoodInteractor
 
                         }
 
-
-                        dd($cargoGood->cargo_units);
-
                     }
 
                 } else {
 
 
+                    for ( $i = 0; $i < $cargoGood->cargo_units_count; $i++) {
+
+                        /**
+                        * @var CargoUnit
+                        */
+                        $cargoUnit = $this->CreateCargoUnit(CargoUnitVO::make(
+                            pallets_space: $cargoGood->type_pallet->value,
+                            customer_pallets_space: false,
+                        ));
+
+                        $this->LinkCargoUnitToCargoGood(CargoUnitToCargoGoodDTO::make(
+                            cargoGood: $cargoGood,
+                            cargoUnit: $cargoUnit,
+                            factor: 100, //TODO Здесь можно указывать загруженность в % (правильно) сейчас захардкоженно под 100
+                        ));
+
+                    }
 
                 }
 
@@ -112,7 +130,7 @@ final class LinkOrderUnitToCargoGoodInteractor
 
             }
 
-
+            dd(CargoUnitCargoGoodPivot::all());
 
             return true;
         });

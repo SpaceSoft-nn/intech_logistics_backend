@@ -30,7 +30,7 @@ class LinkCargoUnitToCargoGoodAction
         try {
 
             //Сохраняем связь от user к personal area
-            $cargoGood->cargo_units()->syncWithoutDetaching(
+            $cargoGood->cargo_units()->attach(
                 [ $cargoUnit->id => ['factor' => $dto->factor] ]
             );
 

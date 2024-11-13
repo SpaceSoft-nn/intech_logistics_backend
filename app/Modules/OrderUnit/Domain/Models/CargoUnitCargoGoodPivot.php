@@ -4,7 +4,7 @@ namespace App\Modules\OrderUnit\Domain\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class CargoUnitCargoGood extends Pivot
+class CargoUnitCargoGoodPivot extends Pivot
 {
 
     public $incrementing = true;

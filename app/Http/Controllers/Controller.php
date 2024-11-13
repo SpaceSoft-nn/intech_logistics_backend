@@ -79,7 +79,14 @@ namespace App\Http\Controllers;
 *    @OA\Property(property="mgx", ref="#/components/schemas/MGXResource")
 * ),
 *
-*
+* @OA\Schema(
+*     schema="MgxObject",
+*     required={"length", "width", "height", "weight"},
+*     @OA\Property(property="length", type="number", format="float", description="Длина. Обязательное поле длины. Минимум 0.", minimum=0, example=10.0),
+*     @OA\Property(property="width", type="number", format="float", description="Ширина. Обязательное поле ширины. Минимум 0.", minimum=0, example=5.0),
+*     @OA\Property(property="height", type="number", format="float", description="Высота. Обязательное поле высоты. Минимум 0.", minimum=0, example=20.0),
+*     @OA\Property(property="weight", type="number", format="float", description="Вес. Обязательное поле веса. Минимум 0.", minimum=0, example=15.0),
+* )
 *
 * @OA\Schema(
 *   schema="MatrixDistanceResource",

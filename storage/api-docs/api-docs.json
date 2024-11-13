@@ -228,7 +228,7 @@
                                                 "description": "User's password",
                                                 "type": "string",
                                                 "format": "password",
-                                                "example": "Pas123!"
+                                                "example": "Pass123!"
                                             }
                                         },
                                         "type": "object"
@@ -792,42 +792,14 @@
                                                             "nullable": true
                                                         },
                                                         "mgx": {
+                                                            "oneOf": [
+                                                                {
+                                                                    "$ref": "#/components/schemas/MgxObject"
+                                                                }
+                                                            ],
+                                                            "nullable": true,
                                                             "description": "**Массогабаритные Характеристики - поле не обязательное, если указано, то будет валидироватья относительно количество паллетов**",
-                                                            "type": "array",
-                                                            "items": {
-                                                                "properties": {
-                                                                    "length": {
-                                                                        "description": "**Длина. Обязательное поле длины. Минимум 0.**",
-                                                                        "type": "number",
-                                                                        "format": "float",
-                                                                        "minimum": 0,
-                                                                        "example": 10
-                                                                    },
-                                                                    "width": {
-                                                                        "description": "**Ширина. Обязательное поле ширины. Минимум 0.**",
-                                                                        "type": "number",
-                                                                        "format": "float",
-                                                                        "minimum": 0,
-                                                                        "example": 5
-                                                                    },
-                                                                    "height": {
-                                                                        "description": "**Высота. Обязательное поле высоты. Минимум 0.**",
-                                                                        "type": "number",
-                                                                        "format": "float",
-                                                                        "minimum": 0,
-                                                                        "example": 20
-                                                                    },
-                                                                    "weight": {
-                                                                        "description": "**Вес. Обязательное поле веса. Минимум 0.**",
-                                                                        "type": "number",
-                                                                        "format": "float",
-                                                                        "minimum": 0,
-                                                                        "example": 15
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            },
-                                                            "nullable": true
+                                                            "type": "object"
                                                         }
                                                     },
                                                     "type": "object"
@@ -3009,6 +2981,45 @@
                     },
                     "mgx": {
                         "$ref": "#/components/schemas/MGXResource"
+                    }
+                },
+                "type": "object"
+            },
+            "MgxObject": {
+                "required": [
+                    "length",
+                    "width",
+                    "height",
+                    "weight"
+                ],
+                "properties": {
+                    "length": {
+                        "description": "Длина. Обязательное поле длины. Минимум 0.",
+                        "type": "number",
+                        "format": "float",
+                        "minimum": 0,
+                        "example": 10
+                    },
+                    "width": {
+                        "description": "Ширина. Обязательное поле ширины. Минимум 0.",
+                        "type": "number",
+                        "format": "float",
+                        "minimum": 0,
+                        "example": 5
+                    },
+                    "height": {
+                        "description": "Высота. Обязательное поле высоты. Минимум 0.",
+                        "type": "number",
+                        "format": "float",
+                        "minimum": 0,
+                        "example": 20
+                    },
+                    "weight": {
+                        "description": "Вес. Обязательное поле веса. Минимум 0.",
+                        "type": "number",
+                        "format": "float",
+                        "minimum": 0,
+                        "example": 15
                     }
                 },
                 "type": "object"

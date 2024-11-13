@@ -31,9 +31,9 @@ final class LinkOrderUnitToCargoGoodInteractor
      * @param OrderUnit $order
      * @param CargoGoodVO[] $cargoGoodsVO
      *
-     * @return bool
+     * @return OrderUnit
      */
-    public function execute(OrderUnit $order, array $cargoGoodsVO) : bool
+    public function execute(OrderUnit $order, array $cargoGoodsVO) : OrderUnit
     {
         return $this->run($order, $cargoGoodsVO);
     }
@@ -42,15 +42,19 @@ final class LinkOrderUnitToCargoGoodInteractor
      * @param OrderUnit $order
      * @param CargoGoodVO[] $cargoGoodsVO
      *
-     * @return bool
+     * @return OrderUnit
      */
-    private function run(OrderUnit $order, array $cargoGoodsVO) : bool
+    private function run(OrderUnit $order, array $cargoGoodsVO) : OrderUnit
     {
-
 
         #TODO Нужно использовать паттерн цепочка обязаностей (handler)
         $order = DB::transaction(function($pdo) use($order, $cargoGoodsVO)  {
 
+            //Высчитыаем общий объём всех грузов для Order
+            $body_volume = 0;
+
+            //Высчитываем общий объём всех паллетов у грузов.
+            $cargo_unit_sum = 0;
 
             { //Создание CargoGood и привязка к OrderUnit
 
@@ -61,9 +65,9 @@ final class LinkOrderUnitToCargoGoodInteractor
                 $this->linkOrderToCargoGood($order, $cargoGoods);
             }
 
+            //TODO - Вынесли логику в отдельный класс интерактор
             //Отправляем каждый CargoGood на валидацию Mgx + создание cargo_unit + factor высоты
             foreach ($cargoGoods as $cargoGood) {
-
 
 
                 if(isset($cargoGood->mgx)) {
@@ -103,6 +107,12 @@ final class LinkOrderUnitToCargoGoodInteractor
 
                     }
 
+                    //Суммируем общий объём груза для Order
+                    $body_volume += $serviceValidationMgx->returnSizeVolumeMgx();
+
+                    //Суммируем общее количесвто паллетов у груза для Order
+                    $cargo_unit_sum += $cargoGood->cargo_units_count;
+
                 } else {
 
 
@@ -124,18 +134,30 @@ final class LinkOrderUnitToCargoGoodInteractor
 
                     }
 
+                    //Суммируем общий объём груза для Order
+                    $body_volume += $cargoGood->body_volume;
+
+                    //Суммируем общее количесвто паллетов у груза для Order
+                    $cargo_unit_sum += $cargoGood->cargo_units_count;
+
                 }
 
 
 
             }
 
-            dd(CargoUnitCargoGoodPivot::all());
+            { // Обновляем данные Order
+                $order->body_volume = $body_volume;
+                $order->cargo_unit_sum = $cargo_unit_sum;
 
-            return true;
+                $order->save();
+
+                return $order;
+            }
+
         });
 
-        return true;
+        return $order;
     }
 
     /**

@@ -112,6 +112,9 @@ class OrderUnitController extends Controller
         $orderUnitAddressDTO = $request->createOrderUnitAddressDTO();
 
 
+        /**
+        * @var OrderUnit
+        */
         $order = $service->createOrderUnit(
             OrderUnitCreateDTO::make(
                 orderUnitVO: $orderUnitVO,
@@ -120,12 +123,9 @@ class OrderUnitController extends Controller
             )
         );
 
+        dd($order->actual_status);
 
-        dd($service->calculateCargoUnitsSumOfCargoGood($order->cargo_goods));
-
-        dd($order->refresh());
-
-        return response()->json(array_success(OrderUnitResource::make($order), 'Return create Order.'), 201);
+        return response()->json(array_success(OrderUnitResource::make($order->refresh()), 'Return create Order.'), 201);
     }
 
     /**

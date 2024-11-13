@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class OrderUnitStatus extends Model
 {
@@ -24,12 +23,12 @@ class OrderUnitStatus extends Model
     protected $fillable = [
 
         'order_unit_id',
-        'date',
         'status',
 
     ];
 
     protected $guarded = [
+
         'id',
         'created_at',
         'updated_at',
@@ -51,7 +50,7 @@ class OrderUnitStatus extends Model
 
     public function order_unit(): BelongsTo
     {
-        return $this->belongsTo(OrderUnit::class);
+        return $this->belongsTo(OrderUnit::class, 'order_unit_id');
     }
 
 }

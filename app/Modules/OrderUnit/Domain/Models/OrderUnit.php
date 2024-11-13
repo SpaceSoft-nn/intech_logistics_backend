@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class OrderUnit extends Model
 {
@@ -87,13 +88,22 @@ class OrderUnit extends Model
     }
 
 
+
+    //TODO - Вынести в репозиторий
     /**
-     * Вернуть все возможные статусы которые были
-     * @return HasMany
-     */
+    * Вернуть все возможные статусы которые были
+    * @return HasMany
+    */
     public function order_unit_statuses(): HasMany
     {
         return $this->hasMany(OrderUnitStatus::class);
+    }
+
+    #TODO Вынести в репозиторий
+    public function actual_status(): HasOne
+    {
+        //при latest - мы можем указать по какому столбцу возвращать
+        return $this->hasOne(OrderUnitStatus::class)->latest('created_at');
     }
 
     /**

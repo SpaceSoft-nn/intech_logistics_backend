@@ -234,6 +234,11 @@ class MgxValidationService
         return $count;
     }
 
+    public function returnSizeVolumeMgx()
+    {
+        return $this->sizePallet->getSizeModel($this->cargoGood->mgx);
+    }
+
     /**
      * Возвращаем количество паллетов которые нужны для погрузки данного груза
      * @return int

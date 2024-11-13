@@ -8,6 +8,7 @@ use App\Modules\OrderUnit\Domain\Actions\MGX\MgxCreateAction;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use Exception;
 
+
 use function App\Helpers\Mylog;
 
 class CreateCargoGoodAndMgxAction
@@ -29,8 +30,6 @@ class CreateCargoGoodAndMgxAction
     */
     private function run(CargoGoodVO $vo) : CargoGood
     {
-        $сargoGood = CargoGood::create($vo->toArrayNotNull());
-
         try {
 
             $сargoGood = CargoGood::create($vo->toArrayNotNull());

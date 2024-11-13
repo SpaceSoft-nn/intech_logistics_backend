@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\OrderUnit\Domain\Actions\MGX;
+namespace App\Modules\OrderUnit\Domain\Actions\Mgx;
 
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\MgxVO;
 use App\Modules\OrderUnit\Domain\Models\Mgx;

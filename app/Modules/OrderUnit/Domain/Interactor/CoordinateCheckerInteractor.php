@@ -111,17 +111,26 @@ final class CoordinateCheckerInteractor
             $address_start = $this->repOrderUnit->firstPivotPriorityAddress($order);
             $address_end =  $this->repOrderUnit->lastPivotPriorityAddress($order);
 
-            dd
 
-            return [
-                $order->id => [
-                    ['lat' => $address_start->latitude , 'lng' => $address_start->longitude],
-                    ['lat' => $address_end->latitude , 'lng' => $address_end->longitude],
-                ]
-            ];
+            try {
+
+                if(is_null($address_start) || is_null($address_end)) { return null; }
+
+                return [
+                    $order->id => [
+                        ['lat' => $address_start->latitude , 'lng' => $address_start->longitude],
+                        ['lat' => $address_end->latitude , 'lng' => $address_end->longitude],
+                    ]
+                ];
+
+            } catch (\Throwable $th) {
+                Mylog('Ошибка при логике алгоритма, скорее всего Order - не имеет Адрессов' . $th);
+                throw new Exception('Ошибка в логике алгоритма CoordinateCheckerInteractor - ошибка сервера', 500);
+            }
+
+
 
         })->all();
-
 
         return $cordinstes;
     }

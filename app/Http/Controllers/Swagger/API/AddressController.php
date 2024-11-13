@@ -104,7 +104,7 @@ use App\Http\Controllers\Controller;
  *          response=200,
  *          description="Ok",
  *          @OA\JsonContent(
- *              @OA\Property( property="data", type="object", @OA\Items(ref="#/components/schemas/AddressResource") ),
+ *              @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/AddressResource") ),
  *              @OA\Property(property="message", type="string", example="Return Address select."),
  *          ),
  *      ),

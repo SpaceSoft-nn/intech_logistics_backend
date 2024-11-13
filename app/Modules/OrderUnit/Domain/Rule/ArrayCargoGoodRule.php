@@ -75,7 +75,7 @@ class ArrayCargoGoodRule implements ValidationRule
                     'body_volume' => ['required','numeric', 'min:0'],
                     'name_value' => ['nullable', 'string', 'max:100'],
                     'description' => ['nullable', 'string' , 'max:500'],
-                    'mgx' => ['nullable', 'object', new ArrayCargoMgxRule()],
+                    'mgx' => ['nullable', new ArrayCargoMgxRule()],
                 ], $messageBagGood );
 
 

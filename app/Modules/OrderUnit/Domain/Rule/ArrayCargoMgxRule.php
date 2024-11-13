@@ -12,12 +12,11 @@ class ArrayCargoMgxRule implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        // Проверяем, что значение является массивом
+        if (!is_array($value)) {
+            $fail('Ошибка :attribute должен быть массивом.');
 
-        if (!is_object($value)) {
-
-            $fail('Ошибка :attribute должен быть объектом.');
-
-            return ;
+            return;
         }
 
 

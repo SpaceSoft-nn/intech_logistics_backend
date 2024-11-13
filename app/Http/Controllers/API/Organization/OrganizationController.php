@@ -7,6 +7,7 @@ use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Organization\Domain\Requests\CreateOrganizationRequest;
+use App\Modules\Organization\Domain\Resources\OrganizationCollection;
 use App\Modules\Organization\Domain\Resources\OrganizationResource;
 use App\Modules\Organization\Domain\Services\OrganizationService;
 use App\Modules\User\Domain\Models\User;
@@ -21,6 +22,12 @@ class OrganizationController
         private OrganizationService $service,
         private AuthServiceInterface $auth,
     ) {}
+
+    //TODO Временно возвращаем все организации (потом убрать (проверку через user сделать) )
+    public function index()
+    {
+        return response()->json(array_success(OrganizationCollection::make(Organization::all()), 'Return organization select.'), 200);
+    }
 
     public function show(Organization $organization)
     {

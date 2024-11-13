@@ -124,6 +124,33 @@ namespace App\Http\Controllers\Swagger\API;
  *              @OA\Property(property="code", type="integer", example="500"),
  *          ),
  *      ),
+ * ),
+ *
+ *  @OA\GET(
+ *
+ *      path="/api/organization}",
+ *      summary="Вернуть все записи organization",
+ *      tags={"Organization"},
+ *
+ *
+ *      @OA\Response(
+ *          response=200,
+ *          description="Ok",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/OrganizationResource")),
+ *              @OA\Property(property="message", type="string", example="Return organization select."),
+ *          ),
+ *      ),
+ *
+ *
+ *      @OA\Response(
+ *          response=500,
+ *          description="Общая ошибка сервера.",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message_error", type="string", example="Общая ошибка сервера."),
+ *              @OA\Property(property="code", type="integer", example="500"),
+ *          ),
+ *      ),
  * )
  */
 class OrganizationController

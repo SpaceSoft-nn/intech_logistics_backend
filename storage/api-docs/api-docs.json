@@ -2005,6 +2005,59 @@
                 }
             }
         },
+        "/api/organization}": {
+            "get": {
+                "tags": [
+                    "Organization"
+                ],
+                "summary": "Вернуть все записи organization",
+                "operationId": "3f2b670d32050717310f8b0b594f89ba",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/OrganizationResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return organization select."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/region-economic-status": {
             "get": {
                 "tags": [

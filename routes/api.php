@@ -22,8 +22,9 @@ Route::post('/notification/send', [NotificationController::class, 'sendNotificat
 Route::post('/notification/confirm', [NotificationController::class, 'confirmCode']);
 
     //Organization
+Route::get('/organization', [OrganizationController::class, 'index']);
 Route::get('/organization/{organization}', [OrganizationController:: class, 'show'])->whereUuid('organization');
-Route::post('/organization', [OrganizationController:: class, 'create']);
+Route::post('/organization', [OrganizationController::class, 'create']);
 
 
     //User

@@ -15,6 +15,7 @@ class OrganizationResource extends JsonResource
     public function toArray(Request $request) : array
     {
         return [
+            "id" => $this->id,
             "owner_id" => $this->owner_id,
             "name" => $this->name,
             "address" => $this->address,

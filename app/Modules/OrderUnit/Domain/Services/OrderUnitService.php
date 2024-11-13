@@ -5,7 +5,6 @@ namespace App\Modules\OrderUnit\Domain\Services;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Interactor\Order\CreateOrderUnitInteractor;
-use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Exception;
 use Illuminate\Support\Collection;

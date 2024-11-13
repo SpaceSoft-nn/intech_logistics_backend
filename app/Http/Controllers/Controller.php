@@ -20,23 +20,65 @@ namespace App\Http\Controllers;
 *     )
 * ),
 *
-*
 * @OA\Schema(
 *    schema="OrderUnitResource",
-*    title="Json Ресурс Order Unit",
+*    title="Json Ресурс OrderUnit",
 *    @OA\Property(property="id", type="string", format="uuid"),
-*    @OA\Property(property="end_date_order", type="string", format="date-time"),
-*    @OA\Property(property="delivery_end", type="string", format="date-time"),
+*    @OA\Property(property="end_date_order", type="string", format="date", description="Дата окончания заказа"),
+*    @OA\Property(property="body_volume", type="number", format="float", description="Объем кузова"),
+*    @OA\Property(property="order_total", type="number", format="float", description="Общая стоимость заказа"),
+*    @OA\Property(property="description", type="string", description="Описание заказа"),
+*    @OA\Property(property="type_transport_weight", type="number", format="float", description="Вес типа транспорта"),
+*    @OA\Property(property="cargo_unit_sum", type="number", format="float", description="Сумма единиц груза"),
+*    @OA\Property(property="type_load_truck", type="string", description="Тип загрузочного транспорта"),
 *    @OA\Property(property="address_start_id", ref="#/components/schemas/AddressResource"),
 *    @OA\Property(property="address_end_id", ref="#/components/schemas/AddressResource"),
-*    @OA\Property(property="body_volume", type="number", format="float"),
-*    @OA\Property(property="order_total", type="number", format="float"),
-*    @OA\Property(property="description", type="string"),
-*    @OA\Property(property="product_type", type="string"),
-*    @OA\Property(property="order_status", type="string"),
-*    @OA\Property(property="user_id", ref="#/components/schemas/UserResource"),
-*    @OA\Property(property="organization_id", ref="#/components/schemas/OrganizationResource"),
+*    @OA\Property(
+*       property="cargo_goods",
+*       type="array",
+*       @OA\Items(ref="#/components/schemas/CargoGoodResource"),
+*       description="Коллекция грузов"
+*    ),
+*    @OA\Property(
+*       property="address_array",
+*       type="array",
+*       @OA\Items(ref="#/components/schemas/AddressResource"),
+*       description="Массив адресов"
+*    ),
+*    @OA\Property(property="add_load_space", type="boolean", description="Добавление грузового пространства"),
+*    @OA\Property(property="change_price", type="boolean", description="Изменение цены"),
+*    @OA\Property(property="change_time", type="boolean", description="Изменение времени"),
+*    @OA\Property(property="address_is_array", type="boolean", description="Адрес в виде массива"),
+*    @OA\Property(property="goods_is_array", type="boolean", description="Товары в виде массива"),
+*    @OA\Property(property="order_status", type="string", description="Статус заказа"),
+*    @OA\Property(property="user_id", ref="#/components/schemas/UserResource", description="Ресурс пользователя"),
+*    @OA\Property(property="organization_id", ref="#/components/schemas/OrganizationResource", description="Ресурс организации"),
 * ),
+*
+*
+* @OA\Schema(
+*    schema="MGXResource",
+*    title="Json Ресурс MGX",
+*    @OA\Property(property="length", type="number", format="float", description="Длина, в метрах"),
+*    @OA\Property(property="width", type="number", format="float", description="Ширина, в метрах"),
+*    @OA\Property(property="height", type="number", format="float", description="Высота, в метрах"),
+*    @OA\Property(property="weight", type="number", format="float", description="Вес, в килограммах"),
+* ),
+*
+*
+* @OA\Schema(
+*    schema="CargoGoodResource",
+*    title="Json Ресурс Cargo Good - груз",
+*    @OA\Property(property="id", type="string", format="uuid"),
+*    @OA\Property(property="name_value", type="string", format="date-time"),
+*    @OA\Property(property="product_type", type="number", format="float"),
+*    @OA\Property(property="type_pallet", type="number", format="float"),
+*    @OA\Property(property="cargo_units_count", type="string"),
+*    @OA\Property(property="body_volume", type="number", format="float"),
+*    @OA\Property(property="description", type="string"),
+*    @OA\Property(property="mgx", ref="#/components/schemas/MGXResource")
+* ),
+*
 *
 *
 * @OA\Schema(

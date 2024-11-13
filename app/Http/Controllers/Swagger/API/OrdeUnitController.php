@@ -129,44 +129,54 @@ use App\Http\Controllers\Controller;
 *              required=true,
 *              @OA\JsonContent(
 *                  allOf={
-*                   @OA\Schema(
-*                      @OA\Property(property="start_address_id", type="string", format="uuid", description="UUID адреса начала.", example="123e4567-e89b-12d3-a456-426614174000"),
-*                      @OA\Property(property="end_address_id", type="string", format="uuid", description="UUID адреса окончания.", example="123e4567-e89b-12d3-a456-426614174000"),
-*                      @OA\Property(property="start_date_delivery", type="string", format="date", description="Дата начала заказа.", example="2023-10-01"),
-*                      @OA\Property(property="end_date_delivery", type="string", format="date", description="Дата окончания заказа.", example="2023-10-10"),
-*                      @OA\Property(property="organization_id", type="string", format="uuid", description="UUID организации.", example="123e4567-e89b-12d3-a456-426614174000"),
-*                      @OA\Property(property="end_date_order", type="string", format="date", description="Дата окончания заказа.", example="2023-10-15"),
-*                      @OA\Property(property="product_type", type="string", maxLength=255, description="Тип продукта (максимум 255 символов).", example="Продукты питания"),
-*                      @OA\Property(property="body_volume", type="number", format="float", minimum=1, description="Объём продукта (минимум 1).", example=100.5),
-*                      @OA\Property(property="type_load_truck", type="string", enum={"ftl", "ltl", "custom"}, description="Тип загрузки грузовика. Возможные значения: ftl, ltl, custom."),
-*                      @OA\Property(property="order_total", type="number", format="float", description="Цена заказа.", example=50000.00),
-*                      @OA\Property(property="description", type="string", maxLength=1000, nullable=true, description="Описание (необязательное поле, максимум 1000 символов).", example="Это пример описания заказа."),
-*                      @OA\Property(
-*                          property="address_array",
-*                          type="array",
-*                          nullable=true,
-*                          description="Массив объектов с UUID адресов в качестве ключей и датами в качестве значений.",
-*                          @OA\Items(
-*                              type="object",
-*                              additionalProperties=@OA\Schema(
-*                              type="string",
-*                              format="date",
-*                             description="Дата в формате 'дд.мм.гггг'.",
-*                             example="07.01.2024"
-*                           ),
-*                           description="Объект с UUID адреса и соответствующей датой."
-*                       ),
-*                           example={
-*                               {
-*                                   "9d5b6d75-e26a-419e-96e3-0c0674987e06": "07.01.2024"
-*                               },
-*                               {
-*                               "9d5b6d75-e2eb-42a1-9d67-f767190f1f75": "07.01.2024"
-*                               }
-*                           }
-*                       ),
-*                  )
-*                 }
+*                        @OA\Schema(
+*                            @OA\Property(property="start_address_id", type="string", format="uuid", description="**UUID адреса начала. Поле обязательно и должно существовать в таблице addresses.**", example="123e4567-e89b-12d3-a456-426614174000"),
+*                            @OA\Property(property="end_address_id", type="string", format="uuid", description="**UUID адреса окончания. Поле обязательно и должно существовать в таблице addresses.**", example="123e4567-e89b-12d3-a456-426614174000"),
+*                            @OA\Property(property="start_date_delivery", type="string", format="date", description="**Дата начала заказа. Обязательное поле.**", example="2023-10-01"),
+*                            @OA\Property(property="end_date_delivery", type="string", format="date", description="**Дата окончания заказа. Обязательное поле.**", example="2023-10-10"),
+*                            @OA\Property(
+*                                property="address_array",
+*                                type="array",
+*                                description="**Массив объектов с UUID адресов и датами (nullable) не обязательное поле - Данное поле предназначеное для промежуточных адрессов погрузки/разгрузки между главным адрессом движение.**",
+*                                nullable=true,
+*                                @OA\Items(
+*                                    type="object",
+*                                    @OA\Property(property="id", type="string", format="uuid", description="**UUID адреса. Обязательное поле.**", example="123e4567-e89b-12d3-a456-426614174000"),
+*                                    @OA\Property(property="date", type="string", format="date", description="**Дата. Обязательное поле.** - Это дата нужна для указание когда забрать груз", example="2023-10-01"),
+*                                    @OA\Property(property="type", type="string", description="**Тип адреса. Обязательное поле. Возможные значения: 'sending' - Аддресс отправка, 'coming' - Адресс прибытия **", enum={"sending", "coming"}, example="sending")
+*                                ),
+*                            ),
+*                            @OA\Property(
+*                                property="goods_array",
+*                                type="array",
+*                                description="Массив объектов, представляющих грузы. Обязательное поле. Минимум 1+ груз",
+*                                @OA\Items(
+*                                    type="object",
+*                                    @OA\Property(property="product_type", type="string", description="**Тип продукта. Обязательное поле.**", example="Тип 1"),
+*                                    @OA\Property(property="type_pallet", type="string", description="**Тип поддона. Обязательное поле. Возможные значения: 'eur', 'ecom', 'fin' **", enum={"eur", "ecom", "fin"}, example="eur"),
+*                                    @OA\Property(property="cargo_units_count", type="integer", description="**Количество паллетов. Обязательное поле. Минимум 1.**", minimum=1, example=5),
+*                                    @OA\Property(property="body_volume", type="number", format="float", description="**Объем кузова. Обязательное поле. Минимум 0.**", minimum=0, example=12.5),
+*                                    @OA\Property(property="name_value", type="string", nullable=true, description="**Название. Необязательное поле. Максимум 100 символов.**", maxLength=100, example="Название груза"),
+*                                    @OA\Property(property="description", type="string", nullable=true, description="**Описание. Необязательное поле. Максимум 500 символов.**", maxLength=500, example="Описание груза"),
+*                                    @OA\Property(property="mgx", type="array", nullable=true, description="**Массогабаритные Характеристики - поле не обязательное, если указано, то будет валидироватья относительно количество паллетов**",
+*                                       @OA\Items(
+*                                           type="object",
+*                                           @OA\Property(property="length", type="number", format="float", description="**Длина. Обязательное поле длины. Минимум 0.**", minimum=0, example=10.0),
+*                                           @OA\Property(property="width", type="number", format="float", description="**Ширина. Обязательное поле ширины. Минимум 0.**", minimum=0, example=5.0),
+*                                           @OA\Property(property="height", type="number", format="float", description="**Высота. Обязательное поле высоты. Минимум 0.**", minimum=0, example=20.0),
+*                                           @OA\Property(property="weight", type="number", format="float", description="**Вес. Обязательное поле веса. Минимум 0.**", minimum=0, example=15.0),
+*                                       ),
+*                                    ),
+*                                ),
+*                            ),
+*                            @OA\Property(property="type_transport_weight", type="string", description="**Тип транспортировки по габаритам. Обязательное поле.** small: 1.5-3 тонны, medium: 5 - 10 тонн, large: 10 - 20 тонн, extraLarge: 20 - 40 тонн, superSize: Более 40 тонн", enum={"small", "medium", "large", "extraLarge", "superSize"}, example="small"),
+*                            @OA\Property(property="organization_id", type="string", format="uuid", description="**UUID организации. Поле обязательно и должно существовать в таблице organizations.**", example="123e4567-e89b-12d3-a456-426614174000"),
+*                            @OA\Property(property="end_date_order", type="string", format="date", description="**Дата окончания заказа. Обязательное поле.**", example="2023-10-15"),
+*                            @OA\Property(property="type_load_truck", type="string", description="**Тип загрузки грузовика. Обязательное поле. Возможные значения: ftl, ltl, custom.**", enum={"ftl", "ltl", "custom"}, example="ftl"),
+*                            @OA\Property(property="order_total", type="number", format="float", description="**Цена заказа. Обязательное поле.**", example=50000.00),
+*                            @OA\Property(property="description", nullable=true, type="string", maxLength=1000, nullable=true, description="**Описание (необязательное поле, максимум 1000 символов).**", example="Это пример описания заказа."),
+*                      )
+*                  }
 *              )
 *          ),
 *
@@ -187,6 +197,61 @@ use App\Http\Controllers\Controller;
 *               @OA\Property(property="code", type="integer", example="500"),
 *           ),
 *       ),
+*
+*
+*       @OA\Response(
+*           response=422,
+*           description="**Ошибка валидации данных при указани MGX.** По какому размеру ошибка будет указана в model, new_count_pallet - это сколько нужно паллетов, old_count_pallet - это сколько было указано",
+*           @OA\JsonContent(
+*               oneOf={
+*                   @OA\Schema(
+*                        @OA\Property(property="success", type="boolean", example=false),
+*                        @OA\Property(
+*                            property="info",
+*                            type="object",
+*                            @OA\Property(property="model", type="string", example="mgx"),
+*                            @OA\Property(property="error", type="string", example="height"),
+*                            @OA\Property(
+*                                property="message",
+*                                type="string",
+*                                example="Указанные Массогабаритные-Характеристики по максимальной Height у груза: 'ТоварТип', не подходят, максимальная высота: 200, у вас указана: 250."
+*                            )
+*                        )
+*                    ),
+*                    @OA\Schema(
+*                        @OA\Property(property="success", type="boolean", example=false),
+*                        @OA\Property(
+*                            property="info",
+*                            type="object",
+*                            @OA\Property(property="model", type="string", example="mgx"),
+*                            @OA\Property(property="error", type="string", example="height"),
+*                            @OA\Property(
+*                                property="message",
+*                                type="string",
+*                                example="Указанные Массогабаритные-Характеристики по Height у груза: 'ТоварТип', не подходят под данный тип паллета, максимальная высота для данного типа паллета: 180, у вас указана: 250."
+*                            )
+*                        )
+*                    ),
+*                   @OA\Schema(
+*                        @OA\Property(property="success", type="boolean", example=false),
+*                        @OA\Property(
+*                               property="info",
+*                               type="object",
+*                               @OA\Property(property="model", type="string", example="mgx"),
+*                               @OA\Property(property="new_count_pallet", type="string", example="4"),
+*                               @OA\Property(property="old_count_pallet", type="string", example="1"),
+*                               @OA\Property(property="error", type="string", example="length"),
+*                               @OA\Property(
+*                                   property="message",
+*                                   type="string",
+*                                   example="Указанные Массогабаритные-Характеристики по length у груза: 'Молоко', не подходят под указанный тип паллета и указанное количество паллетов. Чтобы груз уместился, укажите количество паллетов: 4, вы указали: 1."
+*                               ),
+*                        ),
+*                   ),
+*              }
+*           ),
+*       ),
+*
 *
 * ),
 *

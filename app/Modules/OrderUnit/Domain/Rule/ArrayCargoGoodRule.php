@@ -22,7 +22,7 @@ class ArrayCargoGoodRule implements ValidationRule
         }
 
 
-        $typeTransportWeight = array_column(TypeSizePalletSpaceEnum::cases(), 'name');
+        $typePallet = array_column(TypeSizePalletSpaceEnum::cases(), 'name');
 
         $messageBagGood = [
            'product_type' => [
@@ -70,7 +70,7 @@ class ArrayCargoGoodRule implements ValidationRule
 
                 [
                     'product_type' => ['required' ,'string'],
-                    'type_pallet' => ['required', 'string', Rule::in($typeTransportWeight)],
+                    'type_pallet' => ['required', 'string', Rule::in($typePallet)],
                     'cargo_units_count' => ['required', 'integer', 'min:1'],
                     'body_volume' => ['required','numeric', 'min:0'],
                     'name_value' => ['nullable', 'string', 'max:100'],

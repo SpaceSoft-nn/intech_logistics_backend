@@ -137,7 +137,7 @@ namespace App\Http\Controllers\Swagger\API;
  *          response=200,
  *          description="Ok",
  *          @OA\JsonContent(
- *              @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/OrganizationResource")),
+ *              @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/OrganizationResource") ),
  *              @OA\Property(property="message", type="string", example="Return organization select."),
  *          ),
  *      ),

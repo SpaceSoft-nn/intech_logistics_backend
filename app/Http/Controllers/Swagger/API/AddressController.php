@@ -92,6 +92,32 @@ use App\Http\Controllers\Controller;
  *              @OA\Property(property="code", type="integer", example="500"),
  *          ),
  *      ),
+ * ),
+ *
+ * * @OA\GET(
+ *
+ *      path="/api/addresses/",
+ *      summary="Вернуть запись по id",
+ *      tags={"Address"},
+ *
+ *      @OA\Response(
+ *          response=200,
+ *          description="Ok",
+ *          @OA\JsonContent(
+ *              @OA\Property( property="data", type="object", @OA\Items(ref="#/components/schemas/AddressResource") ),
+ *              @OA\Property(property="message", type="string", example="Return Address select."),
+ *          ),
+ *      ),
+ *
+ *
+ *      @OA\Response(
+ *          response=500,
+ *          description="Общая ошибка сервера.",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message_error", type="string", example="Общая ошибка сервера."),
+ *              @OA\Property(property="code", type="integer", example="500"),
+ *          ),
+ *      ),
  * )
  */
 class AddressController extends Controller

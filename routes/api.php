@@ -27,7 +27,7 @@ Route::get('/organization/{organization}', [OrganizationController:: class, 'sho
 Route::post('/organization', [OrganizationController::class, 'create']);
 
 
-    //User  
+    //User
 Route::post('/user', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
 
 
@@ -47,8 +47,9 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 });
 
     //Address
+Route::get('/addresses', [AddressController::class, 'index']);
 Route::get('/addresses/{address}', [AddressController:: class, 'show'])->whereUuid('address');
-Route::post('/addresses', [AddressController:: class, 'create']);
+Route::post('/addresses', [AddressController::class, 'create']);
 
     //orderUnit
 Route::prefix('/orders')->group(function () {

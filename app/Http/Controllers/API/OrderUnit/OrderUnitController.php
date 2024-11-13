@@ -123,8 +123,6 @@ class OrderUnitController extends Controller
             )
         );
 
-        dd($order->actual_status);
-
         return response()->json(array_success(OrderUnitResource::make($order->refresh()), 'Return create Order.'), 201);
     }
 

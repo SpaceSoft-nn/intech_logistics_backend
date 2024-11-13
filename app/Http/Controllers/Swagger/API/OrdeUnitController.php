@@ -158,7 +158,7 @@ use App\Http\Controllers\Controller;
 *                                    @OA\Property(property="body_volume", type="number", format="float", description="**Объем кузова. Обязательное поле. Минимум 0.**", minimum=0, example=12.5),
 *                                    @OA\Property(property="name_value", type="string", nullable=true, description="**Название. Необязательное поле. Максимум 100 символов.**", maxLength=100, example="Название груза"),
 *                                    @OA\Property(property="description", type="string", nullable=true, description="**Описание. Необязательное поле. Максимум 500 символов.**", maxLength=500, example="Описание груза"),
-*                                    @OA\Property(property="mgx", type="array", nullable=true, description="**Массогабаритные Характеристики - поле не обязательное, если указано, то будет валидироватья относительно количество паллетов**",
+*                                    @OA\Property(property="mgx", type="object", nullable=true, description="**Массогабаритные Характеристики - поле не обязательное, если указано, то будет валидироватья относительно количество паллетов**",
 *                                       @OA\Items(
 *                                           type="object",
 *                                           @OA\Property(property="length", type="number", format="float", description="**Длина. Обязательное поле длины. Минимум 0.**", minimum=0, example=10.0),

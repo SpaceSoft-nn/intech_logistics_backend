@@ -27,7 +27,7 @@ Route::get('/organization/{organization}', [OrganizationController:: class, 'sho
 Route::post('/organization', [OrganizationController::class, 'create']);
 
 
-    //User
+    //User  
 Route::post('/user', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
 
 

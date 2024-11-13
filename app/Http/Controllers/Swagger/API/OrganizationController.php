@@ -128,7 +128,7 @@ namespace App\Http\Controllers\Swagger\API;
  *
  *  @OA\GET(
  *
- *      path="/api/organization}",
+ *      path="/api/organization",
  *      summary="Вернуть все записи organization",
  *      tags={"Organization"},
  *

@@ -53,8 +53,11 @@ final class CoordinateCheckerInteractor
         $this->otherVector = $otherVector;
         $this->mainVector = $mainVector;
 
+
         //строим прямоугольник проверяем что вектора входят
         $data = $this->checkCoordinatesInRectangle(RentagleArrayVO::make($mainVector), $otherVector);
+
+
 
         //проверяем что вектора которые входят, направлены в попутном направлении относительно главного вектора
         return $this->runVectorMoventTrue($data);
@@ -105,17 +108,20 @@ final class CoordinateCheckerInteractor
         //подготавливаем наш массив к функции
         $cordinstes = $orders->flatMap(function($order) {
 
-            $Address_start = $this->repOrderUnit->firstPivotPriorityAddress($order);
-            $Address_end =  $this->repOrderUnit->lastPivotPriorityAddress($order);
+            $address_start = $this->repOrderUnit->firstPivotPriorityAddress($order);
+            $address_end =  $this->repOrderUnit->lastPivotPriorityAddress($order);
+
+            dd
 
             return [
                 $order->id => [
-                    ['lat' => $Address_start->latitude , 'lng' => $Address_start->longitude],
-                    ['lat' => $Address_end->latitude , 'lng' => $Address_end->longitude],
+                    ['lat' => $address_start->latitude , 'lng' => $address_start->longitude],
+                    ['lat' => $address_end->latitude , 'lng' => $address_end->longitude],
                 ]
             ];
 
         })->all();
+
 
         return $cordinstes;
     }

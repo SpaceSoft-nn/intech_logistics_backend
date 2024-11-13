@@ -62,8 +62,7 @@ class OrderUnitSeeder extends Seeder
 
             //делаем связки через промежуточные таблицы
             {
-                //с cargo_unit
-                $this->linkOrderAndCargo($order, $pallet);
+
 
                 //с адрессами(ом)
                 {
@@ -94,8 +93,7 @@ class OrderUnitSeeder extends Seeder
 
             //делаем связки через промежуточные таблицы
             {
-                //с cargo_unit
-                $this->linkOrderAndCargo($order, $pallet);
+
 
                 //с адрессами(ом)
                 {
@@ -123,8 +121,7 @@ class OrderUnitSeeder extends Seeder
 
             //делаем связки через промежуточные таблицы
             {
-                //с cargo_unit
-                $this->linkOrderAndCargo($order, $pallet);
+
 
                 //с адрессами(ом)
                 {
@@ -153,8 +150,7 @@ class OrderUnitSeeder extends Seeder
 
             //делаем связки через промежуточные таблицы
             {
-                //с cargo_unit
-                $this->linkOrderAndCargo($order, $pallet);
+
 
                 //с адрессами(ом)
                 {
@@ -181,8 +177,7 @@ class OrderUnitSeeder extends Seeder
 
            //делаем связки через промежуточные таблицы
             {
-                //с cargo_unit
-                $this->linkOrderAndCargo($order, $pallet);
+
 
                 //с адрессами(ом)
                 {
@@ -209,8 +204,7 @@ class OrderUnitSeeder extends Seeder
 
             //делаем связки через промежуточные таблицы
             {
-                //с cargo_unit
-                $this->linkOrderAndCargo($order, $pallet);
+
 
                 //с адрессами(ом)
                 {
@@ -237,8 +231,7 @@ class OrderUnitSeeder extends Seeder
 
              //делаем связки через промежуточные таблицы
              {
-                //с cargo_unit
-                $this->linkOrderAndCargo($order, $pallet);
+
 
                 //с адрессами(ом)
                 {
@@ -265,19 +258,18 @@ class OrderUnitSeeder extends Seeder
 
            //делаем связки через промежуточные таблицы
            {
-            //с cargo_unit
-            $this->linkOrderAndCargo($order, $pallet);
 
-            //с адрессами(ом)
-            {
-                //Адресс отбытия
-                LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[15], $order, TypeStateAddressEnum::sending, $startData));
 
-                //Адресс прибытия
-                LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[16], $order, TypeStateAddressEnum::coming, $endData));
+                //с адрессами(ом)
+                {
+                    //Адресс отбытия
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[15], $order, TypeStateAddressEnum::sending, $startData));
+
+                    //Адресс прибытия
+                    LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[16], $order, TypeStateAddressEnum::coming, $endData));
+                }
+
             }
-
-        }
         }
 
         {
@@ -293,8 +285,7 @@ class OrderUnitSeeder extends Seeder
 
              //делаем связки через промежуточные таблицы
              {
-                //с cargo_unit
-                $this->linkOrderAndCargo($order, $pallet);
+
 
                 //с адрессами(ом)
                 {
@@ -321,8 +312,7 @@ class OrderUnitSeeder extends Seeder
 
             //делаем связки через промежуточные таблицы
             {
-                //с cargo_unit
-                $this->linkOrderAndCargo($order, $pallet);
+
 
                 //с адрессами(ом)
                 {
@@ -349,8 +339,7 @@ class OrderUnitSeeder extends Seeder
 
             //делаем связки через промежуточные таблицы
             {
-                //с cargo_unit
-                $this->linkOrderAndCargo($order, $pallet);
+
 
                 //с адрессами(ом)
                 {
@@ -377,8 +366,7 @@ class OrderUnitSeeder extends Seeder
 
             //делаем связки через промежуточные таблицы
             {
-                //с cargo_unit
-                $this->linkOrderAndCargo($order, $pallet);
+
 
                 //с адрессами(ом)
                 {
@@ -394,24 +382,24 @@ class OrderUnitSeeder extends Seeder
 
     }
 
-    /**
-     * #TODO Вынести в action
-     * Делаем линвку при связи многие ко многим
-     * @return [type]
-     */
-    private function linkOrderAndCargo(OrderUnit $order, PalletSpace $pallet){
+    // /**
+    //  * #TODO Вынести в action
+    //  * Делаем линвку при связи многие ко многим
+    //  * @return [type]
+    //  */
+    // private function linkOrderAndCargo(OrderUnit $order, PalletSpace $pallet){
 
-        $cargo_units_ids = CargoUnit::factory()->count($this->faker->numberBetween(2, 12))->create([
-            "pallets_space_id" => $pallet->id,
-        ]);
+    //     $cargo_units_ids = CargoUnit::factory()->count($this->faker->numberBetween(2, 12))->create([
+    //         "pallets_space_id" => $pallet->id,
+    //     ]);
 
-        //мапим и делаем ассоциативный массив
-        $syncData = $cargo_units_ids->mapWithKeys(function ($value) {
-            return [$value->id => ['factor' => 1]];
-        });
+    //     //мапим и делаем ассоциативный массив
+    //     $syncData = $cargo_units_ids->mapWithKeys(function ($value) {
+    //         return [$value->id => ['factor' => 1]];
+    //     });
 
 
-        $order->cargo_units()->syncWithoutDetaching($syncData->toArray());
-    }
+    //     $order->cargo_units()->syncWithoutDetaching($syncData->toArray());
+    // }
 
 }

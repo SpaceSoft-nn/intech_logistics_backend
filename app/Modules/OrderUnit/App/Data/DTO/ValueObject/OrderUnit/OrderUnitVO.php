@@ -18,7 +18,7 @@ class OrderUnitVO implements Arrayable
         public readonly string $end_date_order,
         public readonly ?float $body_volume,
         public readonly string $order_total,
-        
+
 
 
         public readonly TypeTransportWeight $type_transport_weight,

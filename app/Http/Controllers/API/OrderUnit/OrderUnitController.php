@@ -229,8 +229,18 @@ class OrderUnitController extends Controller
      */
     public function algorithm(OrderUnitAlgorithmRequest $request, CoordinateCheckerInteractor $coordinator)
     {
+        //Тут надо добавлять ещё логику, что статус должен быть опубликован
+        //получаем заказы где нету множество адрессов (только отправка и прибытия)
+        $orders = OrderUnit::all()->where('address_is_array', false);
 
-        $orders = OrderUnit::all()->where("order_status", StatusOrderUnitEnum::draft);
+        //Получаем адресса у которых только статус: опубликован
+        $orders = $orders->filter(function ($order) {
+            // Предполагается, что вы имеете доступ к методу or отношению, которое возвращает последний адрес.
+            $lastAddress = $order->actual_status; // Это пример, измените в зависимости от вашей модели
+
+            // Проверяем статус на соответствие
+            return $lastAddress->status->value == 'Опубликован';
+        });
 
         {
             $orderMain = $orders->where('id', $request['main_order'])->first();

@@ -30,12 +30,29 @@ class OrderUnitCreateAction
 
             $order = OrderUnit::create($vo->toArrayNotNull());
 
-            //Создаём дефолтный статус draft -> черновик
-            $status = OrderUnitStatusCreateAction::make(
-                OrderUnitStatusVO::make(
-                    order_unit_id: $order->id,
-                )
-            );
+            #TODO Мы здесь создаём статус, нужно ли эту логику переносить как триггер?
+            //Создание статуса
+            if(!is_null($vo->order_status)) {
+
+                $status = OrderUnitStatusCreateAction::make(
+                    OrderUnitStatusVO::make(
+                        order_unit_id: $order->id,
+                        status: $vo->order_status->value,
+                    )
+                );
+
+            } else {
+
+                //Создаём дефолтный статус draft -> черновик
+                $status = OrderUnitStatusCreateAction::make(
+                    OrderUnitStatusVO::make(
+                        order_unit_id: $order->id,
+                    )
+                );
+
+            }
+
+
 
         } catch (\Throwable $th) {
 

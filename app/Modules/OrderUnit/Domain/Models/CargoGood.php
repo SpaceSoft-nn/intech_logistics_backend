@@ -3,6 +3,7 @@
 namespace App\Modules\OrderUnit\Domain\Models;
 
 use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
+use App\Modules\OrderUnit\Domain\Factories\CargoGoodFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,10 +16,10 @@ class CargoGood extends Model
 
     protected $table = 'cargo_goods';
 
-    // protected static function newFactory()
-    // {
-    //     return CargoUnitFactory::new();
-    // }
+    protected static function newFactory()
+    {
+        return CargoGoodFactory::new();
+    }
 
     protected $fillable = [
 

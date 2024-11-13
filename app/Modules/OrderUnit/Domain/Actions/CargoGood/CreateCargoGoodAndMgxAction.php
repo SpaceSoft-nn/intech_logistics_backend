@@ -24,7 +24,7 @@ class CreateCargoGoodAndMgxAction
     }
 
     /**
-    *
+    * @param CargoGoodVO $vo
     * @return ?CargoGood
     */
     private function run(CargoGoodVO $vo) : CargoGood

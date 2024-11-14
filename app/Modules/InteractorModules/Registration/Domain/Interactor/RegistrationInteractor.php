@@ -78,37 +78,41 @@ class RegistrationInteractor
         */
         $userDTO = $dto->userDTO;
 
-        {
-            //Проверяем подтверждён ли phone/email
-            $model_confirm = $this->isAccessNotification(email: $dto->email, phone: $dto->phone);
+        // { #TODO - Эо логика при подтверждении сотового или email (мы её убираем на время)
 
-                //Если нет выкидываем массив с сообщением
-            if(empty($model_confirm['data'])) { return $this->arrayResponseConfrimNotification(); }
-        }
+        //     {
+        //         //Проверяем подтверждён ли phone/email
+        //         $model_confirm = $this->isAccessNotification(email: $dto->email, phone: $dto->phone);
 
-        //Получаем id emailList or PhoneList
-        $notifyId = $model_confirm['data']->id;
+        //             //Если нет выкидываем массив с сообщением
+        //         if(empty($model_confirm['data'])) { return $this->arrayResponseConfrimNotification(); }
+        //     }
 
-        //Устанавливаем для DTO email_id или phone_id
-        switch ($model_confirm['type']) {
-            case 'phone':
-            {
-                $userDTO->userVO->setPhoneId($notifyId);
-                break;
-            }
+        //     //Получаем id emailList or PhoneList
+        //     $notifyId = $model_confirm['data']->id;
 
-            case 'email':
-            {
-                $userDTO->userVO->setEmailId($notifyId);
-                break;
-            }
+        //     //Устанавливаем для DTO email_id или phone_id
+        //     switch ($model_confirm['type']) {
+        //         case 'phone':
+        //         {
+        //             $userDTO->userVO->setPhoneId($notifyId);
+        //             break;
+        //         }
 
-            default:
-            {
-                throw new Exception('Неизвстный тип нотифкаици при создании User', 500);
-                break;
-            }
-        }
+        //         case 'email':
+        //         {
+        //             $userDTO->userVO->setEmailId($notifyId);
+        //             break;
+        //         }
+
+        //         default:
+        //         {
+        //             throw new Exception('Неизвстный тип нотифкаици при создании User', 500);
+        //             break;
+        //         }
+        //     }
+        // }
+
 
         //вызываем сервес для создание user
         $user = $this->userService->createUser($userDTO);

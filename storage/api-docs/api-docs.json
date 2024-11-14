@@ -1894,11 +1894,11 @@
                                         "example": "https://www.example.com"
                                     },
                                     "type": {
-                                        "description": "Type of organization, either 'legal' or 'ie'",
+                                        "description": "Type of organization, either 'legal' or 'individual'",
                                         "type": "string",
                                         "enum": [
                                             "legal",
-                                            "ie"
+                                            "individual"
                                         ],
                                         "example": "legal"
                                     },
@@ -1948,13 +1948,6 @@
                                         "type": "string",
                                         "pattern": "^[0-9]{13}$",
                                         "example": "1234567890123",
-                                        "nullable": true
-                                    },
-                                    "registration_number_individual": {
-                                        "description": "OGRNIP number (обязательный параметр когда 'Индивидуальный предприниматель')",
-                                        "type": "string",
-                                        "pattern": "^[0-9]{15}$",
-                                        "example": "123456789012345",
                                         "nullable": true
                                     }
                                 },
@@ -3248,7 +3241,7 @@
                         "type": "string",
                         "enum": [
                             "legal",
-                            "ie"
+                            "individual"
                         ]
                     },
                     "description": {
@@ -3291,12 +3284,6 @@
                         "description": "ОГРН (для ООО)",
                         "type": "string",
                         "pattern": "^([0-9]{13})?$",
-                        "nullable": true
-                    },
-                    "registration_number_individual": {
-                        "description": "ОГРНИП (для ИП)",
-                        "type": "string",
-                        "pattern": "^\\d{15}$",
                         "nullable": true
                     }
                 },

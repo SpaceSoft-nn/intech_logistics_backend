@@ -22,12 +22,16 @@ class OrderUnitResource extends JsonResource
             "order_total" => $this->order_total,
             "description" => $this->description,
 
+            'start_date_delivery' => $this->start_date_delivery,
+            'end_date_delivery' => $this->end_date_delivery,
+
             "type_transport_weight" => $this->type_load_truck,
             "cargo_unit_sum" => $this->cargo_unit_sum,
             "type_load_truck" => $this->type_load_truck,
 
             'cargo_goods' => CargoGoodCollection::make($this->cargo_goods),
-            'address_array' => AddressCollection::make($this->addresses),
+
+            'address_array' => AddressCollection::make(resource: $this->addresses, idOrderUnit: $this->id),
 
             //bool
                 "add_load_space" => $this->add_load_space,

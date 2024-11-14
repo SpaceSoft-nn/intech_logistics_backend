@@ -47,6 +47,8 @@ class CreateOrderUnitInteractor
                 $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
             }
 
+            // dd($order->addresses[0]->pivot->data_time);
+
 
             //Нужно получать актуальное состояние что бы с ним работать корректно во стальных сервесах
             $order = $order->refresh();

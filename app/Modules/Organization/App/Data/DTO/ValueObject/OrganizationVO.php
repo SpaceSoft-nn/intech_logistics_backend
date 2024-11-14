@@ -5,7 +5,6 @@ namespace App\Modules\Organization\App\Data\DTO\ValueObject;
 use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\Organization\App\Data\DTO\Base\BaseDTO;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
-use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 
@@ -33,7 +32,7 @@ final class OrganizationVO extends BaseDTO implements Arrayable
 
         public readonly string $inn,
         public readonly ?string $kpp,
-        public readonly ?string $registration_number,
+        public readonly string $registration_number,
 
     ) { }
 

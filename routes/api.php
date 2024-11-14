@@ -34,7 +34,8 @@ Route::post('/user', [UserController:: class, 'create'])->middleware(['auth:sanc
 //routing аутентификации по токену
 Route::prefix('auth')->controller(AuthController::class)->group(function () {
 
-    Route::post('/login', 'login');
+    //Он не нужен в нем нету валидации
+    //Route::post('/login', 'login');
 
     Route::middleware(['auth:sanctum'])->group(function () {
 

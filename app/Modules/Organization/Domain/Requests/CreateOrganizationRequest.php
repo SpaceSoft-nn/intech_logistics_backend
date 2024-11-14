@@ -60,7 +60,7 @@ class CreateOrganizationRequest extends ApiRequest
         // если ИП, добавляем огрнип
         if( strtolower($this->input('type')) == strtolower(OrganizationEnum::individual->value) )
         {
-            $rules['    '] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule)];
+            $rules['registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule)];
         }
 
         return $rules;

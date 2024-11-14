@@ -22,7 +22,7 @@ class AddressCollection extends ResourceCollection
 
     public function toArray(Request $request): array
     {
-        if(is_null($this->idOrderUnit)) { return $this->collection; }
+        if(is_null($this->idOrderUnit)) { return $this->collection->toArray(); }
 
         return $this->toMapColletcion();
     }
@@ -48,9 +48,6 @@ class AddressCollection extends ResourceCollection
             // Обработка случая, когда orderUnit не найден
             return [
                 'address' => new AddressResource($item),
-                'date' => null,
-                'type' => null,
-                'priority' => null,
             ];
         }
 

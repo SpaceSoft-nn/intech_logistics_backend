@@ -29,7 +29,6 @@ class AddressCreateRequest extends ApiRequest
             "longitude" => ['required', "numeric", 'between:-180,180'],
             "building" => ['nullable', 'string', "max:50"],
             "apartament" => ['nullable', 'string', "max:50"],
-            "house_number" => ['nullable', 'string', "max:50"],
             "postal_code" => ['nullable', 'string', "max:20"],
             "type_address" => ['nullable', 'string', "max:50"]
         ];

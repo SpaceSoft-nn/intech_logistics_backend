@@ -47,12 +47,6 @@
                                                 "example": "101",
                                                 "nullable": true
                                             },
-                                            "house_number": {
-                                                "description": "Номер дома",
-                                                "type": "string",
-                                                "example": "10",
-                                                "nullable": true
-                                            },
                                             "postal_code": {
                                                 "description": "Почтовый индекс",
                                                 "type": "string",
@@ -3527,11 +3521,6 @@
                     },
                     "apartament": {
                         "description": "Квартира адреса",
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "house_number": {
-                        "description": "Номер дома адреса",
                         "type": "string",
                         "nullable": true
                     },

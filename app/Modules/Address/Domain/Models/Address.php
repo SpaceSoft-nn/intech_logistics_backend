@@ -29,7 +29,6 @@ class Address extends Model
         "street",
         "building",
         "apartament",
-        "house_number",
         "postal_code",
         "latitude",
         "longitude",

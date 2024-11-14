@@ -25,7 +25,6 @@ class AddressVO implements Arrayable
         public ?string $building,
         public ?TypeAddressEnum $type_address,
         public ?string $apartament,
-        public ?string $house_number,
         public ?string $postal_code,
     ) {}
 
@@ -40,7 +39,6 @@ class AddressVO implements Arrayable
 
         ?string $building = null,
         ?string $apartament = null,
-        ?string $house_number = null,
         ?string $postal_code = null,
         ?TypeAddressEnum $type_address = null,
 
@@ -53,7 +51,6 @@ class AddressVO implements Arrayable
             street: $street,
             building: $building,
             apartament: $apartament,
-            house_number: $house_number,
             postal_code: $postal_code,
             type_address: $type_address,
             latitude: $latitude,
@@ -71,7 +68,6 @@ class AddressVO implements Arrayable
             "street" => $this->street,
             "building" => $this->building,
             "apartament" => $this->apartament,
-            "house_number" => $this->house_number,
             "postal_code" => $this->postal_code,
             "type_address" => $this->type_address,
             "latitude" => $this->latitude,
@@ -87,7 +83,6 @@ class AddressVO implements Arrayable
             street: Arr::get($array, 'street', null),
             building: Arr::get($array, 'building', null),
             apartament: Arr::get($array, 'apartament', null),
-            house_number: Arr::get($array, 'house_number', null),
             postal_code: Arr::get($array, 'postal_code', null),
             type_address: Arr::get($array, 'type_address', null),
             latitude: Arr::get($array, 'latitude', null),

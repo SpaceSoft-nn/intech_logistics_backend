@@ -20,7 +20,6 @@ use App\Http\Controllers\Controller;
 *                         @OA\Property(property="street", type="string", description="Улица", example="Тверская"),
 *                         @OA\Property(property="building", type="string", description="Строение", nullable=true, example="1"),
 *                         @OA\Property(property="apartment", type="string", description="Квартира", nullable=true, example="101"),
-*                         @OA\Property(property="house_number", type="string", description="Номер дома", nullable=true, example="10"),
 *                         @OA\Property(property="postal_code", type="string", description="Почтовый индекс", nullable=true, example="123456"),
 *                         @OA\Property(property="latitude", type="string", description="Широта", example="55.7558"),
 *                         @OA\Property(property="longitude", type="string", description="Долгота", example="37.6173"),

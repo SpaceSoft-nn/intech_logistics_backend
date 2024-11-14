@@ -291,7 +291,6 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="street", type="string", description="Улица адреса"),
 *     @OA\Property(property="building", type="string", description="Дом адреса", nullable=true),
 *     @OA\Property(property="apartament", type="string", description="Квартира адреса", nullable=true),
-*     @OA\Property(property="house_number", type="string", description="Номер дома адреса", nullable=true),
 *     @OA\Property(property="postal_code", type="string", description="Почтовый индекс адреса", nullable=true),
 *     @OA\Property(property="type_Address", type="string", description="Тип адреса", nullable=true),
 *     @OA\Property(property="latitude", type="float", description="Широта адреса"),

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('street');
             $table->string('building')->nullable();
             $table->string('apartament')->nullable();
-            $table->string('house_number')->nullable();
             $table->string('postal_code')->nullable();
 
             $table->string('type_address')->nullable();

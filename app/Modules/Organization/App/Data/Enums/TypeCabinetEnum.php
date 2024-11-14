@@ -7,6 +7,7 @@ use InvalidArgumentException;
 
 enum TypeCabinetEnum : string
 {
+    
     case customer = "Заказчик"; //Проблема может бытьс case англ => ру буквы
     case store_space = "Склад"; //Проблема может бытьс case англ => ру буквы
     case сarrier = "Перевозчик"; //Проблема может бытьс case англ => ру буквы

@@ -37,8 +37,8 @@ namespace App\Http\Controllers\Swagger\API;
  *                 property="registration_number",
  *                 type="string",
  *                 nullable=true,
- *                 description="OGRN number (обязательный параметр когда 'legal')",
- *                 pattern="^[0-9]{13}$",
+ *                 description="огрн/огрнип number (Либо при ИП либо при ООО)",
+ *                 pattern="^[0-9]{15}$",
  *                 example="1234567890123"
  *             ),
  *          )

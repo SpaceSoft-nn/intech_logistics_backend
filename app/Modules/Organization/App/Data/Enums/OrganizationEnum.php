@@ -2,6 +2,7 @@
 
 namespace App\Modules\Organization\App\Data\Enums;
 
+use Exception;
 use InvalidArgumentException;
 
 enum OrganizationEnum : string
@@ -24,6 +25,21 @@ enum OrganizationEnum : string
                 "Не правильный аргумент в функции: [{$value}] не поддерживается" , 500
             ),
 
+        };
+    }
+
+    /**
+     * Получить значение case в string и прислать объект
+     * @param string $value
+     *
+     * @return self
+    */
+    public static function stringByCaseToObject(string $value) : self
+    {
+        return match ($value) {
+            "legal" => OrganizationEnum::legal,
+            "individual" => OrganizationEnum::individual,
+            default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
         };
     }
 }

@@ -12,7 +12,7 @@ class OgrnRule implements ValidationRule
     {
         if(!$this->validateOGRN($value))
         {
-            $fail('У :attribute не правильный формат данных');
+            $fail('У :attribute не правильный формат данных, должен быть формата ОГРН');
         }
     }
 

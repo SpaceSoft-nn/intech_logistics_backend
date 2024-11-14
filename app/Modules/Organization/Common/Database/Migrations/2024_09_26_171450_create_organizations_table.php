@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('website')->nullable();
             $table->string('type');
             $table->text('description')->nullable();
-            $table->string('okved');
+            $table->string('okved')->nullable();
             $table->dateTime('founded_date');
 
             $table->string('inn', 12)->comment('Инн у ООО/ИП');

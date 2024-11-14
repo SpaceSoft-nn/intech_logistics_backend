@@ -18,14 +18,14 @@ final class OrganizationVO extends BaseDTO implements Arrayable
 
         public readonly string $name,
         public readonly string $address,
-        public readonly string $okved,
+        public readonly ?string $okved,
         public readonly string $founded_date,
         public readonly ?string $website,
         public readonly ?string $description,
 
         public readonly ?bool $remuved,
         public readonly OrganizationEnum $type,
-        // public readonly TypeCabinetEnum $type_cabinet,
+        // public readonly TypeCabinetEnum $type_cabinet, // Для VO она не нужна, но нужна в проежуточной таблице user_organization
 
         public readonly ?string $phone,
         public readonly ?string $email,
@@ -45,11 +45,11 @@ final class OrganizationVO extends BaseDTO implements Arrayable
 
         string $name,
         string $address,
-        string $okved,
         string $founded_date,
-        OrganizationEnum $type,
+        string $type,
         string $inn,
         // string $type_cabinet,
+        ?string $okved = null,
         ?string $owner_id,
         ?string $website = null,
         ?string $description = null,
@@ -72,7 +72,7 @@ final class OrganizationVO extends BaseDTO implements Arrayable
             phone: $phone,
             email: $email,
             remuved: $remuved,
-            type: $type,
+            type: OrganizationEnum::stringByCaseToObject($type),
             inn: $inn,
             kpp: $kpp,
             registration_number: $registration_number,
@@ -89,7 +89,7 @@ final class OrganizationVO extends BaseDTO implements Arrayable
             phone: Arr::get($data, 'phone' , null),
             email: Arr::get($data, 'email' , null),
             website: Arr::get($data, 'website' , null),
-            type: OrganizationEnum::returnObjectByString(Arr::get($data, 'type', null)),
+            type: (Arr::get($data, 'type', null)),
             description: Arr::get($data, 'description' , null),
             // type_cabinet: Arr::get($data, 'type_cabinet'),
             okved: Arr::get($data, 'okved' , null),
@@ -97,7 +97,7 @@ final class OrganizationVO extends BaseDTO implements Arrayable
             remuved: Arr::get($data, 'remuved' , null),
             inn: Arr::get($data, 'inn' , null),
             kpp: Arr::get($data, 'kpp' , null),
-            registration_number: Arr::get($data, 'registration_number' , null),
+            registration_number: Arr::get($data, 'registration_number'),
         );
     }
 

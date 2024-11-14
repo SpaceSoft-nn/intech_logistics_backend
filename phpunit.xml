@@ -17,7 +17,6 @@
             <directory>App\Modules\InteractorModules\Registration\Common\Tests\Feature</directory>
             <directory>App\Modules\IndividualFace\Common\Tests\Feature</directory>
             <directory>App\Modules\Transport\Common\Tests\Feature</directory>
-            <directory>App\Modules\PalletSpace\Common\Tests\Feature</directory>
             <directory>App\Modules\Address\Common\Tests\Feature</directory>
             <directory>App\Modules\OrderUnit\Common\Tests\Feature</directory>
             <directory>App\Modules\Transfer\Common\Tests\Feature</directory>

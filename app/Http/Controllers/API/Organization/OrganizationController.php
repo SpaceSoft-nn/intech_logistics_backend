@@ -42,6 +42,7 @@ class OrganizationController
         */
         $orgVO = $request->getValueObject();
 
+        #TODO - Может быть так что организацию мы можем создавать без User (например с внешнего апи) - предусмотреть это в будущем
         /**
         * @var User
         */

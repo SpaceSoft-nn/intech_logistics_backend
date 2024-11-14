@@ -33,7 +33,8 @@ class CreateOrganizationRequest extends ApiRequest
     public function rules(): array
     {
 
-        $typeTransportWeight = array_column(TypeCabinetEnum::cases(), 'name');
+        $typeCabinet = array_column(TypeCabinetEnum::cases(), 'name');
+        $typeOrganization = array_column(OrganizationEnum::cases(), 'name');
 
         $rules = [
 
@@ -42,23 +43,23 @@ class CreateOrganizationRequest extends ApiRequest
             'phone' => ['required' , 'string'],
             'email' => ['required', "string", "email:filter", "max:100"],
             'website' => ['required', "string"],
-            'type' =>  ['required', 'string' , Rule::enum(OrganizationEnum::class)->only([OrganizationEnum::legal, OrganizationEnum::individual])],
+            'type' =>  ['required', 'string' , Rule::in($typeOrganization)],
             'description' => ['nullable', 'string'],
             'okved' => ['nullable', 'string'],
             'founded_date' => ['nullable', 'date'],
             'inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/'],
-            'type_cabinet' => ['required' , Rule::in($typeTransportWeight)],
+            'type_cabinet' => ['required' , Rule::in($typeCabinet)],
 
         ];
 
         // Если тип ооо, добавляем к правилам валидации kpp и ogrn
-        if (strtolower($this->input('type')) == strtolower(OrganizationEnum::legal->value)) {
+        if (OrganizationEnum::stringByCaseToObject(strtolower($this->input('type'))) == OrganizationEnum::legal) {
             $rules['kpp'] = ['required', 'numeric' , 'regex:/^([0-9]{9})?$/'];
             $rules['registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , (new OgrnRule)];
         }
 
         // если ИП, добавляем огрнип
-        if( strtolower($this->input('type')) == strtolower(OrganizationEnum::individual->value) )
+        if( OrganizationEnum::stringByCaseToObject($this->input('type')) == OrganizationEnum::individual )
         {
             $rules['registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule)];
         }
@@ -73,7 +74,7 @@ class CreateOrganizationRequest extends ApiRequest
 
     /**
      * Получаем кабинет пользователя
-     * @return [type]
+     * @return TypeCabinetEnum
      */
     public function getTypeCabinet() : TypeCabinetEnum
     {

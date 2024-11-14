@@ -39,7 +39,7 @@ class OrganizationFactory extends Factory
             phone : $this->faker->phoneNumber() ,
             email : $this->faker->safeEmail() ,
             remuved : null ,
-            type : OrganizationEnum::legal,
+            type : 'legal',
             inn : $this->faker->unique()->numerify('##########'),
             kpp : $this->faker->unique()->numerify('#########') ,
             registration_number : $this->faker->unique()->numerify('############') ,

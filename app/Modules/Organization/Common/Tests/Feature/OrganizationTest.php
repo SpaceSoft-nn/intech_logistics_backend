@@ -42,7 +42,7 @@ class OrganizationTest extends TestCase
                     address: $this->faker->address,
                     okved: $this->faker->text,
                     founded_date: $this->faker->date,
-                    type: OrganizationEnum::legal,
+                    type: 'legal',
                     inn: "123456789012",
                     registration_number: "1234567890123",
                 )

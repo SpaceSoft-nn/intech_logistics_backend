@@ -2975,17 +2975,11 @@
                         "description": "Тип загрузочного транспорта",
                         "type": "string"
                     },
-                    "address_start_id": {
-                        "$ref": "#/components/schemas/AddressResource"
-                    },
-                    "address_end_id": {
-                        "$ref": "#/components/schemas/AddressResource"
-                    },
                     "cargo_goods": {
                         "description": "Коллекция грузов",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/CargoGoodResource"
+                            "$ref": "#/components/schemas/AddressList"
                         }
                     },
                     "address_array": {
@@ -3050,6 +3044,34 @@
                         "description": "Вес, в килограммах",
                         "type": "number",
                         "format": "float"
+                    }
+                },
+                "type": "object"
+            },
+            "AddressList": {
+                "properties": {
+                    "address": {
+                        "$ref": "#/components/schemas/AddressResource"
+                    },
+                    "date": {
+                        "description": "Указанная дата у Адресса (Отправки/Прибытия)",
+                        "type": "enum",
+                        "format": "date",
+                        "example": "2024-01-07"
+                    },
+                    "type": {
+                        "description": "(Отправки/Прибытия) - тип у адресса",
+                        "type": "string",
+                        "enum": [
+                            "Отправка",
+                            "Прибытие"
+                        ],
+                        "example": "Прибытие"
+                    },
+                    "priority": {
+                        "description": "Приоритет у Адрессов, приоритет 1 - это всегда главные Адресса (вектор движения)",
+                        "type": "integer",
+                        "example": 1
                     }
                 },
                 "type": "object"

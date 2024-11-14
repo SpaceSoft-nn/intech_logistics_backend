@@ -31,12 +31,10 @@ namespace App\Http\Controllers;
 *    @OA\Property(property="type_transport_weight", type="number", format="float", description="Вес типа транспорта"),
 *    @OA\Property(property="cargo_unit_sum", type="number", format="float", description="Сумма единиц груза"),
 *    @OA\Property(property="type_load_truck", type="string", description="Тип загрузочного транспорта"),
-*    @OA\Property(property="address_start_id", ref="#/components/schemas/AddressResource"),
-*    @OA\Property(property="address_end_id", ref="#/components/schemas/AddressResource"),
 *    @OA\Property(
 *       property="cargo_goods",
 *       type="array",
-*       @OA\Items(ref="#/components/schemas/CargoGoodResource"),
+*       @OA\Items(ref="#/components/schemas/AddressList"),
 *       description="Коллекция грузов"
 *    ),
 *    @OA\Property(
@@ -64,6 +62,21 @@ namespace App\Http\Controllers;
 *    @OA\Property(property="height", type="number", format="float", description="Высота, в метрах"),
 *    @OA\Property(property="weight", type="number", format="float", description="Вес, в килограммах"),
 * ),
+*
+* //Схема при получении OrderUnitResource
+* @OA\Schema(
+*     schema="AddressList",
+*     type="object",
+*     @OA\Property(
+*         property="address",
+*         ref="#/components/schemas/AddressResource",
+*         description="Детальная информация об адресе"
+*     ),
+*     @OA\Property(property="date", description="Указанная дата у Адресса (Отправки/Прибытия)" , type="enum", format="date", example="2024-01-07"),
+*     @OA\Property(property="type", description="(Отправки/Прибытия) - тип у адресса", type="string", enum={"Отправка", "Прибытие"}, example="Прибытие" ),
+*     @OA\Property(property="priority", description="Приоритет у Адрессов, приоритет 1 - это всегда главные Адресса (вектор движения)", type="integer", example=1)
+* )
+*
 *
 *
 * @OA\Schema(

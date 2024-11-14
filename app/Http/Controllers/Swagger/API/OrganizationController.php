@@ -19,9 +19,9 @@ namespace App\Http\Controllers\Swagger\API;
  *             @OA\Property(property="phone", type="string", description="Contact phone number", example="+1234567890"),
  *             @OA\Property(property="email", type="string", format="email", description="Contact email", maxLength=100, example="contact@example.com"),
  *             @OA\Property(property="website", type="string", description="Website URL", example="https://www.example.com"),
- *             @OA\Property(property="type", type="string", enum={"ooo", "ie"}, description="Type of organization, either 'ooo' or 'ie'", example="ooo"),
- *             @OA\Property(property="description", type="string", nullable=true, description="Description of the organization", example="A leading company in the industry."),
- *             @OA\Property(property="industry", type="string", nullable=true, description="Industry type", example="Technology"),
+ *             @OA\Property(property="type", type="string", enum={"legal", "individual"}, description="Type of organization, either 'legal' or 'individual'", example="legal"),
+ *             @OA\Property(property="description", type="string", nullable=true, description="Description of the organization", example="A leading company in the okved."),
+ *             @OA\Property(property="okved", type="string", nullable=true, description="okved type", example="Technology"),
  *             @OA\Property(property="founded_date", type="string", format="date", nullable=true, description="Date the organization was founded", example="2020-01-01"),
  *             @OA\Property(property="inn", type="string", description="INN number; either 10 or 12 digits", pattern="^(([0-9]{12})|([0-9]{10}))?$", example="1234567890"),
  *             @OA\Property(property="type_cabinet", type="string", description="**Тип кабинета: Заказчик, Склад, Перевозчик**", enum={"customer", "store_space", "сarrier"} ),
@@ -29,7 +29,7 @@ namespace App\Http\Controllers\Swagger\API;
  *                 property="kpp",
  *                 type="string",
  *                 nullable=true,
- *                 description="KPP number (обязательный параметр когда 'ooo')",
+ *                 description="KPP number (обязательный параметр когда 'legal')",
  *                 pattern="^[0-9]{9}$",
  *                 example="123456789"
  *             ),
@@ -37,17 +37,9 @@ namespace App\Http\Controllers\Swagger\API;
  *                 property="registration_number",
  *                 type="string",
  *                 nullable=true,
- *                 description="OGRN number (обязательный параметр когда 'ooo')",
+ *                 description="OGRN number (обязательный параметр когда 'legal')",
  *                 pattern="^[0-9]{13}$",
  *                 example="1234567890123"
- *             ),
- *             @OA\Property(
- *                 property="registration_number_individual",
- *                 type="string",
- *                 nullable=true,
- *                 description="OGRNIP number (обязательный параметр когда 'Индивидуальный предприниматель')",
- *                 pattern="^[0-9]{15}$",
- *                 example="123456789012345"
  *             ),
  *          )
  *       ),

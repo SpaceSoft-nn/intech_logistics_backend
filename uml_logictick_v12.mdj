@@ -1334,7 +1334,7 @@
 											"top": 51,
 											"width": 153.15966796875,
 											"height": 13,
-											"text": "OOO",
+											"text": "legal",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2046,7 +2046,7 @@
 											"top": 344,
 											"width": 191,
 											"height": 13,
-											"text": "+industry: string",
+											"text": "+okved: string",
 											"horizontalAlignment": 0
 										},
 										{
@@ -24753,7 +24753,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGSHbVjfHdO4wA="
 							},
-							"name": "OOO",
+							"name": "legal",
 							"type": ""
 						},
 						{
@@ -24949,7 +24949,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGSHb6/AniXkSg="
 							},
-							"name": "OOO"
+							"name": "legal"
 						},
 						{
 							"_type": "UMLEnumerationLiteral",
@@ -25170,7 +25170,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGSHcJztID1mws="
 							},
-							"name": "industry",
+							"name": "okved",
 							"type": "string"
 						},
 						{

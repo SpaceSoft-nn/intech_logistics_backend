@@ -71,9 +71,11 @@ class OrderUnitSeeder extends Seeder
 
                     //Адресс прибытия
                     LinkOrderToAddressAction::run(OrderToAddressDTO::make($arrayAddress[2], $order, TypeStateAddressEnum::coming, $endData));
+
                 }
 
             }
+
 
         }
 

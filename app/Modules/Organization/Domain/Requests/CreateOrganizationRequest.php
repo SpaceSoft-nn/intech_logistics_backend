@@ -42,9 +42,9 @@ class CreateOrganizationRequest extends ApiRequest
             'phone' => ['required' , 'string'],
             'email' => ['required', "string", "email:filter", "max:100"],
             'website' => ['required', "string"],
-            'type' =>  ['required', 'string' , Rule::enum(OrganizationEnum::class)->only([OrganizationEnum::ooo, OrganizationEnum::ie])],
+            'type' =>  ['required', 'string' , Rule::enum(OrganizationEnum::class)->only([OrganizationEnum::legal, OrganizationEnum::individual])],
             'description' => ['nullable', 'string'],
-            'industry' => ['nullable', 'string'],
+            'okved' => ['nullable', 'string'],
             'founded_date' => ['nullable', 'date'],
             'inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/'],
             'type_cabinet' => ['required' , Rule::in($typeTransportWeight)],
@@ -52,15 +52,15 @@ class CreateOrganizationRequest extends ApiRequest
         ];
 
         // Если тип ооо, добавляем к правилам валидации kpp и ogrn
-        if (strtolower($this->input('type')) == strtolower(OrganizationEnum::ooo->value)) {
+        if (strtolower($this->input('type')) == strtolower(OrganizationEnum::legal->value)) {
             $rules['kpp'] = ['required', 'numeric' , 'regex:/^([0-9]{9})?$/'];
             $rules['registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , (new OgrnRule)];
         }
 
         // если ИП, добавляем огрнип
-        if( strtolower($this->input('type')) == strtolower(OrganizationEnum::ie->value) )
+        if( strtolower($this->input('type')) == strtolower(OrganizationEnum::individual->value) )
         {
-            $rules['registration_number_individual'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule)];
+            $rules['    '] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule)];
         }
 
         return $rules;

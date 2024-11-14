@@ -43,6 +43,12 @@ class LinkOrderToAddressAction
                 'priority' => $dto->priority,
             ]]);
 
+            // if($type_status == TypeStateAddressEnum::coming)
+            // {
+            //     dd($order->addresses);
+            // }
+
+
             return true;
 
         } catch (\Throwable $th) {

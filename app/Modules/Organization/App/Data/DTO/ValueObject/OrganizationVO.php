@@ -19,7 +19,7 @@ final class OrganizationVO extends BaseDTO implements Arrayable
 
         public readonly string $name,
         public readonly string $address,
-        public readonly string $industry,
+        public readonly string $okved,
         public readonly string $founded_date,
         public readonly ?string $website,
         public readonly ?string $description,
@@ -34,7 +34,6 @@ final class OrganizationVO extends BaseDTO implements Arrayable
         public readonly string $inn,
         public readonly ?string $kpp,
         public readonly ?string $registration_number,
-        public readonly ?string $registration_number_individual,
 
     ) { }
 
@@ -47,7 +46,7 @@ final class OrganizationVO extends BaseDTO implements Arrayable
 
         string $name,
         string $address,
-        string $industry,
+        string $okved,
         string $founded_date,
         OrganizationEnum $type,
         string $inn,
@@ -60,7 +59,6 @@ final class OrganizationVO extends BaseDTO implements Arrayable
         ?bool $remuved = null,
         ?string $kpp = null,
         ?string $registration_number = null,
-        ?string $registration_number_individual = null,
     ) : self {
 
         return new self(
@@ -69,7 +67,7 @@ final class OrganizationVO extends BaseDTO implements Arrayable
             address: $address,
             website: $website,
             description: $description,
-            industry: $industry,
+            okved: $okved,
             founded_date: $founded_date,
             // type_cabinet: TypeCabinetEnum::stringByCaseToObject($type_cabinet),
             phone: $phone,
@@ -79,7 +77,6 @@ final class OrganizationVO extends BaseDTO implements Arrayable
             inn: $inn,
             kpp: $kpp,
             registration_number: $registration_number,
-            registration_number_individual: $registration_number_individual,
         );
     }
 
@@ -96,13 +93,12 @@ final class OrganizationVO extends BaseDTO implements Arrayable
             type: OrganizationEnum::returnObjectByString(Arr::get($data, 'type', null)),
             description: Arr::get($data, 'description' , null),
             // type_cabinet: Arr::get($data, 'type_cabinet'),
-            industry: Arr::get($data, 'industry' , null),
+            okved: Arr::get($data, 'okved' , null),
             founded_date: Arr::get($data, 'founded_date' , null),
             remuved: Arr::get($data, 'remuved' , null),
             inn: Arr::get($data, 'inn' , null),
             kpp: Arr::get($data, 'kpp' , null),
             registration_number: Arr::get($data, 'registration_number' , null),
-            registration_number_individual: Arr::get($data, 'registration_number_individual' , null),
         );
     }
 
@@ -114,7 +110,7 @@ final class OrganizationVO extends BaseDTO implements Arrayable
             "owner_id" => $this->owner_id,
             "name" => $this->name,
             "address" => $this->address,
-            "industry" => $this->industry,
+            "okved" => $this->okved,
             "founded_date" => $this->founded_date,
             "website" => $this->website,
             "description" => $this->description,
@@ -130,7 +126,6 @@ final class OrganizationVO extends BaseDTO implements Arrayable
             "inn" => $this->inn,
             "kpp" => $this->kpp,
             "registration_number" => $this->registration_number,
-            "registration_number_individual" => $this->registration_number_individual,
 
         ];
     }

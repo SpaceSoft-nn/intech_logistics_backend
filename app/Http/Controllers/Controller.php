@@ -137,10 +137,10 @@ namespace App\Http\Controllers;
 *     property="type",
 *     type="string",
 *     description="Тип организации",
-*     enum={"ooo", "ie"}
+*     enum={"legal", "individual"}
 *   ),
 *   @OA\Property(property="description", type="string", nullable=true, description="Описание организации"),
-*   @OA\Property(property="industry", type="string", nullable=true, description="Индустрия организации"),
+*   @OA\Property(property="okved", type="string", nullable=true, description="Индустрия организации"),
 *   @OA\Property(property="founded_date", type="string", format="date", nullable=true, description="Дата основания организации"),
 *   @OA\Property(property="inn", type="string", description="ИНН организации", pattern="^(([0-9]{12})|([0-9]{10}))?$"),
 *   @OA\Property(
@@ -163,13 +163,7 @@ namespace App\Http\Controllers;
 *     pattern="^([0-9]{13})?$",
 *     nullable=true
 *   ),
-*   @OA\Property(
-*     property="registration_number_individual",
-*     type="string",
-*     description="ОГРНИП (для ИП)",
-*     pattern="^\d{15}$",
-*     nullable=true
-*   ),
+
 * ),
 *
 * @OA\Schema(

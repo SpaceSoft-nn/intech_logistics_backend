@@ -40,9 +40,9 @@ class OrganizationTest extends TestCase
                     owner_id: $user->id,
                     name: $this->faker->name,
                     address: $this->faker->address,
-                    industry: $this->faker->text,
+                    okved: $this->faker->text,
                     founded_date: $this->faker->date,
-                    type: OrganizationEnum::ooo,
+                    type: OrganizationEnum::legal,
                     inn: "123456789012",
                     registration_number: "1234567890123",
                 )

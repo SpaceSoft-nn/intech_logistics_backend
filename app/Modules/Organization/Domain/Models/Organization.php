@@ -23,12 +23,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string|null $website
  * @property OrganizationEnum $type
  * @property string|null $description
- * @property string|null $industry
+ * @property string|null $okved
  * @property \Illuminate\Support\Carbon|null $founded_date
  * @property string $inn Инн у ООО/ИП
  * @property string|null $kpp КПП - Только у организации
  * @property string|null $registration_number ОГРН - Только у организации
- * @property string|null $registration_number_individual ОГРНИП - Только у ИП
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property mixed $password
@@ -41,7 +40,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Organization whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Organization whereFoundedDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Organization whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Organization whereIndustry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Organization whereokved($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Organization whereInn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Organization whereKpp($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Organization whereName($value)
@@ -74,7 +73,7 @@ class Organization extends Model
         'address',
         'website',
         'description',
-        'industry',
+        'okved',
         'founded_date',
 
         'phone',
@@ -88,7 +87,6 @@ class Organization extends Model
         'inn',
         'kpp',
         'registration_number',
-        'registration_number_individual',
 
     ];
 

@@ -20,12 +20,11 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
  * @property string|null $website
  * @property string $type
  * @property string|null $description
- * @property string|null $industry
+ * @property string|null $okved
  * @property string|null $founded_date
  * @property string $inn Инн у ООО/ИП
  * @property string|null $kpp КПП - Только у организации
  * @property string|null $registration_number ОГРН - Только у организации
- * @property string|null $registration_number_individual ОГРНИП - Только у ИП
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|IndividualPeople newModelQuery()
@@ -37,7 +36,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
  * @method static \Illuminate\Database\Eloquent\Builder|IndividualPeople whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IndividualPeople whereFoundedDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IndividualPeople whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|IndividualPeople whereIndustry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IndividualPeople whereokved($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IndividualPeople whereInn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IndividualPeople whereKpp($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IndividualPeople whereName($value)

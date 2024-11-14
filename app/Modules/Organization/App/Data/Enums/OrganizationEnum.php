@@ -6,16 +6,17 @@ use InvalidArgumentException;
 
 enum OrganizationEnum : string
 {
-    case ooo = "ООО"; //Проблема может бытьс case англ => ру буквы
-    case ie = "Индивидуальный Предприниматель"; //Проблема может бытьс case англ => ру буквы
+    case legal = "ООО"; //Проблема может бытьс case англ => ру буквы
+    case individual = "ИП"; //Проблема может бытьс case англ => ру буквы
+
 
     public static function returnObjectByString(?string $value) : ?self
     {
         return match ($value) {
 
-            'ООО' => self::ooo,
+            'ООО' => self::legal,
 
-            'Индивидуальный Предприниматель' => self::ie,
+            'Индивидуальный Предприниматель' => self::individual,
 
             null => null,
 

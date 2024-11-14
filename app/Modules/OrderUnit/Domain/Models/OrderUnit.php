@@ -106,15 +106,6 @@ class OrderUnit extends Model
         return $this->hasOne(OrderUnitStatus::class)->latest('created_at');
     }
 
-    /**
-     * Связь с паллетами многие ко многим
-     * @return BelongsToMany
-     */
-    public function cargo_units(): BelongsToMany
-    {
-        #TODO Может быть баг проверить
-        return $this->belongsToMany(CargoUnit::class, 'order_unit_cargo_unit', 'order_unit_id' , 'cargo_unit_id')->withPivot('factor');
-    }
 
     public function transfers(): BelongsToMany
     {

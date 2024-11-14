@@ -34,16 +34,15 @@ class OrganizationFactory extends Factory
             address : $this->faker->address() ,
             website : $this->faker->url() ,
             description : $this->faker->sentence() ,
-            industry : $this->faker->word() ,
+            okved : $this->faker->word() ,
             founded_date : $this->faker->date() ,
             phone : $this->faker->phoneNumber() ,
             email : $this->faker->safeEmail() ,
             remuved : null ,
-            type : OrganizationEnum::ooo,
+            type : OrganizationEnum::legal,
             inn : $this->faker->unique()->numerify('##########'),
             kpp : $this->faker->unique()->numerify('#########') ,
             registration_number : $this->faker->unique()->numerify('############') ,
-            registration_number_individual : null ,
         );
 
         return $organizationVO->toArrayNotNull();

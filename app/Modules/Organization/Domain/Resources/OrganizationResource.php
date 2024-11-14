@@ -21,7 +21,7 @@ class OrganizationResource extends JsonResource
             "address" => $this->address,
             "website" => $this->website,
             "description" => $this->description,
-            "industry" => $this->industry,
+            "okved" => $this->okved,
             "founded_date" => $this->founded_date,
             "phone" => $this->phone,
             "email" => $this->email,
@@ -30,7 +30,6 @@ class OrganizationResource extends JsonResource
             "inn" => $this->inn,
             "kpp" => $this->kpp,
             "registration_number"=> $this->registration_number,
-            "registration_number_individual" => $this->registration_number_individual,
         ];
     }
 }

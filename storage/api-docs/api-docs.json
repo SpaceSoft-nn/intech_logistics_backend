@@ -1894,22 +1894,22 @@
                                         "example": "https://www.example.com"
                                     },
                                     "type": {
-                                        "description": "Type of organization, either 'ooo' or 'ie'",
+                                        "description": "Type of organization, either 'legal' or 'ie'",
                                         "type": "string",
                                         "enum": [
-                                            "ooo",
+                                            "legal",
                                             "ie"
                                         ],
-                                        "example": "ooo"
+                                        "example": "legal"
                                     },
                                     "description": {
                                         "description": "Description of the organization",
                                         "type": "string",
-                                        "example": "A leading company in the industry.",
+                                        "example": "A leading company in the okved.",
                                         "nullable": true
                                     },
-                                    "industry": {
-                                        "description": "Industry type",
+                                    "okved": {
+                                        "description": "okved type",
                                         "type": "string",
                                         "example": "Technology",
                                         "nullable": true
@@ -1937,14 +1937,14 @@
                                         ]
                                     },
                                     "kpp": {
-                                        "description": "KPP number (обязательный параметр когда 'ooo')",
+                                        "description": "KPP number (обязательный параметр когда 'legal')",
                                         "type": "string",
                                         "pattern": "^[0-9]{9}$",
                                         "example": "123456789",
                                         "nullable": true
                                     },
                                     "registration_number": {
-                                        "description": "OGRN number (обязательный параметр когда 'ooo')",
+                                        "description": "OGRN number (обязательный параметр когда 'legal')",
                                         "type": "string",
                                         "pattern": "^[0-9]{13}$",
                                         "example": "1234567890123",
@@ -3247,7 +3247,7 @@
                         "description": "Тип организации",
                         "type": "string",
                         "enum": [
-                            "ooo",
+                            "legal",
                             "ie"
                         ]
                     },
@@ -3256,7 +3256,7 @@
                         "type": "string",
                         "nullable": true
                     },
-                    "industry": {
+                    "okved": {
                         "description": "Индустрия организации",
                         "type": "string",
                         "nullable": true

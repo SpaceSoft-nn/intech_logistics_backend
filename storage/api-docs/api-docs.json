@@ -1338,35 +1338,6 @@
                                                 "type": "string",
                                                 "format": "uuid",
                                                 "example": "123e4567-e89b-12d3-a456-426614174000"
-                                            },
-                                            "organization_id": {
-                                                "description": "UUID организации (обязательное поле, должен существовать в таблице organizations).",
-                                                "type": "string",
-                                                "format": "uuid",
-                                                "example": "123e4567-e89b-12d3-a456-426614174000"
-                                            },
-                                            "end_date_order": {
-                                                "description": "Дата окончания заказа (обязательное поле).",
-                                                "type": "string",
-                                                "format": "date",
-                                                "example": "2023-12-31"
-                                            },
-                                            "product_type": {
-                                                "description": "Тип продукта (обязательное поле, максимум 255 символов).",
-                                                "type": "string",
-                                                "example": "Продукты питания"
-                                            },
-                                            "body_volume": {
-                                                "description": "Объём продукта (обязательное поле, минимум 1).",
-                                                "type": "number",
-                                                "format": "float",
-                                                "example": 100.5
-                                            },
-                                            "description": {
-                                                "description": "Описание (необязательное поле, максимум 1000 символов).",
-                                                "type": "string",
-                                                "example": "Это пример описания заказа.",
-                                                "nullable": true
                                             }
                                         },
                                         "type": "object"
@@ -3299,8 +3270,12 @@
                 "properties": {
                     "FTL": {
                         "properties": {
-                            "value": {
+                            "load_type": {
                                 "description": "Значение метода FTL",
+                                "type": "string"
+                            },
+                            "price_km": {
+                                "description": "Цена за 1 км",
                                 "type": "string"
                             },
                             "price": {
@@ -3312,8 +3287,12 @@
                     },
                     "LTL": {
                         "properties": {
-                            "value": {
+                            "load_type": {
                                 "description": "Значение метода LTL",
+                                "type": "string"
+                            },
+                            "price_km": {
+                                "description": "Цена за 1 км",
                                 "type": "string"
                             },
                             "price": {

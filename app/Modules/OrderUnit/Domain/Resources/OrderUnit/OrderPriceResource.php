@@ -10,20 +10,36 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class OrderPriceResource extends JsonResource
 {
 
+    protected $distance;
+
+    public function __construct($resource, $distance)
+    {
+        //получаем idOrderUnit - для проверки и получение таблицы pivot при связях многие ко многим
+        $this->distance = $distance;
+
+        parent::__construct($resource);
+    }
+
     public function toArray(Request $request): array
     {
         $faker = Faker::create();
 
+        $price1 = $faker->numberBetween(45000, 300000);
+        $price2 = $faker->numberBetween(45000, 300000);
+
+
         return [
 
             "FTL" => [
-                "value" => TypeLoadingTruckMethod::ftl->value,
-                "price" => $faker->numberBetween(45000, 300000),
+                "load_type" => TypeLoadingTruckMethod::ftl->value,
+                "price_km" =>  $price1 / $this->distance,
+                "price" => $price1,
             ],
 
             "LTL" => [
-                "value" => TypeLoadingTruckMethod::ltl->value,
-                "price" => $faker->numberBetween(35000, 190000),
+                "load_type" => TypeLoadingTruckMethod::ltl->value,
+                "price_km" => $price2 / $this->distance,
+                "price" => $price2,
             ]
 
         ];

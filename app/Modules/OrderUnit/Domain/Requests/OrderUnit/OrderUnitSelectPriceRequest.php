@@ -20,14 +20,14 @@ class OrderUnitSelectPriceRequest extends ApiRequest
 
             "start_address_id" => ['required', 'uuid', "exists:addresses,id"],
             "end_address_id" => ['required', 'uuid', "exists:addresses,id"],
-            "organization_id" => ['required', 'uuid', "exists:organizations,id"],
+            //"organization_id" => ['required', 'uuid', "exists:organizations,id"],
 
-            "end_date_order" => ['required', 'date'], //Дата окончание order
+            //"end_date_order" => ['required', 'date'], //Дата окончание order
 
-            "product_type" => ['required', 'string', 'max:255'], //Тип продукта
-            "body_volume" => ['required', 'numeric', 'min:1'], //Объём продукта
+            //"product_type" => ['required', 'string', 'max:255'], //Тип продукта
+            //"body_volume" => ['required', 'numeric', 'min:1'], //Объём продукта
 
-            "description" => ['nullable', 'string', 'max:1000'], //Описание
+            //"description" => ['nullable', 'string', 'max:1000'], //Описание
         ];
     }
 

@@ -259,11 +259,11 @@ use App\Http\Controllers\Controller;
 *                  @OA\Schema(
 *                      @OA\Property(property="start_address_id", type="string", format="uuid", description="UUID адреса начала (обязательное поле, должен существовать в таблице addresses).", example="123e4567-e89b-12d3-a456-426614174000"),
  *                     @OA\Property(property="end_address_id", type="string", format="uuid", description="UUID адреса окончания (обязательное поле, должен существовать в таблице addresses).", example="123e4567-e89b-12d3-a456-426614174000"),
- *                     @OA\Property(property="organization_id", type="string", format="uuid", description="UUID организации (обязательное поле, должен существовать в таблице organizations).", example="123e4567-e89b-12d3-a456-426614174000"),
- *                     @OA\Property(property="end_date_order", type="string", format="date", description="Дата окончания заказа (обязательное поле).", example="2023-12-31"),
- *                     @OA\Property(property="product_type", type="string", description="Тип продукта (обязательное поле, максимум 255 символов).", example="Продукты питания"),
- *                     @OA\Property(property="body_volume", type="number", format="float", description="Объём продукта (обязательное поле, минимум 1).", example=100.5),
- *                     @OA\Property(property="description", type="string", nullable=true, description="Описание (необязательное поле, максимум 1000 символов).", example="Это пример описания заказа.")
+ *                     \\@OA\Property(property="organization_id", type="string", format="uuid", description="UUID организации (обязательное поле, должен существовать в таблице organizations).", example="123e4567-e89b-12d3-a456-426614174000"),
+ *                     \\@OA\Property(property="end_date_order", type="string", format="date", description="Дата окончания заказа (обязательное поле).", example="2023-12-31"),
+ *                     \\@OA\Property(property="product_type", type="string", description="Тип продукта (обязательное поле, максимум 255 символов).", example="Продукты питания"),
+ *                     \\@OA\Property(property="body_volume", type="number", format="float", description="Объём продукта (обязательное поле, минимум 1).", example=100.5),
+ *                     \\@OA\Property(property="description", type="string", nullable=true, description="Описание (необязательное поле, максимум 1000 символов).", example="Это пример описания заказа.")
 *                  ),
 *               },
 *           ),

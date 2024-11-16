@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\OrderUnit;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Address\Domain\Models\Address;
 use App\Modules\Auth\Domain\Services\AuthService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\DTO\OrgOrderInvoiceCreateDTO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
@@ -68,11 +69,27 @@ class OrderUnitController extends Controller
      *
      * @return void
      */
-    public function selectPrice(OrderUnitSelectPriceRequest $request)
-    {
+    public function selectPrice(
+        OrderUnitSelectPriceRequest $request,
+        CoordinateCheckerInteractor $interactor
+        //Request $request
+    ) {
         $validated = $request->validated();
-        // dd($validated, 1);
 
+        /**
+         * @var Address
+        */
+        $star_address = Address::find($validated['start_address_id']);
+
+        /**
+         * @var Address
+        */
+        $end_address = Address::find($validated['end_address_id']);
+
+
+
+        //Получаем расстояние между адрессами, что бы найти цену за 1км
+        $distance = $interactor->calculateVectorLength($star_address->latitude, $star_address->longitude, $end_address->latitude, $end_address->longitude);
 
         // $order = OrderUnit::factory()->create([
         //     "Address_start_id" => $validated['start_Address_id'],
@@ -82,7 +99,7 @@ class OrderUnitController extends Controller
         //TODO Нужна логика высчитывание цены в зависимости от заказа
         $test = "test";
 
-        return response()->json(array_success(OrderPriceResource::make($test), 'Return Select Price.'), 200);
+        return response()->json(array_success(OrderPriceResource::make($test, $distance / 1000), 'Return Select Price.'), 200);
     }
 
     /**

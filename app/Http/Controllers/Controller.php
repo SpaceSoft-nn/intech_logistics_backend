@@ -173,13 +173,15 @@ namespace App\Http\Controllers;
 *    @OA\Property(
 *        property="FTL",
 *        type="object",
-*        @OA\Property(property="value", type="string", description="Значение метода FTL"),
+*        @OA\Property(property="load_type", type="string", description="Значение метода FTL"),
+*        @OA\Property(property="price_km", type="string", description="Цена за 1 км"),
 *        @OA\Property(property="price", type="integer", description="Цена метода FTL")
 *    ),
 *    @OA\Property(
 *        property="LTL",
 *        type="object",
-*        @OA\Property(property="value", type="string", description="Значение метода LTL"),
+*        @OA\Property(property="load_type", type="string", description="Значение метода LTL"),
+*        @OA\Property(property="price_km", type="string", description="Цена за 1 км"),
 *        @OA\Property(property="price", type="integer", description="Цена метода LTL")
 *    )
 * ),

@@ -15,7 +15,7 @@ class OrgOrderInvoiceResource extends JsonResource
         return [
 
             //#TODO Решить какими данными отвечать
-            "id" => $this->id,
+            "id_contract" => $this->id,
             "organization_contract" => OrganizationResource::make($this->organization),
             "order" => OrderUnitResource::make($this->order_unit),
             "invoice_order" => InvoceOrderResource::make($this->invoice_order),

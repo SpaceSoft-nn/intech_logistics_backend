@@ -362,7 +362,7 @@ use App\Http\Controllers\Controller;
 *
 *      path="/api/orders/{OrderUnit::uuid}/contractors",
 *      summary="Получить всех подрятчиков откликнувшиеся на заказ",
-*      description="Получить всез подрятчиков которые откликнулись на заказ, и заинтересованы в работе, возвращает: organization_order_unit_invoces",
+*      description="Получить всех подрятчиков которые откликнулись на заказ, и заинтересованы в работе, возвращает: organization_order_unit_invoces",
 *      tags={"Order Unit"},
 *      @OA\Parameter(
 *          name="OrderUnit::uuid",

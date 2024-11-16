@@ -1396,7 +1396,7 @@
                     "Order Unit"
                 ],
                 "summary": "Получить всех подрятчиков откликнувшиеся на заказ",
-                "description": "Получить всез подрятчиков которые откликнулись на заказ, и заинтересованы в работе, возвращает: organization_order_unit_invoces",
+                "description": "Получить всех подрятчиков которые откликнулись на заказ, и заинтересованы в работе, возвращает: organization_order_unit_invoces",
                 "operationId": "306e78e6917c09fd02589f5d90091927",
                 "parameters": [
                     {
@@ -3339,7 +3339,8 @@
                 "title": "Organization Order Invoice Resource",
                 "description": "JSON ресурс - который отвечает за то, какой Подрядчик откликнулся на определённый заказ (с invoice_order (неким документом или информацией))",
                 "properties": {
-                    "id": {
+                    "id_contract": {
+                        "description": "Id контракта, его нужно отправлять когда заказчик будет выбирать подрядичка",
                         "type": "string",
                         "format": "uuid",
                         "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"

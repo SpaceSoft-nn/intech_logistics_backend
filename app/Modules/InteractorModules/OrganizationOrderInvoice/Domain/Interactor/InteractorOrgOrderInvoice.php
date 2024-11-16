@@ -2,6 +2,7 @@
 
 namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Interactor;
 
+use App\Modules\Base\Error\BusinessException;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\DTO\OrgOrderInvoiceCreateDTO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Actions\OrderInvoice\InvoiceOrderCreateAction;
@@ -12,6 +13,8 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\Organ
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use DB;
 use Exception;
+
+use function App\Helpers\Mylog;
 
 class InteractorOrgOrderInvoice
 {
@@ -37,24 +40,12 @@ class InteractorOrgOrderInvoice
      */
     private function run(OrgOrderInvoiceCreateDTO $dto) : bool
     {
-        $modelInvoce = $this->createInvoiceOrder($dto->invoiceOrderVO);
-
-        $model = $this->createOrgOrderInvoice(
-            orderId: $dto->order->id,
-            orgId: $dto->organization->id,
-            invoiceId: $modelInvoce->id,
-        );
-
-        //Добавляем cotractor к OrederUnit
-        $this->addContractorOrder($dto->order, $dto->organization->id);
-
-        return $model ? true : false;
-
 
         try {
 
             return DB::transaction(function ($pdo) use ($dto) {
 
+                //создаём некую документацию от исполнителя, для заказчика - выбравший Заказ
                 $modelInvoce = $this->createInvoiceOrder($dto->invoiceOrderVO);
 
                 $model = $this->createOrgOrderInvoice(
@@ -70,8 +61,15 @@ class InteractorOrgOrderInvoice
 
             });
 
+        }
+        catch (BusinessException $e) {
+
+            //ловим заказ и ещё раз выкидываем ошибку. т.к $e ловит нашу ошибку из сервеса глубже и переопределяем.
+            throw new BusinessException($e->getCustomMessage(), 422);
+
         } catch (\Exception $e) {
 
+            Mylog('Ошибк в InteractorOrgOrderInvoice: ' . $e);
             throw new Exception('Ошибка транзакции в интеракторе: InteractorOrgOrderInvoice', 500);
 
         }
@@ -106,6 +104,7 @@ class InteractorOrgOrderInvoice
      */
     private function addContractorOrder(OrderUnit $order, string $organization_id) : bool
     {
+
         $order->contractor_id = $organization_id;
 
         return $order->save() ? true : false;

@@ -1,10 +1,8 @@
 <?php
 
-use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use phpDocumentor\Reflection\Types\Nullable;
 
 return new class extends Migration
 {
@@ -40,7 +38,6 @@ return new class extends Migration
             $table->uuid('contractor_id')->comment('Выбранный подрядчик на заказ.')->nullable()
                 ->constrained('organizations')->noActionOnDelete();
 
-            // $table->string('order_status')->default(StatusOrderUnitEnum::draft)->comment('status order');
 
                 //служебнеы поля
             $table->boolean('add_load_space')->default(false)->comment('Возможен ли догруз');

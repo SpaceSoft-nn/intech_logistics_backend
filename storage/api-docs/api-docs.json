@@ -1152,9 +1152,13 @@
                                             "order_status": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "Опубликован",
-                                                    "Закрыт",
-                                                    "Отозван"
+                                                    "draft",
+                                                    "published",
+                                                    "accepted",
+                                                    "in_work",
+                                                    "completed_and_wait_payment",
+                                                    "cancelled",
+                                                    "private"
                                                 ],
                                                 "example": "Опубликован",
                                                 "nullable": true
@@ -1944,9 +1948,9 @@
                                         "nullable": true
                                     },
                                     "registration_number": {
-                                        "description": "OGRN number (обязательный параметр когда 'legal')",
+                                        "description": "огрн/огрнип number (Либо при ИП либо при ООО)",
                                         "type": "string",
-                                        "pattern": "^[0-9]{13}$",
+                                        "pattern": "^[0-9]{15}$",
                                         "example": "1234567890123",
                                         "nullable": true
                                     }

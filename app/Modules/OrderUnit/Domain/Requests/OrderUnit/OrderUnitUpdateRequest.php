@@ -24,17 +24,14 @@ class OrderUnitUpdateRequest extends ApiRequest
 
     public function rules(): array
     {
+
+        $statusEnum = array_column(StatusOrderUnitEnum::cases(), 'name');
+
         return [
 
             "change_price" => ['nullable', 'boolean'],
             "change_time" => ['nullable', 'boolean'],
-            "order_status" => ['nullable' ,
-                Rule::enum(StatusOrderUnitEnum::class)->only(
-                    StatusOrderUnitEnum::published,
-                    StatusOrderUnitEnum::private,
-                    StatusOrderUnitEnum::close,
-                )
-            ]
+            "order_status" => ['nullable' , Rule::in($statusEnum)]
 
         ];
     }

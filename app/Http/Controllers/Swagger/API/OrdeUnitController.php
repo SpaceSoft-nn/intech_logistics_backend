@@ -317,9 +317,13 @@ use App\Http\Controllers\Controller;
 *                          type="string",
 *                          nullable=true,
 *                          enum={
-*                              "Опубликован",
-*                              "Закрыт",
-*                              "Отозван"
+*                                 "draft",
+*                                 "published",
+*                                 "accepted",
+*                                 "in_work",
+*                                 "completed_and_wait_payment",
+*                                 "cancelled",
+*                                 "private",
 *                          },
 *                          example="Опубликован"
 *                     ),

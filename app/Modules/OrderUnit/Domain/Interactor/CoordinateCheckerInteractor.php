@@ -241,6 +241,7 @@ final class CoordinateCheckerInteractor
 
     /**
      * Вычисляет длину вектора между двумя точками в метрах.
+     * @return float - возваращет расстояние в МЕТРАХ!
      */
     public function calculateVectorLength($lat1, $lng1, $lat2, $lng2) : float
     {

@@ -148,8 +148,10 @@ class OrderUnitController extends Controller
      * @param OrderUnitUpdateRequest $request
      *
      */
-    public function update(OrderUnit $orderUnit, OrderUnitUpdateRequest $request)
-    {
+    public function update(
+        OrderUnit $orderUnit,
+        OrderUnitUpdateRequest $request
+    ) {
         $validated = $request->validated();
 
         $status = OrderUnitUpdateAction::make(

@@ -9,17 +9,19 @@ enum StatusOrderUnitEnum : string
 
     case draft = "Черновик"; // Создан в черновике
 
-    case published = "Опубликован"; // Опубликован в общем доступен
+    case published = "Сбор предложений"; // Опубликован в общем доступен - доступен для исполнителей
+
+    case accepted = "Принят"; // Опубликован в общем доступен - доступен для исполнителей
+
+    case in_work = "В работе"; // В работе
+
+    case completed_and_wait_payment = "Выполнен и ожидает оплаты"; //Снят из общего доступа
+
+    case cancelled = " Отменен/Отозван"; // В работе
 
     case private = "Закрыт"; //Запревачен (видно не всем)
 
-    case close = "Отозван"; //Снят из общего доступа
-
-    case progress = "В процессе"; // В работе
-
-    case delete = "Полностью удален"; // В работе
-
-       /**
+    /**
     * Получить значение case в string и прислать объект
     * @param string $value
     *
@@ -31,9 +33,10 @@ enum StatusOrderUnitEnum : string
             "draft" => StatusOrderUnitEnum::draft,
             "published" => StatusOrderUnitEnum::published,
             "private" => StatusOrderUnitEnum::private,
-            "close" => StatusOrderUnitEnum::close,
-            "progress" => StatusOrderUnitEnum::progress,
-            "delete" => StatusOrderUnitEnum::delete,
+            "accept" => StatusOrderUnitEnum::accepted,
+            "work" => StatusOrderUnitEnum::in_work,
+            "completed_and_wait_payment" => StatusOrderUnitEnum::completed_and_wait_payment,
+            "canceled" => StatusOrderUnitEnum::cancelled,
             null => null,
             default => throw new Exception('Ошибка преобразование Enum StatusOrderUnitEnum', 500),
         };

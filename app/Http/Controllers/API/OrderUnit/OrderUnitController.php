@@ -238,6 +238,30 @@ class OrderUnitController extends Controller
         return response()->json(array_success(AgreementOrderAcceptResource::make($model), 'Заказчик успешно выбрал подрятчика, запись создана.'), 201);
     }
 
+    /**
+    * Двух сторонний договор, о принятии в работу Заказа,
+    * P.S Заказчик/Подрядчик - true/true - что бы создался Transfer
+    */
+    public function agreementAccept(
+        AgreementOrderAccept $agreementOrderAccept,
+        AuthService $auth,
+        AgreementOrderAcceptService $service,
+    ) {
+
+        #TODO вынести логику в сервес
+
+        /**
+        * @var User
+        */
+        $user = $auth->getUserAuth();
+
+        $result = $service->acceptAgreement($user, $agreementOrderAccept);
+
+        return $result->status
+            ? response()->json(array_success(null, $result->message), 200)
+            : response()->json(array_success(null, $result->message), 403);
+    }
+
 
     /**
      * Поиск входящих векторов относительно главного вектора (заказа)
@@ -278,30 +302,6 @@ class OrderUnitController extends Controller
         $rectangle = $coordinator->run($orderMain , $orders);
 
         return response()->json(array_success(OrderUnitCollection::make($orders->find($rectangle)->values()->all()), 'Возвращены все заказы входящие в область, главного заказа.'), 200);
-    }
-
-    /**
-     * Двух сторонний договор, о принятии в работу Заказа,
-     * P.S Заказчик/Подрядчик - true/true - что бы создался Transfer
-     */
-    public function agreementAccept(
-        AgreementOrderAccept $agreementOrderAccept,
-        AuthService $auth,
-        AgreementOrderAcceptService $service,
-    ) {
-
-        #TODO вынести логику в сервес
-
-        /**
-        * @var User
-        */
-        $user = $auth->getUserAuth();
-
-        $result = $service->acceptAgreement($user, $agreementOrderAccept);
-
-        return $result->status
-            ? response()->json(array_success(null, $result->message), 200)
-            : response()->json(array_success(null, $result->message), 403);
     }
 
 }

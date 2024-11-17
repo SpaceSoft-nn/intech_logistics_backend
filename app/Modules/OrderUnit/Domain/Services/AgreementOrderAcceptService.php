@@ -7,7 +7,6 @@ use App\Modules\User\Domain\Models\User;
 
 class AgreementOrderAcceptService
 {
-
     /**
      * Подписать договор со стороны user (проверка что user принадлежит к бизнес-логики AgreementOrderAccept)
      * @param User $user

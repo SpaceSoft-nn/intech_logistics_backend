@@ -86,6 +86,9 @@ Route::prefix('/orders')->group(function () {
         //Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи
         Route::post('/{orderUnit}/agreement-order', [OrderUnitController:: class, 'agreementOrder'])->whereUuid('orderUnit');
 
+
+        #TODO нужен endpoint на возврат всех agreementOrderAccept (В Теории)
+
         //Утверждения Двух сторонний договор, о принятии в работу Заказа,
         //P.S Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer
         Route::patch('/{agreementOrderAccept}/agreement-accept', [OrderUnitController:: class, 'agreementAccept'])->whereUuid('agreementOrderAccept');

@@ -179,7 +179,7 @@ class OrderUnitController extends Controller
         OrganizationOrderInvoiceService $service,
     ) {
 
-        #TODO Проверять что организация принадлежит к user от корого идёт запрос
+        #TODO Проверять что организация принадлежит к user от которого идёт запрос
 
         /**
         * @var InvoiceOrderVO

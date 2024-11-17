@@ -20831,7 +20831,7 @@
 											"top": 1199,
 											"width": 231,
 											"height": 13,
-											"text": "agreemen_order_transfer"
+											"text": "agreement_order_transfer"
 										},
 										{
 											"_type": "LabelView",
@@ -28729,7 +28729,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "agreemen_order_transfer",
+					"name": "agreement_order_transfer",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",

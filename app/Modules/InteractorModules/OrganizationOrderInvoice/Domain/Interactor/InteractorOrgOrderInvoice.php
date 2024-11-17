@@ -54,8 +54,9 @@ class InteractorOrgOrderInvoice
                     invoiceId: $modelInvoce->id,
                 );
 
+                #TODO Убедиться что не нужна, и удалить.
                 //Добавляем cotractor к OrederUnit
-                $this->addContractorOrder($dto->order, $dto->organization->id);
+                // $this->addContractorOrder($dto->order, $dto->organization->id);
 
                 return $model ? true : false;
 
@@ -99,14 +100,15 @@ class InteractorOrgOrderInvoice
     }
 
     /**
+     * #TODO Лишняя логика? Потом удалить
      * Добавляем contractor_id к Order
      * @return bool
      */
-    private function addContractorOrder(OrderUnit $order, string $organization_id) : bool
-    {
+    // private function addContractorOrder(OrderUnit $order, string $organization_id) : bool
+    // {
 
-        $order->contractor_id = $organization_id;
+    //     $order->contractor_id = $organization_id;
 
-        return $order->save() ? true : false;
-    }
+    //     return $order->save() ? true : false;
+    // }
 }

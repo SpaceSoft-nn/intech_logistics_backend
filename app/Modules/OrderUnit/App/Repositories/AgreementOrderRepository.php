@@ -17,6 +17,11 @@ class AgreementOrderRepository extends CoreRepository
         return $this->startConditions()->query();
     }
 
+    public function get(string $uuid) : ?Model
+    {
+        return Model::findOrFail($uuid);
+    }
+
     /**
      * Проверяем что в модели существует main_order и значит он вляется главным.
      * @param Model $model
@@ -30,6 +35,17 @@ class AgreementOrderRepository extends CoreRepository
     }
 
 
+    /**
+     * Проверяем что заказчик для данного заказа уже выбрал исполнителя
+     * @param string $order_id
+     * @return bool
+     */
+    public function checkStatusAgreementOrder(string $order_id) : bool
+    {
+        $status = $this->query()->where("order_unit_id", $order_id)->first();
+
+        return $status ? true : false;
+    }
 
 
 

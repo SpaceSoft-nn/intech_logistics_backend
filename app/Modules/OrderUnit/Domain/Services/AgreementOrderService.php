@@ -9,8 +9,14 @@ use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 /**
  * Сервес для указание подрядчика для заказа
  */
-class AgreementOrderService
+final class AgreementOrderService
 {
+
+    public function __construct(
+        private AgreementOrderInteractor $agreementOrderInteractor
+    ) { }
+
+
     /**
      * @param AgreementOrderCreateDTO $dto
      *
@@ -18,6 +24,6 @@ class AgreementOrderService
      */
     public function acceptCotractorToOrder(AgreementOrderCreateDTO $dto) : ?AgreementOrderAccept
     {
-        return AgreementOrderInteractor::execute($dto);
+        return $this->agreementOrderInteractor->execute($dto);
     }
 }

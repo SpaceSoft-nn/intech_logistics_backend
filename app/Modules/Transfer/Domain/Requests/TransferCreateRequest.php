@@ -20,10 +20,11 @@ class TransferCreateRequest extends ApiRequest
 
             "main_order" => ['required', 'uuid', 'exists:order_units,id'],
 
-            "agreement_order_accept_id" => ['required', 'array', 'min:1'],
-            "agreement_order_accept_id.*" => ['required', 'uuid', 'exists:agreement_orders,id'],
+            "agreement_order_id" => ['required', 'array', 'min:1'],
+            "agreement_order_id.*" => ['required', 'uuid', 'exists:agreement_orders,id'],
 
-            "transport_id" => ['required', 'uuid', 'exists:transports,id'],
+            // "transport_id" => ['required', 'uuid', 'exists:transports,id'],
+            "transport_id" => ['required', 'uuid'],
             "description" => ['nullable', 'string', 'min:3', 'max:1000'],
 
         ];

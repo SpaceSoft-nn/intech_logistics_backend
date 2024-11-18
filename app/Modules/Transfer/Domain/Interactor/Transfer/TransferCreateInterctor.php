@@ -45,6 +45,32 @@ class TransferCreateInterctor
     {
         #TODO Здесь нужно использовать паттерн handler (цепочка обязанностей)
 
+        //получаем agreementOrders в свойства класса $agreementOrders
+        $this->setAgreementOrders($dto->agreementOrder_id);
+
+        //создаём transfer
+        {
+
+        /**
+         * @var TransferVO
+        */
+        $vo = $this->createTransferVO($dto);
+
+
+        /**
+         * @var Transfer
+        */
+        $transfer = $this->createTransfer($vo);
+        if(!$transfer) { throw new Exception("Ошибка в TransferCreateInterctor, при создании transfer", 500); }
+        }
+
+        //привязываем AgreementOrder к transfer
+        {
+            $this->linkAgreementTransfer($transfer , $dto->main_order_id);
+        }
+
+        return $transfer;
+
 
         try {
 
@@ -119,8 +145,8 @@ class TransferCreateInterctor
         $order_main ?? throw new BusinessException('Не найдено подтверждения между сторонами главного заказа.', 404);
 
         //получаем через репозиторий адресс начала и конца в связки по приоритености (т.е главный заказ)
-        $Address_start = $this->orderUnitRepository->firstPivotPriorityAddress($order_main);
-        $Address_end = $this->orderUnitRepository->lastPivotPriorityAddress($order_main);
+        $address_start = $this->orderUnitRepository->firstPivotPriorityAddress($order_main);
+        $address_end = $this->orderUnitRepository->lastPivotPriorityAddress($order_main);
 
 
 
@@ -130,10 +156,10 @@ class TransferCreateInterctor
         */
         $transferVO = TransferVO::make(
             transport_id: $dto->transferDTO->transport_id,
-            delivery_start: $Address_start->order_units->first()->pivot->data_time, // может случится баг (делать проверку на заказ)
-            delivery_end: $Address_end->order_units->first()->pivot->data_time, //может случится баг (делать проверку на заказ)
-            Address_start_id: $Address_start->id,
-            Address_end_id: $Address_end->id,
+            delivery_start: $address_start->order_units->first()->pivot->data_time, // может случится баг (делать проверку на заказ) у Адресса много заказов
+            delivery_end: $address_end->order_units->first()->pivot->data_time, //может случится баг (делать проверку на заказ) у Адресса много заказов
+            address_start_id: $address_start->id,
+            address_end_id: $address_end->id,
             order_total: $this->orderService->calcultTotalOrders(collect($arrayCollection)),
             description: $dto->transferDTO->description,
             body_volume: $this->orderService->calcultBodyBolumeOrders(collect($arrayCollection)),

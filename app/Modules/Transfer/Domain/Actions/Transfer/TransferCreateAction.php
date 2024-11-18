@@ -18,6 +18,7 @@ class TransferCreateAction
 
     private function run(TransferVO $vo) : ?Transfer
     {
+        dd($vo);
 
         try {
             $model = Transfer::create($vo->toArrayNotNull());

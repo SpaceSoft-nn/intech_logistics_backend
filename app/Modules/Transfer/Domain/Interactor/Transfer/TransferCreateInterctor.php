@@ -2,6 +2,7 @@
 
 namespace App\Modules\Transfer\Domain\Interactor\Transfer;
 
+use App\Modules\Base\Error\BusinessException;
 use App\Modules\InteractorModules\AgreementTransfer\App\Data\DTO\LinkAgreementToTransferDTO;
 use App\Modules\InteractorModules\AgreementTransfer\Domain\Actions\LinkAgreementToTransferAction;
 use App\Modules\OrderUnit\App\Repositories\AgreementOrderRepository;
@@ -9,7 +10,6 @@ use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
-use App\Modules\OrderUnit\Domain\Services\OrderUnitSirvece;
 use App\Modules\Transfer\App\Data\DTO\Transfer\CreateTransferServiceDTO;
 use App\Modules\Transfer\App\Data\ValueObject\TransferVO;
 use App\Modules\Transfer\Domain\Actions\Transfer\TransferCreateAction;
@@ -45,31 +45,6 @@ class TransferCreateInterctor
     {
         #TODO Здесь нужно использовать паттерн handler (цепочка обязанностей)
 
-        //получаем agreementOrders в свойства класса $agreementOrders
-        $this->setAgreementOrders($dto->agreementOrder_id);
-
-        //создаём transfer
-        {
-
-        /**
-         * @var TransferVO
-         */
-        $vo = $this->createTransferVO($dto);
-
-
-        /**
-         * @var Transfer
-         */
-        $transfer = $this->createTransfer($vo);
-        if(!$transfer) { throw new Exception("Ошибка в TransferCreateInterctor, при создании transfer", 500); }
-        }
-
-        //привязываем AgreementOrder к transfer
-        {
-            $this->linkAgreementTransfer($transfer , $dto->main_order_id);
-        }
-
-        return $transfer;
 
         try {
 
@@ -141,7 +116,7 @@ class TransferCreateInterctor
 
         }
 
-        $order_main ?? throw new Exception('Главный заказ не найден', 500);
+        $order_main ?? throw new BusinessException('Не найдено подтверждения между сторонами главного заказа.', 404);
 
         //получаем через репозиторий адресс начала и конца в связки по приоритености (т.е главный заказ)
         $Address_start = $this->orderUnitRepository->firstPivotPriorityAddress($order_main);
@@ -198,7 +173,7 @@ class TransferCreateInterctor
                     LinkAgreementToTransferDTO::make(
                         agreementOrder: $model,
                         transfer: $transfer,
-                        order_main:$statusOrderMain ,
+                        order_main: $statusOrderMain ,
                     )
                 );
 

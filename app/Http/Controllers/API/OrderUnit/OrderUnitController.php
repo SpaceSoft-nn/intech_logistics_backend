@@ -39,6 +39,7 @@ use Illuminate\Http\Request;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use function App\Helpers\isAuthorized;
 
 class OrderUnitController extends Controller
 {
@@ -253,7 +254,7 @@ class OrderUnitController extends Controller
         /**
         * @var User
         */
-        $user = $auth->getUserAuth();
+        $user = isAuthorized($auth);
 
         $result = $service->acceptAgreement($user, $agreementOrderAccept);
 

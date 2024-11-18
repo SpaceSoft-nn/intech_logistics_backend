@@ -39,6 +39,8 @@ class TransferContoller
 
         $validated = $request->validated();
 
+        dd($validated);
+
 
         $transfer = $transferService->createTransfer(
             CreateTransferServiceDTO::make(

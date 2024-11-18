@@ -86,17 +86,20 @@ Route::prefix('/orders')->group(function () {
 
         {   //AgreementOrderUnit
 
-            //Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи
-            Route::post('/{orderUnit}/agreement-order', [AgreementOrderUnitController::class, 'agreementOrder'])->whereUuid('orderUnit');
 
-            #TODO нужен endpoint на возврат всех agreementOrderAccept (В Теории)
-
-            //Утверждения Двух сторонний договор, о принятии в работу Заказа,
-            //P.S Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer
-            Route::patch('/{agreementOrderAccept}/agreement-accept', [AgreementOrderUnitController::class, 'agreementAccept'])->whereUuid('agreementOrderAccept');
-
-
+            #TODO Поменять сваггер
             Route::prefix('/agreement')->group(function () {
+
+                //Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи
+                Route::post('/{orderUnit}/agreement-order', [AgreementOrderUnitController::class, 'agreementOrder'])->whereUuid('orderUnit');
+
+                #TODO нужен endpoint на возврат всех agreementOrderAccept (В Теории)
+
+                //Утверждения Двух сторонний договор, о принятии в работу Заказа,
+                //P.S Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer
+                Route::patch('/{agreementOrderAccept}/agreement-accept', [AgreementOrderUnitController::class, 'agreementAccept'])->whereUuid('agreementOrderAccept');
+
+
 
                 //вернуть agreementOrderAccept по uuid
                 Route::get('/{agreementOrderAccept}/agreement-order-accept', [AgreementOrderUnitController::class, 'getAgreementOrderAccept'])->whereUuid('agreementOrderAccept');

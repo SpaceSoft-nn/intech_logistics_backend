@@ -17,13 +17,13 @@ class CargoGoodResource extends JsonResource
         return [
 
             "id" => $this->id,
-            "name_value" => $this->end_date_order,
+            "name_value" => $this->name_value,
             "product_type" => $this->body_volume,
-            "type_pallet" => $this->order_total,
-            "cargo_units_count" => $this->description,
+            "type_pallet" => $this->type_pallet,
+            "cargo_units_count" => $this->cargo_units_count,
 
-            "body_volume" => $this->type_load_truck,
-            "description" => $this->end_date_order,
+            "body_volume" => $this->body_volume,
+            "description" => $this->description,
             "mgx" => $this->mgx,
 
         ];

@@ -12,10 +12,11 @@ class OrgOrderInvoiceResource extends JsonResource
 
     public function toArray(Request $request): array
     {
+
         return [
 
             //#TODO Решить какими данными отвечать
-            "id_contract" => $this->id,
+            "organization_order_units_invoce_id" => $this->id,
             "organization_contract" => OrganizationResource::make($this->organization),
             "order" => OrderUnitResource::make($this->order_unit),
             "invoice_order" => InvoceOrderResource::make($this->invoice_order),

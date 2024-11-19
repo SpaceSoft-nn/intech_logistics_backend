@@ -14,6 +14,15 @@ class OrderUnitResource extends JsonResource
 
     public function toArray(Request $request): array
     {
+        //Обновляем, что бы получить актуальные данные из бд
+        $this->refresh();
+
+        // Загружаем отношения что бы не было проблемы N + 1
+        $this->loadMissing([
+            'cargo_goods',
+            'addresses',
+        ]);
+
         return [
 
             "id" => $this->id,

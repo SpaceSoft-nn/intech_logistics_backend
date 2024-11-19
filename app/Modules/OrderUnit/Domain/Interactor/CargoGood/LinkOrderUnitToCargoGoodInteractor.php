@@ -11,7 +11,6 @@ use App\Modules\OrderUnit\Domain\Actions\LinkCargoUnitToCargoGoodAction;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoGoodAction;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
-use App\Modules\OrderUnit\Domain\Models\CargoUnitCargoGoodPivot;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Services\CargoGoodService;
 use App\Modules\OrderUnit\Domain\Services\MgxValidationService;
@@ -56,13 +55,16 @@ final class LinkOrderUnitToCargoGoodInteractor
             //Высчитываем общий объём всех паллетов у грузов.
             $cargo_unit_sum = 0;
 
-            { //Создание CargoGood и привязка к OrderUnit
+            // dd($cargoGoodsVO);
+
+            { //Создание CargoGood и привязка к OrderUnit (тут уже будет работа с массивом CargoGood[])
 
                 /**
                 * @var CargoGood[]
                 */
                 $cargoGoods = $this->createCargoGood($cargoGoodsVO);
                 $this->linkOrderToCargoGood($order, $cargoGoods);
+
             }
 
             //TODO - Вынесли логику в отдельный класс интерактор
@@ -109,6 +111,11 @@ final class LinkOrderUnitToCargoGoodInteractor
 
                     //Суммируем общий объём груза для Order
                     $body_volume += $serviceValidationMgx->returnSizeVolumeMgx();
+
+                    //Высчитываем актуальный объём для груза при MGX
+                    $cargoGood->body_volume = $serviceValidationMgx->returnSizeVolumeMgx();
+
+                    $cargoGood->save();
 
                     //Суммируем общее количесвто паллетов у груза для Order
                     $cargo_unit_sum += $cargoGood->cargo_units_count;

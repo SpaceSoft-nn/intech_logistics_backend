@@ -29,8 +29,8 @@ class Transfer extends Model
         "transport_id",
         "delivery_start",
         "delivery_end",
-        "Address_start_id",
-        "Address_end_id",
+        "address_start_id",
+        "address_end_id",
         "order_total",
         "description",
         "body_volume",
@@ -56,21 +56,21 @@ class Transfer extends Model
 
     public function cargo_units(): BelongsToMany
     {
-        return $this->belongsToMany(CargoUnit::class, 'cargo_unit_transfer', 'cargo_unit_id' , 'transfer_id');
+        return $this->belongsToMany(CargoUnit::class, 'cargo_unit_transfer', 'transfer_id' , 'cargo_unit_id');
     }
 
-    public function Address_start(): BelongsTo
+    public function address_start(): BelongsTo
     {
-        return $this->belongsTo(Address::class, 'Address_start_id');
+        return $this->belongsTo(Address::class, 'address_start_id');
     }
 
-    public function Address_end(): BelongsTo
+    public function address_end(): BelongsTo
     {
-        return $this->belongsTo(Address::class, 'Address_end_id');
+        return $this->belongsTo(Address::class, 'address_end_id');
     }
 
     public function agreements(): BelongsToMany
     {
-        return $this->belongsToMany(AgreementOrder::class, 'agreement_transfer', 'agreement_id' , 'transfer_id');
+        return $this->belongsToMany(AgreementOrder::class, 'agreement_transfer', 'transfer_id' , 'agreement_id');
     }
 }

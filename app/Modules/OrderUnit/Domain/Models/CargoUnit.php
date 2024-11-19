@@ -4,6 +4,7 @@ namespace App\Modules\OrderUnit\Domain\Models;
 
 use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
 use App\Modules\OrderUnit\Domain\Factories\CargoUnitFactory;
+use App\Modules\Transfer\Domain\Models\Transfer;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -58,7 +59,9 @@ class CargoUnit extends Model
             ->withTimestamps();
     }
 
-
-
+    public function transfers(): BelongsToMany
+    {
+        return $this->belongsToMany(Transfer::class, 'cargo_unit_transfer', 'cargo_unit_id' , 'transfer_id');
+    }
 
 }

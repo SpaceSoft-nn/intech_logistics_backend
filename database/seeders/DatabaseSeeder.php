@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
                 //Нужны первые сиды
             \App\Modules\Address\Common\Database\Seeders\AddressSeeder::class,
             \App\Modules\OrderUnit\Common\Database\Seeders\OrderUnitSeeder::class,
-            // \App\Modules\Transport\Common\Database\Seeders\TransportSeeder::class,
+            \App\Modules\Transport\Common\Database\Seeders\TransportSeeder::class,
 
                 //Дальше по цепочке сиды - эти сиды вынесены отдельно как склепок БД (Т.к по апи есть ограничение на бесплатные запросы)
             // \App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceSeed::class,

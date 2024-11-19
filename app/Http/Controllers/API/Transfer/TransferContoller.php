@@ -51,6 +51,8 @@ class TransferContoller
             )
         );
 
+        dd($transfer);
+
         return $transfer
             ? response()->json(array_success(TransferResource::make($transfer), 'Return Transfer.'), 201)
             : response()->json(array_error(null, 'Error create transferю'), 404);

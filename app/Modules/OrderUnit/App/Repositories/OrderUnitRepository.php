@@ -4,8 +4,10 @@ namespace App\Modules\OrderUnit\App\Repositories;
 
 use App\Modules\Address\Domain\Models\Address;
 use App\Modules\Base\Repositories\CoreRepository;
+
 use App\Modules\OrderUnit\Domain\Models\OrderUnit as Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 
 class OrderUnitRepository extends CoreRepository
 {
@@ -95,6 +97,11 @@ class OrderUnitRepository extends CoreRepository
         }
 
         return $firstAddress;
+    }
+
+    public function cargo_units(Model $model) : SupportCollection
+    {
+        return $model->cargo_goods()->with('cargo_units')->get()->pluck('cargo_units')->flatten()->unique('id');
     }
 
 

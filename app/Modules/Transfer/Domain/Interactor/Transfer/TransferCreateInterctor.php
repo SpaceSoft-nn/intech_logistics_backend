@@ -12,7 +12,7 @@ use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
 use App\Modules\Transfer\App\Data\DTO\Transfer\CreateTransferServiceDTO;
 use App\Modules\Transfer\App\Data\ValueObject\TransferVO;
-use App\Modules\Transfer\Domain\Actions\Transfer\TransferCreateAction;
+use App\Modules\Transfer\Domain\Actions\Transfer\Transfer\TransferCreateAction;
 use App\Modules\Transfer\Domain\Models\Transfer;
 use DB;
 use Exception;
@@ -33,6 +33,7 @@ class TransferCreateInterctor
         private OrderUnitService $orderService,
         private AgreementOrderRepository $agrOrderReposiotry,
         private OrderUnitRepository $orderUnitRepository,
+        private LinkTransferToCargoUnitInteractor $linkTransferToCargoUnitInteractor,
     ) { }
 
     public function execute(CreateTransferServiceDTO $dto)
@@ -44,32 +45,6 @@ class TransferCreateInterctor
     private function InteractorLogic(CreateTransferServiceDTO $dto) : ?Transfer
     {
         #TODO Здесь нужно использовать паттерн handler (цепочка обязанностей)
-
-        //получаем agreementOrders в свойства класса $agreementOrders
-        $this->setAgreementOrders($dto->agreementOrder_id);
-
-        //создаём transfer
-        {
-
-        /**
-         * @var TransferVO
-        */
-        $vo = $this->createTransferVO($dto);
-
-
-        /**
-         * @var Transfer
-        */
-        $transfer = $this->createTransfer($vo);
-        if(!$transfer) { throw new Exception("Ошибка в TransferCreateInterctor, при создании transfer", 500); }
-        }
-
-        //привязываем AgreementOrder к transfer
-        {
-            $this->linkAgreementTransfer($transfer , $dto->main_order_id);
-        }
-
-        return $transfer;
 
 
         try {
@@ -95,14 +70,24 @@ class TransferCreateInterctor
                 if(!$transfer) { throw new Exception("Ошибка в TransferCreateInterctor, при создании transfer", 500); }
                 }
 
-                //привязываем AgreementOrder к transfer
-                {
+
+                { //привязываем AgreementOrder к transfer
                     $this->linkAgreementTransfer($transfer , $dto->main_order_id);
                 }
+
+                { //привязываем OrderUnit к Transfer
+                    $this->linkCargoUnitToTransfer($transfer);
+                }
+
 
                 return $transfer;
 
             });
+
+        }
+        catch (BusinessException $th) {
+
+            throw new BusinessException($th->getCustomMessage(), $th->getCustomCode());
 
         } catch (\Throwable $th) {
 
@@ -173,6 +158,30 @@ class TransferCreateInterctor
         return TransferCreateAction::make($vo);
     }
 
+    private function linkCargoUnitToTransfer(Transfer $transfer)
+    {
+        $models = $this->agreementOrders;
+
+        $status = false;
+
+        if($models)
+        {
+
+            foreach ($models as $model) {
+
+                $status = $this->linkTransferToCargoUnitInteractor->execute($transfer, $model);
+
+            }
+
+        } else {
+
+            throw new BusinessException('Не найденно не одной записи Agreement Order', 404);
+
+        }
+
+        return $status;
+    }
+
 
     /**
      * Линкуем связь многие ко многим Transfer и Order Agreement
@@ -207,7 +216,7 @@ class TransferCreateInterctor
 
         } else {
 
-            throw new Exception('Не найденно не одной модели Agreement Order', 500);
+            throw new BusinessException('Не найденно не одной записи Agreement Order', 404);
 
         }
 

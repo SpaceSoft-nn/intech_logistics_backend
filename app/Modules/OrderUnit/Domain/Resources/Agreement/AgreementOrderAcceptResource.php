@@ -14,7 +14,7 @@ class AgreementOrderAcceptResource extends JsonResource
             "id" => $this->id,
             "agreement_order" => $this->agreement,
             "order_bool" => $this->order_bool,
-            "contractor_bool" => $this->executor_bool,
+            "contractor_bool" => $this->contractor_bool,
         ];
     }
 }

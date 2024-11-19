@@ -9,8 +9,6 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Actions\OrderI
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Actions\OrganizationOrderUnitInvoice\OrganizationOrderUnitInvoiceCreateAction;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use DB;
 use Exception;
 
@@ -25,9 +23,9 @@ class InteractorOrgOrderInvoice
     /**
      * @param OrgOrderInvoiceCreateDTO $dto
      *
-     * @return bool
+     * @return OrganizationOrderUnitInvoice
      */
-    public static function excexute(OrgOrderInvoiceCreateDTO $dto) : bool
+    public static function excexute(OrgOrderInvoiceCreateDTO $dto) : OrganizationOrderUnitInvoice
     {
         return (new self())->run($dto);
     }
@@ -36,9 +34,9 @@ class InteractorOrgOrderInvoice
      * Запуск работы бизнес логики
      * @param OrgOrderInvoiceCreateDTO $dto
      *
-     * @return bool
+     * @return OrganizationOrderUnitInvoice
      */
-    private function run(OrgOrderInvoiceCreateDTO $dto) : bool
+    private function run(OrgOrderInvoiceCreateDTO $dto) : OrganizationOrderUnitInvoice
     {
 
         try {
@@ -48,6 +46,9 @@ class InteractorOrgOrderInvoice
                 //создаём некую документацию от исполнителя, для заказчика - выбравший Заказ
                 $modelInvoce = $this->createInvoiceOrder($dto->invoiceOrderVO);
 
+                /**
+                * @var OrganizationOrderUnitInvoice
+                */
                 $model = $this->createOrgOrderInvoice(
                     orderId: $dto->order->id,
                     orgId: $dto->organization->id,
@@ -58,7 +59,7 @@ class InteractorOrgOrderInvoice
                 //Добавляем cotractor к OrederUnit
                 // $this->addContractorOrder($dto->order, $dto->organization->id);
 
-                return $model ? true : false;
+                return $model;
 
             });
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Transfer\Domain\Actions\Transfer;
+namespace App\Modules\Transfer\Domain\Actions\Transfer\Transfer;
 
 use App\Modules\Transfer\App\Data\ValueObject\TransferVO;
 use App\Modules\Transfer\Domain\Models\Transfer;

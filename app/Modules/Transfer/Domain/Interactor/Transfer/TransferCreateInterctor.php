@@ -12,7 +12,7 @@ use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
 use App\Modules\Transfer\App\Data\DTO\Transfer\CreateTransferServiceDTO;
 use App\Modules\Transfer\App\Data\ValueObject\TransferVO;
-use App\Modules\Transfer\Domain\Actions\Transfer\Transfer\TransferCreateAction;
+use App\Modules\Transfer\Domain\Actions\Transfer\TransferCreateAction;
 use App\Modules\Transfer\Domain\Models\Transfer;
 use DB;
 use Exception;
@@ -25,7 +25,7 @@ class TransferCreateInterctor
 {
 
     /**
-    * @var Collection
+    * @var AgreementOrder[]
     */
     private Collection $agreementOrders;
 
@@ -169,7 +169,12 @@ class TransferCreateInterctor
 
             foreach ($models as $model) {
 
-                $status = $this->linkTransferToCargoUnitInteractor->execute($transfer, $model);
+                /**
+                * @var OrderUnit $order
+                */
+                $order = $model->order;
+
+                $status = $this->linkTransferToCargoUnitInteractor->execute($transfer, $order);
 
             }
 

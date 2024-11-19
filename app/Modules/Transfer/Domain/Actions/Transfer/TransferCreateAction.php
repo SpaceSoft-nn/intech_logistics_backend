@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Transfer\Domain\Actions\Transfer\Transfer;
+namespace App\Modules\Transfer\Domain\Actions\Transfer;
 
 use App\Modules\Transfer\App\Data\ValueObject\TransferVO;
 use App\Modules\Transfer\Domain\Models\Transfer;
@@ -18,7 +18,6 @@ class TransferCreateAction
 
     private function run(TransferVO $vo) : ?Transfer
     {
-        dd($vo);
 
         try {
             $model = Transfer::create($vo->toArrayNotNull());

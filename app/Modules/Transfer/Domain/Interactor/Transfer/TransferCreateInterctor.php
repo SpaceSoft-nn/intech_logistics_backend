@@ -37,40 +37,13 @@ class TransferCreateInterctor
 
     public function execute(CreateTransferServiceDTO $dto)
     {
-        return $this->InteractorLogic($dto);
+        return $this->run($dto);
     }
 
 
-    private function InteractorLogic(CreateTransferServiceDTO $dto) : ?Transfer
+    private function run(CreateTransferServiceDTO $dto) : ?Transfer
     {
         #TODO Здесь нужно использовать паттерн handler (цепочка обязанностей)
-
-        //получаем agreementOrders в свойства класса $agreementOrders
-        $this->setAgreementOrders($dto->agreementOrder_id);
-
-        //создаём transfer
-        {
-
-        /**
-         * @var TransferVO
-        */
-        $vo = $this->createTransferVO($dto);
-
-
-        /**
-         * @var Transfer
-        */
-        $transfer = $this->createTransfer($vo);
-        if(!$transfer) { throw new Exception("Ошибка в TransferCreateInterctor, при создании transfer", 500); }
-        }
-
-        //привязываем AgreementOrder к transfer
-        {
-            $this->linkAgreementTransfer($transfer , $dto->main_order_id);
-        }
-
-        return $transfer;
-
 
         try {
 
@@ -193,6 +166,7 @@ class TransferCreateInterctor
 
             foreach ($models as $model) {
 
+                //устанавливаем во связи - главный заказ (главный вектор движения)
                 $statusOrderMain = (bool) $model->order_unit_id == $order_main;
 
                 $status = LinkAgreementToTransferAction::run(

@@ -15,7 +15,6 @@ class AgreementOrderAcceptService
         private AgreementOrderInteractor $agreementOrderInteractor,
     ) { }
 
-
     /**
      * Подписать договор со стороны user (проверка что user принадлежит к бизнес-логики AgreementOrderAccept)
      * @param User $user

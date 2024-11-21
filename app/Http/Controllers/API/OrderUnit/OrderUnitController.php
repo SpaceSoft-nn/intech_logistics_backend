@@ -10,6 +10,7 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Requests\AddContractorRequest;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceResource;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
 use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
@@ -17,6 +18,7 @@ use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
+use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdateAction;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
@@ -140,7 +142,8 @@ class OrderUnitController extends Controller
             )
         );
 
-        return response()->json(array_success(OrderUnitResource::make($order->refresh()), 'Return create Order.'), 201);
+
+        return response()->json(array_success(OrderUnitResource::make($order), 'Return create Order.'), 201);
     }
 
     /**
@@ -187,7 +190,10 @@ class OrderUnitController extends Controller
         */
         $invoceOrder = $request->getValueObject();
 
-        $status = $service->addСontractor(
+        /**
+        * @var OrganizationOrderUnitInvoice
+        */
+        $model = $service->addСontractor(
             OrgOrderInvoiceCreateDTO::make(
                 organization: $organization,
                 order: $orderUnit,
@@ -195,8 +201,8 @@ class OrderUnitController extends Controller
             )
         );
 
-        return ($status)
-        ? response()->json(array_success(null, 'Successfully added a contractor to the order.'), 201)
+        return ($model)
+        ? response()->json(array_success(OrgOrderInvoiceResource::make($model), 'Successfully added a contractor to the order.'), 201)
         : response()->json(array_error(null, 'Error added a contractor to the order.'), 404);
 
     }

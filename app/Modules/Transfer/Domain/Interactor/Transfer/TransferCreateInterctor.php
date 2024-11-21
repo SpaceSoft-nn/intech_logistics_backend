@@ -25,7 +25,7 @@ class TransferCreateInterctor
 {
 
     /**
-    * @var Collection
+    * @var AgreementOrder[]
     */
     private Collection $agreementOrders;
 
@@ -33,6 +33,7 @@ class TransferCreateInterctor
         private OrderUnitService $orderService,
         private AgreementOrderRepository $agrOrderReposiotry,
         private OrderUnitRepository $orderUnitRepository,
+        private LinkTransferToCargoUnitInteractor $linkTransferToCargoUnitInteractor,
     ) { }
 
     public function execute(CreateTransferServiceDTO $dto)
@@ -44,6 +45,7 @@ class TransferCreateInterctor
     private function run(CreateTransferServiceDTO $dto) : ?Transfer
     {
         #TODO Здесь нужно использовать паттерн handler (цепочка обязанностей)
+
 
         try {
 
@@ -68,14 +70,24 @@ class TransferCreateInterctor
                 if(!$transfer) { throw new Exception("Ошибка в TransferCreateInterctor, при создании transfer", 500); }
                 }
 
-                //привязываем AgreementOrder к transfer
-                {
+
+                { //привязываем AgreementOrder к transfer
                     $this->linkAgreementTransfer($transfer , $dto->main_order_id);
                 }
+
+                { //привязываем OrderUnit к Transfer
+                    $this->linkCargoUnitToTransfer($transfer);
+                }
+
 
                 return $transfer;
 
             });
+
+        }
+        catch (BusinessException $th) {
+
+            throw new BusinessException($th->getCustomMessage(), $th->getCustomCode());
 
         } catch (\Throwable $th) {
 
@@ -146,6 +158,35 @@ class TransferCreateInterctor
         return TransferCreateAction::make($vo);
     }
 
+    private function linkCargoUnitToTransfer(Transfer $transfer)
+    {
+        $models = $this->agreementOrders;
+
+        $status = false;
+
+        if($models)
+        {
+
+            foreach ($models as $model) {
+
+                /**
+                * @var OrderUnit $order
+                */
+                $order = $model->order;
+
+                $status = $this->linkTransferToCargoUnitInteractor->execute($transfer, $order);
+
+            }
+
+        } else {
+
+            throw new BusinessException('Не найденно не одной записи Agreement Order', 404);
+
+        }
+
+        return $status;
+    }
+
 
     /**
      * Линкуем связь многие ко многим Transfer и Order Agreement
@@ -181,7 +222,7 @@ class TransferCreateInterctor
 
         } else {
 
-            throw new Exception('Не найденно не одной модели Agreement Order', 500);
+            throw new BusinessException('Не найденно не одной записи Agreement Order', 404);
 
         }
 
@@ -189,9 +230,4 @@ class TransferCreateInterctor
 
     }
 
-    private function linkCargoUnit()
-    {
-        #TODO - Сделать логику линковки cargoUnit и Transfer
-        return 'cargo';
-    }
 }

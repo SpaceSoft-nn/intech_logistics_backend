@@ -107,12 +107,6 @@ class OrderUnit extends Model
     }
 
 
-    public function transfers(): BelongsToMany
-    {
-        #TODO Может быть баг проверить - нужно ли это тут?
-        return $this->belongsToMany(Transfer::class, 'cargo_unit_transfer', 'cargo_unit_id' , 'transfer_id');
-    }
-
     public function addresses(): BelongsToMany
     {
         return $this->belongsToMany(Address::class, 'order_unit_address', 'order_unit_id' , 'address_id' )

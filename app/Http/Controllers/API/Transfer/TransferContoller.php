@@ -39,17 +39,20 @@ class TransferContoller
 
         $validated = $request->validated();
 
-
+        /**
+        * @var Transfer
+        */
         $transfer = $transferService->createTransfer(
             CreateTransferServiceDTO::make(
-                main_order_id: $validated['main_order'],
-                agreementOrder_id: $validated['agreement_order_accept_id'],
+                main_order_id: $validated['main_order_id'],
+                agreementOrder_id: $validated['agreement_order_id'],
                 transferDTO: TransferDTO::make(
                     transport_id: $validated['transport_id'],
                     description : $validated['description'],
                 ),
             )
         );
+
 
         return $transfer
             ? response()->json(array_success(TransferResource::make($transfer), 'Return Transfer.'), 201)

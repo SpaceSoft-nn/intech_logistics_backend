@@ -24,9 +24,19 @@ class AddressCreateRequest extends ApiRequest
         return [
 
             'data' => ['required', 'array'],
-            'data.data' => ['required', 'array'],
-            'data.unrestricted_value' => ['nullable', 'string'],
-            'data.value' => ['nullable', 'string'],
+            'data.data*' => ['required', 'array'],
+
+            'data.data.postal_code' => ['sometimes', 'string'],
+            'data.data.country' => ['required', 'string'],
+            'data.data.city_with_type' => ['required', 'string'],
+            'data.data.street_with_type' => ['required', 'string'],
+            'data.data.house_type_full' => ['sometimes', 'string'],
+            'data.data.house' => ['sometimes', 'string'],
+            'data.data.geo_lat' => ['required', 'string'],
+            'data.data.geo_lon' => ['required', 'string'],
+
+            // 'data.unrestricted_value' => ['nullable', 'string'],
+            // 'data.value' => ['nullable', 'string'],
 
             // "region" => ['required', 'string' ],
             // "city" => ['required', 'string'],
@@ -43,7 +53,7 @@ class AddressCreateRequest extends ApiRequest
 
     public function getAddressVO() : AddressVO
     {
-        return AddressVO::returnObjectFromArray($this->validated());
+        return AddressVO::returnObjectFromArray($this->validated())->setJson($this->all());
     }
 
 }

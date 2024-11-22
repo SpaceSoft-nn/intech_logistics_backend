@@ -7,7 +7,7 @@ use Arr;
 use Illuminate\Contracts\Support\Arrayable;
 use JsonSerializable;
 
-class AddressVO implements Arrayable, JsonSerializable
+final readonly class AddressVO implements Arrayable, JsonSerializable
 {
 
     use FilterArrayTrait;
@@ -79,6 +79,23 @@ class AddressVO implements Arrayable, JsonSerializable
         ];
     }
 
+    public function setJson(array $json) : self
+    {
+
+        //повторное создание объекта... #TODO Придумать что можно сделать без доп создание объекта
+        return $this->make(
+            region: $this->region,
+            city: $this->city,
+            street: $this->street,
+            building: $this->building,
+            postal_code: $this->postal_code,
+            latitude: $this->latitude,
+            longitude: $this->longitude,
+            json: $json,
+            update_json: Arr::has($json, 'data') ? now() : null,
+        );
+    }
+
     public function jsonSerialize(): mixed
     {
         return json_encode($this->json);
@@ -99,8 +116,8 @@ class AddressVO implements Arrayable, JsonSerializable
             postal_code: Arr::get($data, 'postal_code', null),
             latitude: Arr::get($data, 'geo_lat'),
             longitude: Arr::get($data, 'geo_lon'),
-            json: Arr::get($array, 'data', null),
-            update_json: Arr::has($array, 'data') ? now() : null,
+            json: null,
+            update_json: null,
         );
     }
 

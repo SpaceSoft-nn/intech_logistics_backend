@@ -109,7 +109,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
         $building =  Arr::get($data, 'house_type_full', null) . ' ' . Arr::get($data, 'house', null); //создаём правильное название дома
 
         return new self(
-            region: Arr::get($data, 'country'), //Сделано country т.к в city_with_type и street_with_type - могут значение повторяться
+            region: Arr::get($data, 'region'), //Сделано country т.к в city_with_type и street_with_type - могут значение повторяться
             city: Arr::get($data, 'city_with_type'),
             street: Arr::get($data, 'street_with_type'),
             building: $building,

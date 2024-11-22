@@ -11,21 +11,16 @@ use App\Http\Controllers\Controller;
  *      summary="Создать запись Address",
  *      tags={"Address"},
  *
- *       @OA\RequestBody(
- *          @OA\JsonContent(
- *              allOf={
- *                 @OA\Schema(
- *                    @OA\Property(property="region", type="string", description="Регион", example="Москва"),
-*                         @OA\Property(property="city", type="string", description="Город", example="Москва"),
-*                         @OA\Property(property="street", type="string", description="Улица", example="Тверская"),
-*                         @OA\Property(property="building", type="string", description="Строение", nullable=true, example="1"),
-*                         @OA\Property(property="apartment", type="string", description="Квартира", nullable=true, example="101"),
-*                         @OA\Property(property="postal_code", type="string", description="Почтовый индекс", nullable=true, example="123456"),
-*                         @OA\Property(property="latitude", type="string", description="Широта", example="55.7558"),
-*                         @OA\Property(property="longitude", type="string", description="Долгота", example="37.6173"),
- *                 )
- *              },
- *          ),
+ *      @OA\RequestBody(
+ *          description="Основной JSON-объект, ожидаемый в параметре data - с сервеса Dadata",
+ *          required=true,
+ *              @OA\JsonContent(
+ *                  @OA\Property(
+ *                      property="data",
+ *                      type="object",
+ *                      description="Объект с JSON-структурой, которая приходит с dadata"
+ *                  )
+ *               )
  *      ),
  *
  *      @OA\Response(

@@ -22,6 +22,7 @@ class AddressCreateRequest extends ApiRequest
     public function rules(): array
     {
         return [
+            'json' => ['required', 'json'],
             "region" => ['required', 'string' ],
             "city" => ['required', 'string'],
             "street" => ['required', 'string'],

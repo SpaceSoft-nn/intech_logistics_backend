@@ -74,7 +74,7 @@ class OrderUnitVO implements Arrayable
             contractors_id: $contractors_id,
             organization_id: $organization_id,
 
-            add_load_space: $add_load_space, //TODO нужно переносить в триггер
+            add_load_space: $add_load_space,
             change_price: $change_price,
             change_time: $change_time,
 
@@ -103,7 +103,7 @@ class OrderUnitVO implements Arrayable
             contractors_id: $this->contractors_id,
             organization_id: $this->organization_id,
 
-            add_load_space: $this->add_load_space, //TODO нужно переносить в триггер
+            add_load_space: $this->add_load_space,
             change_price: $this->change_price,
             change_time: $this->change_time,
         );

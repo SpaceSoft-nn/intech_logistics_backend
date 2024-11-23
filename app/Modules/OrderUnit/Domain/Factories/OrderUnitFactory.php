@@ -64,17 +64,17 @@ class OrderUnitFactory extends Factory
 
     public function configure(): static
     {
-        // Добавляем теги после создания поста
         return $this->afterCreating(function (OrderUnit $orderUnit) {
 
-            if(empty($orderUnit->addresses)) {
+
+            if($orderUnit->addresses->isEmpty()) {
 
                 //Привязываем Адресса
-                $Addresses = Address::factory()->count(2)->create();
+                $addresses = Address::factory()->count(2)->create();
 
                 LinkOrderToAddressAction::run(
                     OrderToAddressDTO::make(
-                        address: $Addresses[0],
+                        address: $addresses[0],
                         order: $orderUnit,
                         type_status: TypeStateAddressEnum::sending,
                         date: now(),
@@ -83,12 +83,13 @@ class OrderUnitFactory extends Factory
 
                 LinkOrderToAddressAction::run(
                     OrderToAddressDTO::make(
-                        address: $Addresses[1],
+                        address: $addresses[1],
                         order: $orderUnit,
                         type_status: TypeStateAddressEnum::coming,
                         date: now(),
                     )
                 );
+
 
             }
 

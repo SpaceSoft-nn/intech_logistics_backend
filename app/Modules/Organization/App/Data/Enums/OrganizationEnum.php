@@ -39,7 +39,7 @@ enum OrganizationEnum : string
         return match ($value) {
             "legal" => OrganizationEnum::legal,
             "individual" => OrganizationEnum::individual,
-            default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
+            default => throw new Exception('Ошибка приобрезование Enum OrganizationEnum', 500),
         };
     }
 }

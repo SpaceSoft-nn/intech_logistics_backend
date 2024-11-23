@@ -147,7 +147,6 @@ class OrderUnitVO implements Arrayable
         $type_transport_weight = Arr::get($data, "type_transport_weight");
         $order_status = Arr::get($data, "order_status", null);
 
-
         $user_id = Arr::get($data, "user_id", null);
         $contractors_id = Arr::get($data, "contractors_id", null);
         $organization_id = Arr::get($data, "organization_id", null);
@@ -182,6 +181,7 @@ class OrderUnitVO implements Arrayable
      */
     public static function filterEnumTypeLoad(string $value)
     {
+
         $enumObject = TypeLoadingTruckMethod::stringByCaseToObject($value);
 
         return ($enumObject === TypeLoadingTruckMethod::ltl) ? true : false;

@@ -38,7 +38,7 @@ class AddressCreateRequest extends ApiRequest
             'data.data*' => ['required', 'array'],
 
             'data.data.postal_code' => ['sometimes', 'string'],
-            'data.data.country' => ['required', 'string'],
+            // 'data.data.country' => ['required', 'string'],
             'data.data.city_with_type' => ['required', 'string'],
             'data.data.region' => ['required', 'string'],
             'data.data.street_with_type' => ['required', 'string'],

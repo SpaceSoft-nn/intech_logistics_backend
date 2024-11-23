@@ -8,7 +8,6 @@ use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
 use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Transfer\Domain\Models\Transfer;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -109,11 +108,12 @@ class OrderUnit extends Model
 
     public function addresses(): BelongsToMany
     {
-        return $this->belongsToMany(Address::class, 'order_unit_address', 'order_unit_id' , 'address_id' )
+        return $this->belongsToMany(Address::class, 'order_unit_address', 'order_unit_id' , 'address_id')
             ->using(OrderUnitAddress::class)
             ->withPivot(['data_time', 'type', 'priority'])
             ->withTimestamps();
     }
+
 
     /**
     * Связь с заказом многие ко многим

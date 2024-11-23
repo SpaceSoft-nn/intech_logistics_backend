@@ -9,17 +9,16 @@ class OrderUnitAddress extends Pivot
 {
     public $incrementing = true;
 
-    protected $table = 'order_unit_address'; // Убедитесь, что название таблицы правильное
+    protected $table = 'order_unit_address';
 
     protected $fillable = [
         'order_unit_id',
-        'Address_id',
+        'address_id',
         'data_time',
         'type',
         'priority',
     ];
 
-    // Если вы используете даты, добавьте их в $dates или $casts
     protected $dates = ['data_time', 'created_at', 'updated_at'];
 
     protected $casts = [

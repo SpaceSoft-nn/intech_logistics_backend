@@ -15,9 +15,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
 
                 //Нужны первые сиды
-            // \App\Modules\Address\Common\Database\Seeders\AddressSeeder::class,
-            // \App\Modules\OrderUnit\Common\Database\Seeders\OrderUnitSeeder::class,
-            // \App\Modules\Transport\Common\Database\Seeders\TransportSeeder::class,
+            \App\Modules\Address\Common\Database\Seeders\AddressSeeder::class,
+            \App\Modules\OrderUnit\Common\Database\Seeders\OrderUnitSeeder::class,
+            \App\Modules\Transport\Common\Database\Seeders\TransportSeeder::class,
 
                 //Дальше по цепочке сиды - эти сиды вынесены отдельно как склепок БД (Т.к по апи есть ограничение на бесплатные запросы)
             // \App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceSeed::class,
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             \App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceFileSeed::class,
 
                 //Запуск seed - здесь будут создаваться: invoice_order, organization_order_units_invoce, agreement_order_accept, agreement_order - так же будут выбираться случаные OrderUnit из бд
-            // \App\Modules\OrderUnit\Common\Database\Seeders\AgreementOrderSeeder::class,
+            \App\Modules\OrderUnit\Common\Database\Seeders\AgreementOrderSeeder::class,
 
             //Сиды для прода (Презентации)
             ProdeSeed::class,

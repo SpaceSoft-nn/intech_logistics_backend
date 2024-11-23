@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
@@ -68,17 +69,58 @@ class ProdeSeed extends Seeder
             );
 
 
-            $orderUnit = OrderUnit::factory()->create([
+            $this->createOrderUnit($user->id, $organization->id);
+        }
+    }
+
+    public function createOrderUnit(string $user_id, string $organization_id)
+    {
+
+        { // создаёмм
+            $orderUnitVoArray = OrderUnit::factory()->make([
                 "end_date_order" => now()->addDays(5),
                 "description" => 'Нужно доставить заказ по данным Адрессам',
                 "order_total" => '180500',
                 "body_volume" => '15.5',
-                "user_id" => $user->id,
-                "organization_id" => $organization->id,
+                "user_id" => $user_id,
+                "organization_id" => $organization_id,
                 "type_load_truck" => TypeLoadingTruckMethod::ftl,
-            ]);
+            ])->toArray();
 
-            dd($orderUnit->addresses);
+            Arr::set($orderUnitVoArray, 'type_load_truck', 'ftl');
+            Arr::set($orderUnitVoArray, 'type_transport_weight', 'medium');
         }
+
+
+        // /**
+        // * @var OrderUnitVO
+        // */
+        // $orderUnitVO = OrderUnitVO::fromArrayToObject($orderUnitVoArray);
+
+        // /**
+        // * @var ?CargoGoodVO[]
+        // */
+        // $cargoGoodVO = $request->createCargoGoodVO();
+
+        // /**
+        // * @var OrderUnitAddressDTO
+        // */
+        // $orderUnitAddressDTO = $request->createOrderUnitAddressDTO();
+
+
+        /**
+        * @var OrderUnit
+        */
+        // $order = app(OrderUnitService::class)->createOrderUnit(
+        //     OrderUnitCreateDTO::make(
+        //         orderUnitVO: $orderUnitVO,
+        //         orderUnitAddressDTO: $orderUnitAddressDTO,
+        //         cargoGoodVO : $cargoGoodVO,
+        //     )
+        // );
+
+
+        // dd($orderUnit->addresses[0]->toArray());
+
     }
 }

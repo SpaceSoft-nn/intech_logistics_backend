@@ -22,7 +22,6 @@ class LinkUserToOrganizationAction
     {
 
 
-
         try {
 
             /**

@@ -106,6 +106,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
 
         $data = Arr::get($array, 'data.data');
 
+
         $building =  Arr::get($data, 'house_type_full', null) . ' ' . Arr::get($data, 'house', null); //создаём правильное название дома
 
         return new self(

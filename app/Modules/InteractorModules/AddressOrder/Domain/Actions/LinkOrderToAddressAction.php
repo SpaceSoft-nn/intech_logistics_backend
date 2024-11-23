@@ -37,13 +37,13 @@ class LinkOrderToAddressAction
             */
             $type_status = $dto->type_status;
 
-            $address->order_units()->syncWithoutDetaching([$order->id => [
-                'data_time' => $dto->date,
-                'type' => $type_status,
-                'priority' => $dto->priority,
-            ]]);
-
-            dd($address->order_units);
+            $order->addresses()->syncWithoutDetaching([$address->id =>
+                [
+                    'data_time' => $dto->date,
+                    'type' => $type_status,
+                    'priority' => 1,
+                ]
+            ]);
 
 
             return true;

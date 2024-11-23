@@ -93,48 +93,6 @@ class OrderUnitFactory extends Factory
 
             }
 
-
-
-            //Привязываем груз
-            /**
-            * @var CargoGood
-            */
-            $cargoGood = CargoGood::factory()->create();
-
-            LinkOrderUnitToCargoGoodAction::run(
-                OrderUnitToCargoGoodDTO::make(
-                    cargoGood: $cargoGood,
-                    orderUnit: $orderUnit,
-                )
-            );
-
-            //Сделали так для проверки работы endpoint get-schem (algorithm в контроллере)
-            if($orderUnit->address_is_array == false){
-
-                //Создание статуса
-                 OrderUnitStatusCreateAction::make(
-                    OrderUnitStatusVO::make(
-                        order_unit_id: $orderUnit->id,
-                        status : 'published',
-                    )
-                );
-
-            } else {
-
-                //Создание статуса
-                OrderUnitStatusCreateAction::make(
-                    OrderUnitStatusVO::make(
-                        order_unit_id: $orderUnit->id,
-                    )
-                );
-
-            }
-
-
-
-
-
-
         });
     }
 

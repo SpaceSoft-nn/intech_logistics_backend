@@ -2,12 +2,19 @@
 
 namespace App\Modules\OrderUnit\Domain\Services;
 
+use App\Modules\OrderUnit\Domain\Interactor\Agreement\AgreementOrderInteractor;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use App\Modules\User\Domain\Models\User;
 
 class AgreementOrderAcceptService
 {
+
+
+    public function __construct(
+        private AgreementOrderInteractor $agreementOrderInteractor,
+    ) { }
+
     /**
      * Подписать договор со стороны user (проверка что user принадлежит к бизнес-логики AgreementOrderAccept)
      * @param User $user
@@ -17,63 +24,14 @@ class AgreementOrderAcceptService
      */
     public function acceptAgreement(User $user, AgreementOrderAccept $agreementOrderAccept) : Object
     {
-        #TODO Вынести в интерактор, что бы потом вызвать checkAcceptAgreement() метод
-        /**
-        * @var OrderUnit
-        */
-        $order = $agreementOrderAccept->agreement->order;
+        //Ответ придёт в массиве - описания
+        $object = $this->agreementOrderInteractor->execute($user, $agreementOrderAccept);
 
-        //проверяем что запрос был от заказчика
-        {
-            if(!empty($order->organization_id)) {
+        #TODO Вынести в триггер
+        //проверяем если документы подписаны с двух сторон, то устанавливаем для AgreementOrder - подрядчика в свойства contractor_id
+        $this->checkAcceptAgreement($agreementOrderAccept);
 
-                foreach ($user->organizations as $organizations) {
-
-                    if($order->organization_id == $organizations)
-                    {
-                        $agreementOrderAccept->order_bool = true;
-                        $agreementOrderAccept->save();
-
-
-                        return $this->response(true, "Заказчик успешно согласовал выполнение заказа.");
-                    }
-                }
-
-            }
-
-            if(!empty($order->user_id))
-            {
-                if($order->user_id == $user->id)
-                {
-                    $agreementOrderAccept->order_bool = true;
-                    $agreementOrderAccept->save();
-
-                    return $this->response(true, "Заказчик успешно согласовал выполнение заказа.");
-                }
-            }
-
-        }
-
-        //проверяем что запрос был от подрядчика
-        {
-
-            if(!empty($order->contractor_id))
-            {
-
-                foreach ($user->organizations as $organizations) {
-
-                    if($order->contractor_id == $organizations->id)
-                    {
-                        $agreementOrderAccept->contractor_bool = true;
-                        $agreementOrderAccept->save();
-
-                        return $this->response(true, 'Подрядчик успешно согласовал выполнение заказа.');
-                    }
-                }
-            }
-        }
-
-        return $this->response(false, 'У данного пользователя нет прав на согласования заказа.');
+        return $object;
     }
 
     /**
@@ -104,14 +62,5 @@ class AgreementOrderAcceptService
 
         return false;
     }
-
-    private function response(bool $status, string $message) : Object
-    {
-        return (object) [
-            'status' => $status,
-            'message' => $message,
-        ];
-    }
-
 
 }

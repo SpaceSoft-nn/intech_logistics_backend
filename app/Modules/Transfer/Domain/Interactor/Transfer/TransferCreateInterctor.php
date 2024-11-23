@@ -38,11 +38,11 @@ class TransferCreateInterctor
 
     public function execute(CreateTransferServiceDTO $dto)
     {
-        return $this->InteractorLogic($dto);
+        return $this->run($dto);
     }
 
 
-    private function InteractorLogic(CreateTransferServiceDTO $dto) : ?Transfer
+    private function run(CreateTransferServiceDTO $dto) : ?Transfer
     {
         #TODO Здесь нужно использовать паттерн handler (цепочка обязанностей)
 
@@ -207,6 +207,7 @@ class TransferCreateInterctor
 
             foreach ($models as $model) {
 
+                //устанавливаем во связи - главный заказ (главный вектор движения)
                 $statusOrderMain = (bool) $model->order_unit_id == $order_main;
 
                 $status = LinkAgreementToTransferAction::run(
@@ -229,9 +230,4 @@ class TransferCreateInterctor
 
     }
 
-    private function linkCargoUnit()
-    {
-        #TODO - Сделать логику линковки cargoUnit и Transfer
-        return 'cargo';
-    }
 }

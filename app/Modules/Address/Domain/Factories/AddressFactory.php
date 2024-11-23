@@ -28,11 +28,9 @@ class AddressFactory extends Factory
             city: $this->faker->city(),
             street: $this->faker->streetName(),
             building: $this->faker->buildingNumber,
-            apartament: $this->faker->randomNumber(3),
             postal_code: $this->faker->postcode,
             latitude:$this->faker->latitude(55.0, 56.0),
             longitude:$this->faker->longitude(37.0, 38.0),
-            type_address: TypeAddressEnum::work,
 
         );
 

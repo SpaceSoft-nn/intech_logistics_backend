@@ -22,7 +22,6 @@ class AddressController extends Controller
 
     public function show(Address $address)
     {
-        dd($address);
         return response()->json(array_success(AddressResource::make($address), 'Return create Address.'), 200);
     }
 
@@ -30,11 +29,12 @@ class AddressController extends Controller
         AddressCreateRequest $request,
         CreateAddressAction $action,
     )  {
-        
+
         /**
         * @var AddressVO
         */
         $addressVO = $request->getAddressVO();
+
 
         $address = $action->make($addressVO);
 

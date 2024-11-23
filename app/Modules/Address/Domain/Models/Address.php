@@ -28,11 +28,11 @@ class Address extends Model
         "city",
         "street",
         "building",
-        "apartament",
         "postal_code",
         "latitude",
         "longitude",
-        "type_Address",
+        'json',
+        'update_json',
 
     ];
 
@@ -48,6 +48,7 @@ class Address extends Model
             "type_Address" => TypeAddressEnum::class,
             "latitude" => "decimal:10",
             "longitude" => "decimal:10",
+            "json" => "array",
         ];
     }
 

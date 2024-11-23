@@ -18,6 +18,9 @@ use Exception;
 
 use function App\Helpers\Mylog;
 
+/**
+ * Интерактор для работы бизнес-логики когда заказчик выбирает подрядчика
+ */
 final class AgreementOrderInteractor
 {
 

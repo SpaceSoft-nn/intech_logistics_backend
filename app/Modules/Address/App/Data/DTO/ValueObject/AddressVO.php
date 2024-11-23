@@ -2,12 +2,12 @@
 
 namespace App\Modules\Address\App\Data\DTO\ValueObject;
 
-use App\Modules\Address\App\Data\Enums\TypeAddressEnum;
 use App\Modules\Base\Traits\FilterArrayTrait;
 use Arr;
 use Illuminate\Contracts\Support\Arrayable;
+use JsonSerializable;
 
-class AddressVO implements Arrayable
+final readonly class AddressVO implements Arrayable, JsonSerializable
 {
 
     use FilterArrayTrait;
@@ -21,11 +21,11 @@ class AddressVO implements Arrayable
         public readonly string $latitude,
         public readonly string $longitude,
 
-
         public ?string $building,
-        public ?TypeAddressEnum $type_address,
-        public ?string $apartament,
+        // public ?TypeAddressEnum $type_address,
         public ?string $postal_code,
+        public ?array $json,
+        public ?string $update_json,
     ) {}
 
     public static function make(
@@ -37,10 +37,12 @@ class AddressVO implements Arrayable
         string $latitude,
         string $longitude,
 
+
         ?string $building = null,
-        ?string $apartament = null,
         ?string $postal_code = null,
-        ?TypeAddressEnum $type_address = null,
+        ?array $json = null,
+        ?string $update_json = null,
+        // ?TypeAddressEnum $type_address = null,
 
     ) : self {
 
@@ -50,11 +52,12 @@ class AddressVO implements Arrayable
             city: $city,
             street: $street,
             building: $building,
-            apartament: $apartament,
             postal_code: $postal_code,
-            type_address: $type_address,
+            // type_address: $type_address,
             latitude: $latitude,
             longitude: $longitude,
+            json: $json,
+            update_json: $update_json,
 
         );
 
@@ -67,26 +70,54 @@ class AddressVO implements Arrayable
             "city" => $this->city,
             "street" => $this->street,
             "building" => $this->building,
-            "apartament" => $this->apartament,
             "postal_code" => $this->postal_code,
-            "type_address" => $this->type_address,
+            // "type_address" => $this->type_address,
             "latitude" => $this->latitude,
             "longitude" => $this->longitude,
+            "json" => $this->json,
+            "update_json" => $this->update_json,
         ];
+    }
+
+    public function setJson(array $json) : self
+    {
+
+        //повторное создание объекта... #TODO Придумать что можно сделать без доп создание объекта
+        return $this->make(
+            region: $this->region,
+            city: $this->city,
+            street: $this->street,
+            building: $this->building,
+            postal_code: $this->postal_code,
+            latitude: $this->latitude,
+            longitude: $this->longitude,
+            json: $json,
+            update_json: Arr::has($json, 'data') ? now() : null,
+        );
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return json_encode($this->json);
     }
 
     public static function returnObjectFromArray(array $array) : self
     {
+
+        $data = Arr::get($array, 'data.data');
+
+        $building =  Arr::get($data, 'house_type_full', null) . ' ' . Arr::get($data, 'house', null); //создаём правильное название дома
+
         return new self(
-            region: Arr::get($array, 'region', null),
-            city: Arr::get($array, 'city', null),
-            street: Arr::get($array, 'street', null),
-            building: Arr::get($array, 'building', null),
-            apartament: Arr::get($array, 'apartament', null),
-            postal_code: Arr::get($array, 'postal_code', null),
-            type_address: Arr::get($array, 'type_address', null),
-            latitude: Arr::get($array, 'latitude', null),
-            longitude: Arr::get($array, 'longitude', null),
+            region: Arr::get($data, 'region'), //Сделано country т.к в city_with_type и street_with_type - могут значение повторяться
+            city: Arr::get($data, 'city_with_type'),
+            street: Arr::get($data, 'street_with_type'),
+            building: $building,
+            postal_code: Arr::get($data, 'postal_code', null),
+            latitude: Arr::get($data, 'geo_lat'),
+            longitude: Arr::get($data, 'geo_lon'),
+            json: null,
+            update_json: null,
         );
     }
 

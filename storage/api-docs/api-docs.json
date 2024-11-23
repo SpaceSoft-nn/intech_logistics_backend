@@ -14,59 +14,18 @@
                 "summary": "Создать запись Address",
                 "operationId": "4b41ba3f0a4bcc842be9aa5845bfa934",
                 "requestBody": {
+                    "description": "Основной JSON-объект, ожидаемый в параметре data - с сервеса Dadata",
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "allOf": [
-                                    {
-                                        "properties": {
-                                            "region": {
-                                                "description": "Регион",
-                                                "type": "string",
-                                                "example": "Москва"
-                                            },
-                                            "city": {
-                                                "description": "Город",
-                                                "type": "string",
-                                                "example": "Москва"
-                                            },
-                                            "street": {
-                                                "description": "Улица",
-                                                "type": "string",
-                                                "example": "Тверская"
-                                            },
-                                            "building": {
-                                                "description": "Строение",
-                                                "type": "string",
-                                                "example": "1",
-                                                "nullable": true
-                                            },
-                                            "apartment": {
-                                                "description": "Квартира",
-                                                "type": "string",
-                                                "example": "101",
-                                                "nullable": true
-                                            },
-                                            "postal_code": {
-                                                "description": "Почтовый индекс",
-                                                "type": "string",
-                                                "example": "123456",
-                                                "nullable": true
-                                            },
-                                            "latitude": {
-                                                "description": "Широта",
-                                                "type": "string",
-                                                "example": "55.7558"
-                                            },
-                                            "longitude": {
-                                                "description": "Долгота",
-                                                "type": "string",
-                                                "example": "37.6173"
-                                            }
-                                        },
+                                "properties": {
+                                    "data": {
+                                        "description": "Объект с JSON-структурой, которая приходит с dadata",
                                         "type": "object"
                                     }
-                                ]
+                                },
+                                "type": "object"
                             }
                         }
                     }
@@ -3487,11 +3446,6 @@
                     },
                     "building": {
                         "description": "Дом адреса",
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "apartament": {
-                        "description": "Квартира адреса",
                         "type": "string",
                         "nullable": true
                     },

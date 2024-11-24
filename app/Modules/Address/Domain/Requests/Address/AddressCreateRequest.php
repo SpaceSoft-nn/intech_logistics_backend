@@ -34,7 +34,7 @@ class AddressCreateRequest extends ApiRequest
             // "postal_code" => ['nullable', 'string', "max:20"],
             // "type_address" => ['nullable', 'string', "max:50"]
 
-            'data' => ['required', 'array'],
+            'data' => ['required', 'json'],
             'data.data*' => ['required', 'array'],
 
             'data.data.postal_code' => ['sometimes', 'string'],

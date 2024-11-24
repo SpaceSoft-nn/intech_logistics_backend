@@ -29,6 +29,7 @@ enum StatusOrderUnitEnum : string
     */
     public static function stringByCaseToObject(?string $value) : ?self
     {
+
         return match ($value) {
             "draft" => StatusOrderUnitEnum::draft,
             "published" => StatusOrderUnitEnum::published,
@@ -42,4 +43,19 @@ enum StatusOrderUnitEnum : string
         };
     }
 
+    public function getNameCase() : string
+    {
+        return match ($this)
+        {
+            StatusOrderUnitEnum::draft => "draft",
+            StatusOrderUnitEnum::published=> "published",
+            StatusOrderUnitEnum::private => "private",
+            StatusOrderUnitEnum::accepted => "accept",
+            StatusOrderUnitEnum::in_work => "work",
+            StatusOrderUnitEnum::completed_and_wait_payment => "completed_and_wait_payment",
+            StatusOrderUnitEnum::cancelled => "canceled",
+            null => null,
+            default => throw new Exception('Ошибка преобразование Enum StatusOrderUnitEnum', 500),
+        };
+    }
 }

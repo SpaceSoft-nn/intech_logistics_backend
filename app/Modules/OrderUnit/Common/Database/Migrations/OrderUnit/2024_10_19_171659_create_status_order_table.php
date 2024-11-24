@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('status_order', function (Blueprint $table) {
 
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             $table->uuid('order_unit_id')
                 ->constrained('order_units')->noActionOnDelete();

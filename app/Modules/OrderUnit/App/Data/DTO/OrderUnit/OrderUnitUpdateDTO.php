@@ -34,7 +34,7 @@ class OrderUnitUpdateDTO implements Arrayable
             order : $order,
             change_price: $change_price,
             change_time: $change_time,
-            order_status: StatusOrderUnitEnum::from($order_status),
+            order_status: StatusOrderUnitEnum::stringByCaseToObject($order_status),
 
         );
 
@@ -46,7 +46,7 @@ class OrderUnitUpdateDTO implements Arrayable
             "order" => $this->order,
             "change_price" => $this->change_price,
             "change_time" => $this->change_time,
-            "order_status" => $this->order_status,
+            "order_status" => $this->order_status->value,
         ];
     }
 

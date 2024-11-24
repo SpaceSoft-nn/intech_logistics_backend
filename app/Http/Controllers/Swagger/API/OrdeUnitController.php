@@ -510,7 +510,7 @@ use App\Http\Controllers\Controller;
 *               allOf={
 *                  @OA\Schema(
 *                     @OA\Property(
-*                         property="invoice_cotractor_id",
+*                         property="organization_order_units_invoce_id",
 *                         type="uuid",
 *                         description="organization_order_units_invoce - откликнувшиеся подрядчики на заказ",
 *                         example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"

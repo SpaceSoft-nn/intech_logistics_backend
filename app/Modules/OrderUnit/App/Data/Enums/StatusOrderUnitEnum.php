@@ -34,10 +34,10 @@ enum StatusOrderUnitEnum : string
             "draft" => StatusOrderUnitEnum::draft,
             "published" => StatusOrderUnitEnum::published,
             "private" => StatusOrderUnitEnum::private,
-            "accept" => StatusOrderUnitEnum::accepted,
+            "accepted" => StatusOrderUnitEnum::accepted,
             "work" => StatusOrderUnitEnum::in_work,
             "completed_and_wait_payment" => StatusOrderUnitEnum::completed_and_wait_payment,
-            "canceled" => StatusOrderUnitEnum::cancelled,
+            "cancelled" => StatusOrderUnitEnum::cancelled,
             null => null,
             default => throw new Exception('Ошибка преобразование Enum StatusOrderUnitEnum', 500),
         };

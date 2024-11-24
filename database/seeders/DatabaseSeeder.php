@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            
+
                 //Нужны первые сиды
             \App\Modules\Address\Common\Database\Seeders\AddressSeeder::class,
             \App\Modules\OrderUnit\Common\Database\Seeders\OrderUnitSeeder::class,
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             \App\Modules\OrderUnit\Common\Database\Seeders\AgreementOrderSeeder::class,
 
             //Сиды для прода (Презентации)
-            ProdeSeed::class,
+            // ProdeSeed::class,
 
                 //Запуск seed Transfer - Даты доставок и т.д, могут быть случайны.
             // \App\Modules\Transfer\Common\Database\Seeders\TransferSeeder::class,

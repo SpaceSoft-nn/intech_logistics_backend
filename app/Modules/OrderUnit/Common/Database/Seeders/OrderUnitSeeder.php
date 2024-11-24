@@ -6,6 +6,11 @@ use App\Modules\Address\Domain\Models\Address;
 use App\Modules\InteractorModules\AddressOrder\App\Data\DTO\OrderToAddressDTO;
 use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
 use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnitToCargoGood\OrderUnitToCargoGoodDTO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitStatus\OrderUnitStatusVO;
+use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoGoodAction;
+use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitSatus\OrderUnitStatusCreateAction;
+use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
@@ -47,7 +52,7 @@ class OrderUnitSeeder extends Seeder
         {
 
             //Заказ 1
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->withCargoGood()->create([
 
                 'end_date_order' => $end_date_order,
                 "body_volume" => 10,
@@ -77,11 +82,13 @@ class OrderUnitSeeder extends Seeder
             }
 
 
+
+
         }
 
         {
             //Заказ 2
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->create([
 
                 "end_date_order" => $end_date_order,
                 "body_volume" => 9,
@@ -108,11 +115,13 @@ class OrderUnitSeeder extends Seeder
 
             }
 
+
+
         }
 
         {
             //Заказ 3
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 3,
                 "description" => $this->faker->text(),
@@ -135,11 +144,13 @@ class OrderUnitSeeder extends Seeder
                 }
 
             }
+
+
         }
 
         {
             //Заказ 4
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 15,
                 "order_total" => 120000,
@@ -164,11 +175,13 @@ class OrderUnitSeeder extends Seeder
                 }
 
             }
+
+
         }
 
         {
             //Заказ 5
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 20,
                 "description" => $this->faker->text(),
@@ -191,11 +204,13 @@ class OrderUnitSeeder extends Seeder
                 }
 
             }
+
+
         }
 
         {
             //Заказ 6
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 31,
                 "description" => $this->faker->text(),
@@ -218,11 +233,13 @@ class OrderUnitSeeder extends Seeder
                 }
 
             }
+
+
         }
 
         {
             //Заказ 7
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 12,
                 "description" => $this->faker->text(),
@@ -231,8 +248,8 @@ class OrderUnitSeeder extends Seeder
                 "address_is_array" => false,
             ]);
 
-             //делаем связки через промежуточные таблицы
-             {
+            //делаем связки через промежуточные таблицы
+            {
 
 
                 //с адрессами(ом)
@@ -245,11 +262,13 @@ class OrderUnitSeeder extends Seeder
                 }
 
             }
+
+
         }
 
         {
             //Заказ 8
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 4,
                 "description" => $this->faker->text(),
@@ -272,11 +291,13 @@ class OrderUnitSeeder extends Seeder
                 }
 
             }
+
+
         }
 
         {
             //Заказ 9
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 33,
                 "description" => $this->faker->text(),
@@ -285,8 +306,8 @@ class OrderUnitSeeder extends Seeder
                 "address_is_array" => false,
             ]);
 
-             //делаем связки через промежуточные таблицы
-             {
+            //делаем связки через промежуточные таблицы
+            {
 
 
                 //с адрессами(ом)
@@ -299,11 +320,13 @@ class OrderUnitSeeder extends Seeder
                 }
 
             }
+
+
         }
 
         {
             //Заказ 10
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 45,
                 "description" => $this->faker->text(),
@@ -326,11 +349,13 @@ class OrderUnitSeeder extends Seeder
                 }
 
             }
+
+
         }
 
         {
             //Заказ 11
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 25,
                 "description" => $this->faker->text(),
@@ -353,11 +378,13 @@ class OrderUnitSeeder extends Seeder
                 }
 
             }
+
+
         }
 
         {
             //Заказ 12
-            $order = OrderUnit::factory()->create([
+            $order = OrderUnit::factory()->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 17,
                 "description" => $this->faker->text(),
@@ -369,7 +396,6 @@ class OrderUnitSeeder extends Seeder
             //делаем связки через промежуточные таблицы
             {
 
-
                 //с адрессами(ом)
                 {
                     //Адресс отбытия
@@ -380,28 +406,10 @@ class OrderUnitSeeder extends Seeder
                 }
 
             }
+
+
         }
 
     }
-
-    // /**
-    //  * #TODO Вынести в action
-    //  * Делаем линвку при связи многие ко многим
-    //  * @return [type]
-    //  */
-    // private function linkOrderAndCargo(OrderUnit $order, PalletSpace $pallet){
-
-    //     $cargo_units_ids = CargoUnit::factory()->count($this->faker->numberBetween(2, 12))->create([
-    //         "pallets_space_id" => $pallet->id,
-    //     ]);
-
-    //     //мапим и делаем ассоциативный массив
-    //     $syncData = $cargo_units_ids->mapWithKeys(function ($value) {
-    //         return [$value->id => ['factor' => 1]];
-    //     });
-
-
-    //     $order->cargo_units()->syncWithoutDetaching($syncData->toArray());
-    // }
 
 }

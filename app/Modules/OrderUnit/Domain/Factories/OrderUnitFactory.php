@@ -61,6 +61,13 @@ class OrderUnitFactory extends Factory
 
     }
 
+    public function withCargoGood()
+    {
+        // Добавление статуса после создания заказа
+        return $this->afterCreating(function (OrderUnit $order) {
+            $this->unionCargoGood($order);
+        });
+    }
 
     public function configure(): static
     {
@@ -93,7 +100,36 @@ class OrderUnitFactory extends Factory
 
             }
 
+            $this->unionOrderStatus($orderUnit);
+
         });
+    }
+
+    private function unionOrderStatus(OrderUnit $orderUnit)
+    {
+
+        //Создание статуса
+        OrderUnitStatusCreateAction::make(
+            OrderUnitStatusVO::make(
+                order_unit_id: $orderUnit->id,
+            )
+        );
+
+    }
+
+
+    private function unionCargoGood(OrderUnit $orderUnit)
+    {
+        /**
+        * @var CargoGood
+        */
+        $cargoGood = CargoGood::factory()->create();
+        LinkOrderUnitToCargoGoodAction::run(
+            OrderUnitToCargoGoodDTO::make(
+                cargoGood: $cargoGood,
+                orderUnit: $orderUnit,
+            )
+        );
     }
 
 }

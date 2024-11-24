@@ -1541,14 +1541,14 @@
                 }
             }
         },
-        "api/orders/{OrderUnit::uuid}/agreement-order": {
+        "api/orders/agreement/{OrderUnit::uuid}/agreement-order": {
             "post": {
                 "tags": [
                     "Order Unit"
                 ],
                 "summary": "Выбор подрядчика (исполнителя), заказчиком",
                 "description": "//Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи",
-                "operationId": "8c34703ca0af5fa7ff213b7f6eaeb3e1",
+                "operationId": "ef5492e691ea417518e29685543a7ae2",
                 "parameters": [
                     {
                         "name": "OrderUnit::uuid",
@@ -1627,14 +1627,14 @@
                 }
             }
         },
-        "api/orders/{agreementOrderAccept::uuid}/agreement-accept": {
+        "api/orders/agreement/{agreementOrderAccept::uuid}/agreement-accept": {
             "patch": {
                 "tags": [
                     "Order Unit"
                 ],
                 "summary": "Утверждения Двух-стороннего договор, о принятии в работу Заказа, со стороны Заказчика/Подрядчика",
                 "description": "Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer",
-                "operationId": "8d0bc1e70b8c426d872bfd348b544ed9",
+                "operationId": "f1e8f87e3a700682d4ee89b425ff94a3",
                 "parameters": [
                     {
                         "name": "agreementOrderAccept::uuid",

@@ -490,7 +490,7 @@ use App\Http\Controllers\Controller;
 * ),
 *
 * @OA\Post(
-*     path="api/orders/{OrderUnit::uuid}/agreement-order",
+*     path="api/orders/agreement/{OrderUnit::uuid}/agreement-order",
 *     tags={"Order Unit"},
 *     summary="Выбор подрядчика (исполнителя), заказчиком",
 *     description="//Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи",
@@ -549,7 +549,7 @@ use App\Http\Controllers\Controller;
 *
 * @OA\patch(
 
-*     path="api/orders/{agreementOrderAccept::uuid}/agreement-accept",
+*     path="api/orders/agreement/{agreementOrderAccept::uuid}/agreement-accept",
 *     tags={"Order Unit"},
 *     summary="Утверждения Двух-стороннего договор, о принятии в работу Заказа, со стороны Заказчика/Подрядчика",
 *     description="Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer",

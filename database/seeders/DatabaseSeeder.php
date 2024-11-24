@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
-
+use App\Modules\Notification\Domain\Models\EmailList;
+use App\Modules\Notification\Domain\Models\PhoneList;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -38,25 +40,23 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-        // {
-        //     $email = EmailList::create([
-        //         'value' => 'test@gmail.com',
-        //         'status' => true,
-        //     ]);
+        {
+            $email = EmailList::create([
+                'value' => 'test@gmail.com',
+                'status' => true,
+            ]);
 
-        //     $phone = PhoneList::create([
-        //         'value' => '79200000000',
-        //         'status' => true,
-        //     ]);
+            $phone = PhoneList::create([
+                'value' => '79200000000',
+                'status' => true,
+            ]);
 
-        //     User::factory()->create([
-        //         "password" => "Pass123!",
-        //         "email_id" =>  $email->id,
-        //         "phone_id" =>  $phone->id,
-        //     ]);
-        // }
-
-
+            User::factory()->create([
+                "password" => "Pass123!",
+                "email_id" =>  $email->id,
+                "phone_id" =>  $phone->id,
+            ]);
+        }
 
     }
 }

@@ -189,6 +189,8 @@ class OrderUnitController extends Controller
         */
         $invoceOrder = $request->getValueObject();
 
+        dd($invoceOrder);
+
         /**
         * @var OrganizationOrderUnitInvoice
         */

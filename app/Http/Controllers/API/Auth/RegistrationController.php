@@ -56,6 +56,7 @@ class RegistrationController
                 }
 
             } catch (\Throwable $th) {
+
                 if(isset($validated['phone'])) {
                     throw new BusinessException('Пользователь с такими данными phone уже существует.', 409);
                 } else {

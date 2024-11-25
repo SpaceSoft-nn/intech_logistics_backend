@@ -71,7 +71,7 @@ class InteractorOrgOrderInvoice
 
         } catch (\Exception $e) {
 
-            Mylog('Ошибк в InteractorOrgOrderInvoice: ' . $e);
+            Mylog('Ошибка в InteractorOrgOrderInvoice: ' . $e);
             throw new Exception('Ошибка транзакции в интеракторе: InteractorOrgOrderInvoice', 500);
 
         }

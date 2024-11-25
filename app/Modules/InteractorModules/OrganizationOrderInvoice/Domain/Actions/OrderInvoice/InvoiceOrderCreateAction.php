@@ -6,6 +6,8 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
 use Exception;
 
+use function App\Helpers\Mylog;
+
 class InvoiceOrderCreateAction
 {
 
@@ -32,6 +34,7 @@ class InvoiceOrderCreateAction
             $model = InvoiceOrder::create($vo->toArray());
 
         } catch (\Throwable $th) {
+            Mylog('Ошибка создание OrderInvoice: ' . $th);
             throw new Exception('Ошибка создание OrderInvoice', 500);
         }
 

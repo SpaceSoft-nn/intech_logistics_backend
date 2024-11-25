@@ -52,7 +52,7 @@ class InvoiceOrderVO implements Arrayable
         $comment = Arr::get($array, "comment");
 
 
-        return new self(
+        return self::make(
             price: $price,
             date: $date,
             comment: $comment,

@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
+use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
@@ -23,10 +25,52 @@ class ProdeSeed extends Seeder
      */
     public function run(): void
     {
-        $this->createUser('test2@gmail.com', '79200000001');
+
+        {
+            $user = [
+                "first_name" => 'Иван',
+                "last_name" => 'Кукушка',
+                "father_name" => 'Васильевич',
+                "password" => "password",
+            ];
+
+            $user = $this->createUser(
+                email: 'customer@gmail.com',
+                phone: '79200000000',
+                typeCabinet: TypeCabinetEnum::сarrier,
+                userValue: $user,
+            );
+
+            //создаём OrderUnit для user
+            $this->createOrderUnit($user);
+        }
+
+
+        $user = [
+            "first_name" => 'Георгий',
+            "last_name" => 'Паншин',
+            "father_name" => 'Павлович',
+            "password" => "password",
+        ];
+
+        $this->createUser(
+            email: 'сarrier@gmail.com',
+            phone: '79200000001',
+            typeCabinet: TypeCabinetEnum::сarrier,
+            userValue: $user,
+        );
     }
 
-    public function createUser(string $email, string $phone)
+    /**
+     * Создаём user
+     * @param string $email
+     * @param string $phone
+     * @param TypeCabinetEnum|null $typeCabinet
+     * @param array|null $userValue
+     *
+     * @return User
+     */
+    public function createUser(string $email, string $phone, ?TypeCabinetEnum $typeCabinet = null, ?array $userValue = null) : User
     {
         {
             { // создаём данные email и phone
@@ -41,17 +85,13 @@ class ProdeSeed extends Seeder
                     'value' => $phone,
                     'status' => true,
                 ]);
+
+                Arr::get($userValue, "email_id", $email->id);
+                Arr::get($userValue, "phone_id", $phone->id);
             }
 
             //создаём user и активируем его в factory
-            $user = User::factory()->create([
-                "first_name" => 'Иван',
-                "last_name" => 'Кукушка',
-                "father_name" => 'Васильевич',
-                "password" => "Pass123!",
-                "email_id" =>  $email->id,
-                "phone_id" =>  $phone->id,
-            ]);
+            $user = User::factory()->create($userValue);
 
             $orgArray = Organization::factory()->make()->toArray();
             //меняем user на своего
@@ -65,62 +105,77 @@ class ProdeSeed extends Seeder
 
 
             $organization = app(OrganizationService::class)->createOrganization(
-                OrganizationCreateDTO::make($orgVO, $user, TypeCabinetEnum::customer)
+                OrganizationCreateDTO::make(
+                    organizationVO: $orgVO,
+                    user: $user,
+                    type_cabinet: $typeCabinet ?? TypeCabinetEnum::customer)
             );
 
-
-            $this->createOrderUnit($user->id, $organization->id);
+            return $user;
         }
     }
 
-    public function createOrderUnit(string $user_id, string $organization_id)
+    public function createOrderUnit(User $user)
     {
 
-        { // создаёмм
-            $orderUnitVoArray = OrderUnit::factory()->make([
+        $user_id = $user->id;
+
+        $organization_id = $user->organizations[0];
+
+        //получем rep OrderUnit для установки своего статуса
+        $orderRep = app(OrderUnitRepository::class);
+
+        { #OrderUnit + cargoGood
+
+            $orderRep = app(OrderUnitRepository::class);
+
+            $arrayCargoGood = [
+                'name_value' => '№3254',
+                'product_type' => 'Вода',
+                'description' => 'Бутилированная вода',
+                'body_volume' => '8.5',
+            ];
+
+            $order = OrderUnit::factory()->withCargoGood($arrayCargoGood)->create([
                 "end_date_order" => now()->addDays(5),
-                "description" => 'Нужно доставить заказ по данным Адрессам',
-                "order_total" => '180500',
-                "body_volume" => '15.5',
+                "order_total" => "180000",
+                "description" => 'Нужно доставить заказ по данными адресам',
+                "body_volume" => '8.5',
                 "user_id" => $user_id,
                 "organization_id" => $organization_id,
-                "type_load_truck" => TypeLoadingTruckMethod::ftl,
-            ])->toArray();
+            ]);
 
-            Arr::set($orderUnitVoArray, 'type_load_truck', 'ftl');
-            Arr::set($orderUnitVoArray, 'type_transport_weight', 'medium');
+            $orderRep->setStatus(StatusOrderUnitEnum::published, $order->id);
+
         }
 
+        { #OrderUnit + cargoGood + mgx
+            $arrayCargoGood = [
+                'name_value' => '№3254',
+                'product_type' => 'Металлокорд',
+                'description' => 'Металлокорд - проволки и троссы',
+                'body_volume' => '18.75',
+            ];
 
-        // /**
-        // * @var OrderUnitVO
-        // */
-        // $orderUnitVO = OrderUnitVO::fromArrayToObject($orderUnitVoArray);
+            $mgx = [
+                "length" => '7.5',
+                "width" => '2.5',
+                "height" => '1',
+                "weight" => '700',
+            ];
 
-        // /**
-        // * @var ?CargoGoodVO[]
-        // */
-        // $cargoGoodVO = $request->createCargoGoodVO();
+            $order = OrderUnit::factory()->withCargoGood($arrayCargoGood, $mgx)->create([
+                "end_date_order" => now()->addDays(5),
+                "order_total" => "275000",
+                "description" => 'Нужно доставить заказ по заданным Адрессам.',
+                "body_volume" => '18.75',
+                "user_id" => $user_id,
+                "organization_id" => $organization_id,
+            ]);
 
-        // /**
-        // * @var OrderUnitAddressDTO
-        // */
-        // $orderUnitAddressDTO = $request->createOrderUnitAddressDTO();
+            $orderRep->setStatus(StatusOrderUnitEnum::published, $order->id);
+        }
 
-
-        /**
-        * @var OrderUnit
-        */
-        // $order = app(OrderUnitService::class)->createOrderUnit(
-        //     OrderUnitCreateDTO::make(
-        //         orderUnitVO: $orderUnitVO,
-        //         orderUnitAddressDTO: $orderUnitAddressDTO,
-        //         cargoGoodVO : $cargoGoodVO,
-        //     )
-        // );
-
-
-        // dd($orderUnit->addresses[0]->toArray());
 
     }
 }

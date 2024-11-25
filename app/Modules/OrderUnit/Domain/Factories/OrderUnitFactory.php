@@ -12,6 +12,7 @@ use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoGoodAction;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitSatus\OrderUnitStatusCreateAction;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
+use App\Modules\OrderUnit\Domain\Models\Mgx;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -61,11 +62,17 @@ class OrderUnitFactory extends Factory
 
     }
 
-    public function withCargoGood()
+    /**
+     * @param ?array $cargoGood если нужны кастомные значение cargoGood
+     * @param ?array $mgx
+     *
+     * @return [type]
+     */
+    public function withCargoGood(array $cargoGood = null, array $mgx = null)
     {
         // Добавление статуса после создания заказа
-        return $this->afterCreating(function (OrderUnit $order) {
-            $this->unionCargoGood($order);
+        return $this->afterCreating(function (OrderUnit $order) use ($cargoGood, $mgx) {
+            $this->createCargoGoodToOrder($order, $cargoGood, $mgx);
         });
     }
 
@@ -118,18 +125,52 @@ class OrderUnitFactory extends Factory
     }
 
 
-    private function unionCargoGood(OrderUnit $orderUnit)
+    /**
+     * @param OrderUnit $orderUnit
+     * @param CargoGood $cargoGood
+     * @param Mgx $mgx
+     *
+     */
+    private function createCargoGoodToOrder(OrderUnit $orderUnit, array $cargoGood = null, array $mgx = null)
     {
-        /**
-        * @var CargoGood
-        */
-        $cargoGood = CargoGood::factory()->create();
+        //создамё cargoGood + если нужно MGX (кастомный или случайны из factory)
+        if(!is_null($cargoGood))
+        {
+
+            if(!is_null($mgx)) {
+                $cargoGood = CargoGood::factory()->withMgx($mgx)->create($cargoGood);
+
+            } else {
+
+                $cargoGood = CargoGood::factory()->create($cargoGood);
+
+            }
+
+
+
+        }
+        else {
+
+            if(!is_null($mgx)) {
+
+                $cargoGood = CargoGood::factory()->withMgx($mgx)->create();
+
+            } else {
+
+                $cargoGood = CargoGood::factory()->create();
+
+            }
+
+        }
+
+
         LinkOrderUnitToCargoGoodAction::run(
             OrderUnitToCargoGoodDTO::make(
                 cargoGood: $cargoGood,
                 orderUnit: $orderUnit,
             )
         );
+
     }
 
 }

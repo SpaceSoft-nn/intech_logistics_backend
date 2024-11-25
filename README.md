@@ -12,7 +12,17 @@
 
 ```
 Пользовтаель созданный через seed:
-    mail:test@gmail.com
-    phone:79200000000
-    password:Pass123!
+
+    //Пользователь с организацией (Заказчик) + 2 (Заказа)
+    mail: customer@gmail.com
+    phone: 79200000000
+    password: password
+
+    //Пользователь с организацией (Перевозчик)
+    mail: сarrier@gmail.com
+    phone: 79200000000
+    password: password
+    
 ```
+
+

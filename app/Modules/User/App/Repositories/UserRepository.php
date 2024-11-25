@@ -9,6 +9,7 @@ use App\Modules\User\Domain\Actions\CreateUserAction;
 use App\Modules\User\Domain\Interface\Repositories\IRepository;
 use App\Modules\User\Domain\Models\PersonalArea;
 use App\Modules\User\Domain\Models\User as Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository extends CoreRepository implements IRepository
 {
@@ -32,10 +33,16 @@ class UserRepository extends CoreRepository implements IRepository
         return CreateUserAction::make($dto->userVO);
     }
 
+    /**
+     * @param string $uuid
+     *
+     * @return Model|null
+     */
     public function getById($uuid) : ?Model
     {
         return $this->query()->find($uuid);
     }
+
 
     #TODO Проверить/ изменить
     public function isOwnerPersonalArea(Model $model, ?string $uuid ) : ?PersonalArea

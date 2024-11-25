@@ -4,6 +4,7 @@ namespace App\Modules\User\Domain\Models;
 
 use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Factories\UserFactory;
@@ -101,6 +102,7 @@ class User extends Authenticatable
         ];
     }
 
+
     public function personal_areas(): BelongsToMany
     {
         return $this->belongsToMany(PersonalArea::class, 'user_personal_area', 'user_id' , 'personal_area_id');
@@ -110,7 +112,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Organization::class, 'user_organization', 'user_id' , 'organization_id')->withPivot('type_cabinet');
     }
-
 
     public function phone(): BelongsTo
     {

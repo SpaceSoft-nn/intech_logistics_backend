@@ -33,30 +33,30 @@ class DatabaseSeeder extends Seeder
             \App\Modules\OrderUnit\Common\Database\Seeders\AgreementOrderSeeder::class,
 
             //Сиды для прода (Презентации)
-            // ProdeSeed::class,
+            ProdeSeed::class,
 
                 //Запуск seed Transfer - Даты доставок и т.д, могут быть случайны.
             // \App\Modules\Transfer\Common\Database\Seeders\TransferSeeder::class,
 
         ]);
 
-        {
-            $email = EmailList::create([
-                'value' => 'test@gmail.com',
-                'status' => true,
-            ]);
+        // {
+        //     $email = EmailList::create([
+        //         'value' => 'test@gmail.com',
+        //         'status' => true,
+        //     ]);
 
-            $phone = PhoneList::create([
-                'value' => '79200000000',
-                'status' => true,
-            ]);
+        //     $phone = PhoneList::create([
+        //         'value' => '79200000000',
+        //         'status' => true,
+        //     ]);
 
-            User::factory()->create([
-                "password" => "Pass123!",
-                "email_id" =>  $email->id,
-                "phone_id" =>  $phone->id,
-            ]);
-        }
+        //     User::factory()->create([
+        //         "password" => "Pass123!",
+        //         "email_id" =>  $email->id,
+        //         "phone_id" =>  $phone->id,
+        //     ]);
+        // }
 
     }
 }

@@ -8,7 +8,7 @@ use App\Modules\OrderUnit\Domain\Actions\LinkCargoUnitToCargoGoodAction;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 use App\Modules\OrderUnit\Domain\Models\Mgx;
-
+use Arr;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CargoGoodFactory extends Factory
@@ -37,19 +37,45 @@ class CargoGoodFactory extends Factory
         }
 
     }
+
+
+    /**
+     * @param ?array $mgx
+     *
+     * @return [type]
+     */
+    public function withMgx(array $mgx = null)
+    {
+        return $this->afterCreating(function (CargoGood $cargoGood) use ($mgx) {
+
+            if(!is_null($mgx)) {
+
+                $array = Arr::add($mgx, 'cargo_good_id', $cargoGood->id);
+
+                /**
+                * @var Mgx
+                */
+                $mgx = Mgx::factory()->create($array);
+
+            } else {
+
+                /**
+                * @var Mgx
+                */
+                $mgx = Mgx::factory()->create([
+                    'cargo_good_id' => $cargoGood->id,
+                ]);
+            }
+
+
+        });
+    }
+
     public function configure(): static
     {
-        // Добавляем теги после создания поста
         return $this->afterCreating(function (CargoGood $cargoGood) {
 
-            /**
-            * @var Mgx
-            */
-            Mgx::factory()->create([
-                'cargo_good_id' => $cargoGood->id
-            ]);
-
-
+            // TODO Продумать нужно ли
             for ($i = 0; $i < $cargoGood->cargo_units_count; $i++) {
 
                 $cargoUnit = CargoUnit::factory()->create([
@@ -65,7 +91,6 @@ class CargoGoodFactory extends Factory
                 );
 
             }
-
 
 
         });

@@ -31,7 +31,7 @@ class OrganizationOrderInvoiceFactory extends Factory
         /**
         * @var OrderUnit
         */
-        $orderUnit = OrderUnit::factory()->create();
+        $orderUnit = OrderUnit::factory()->withCargoGood()->create();
 
         // if(!$orderUnit) { $this->fail('Пожалуйста запустите seed'); }
 

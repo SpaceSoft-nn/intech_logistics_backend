@@ -18,7 +18,7 @@ class CargoGoodResource extends JsonResource
 
             "id" => $this->id,
             "name_value" => $this->name_value,
-            "product_type" => $this->body_volume,
+            "product_type" => $this->product_type,
             "type_pallet" => $this->type_pallet,
             "cargo_units_count" => $this->cargo_units_count,
 

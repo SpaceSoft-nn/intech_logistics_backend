@@ -21,7 +21,7 @@ class AddContractorRequest extends ApiRequest
 
             "price" => ['required', 'numeric'],
             "date" => ['required', 'date'],
-            "comment" => [ 'required', 'string', 'max:1000'],
+            "comment" => [ 'nullable', 'string', 'max:1000'],
 
         ];
     }

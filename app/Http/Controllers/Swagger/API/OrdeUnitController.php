@@ -406,6 +406,43 @@ use App\Http\Controllers\Controller;
 *
 * ),
 *
+* @OA\Get(
+*
+*      path="/api/orders/contractors",
+*      summary="Получить всех подрятчиков откликнувшиеся на заказ (вне зависимости от заказа - Временный endpoint)",
+*      description="Получить всех подрятчиков которые откликнулись на заказ, и заинтересованы в работе, возвращает: organization_order_unit_invoces",
+*      tags={"Order Unit"},
+*
+*      @OA\Response(
+*         response=200,
+*         description="Получение всех подрядчиков успешно.",
+*         @OA\JsonContent(
+*             @OA\Property(
+*                 property="data",
+*                 type="array",
+*                 @OA\Items(
+*                     ref="#/components/schemas/OrgOrderInvoiceResource"
+*                 )
+*             ),
+*             @OA\Property(
+*                 property="message",
+*                 type="string",
+*                 example="Возвращены все подрядчики откликнувшиеся на заказ."
+*             )
+*         )
+*      ),
+*
+*      @OA\Response(
+*           response=500,
+*           description="Общая ошибка сервера.",
+*           @OA\JsonContent(
+*               @OA\Property(property="message_error", type="string", example="Error server"),
+*               @OA\Property(property="code", type="integer", example="500"),
+*           ),
+*      ),
+*
+* ),
+*
 * @OA\Post(
 *     path="api/orders/{OrderUnit::uuid}/contractors/{organization:uuid}",
 *     tags={"Order Unit"},

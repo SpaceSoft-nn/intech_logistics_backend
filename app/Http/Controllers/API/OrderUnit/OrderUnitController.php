@@ -218,6 +218,18 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OrgOrderInvoiceCollection::make($arrays), 'Возвращены все подрядчики откликнувшиеся на заказ.'), 200);
     }
 
+     /**
+     * Возврат всех подрятчиков откликнувшиеся на заказ.
+     * @param OrderUnit $orderUnit
+     *
+     */
+    public function getContractorsAll()
+    {
+        $arrays = OrganizationOrderUnitInvoice::all();
+
+        return response()->json(array_success(OrgOrderInvoiceCollection::make($arrays), 'Возвращены все подрядчики откликнувшиеся на заказ.'), 200);
+    }
+
     /**
     * Принятие подрятчика на заказ от заказчика.
     */

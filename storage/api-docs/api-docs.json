@@ -1415,6 +1415,60 @@
                 }
             }
         },
+        "/api/orders/contractors": {
+            "get": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Получить всех подрятчиков откликнувшиеся на заказ (вне зависимости от заказа - Временный endpoint)",
+                "description": "Получить всех подрятчиков которые откликнулись на заказ, и заинтересованы в работе, возвращает: organization_order_unit_invoces",
+                "operationId": "2e28832a212ab90106707ade50fb9976",
+                "responses": {
+                    "200": {
+                        "description": "Получение всех подрядчиков успешно.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/OrgOrderInvoiceResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Возвращены все подрядчики откликнувшиеся на заказ."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "api/orders/{OrderUnit::uuid}/contractors/{organization:uuid}": {
             "post": {
                 "tags": [

@@ -2,10 +2,8 @@
 
 namespace App\Modules\Matrix\Domain\Factories;
 
-use App\Modules\GAR\Domain\Services\GARService;
-use App\Modules\Matrix\App\Data\DTO\MatrixDistanceDTO;
+use App\Modules\Matrix\App\Data\DTO\MatrixDistanceVO;
 use App\Modules\Matrix\Domain\Models\MatrixDistance;
-use App\Modules\OrderUnit\Domain\Interactor\Algorithm\VectorLength\calculateVectorLength;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MatrixDistanceFactory extends Factory
@@ -16,7 +14,7 @@ class MatrixDistanceFactory extends Factory
     {
 
 
-        $dtoArray = MatrixDistanceDTO::make(
+        $dtoArray = MatrixDistanceVO::make(
             city_start_gar_id: $this->faker->uuid(),
             city_end_gar_id: $this->faker->uuid(),
             city_name_start: $this->faker->city(),

@@ -9,7 +9,6 @@ use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddress
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\MainAddress\MainAddressVectorVO;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use function App\Helpers\Mylog;

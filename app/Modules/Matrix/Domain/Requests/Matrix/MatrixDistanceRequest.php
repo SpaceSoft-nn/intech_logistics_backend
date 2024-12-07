@@ -30,16 +30,15 @@ class MatrixDistanceRequest extends ApiRequest
         ];
     }
 
-    protected function passedValidation(): void
-    {
-        $this->merge([
-            'distance' => '100'
-        ]);
-    }
+    // protected function passedValidation(): void
+    // {
+    //     $this->merge([
+    //         'distance' => '100'
+    //     ]);
+    // }
 
     public function createMatrixDistanceVO() : MatrixDistanceVO
     {
-        dd($this->validated());
         return MatrixDistanceVO::fromArrayToObject($this->validated());
     }
 

@@ -6,6 +6,7 @@ use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\Matrix\App\Data\DTO\Base\BaseDTO;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
+use Str;
 
 class MatrixDistanceVO extends BaseDTO implements Arrayable
 {
@@ -34,10 +35,18 @@ class MatrixDistanceVO extends BaseDTO implements Arrayable
         return new self(
             city_start_gar_id: $city_start_gar_id,
             city_end_gar_id: $city_end_gar_id,
-            city_name_start: $city_name_start,
-            city_name_end: $city_name_end,
+            city_name_start: self::mappingString($city_name_start),
+            city_name_end: self::mappingString($city_name_end),
             distance: $distance,
         );
+    }
+
+    private static function mappingString(string $str)
+    {
+        $str = Str::trim($str); //удаляем пробелы в начале/конце
+        $str = Str::lower($str); //преобразуем в нижний регистр
+
+        return $str;
     }
 
     public static function fromArrayToObject(array $data) : self

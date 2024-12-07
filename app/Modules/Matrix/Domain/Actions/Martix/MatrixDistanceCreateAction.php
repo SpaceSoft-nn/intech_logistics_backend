@@ -2,10 +2,12 @@
 
 namespace App\Modules\Matrix\Domain\Actions\Martix;
 
+use App\Modules\Base\Error\BusinessException;
 use App\Modules\Matrix\App\Data\DTO\MatrixDistanceVO;
 use App\Modules\Matrix\Domain\Models\MatrixDistance;
 
 use Exception;
+use Illuminate\Database\UniqueConstraintViolationException;
 
 use function App\Helpers\Mylog;
 
@@ -20,9 +22,14 @@ class MatrixDistanceCreateAction
     private function run(MatrixDistanceVO $vo) : MatrixDistance
     {
 
+
         try {
 
             $md = MatrixDistance::create($vo->toArrayNotNull());
+
+        } catch (UniqueConstraintViolationException){
+
+            throw new BusinessException('Такая запись городов уже существует.', 409);
 
         } catch (\Throwable $th) {
 

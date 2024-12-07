@@ -308,6 +308,8 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="longitude", type="float", description="Долгота адреса")
 * ),
 *
+*
+*
 */
 abstract class Controller
 {

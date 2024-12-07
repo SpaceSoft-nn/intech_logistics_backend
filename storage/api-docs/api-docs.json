@@ -374,6 +374,107 @@
                 }
             }
         },
+        "/api/matrix-distance/filter": {
+            "get": {
+                "tags": [
+                    "Matrix Distance"
+                ],
+                "summary": "Вернуть матрицу расстояний по Городу start/end (в будущем по gar_id) ",
+                "description": "Возвращает матричные расстояния",
+                "operationId": "de92a82d7221c81a0cf83fc11f7f95af",
+                "parameters": [
+                    {
+                        "name": "city_name_start",
+                        "in": "query",
+                        "description": "Название начального города",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "city_name_end",
+                        "in": "query",
+                        "description": "Название конечного города",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "city_start_gar_id",
+                        "in": "query",
+                        "description": "UUID начального города",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "city_end_gar_id",
+                        "in": "query",
+                        "description": "UUID конечного города",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/MatrixDistanceResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Get Matrix Distance."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Неверные параметры запроса",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/notification/confirm": {
             "post": {
                 "tags": [

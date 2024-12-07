@@ -30,7 +30,7 @@ class MatrixDistanceController extends Controller
         MatrixDistanceShowRequest $request,
         MatrixService $serviceMatrix,
     ) {
-
+        #TODO - Сделать потом что бы сравнения было не по string, а по gar_id (индефикатора города)
         /**
          * @var MatrixDistanceShowDTO
          */

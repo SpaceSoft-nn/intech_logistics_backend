@@ -47,14 +47,16 @@ use App\Http\Controllers\Controller;
  *                 @OA\Schema(
  *                     type="string",
  *                 ),
- *                 description="Название начального города"
+ *                 example="Уфа",
+ *                 description="Название начального города",
  *             ),
  *             @OA\Property(
  *                 property="city_name_end",
  *                 @OA\Schema(
  *                     type="string",
  *                 ),
- *                 description="Название конечного города"
+ *                 example="Казань",
+ *                 description="Название конечного города",
  *             ),
  *             @OA\Property(
  *                 property="distance",
@@ -62,7 +64,8 @@ use App\Http\Controllers\Controller;
  *                     type="string",
  *                     format="float",
  *                 ),
- *                 description="Расстояние между городами"
+ *                 example=750.5,
+ *                 description="Расстояние между городами",
  *             ),
  *             @OA\Property(
  *                 property="city_start_gar_id",
@@ -70,8 +73,9 @@ use App\Http\Controllers\Controller;
  *                     type="string",
  *                     format="uuid",
  *                 ),
+ *                 example="123e4567-e89b-12d3-a456-426614174000",
  *                 description="UUID начального города",
- *                 nullable=true
+ *                 nullable=true,
  *             ),
  *             @OA\Property(
  *                 property="city_end_gar_id",
@@ -79,8 +83,9 @@ use App\Http\Controllers\Controller;
  *                     type="string",
  *                     format="uuid",
  *                 ),
+ *                 example="123e4567-e89b-12d3-a456-426614174001",
  *                 description="UUID конечного города",
- *                 nullable=true
+ *                 nullable=true,
  *             )
  *         )
  *     ),
@@ -101,6 +106,25 @@ use App\Http\Controllers\Controller;
  *             )
  *         )
  *     ),
+ *
+ *     @OA\Response(
+ *         response=409,
+ *         description="Ошибка создания.",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="success",
+ *                 type="boolean",
+ *                 example=false
+ *             ),
+ *             @OA\Property(
+ *                 property="info",
+ *                 type="string",
+ *                 example="Такая запись городов уже существует."
+ *             )
+ *         )
+ *     ),
+ *
  *
  *
  *     @OA\Response(

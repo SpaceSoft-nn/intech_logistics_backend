@@ -392,20 +392,25 @@
                                 ],
                                 "properties": {
                                     "city_name_start": {
-                                        "description": "Название начального города"
+                                        "description": "Название начального города",
+                                        "example": "Уфа"
                                     },
                                     "city_name_end": {
-                                        "description": "Название конечного города"
+                                        "description": "Название конечного города",
+                                        "example": "Казань"
                                     },
                                     "distance": {
-                                        "description": "Расстояние между городами"
+                                        "description": "Расстояние между городами",
+                                        "example": 750.5
                                     },
                                     "city_start_gar_id": {
                                         "description": "UUID начального города",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000",
                                         "nullable": true
                                     },
                                     "city_end_gar_id": {
                                         "description": "UUID конечного города",
+                                        "example": "123e4567-e89b-12d3-a456-426614174001",
                                         "nullable": true
                                     }
                                 },
@@ -427,6 +432,26 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Matrix Distance создана успешно."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Ошибка создания.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "info": {
+                                            "type": "string",
+                                            "example": "Такая запись городов уже существует."
                                         }
                                     },
                                     "type": "object"

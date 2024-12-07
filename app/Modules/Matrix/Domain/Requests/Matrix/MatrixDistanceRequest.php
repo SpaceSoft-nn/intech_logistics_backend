@@ -2,7 +2,6 @@
 
 namespace App\Modules\Matrix\Domain\Requests\Matrix;
 
-use App\Http\Controllers\Swagger\API\MatrixDistance;
 use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\Matrix\App\Data\DTO\MatrixDistanceVO;
 
@@ -23,7 +22,7 @@ class MatrixDistanceRequest extends ApiRequest
             'city_name_start' => ['required', 'string'],
             'city_name_end' => ['required', 'string'],
 
-            'distance' => ['required' , 'number'],
+            'distance' => ['required' , 'numeric'],
 
             'city_start_gar_id' => ['nullable', 'uuid'],
             'city_end_gar_id' => ['nullable', 'uuid'],
@@ -31,9 +30,17 @@ class MatrixDistanceRequest extends ApiRequest
         ];
     }
 
+    protected function passedValidation(): void
+    {
+        $this->merge([
+            'distance' => '100'
+        ]);
+    }
+
     public function createMatrixDistanceVO() : MatrixDistanceVO
     {
-        return MatrixDistanceVO::fromArrayToObject($this->getValidatedData());
+        dd($this->validated());
+        return MatrixDistanceVO::fromArrayToObject($this->validated());
     }
 
 }

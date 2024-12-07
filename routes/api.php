@@ -131,8 +131,14 @@ Route::prefix('/transfer')->group(function () {
 
 });
 
-    //MatrixDistance
-Route::get('/matrix-distance', [MatrixDistanceController:: class, 'get']);
+Route::prefix('/matrix-distance')->group(function () {
+
+    Route::get('/', [MatrixDistanceController:: class, 'index']);
+    Route::post('/', [MatrixDistanceController:: class, 'create']);
+
+});
+
+
 
     //RegionEconomicFactor
 Route::get('/region-economic-status', [RegionEconomicFactorController:: class, 'get']);

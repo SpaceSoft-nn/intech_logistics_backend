@@ -9,7 +9,7 @@ use Exception;
 
 use function App\Helpers\Mylog;
 
-class MatrixCreateAction
+class MatrixDistanceCreateAction
 {
 
     public static function make(MatrixDistanceVO $vo) : MatrixDistance
@@ -22,7 +22,7 @@ class MatrixCreateAction
 
         try {
 
-            $mgx = MatrixDistance::create($vo->toArrayNotNull());
+            $md = MatrixDistance::create($vo->toArrayNotNull());
 
         } catch (\Throwable $th) {
 
@@ -31,6 +31,6 @@ class MatrixCreateAction
 
         }
 
-        return $mgx;
+        return $md;
     }
 }

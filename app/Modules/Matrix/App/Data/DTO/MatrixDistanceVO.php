@@ -13,8 +13,8 @@ class MatrixDistanceVO extends BaseDTO implements Arrayable
     use FilterArrayTrait;
 
     public function __construct(
-        public string $city_start_gar_id,
-        public string $city_end_gar_id,
+        public ?string $city_start_gar_id,
+        public ?string $city_end_gar_id,
         public string $city_name_start,
         public string $city_name_end,
         public float $distance,
@@ -22,11 +22,12 @@ class MatrixDistanceVO extends BaseDTO implements Arrayable
 
     public static function make(
 
-        string $city_start_gar_id,
-        string $city_end_gar_id,
+
         string $city_name_start,
         string $city_name_end,
         float $distance,
+        ?string $city_start_gar_id = null,
+        ?string $city_end_gar_id = null,
 
     ) : self {
 

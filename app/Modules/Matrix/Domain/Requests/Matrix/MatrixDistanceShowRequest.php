@@ -3,9 +3,9 @@
 namespace App\Modules\Matrix\Domain\Requests\Matrix;
 
 use App\Modules\Base\Requests\ApiRequest;
-use App\Modules\Matrix\App\Data\ValueObject\MatrixDistanceVO;
+use App\Modules\Matrix\App\Data\DTO\MatrixDistanceShowDTO;
 
-class MatrixDistanceRequest extends ApiRequest
+class MatrixDistanceShowRequest extends ApiRequest
 {
 
     protected $stopOnFirstFailure = true;
@@ -22,18 +22,15 @@ class MatrixDistanceRequest extends ApiRequest
             'city_name_start' => ['required', 'string'],
             'city_name_end' => ['required', 'string'],
 
-            'distance' => ['required' , 'numeric'],
-
             'city_start_gar_id' => ['nullable', 'uuid'],
             'city_end_gar_id' => ['nullable', 'uuid'],
 
         ];
     }
 
-
-    public function createMatrixDistanceVO() : MatrixDistanceVO
+    public function createMatrixDistanceShowDTO() : MatrixDistanceShowDTO
     {
-        return MatrixDistanceVO::fromArrayToObject($this->validated());
+        return MatrixDistanceShowDTO::fromArrayToObject($this->validated());
     }
 
 }

@@ -134,6 +134,7 @@ Route::prefix('/transfer')->group(function () {
 Route::prefix('/matrix-distance')->group(function () {
 
     Route::get('/', [MatrixDistanceController:: class, 'index']);
+    Route::get('/filter', [MatrixDistanceController:: class, 'show']);
     Route::post('/', [MatrixDistanceController:: class, 'create']);
 
 });

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API\Matrix;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Matrix\App\Data\DTO\MatrixDistanceVO;
+use App\Modules\Matrix\App\Data\DTO\MatrixDistanceShowDTO;
+use App\Modules\Matrix\App\Data\ValueObject\MatrixDistanceVO;
 use App\Modules\Matrix\Domain\Models\MatrixDistance;
 use App\Modules\Matrix\Domain\Requests\Matrix\MatrixDistanceRequest;
+use App\Modules\Matrix\Domain\Requests\Matrix\MatrixDistanceShowRequest;
 use App\Modules\Matrix\Domain\Resources\MatrixDistanceResource;
 use App\Modules\Matrix\Domain\Services\MatrixService;
 
@@ -23,10 +25,26 @@ class MatrixDistanceController extends Controller
         return response()->json($matrix);
     }
 
-    public function show()
-    {
 
+    public function show(
+        MatrixDistanceShowRequest $request,
+        MatrixService $serviceMatrix,
+    ) {
+
+        /**
+         * @var MatrixDistanceShowDTO
+         */
+        $matrixDistanceShowDTO = $request->createMatrixDistanceShowDTO();
+
+        /**
+        * @var MatrixDistance
+        */
+        $matrixDistance = $serviceMatrix->findMatrix($matrixDistanceShowDTO);
+
+
+        return response()->json(array_success(MatrixDistanceResource::make($matrixDistance), 'Get Matrix Distance.'), 200);
     }
+
 
     public function create(
         MatrixDistanceRequest $request,

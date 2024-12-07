@@ -3,7 +3,7 @@
 namespace App\Modules\Matrix\Domain\Actions\Martix;
 
 use App\Modules\Base\Error\BusinessException;
-use App\Modules\Matrix\App\Data\DTO\MatrixDistanceVO;
+use App\Modules\Matrix\App\Data\ValueObject\MatrixDistanceVO;
 use App\Modules\Matrix\Domain\Models\MatrixDistance;
 
 use Exception;
@@ -14,6 +14,11 @@ use function App\Helpers\Mylog;
 class MatrixDistanceCreateAction
 {
 
+    /**
+     * @param MatrixDistanceVO $vo
+     *
+     * @return MatrixDistance
+     */
     public static function make(MatrixDistanceVO $vo) : MatrixDistance
     {
         return (new self())->run($vo);

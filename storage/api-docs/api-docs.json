@@ -372,6 +372,85 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Matrix Distance"
+                ],
+                "summary": "Создать матрицу расстояний",
+                "description": "Создает новую запись матрицы расстояний",
+                "operationId": "62dd65475df9a91e21c1e9f6ad21d00b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "city_name_start",
+                                    "city_name_end",
+                                    "distance"
+                                ],
+                                "properties": {
+                                    "city_name_start": {
+                                        "description": "Название начального города"
+                                    },
+                                    "city_name_end": {
+                                        "description": "Название конечного города"
+                                    },
+                                    "distance": {
+                                        "description": "Расстояние между городами"
+                                    },
+                                    "city_start_gar_id": {
+                                        "description": "UUID начального города",
+                                        "nullable": true
+                                    },
+                                    "city_end_gar_id": {
+                                        "description": "UUID конечного города",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Создано",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/MatrixDistanceResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Matrix Distance создана успешно."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Произошла ошибка на сервере."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/matrix-distance/filter": {

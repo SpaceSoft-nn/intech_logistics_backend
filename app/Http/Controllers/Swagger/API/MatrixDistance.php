@@ -31,6 +31,92 @@ use App\Http\Controllers\Controller;
  *      ),
  * ),
  *
+ * @OA\Post(
+ *     path="/api/matrix-distance",
+ *     summary="Создать матрицу расстояний",
+ *     description="Создает новую запись матрицы расстояний",
+ *     tags={"Matrix Distance"},
+ *
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             type="object",
+ *             required={"city_name_start", "city_name_end", "distance"},
+ *             @OA\Property(
+ *                 property="city_name_start",
+ *                 @OA\Schema(
+ *                     type="string",
+ *                 ),
+ *                 description="Название начального города"
+ *             ),
+ *             @OA\Property(
+ *                 property="city_name_end",
+ *                 @OA\Schema(
+ *                     type="string",
+ *                 ),
+ *                 description="Название конечного города"
+ *             ),
+ *             @OA\Property(
+ *                 property="distance",
+ *                 @OA\Schema(
+ *                     type="string",
+ *                     format="float",
+ *                 ),
+ *                 description="Расстояние между городами"
+ *             ),
+ *             @OA\Property(
+ *                 property="city_start_gar_id",
+ *                 @OA\Schema(
+ *                     type="string",
+ *                     format="uuid",
+ *                 ),
+ *                 description="UUID начального города",
+ *                 nullable=true
+ *             ),
+ *             @OA\Property(
+ *                 property="city_end_gar_id",
+ *                 @OA\Schema(
+ *                     type="string",
+ *                     format="uuid",
+ *                 ),
+ *                 description="UUID конечного города",
+ *                 nullable=true
+ *             )
+ *         )
+ *     ),
+ *
+ *     @OA\Response(
+ *         response=201,
+ *         description="Создано",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="data",
+ *                 ref="#/components/schemas/MatrixDistanceResource"
+ *             ),
+ *             @OA\Property(
+ *                 property="message",
+ *                 type="string",
+ *                 example="Matrix Distance создана успешно."
+ *             )
+ *         )
+ *     ),
+ *
+ *
+ *     @OA\Response(
+ *         response=500,
+ *         description="Внутренняя ошибка сервера",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="error",
+ *                 type="string",
+ *                 example="Произошла ошибка на сервере."
+ *             )
+ *         )
+ *     )
+ * ),
+ *
  * @OA\Get(
  *     path="/api/matrix-distance/filter",
  *     summary="Вернуть матрицу расстояний по Городу start/end (в будущем по gar_id) ",

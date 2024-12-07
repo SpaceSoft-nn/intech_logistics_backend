@@ -60,7 +60,7 @@ class MatrixDistanceController extends Controller
         return $matrixDistance ?
         response()->json(array_success(MatrixDistanceResource::make($matrixDistance), 'Create matrix distance.'), 201)
         :
-        response()->json(array_error(MatrixDistanceResource::make($matrixDistance), 'Faild create matrix distance.'), 400);
+        response()->json(array_error(MatrixDistanceResource::make($matrixDistance), 'Faild create matrix distance.'), 404);
     }
 
 }

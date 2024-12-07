@@ -260,6 +260,22 @@ namespace App\Http\Controllers;
 *     )
 * ),
 *
+* @OA\Schema(
+*     schema="AgreementOrderResource",
+*     description="JSON ресурс AgreementOrder *Таблица - когда заказчик выбрал исполнителя*",
+*     title="Agreement Order Accept Resource",
+*     @OA\Property(
+*         property="id",
+*         type="string",
+*         format="uuid",
+*         description="Уникальный идентификатор ресурса",
+*         example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+*     ),
+*     @OA\Property(property="order_unit_id", ref="#/components/schemas/OrderUnitResource", description="Ресурс Заказа"),
+*     @OA\Property(property="organization_contractor_id", ref="#/components/schemas/OrganizationResource", description="Организация откликнувшиеся на заказ"),
+*     @OA\Property(property="organization_order_units_invoce_id", ref="#/components/schemas/OrgOrderInvoiceResource", description="organization_order_units_invoce"),
+*
+* ),
 *
 *
 * @OA\Schema(

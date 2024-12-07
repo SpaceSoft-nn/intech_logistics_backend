@@ -1596,6 +1596,63 @@
             }
         },
         "api/orders/agreement/{OrderUnit::uuid}/agreement-order": {
+            "get": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Возвращаем AgreementOrder по uuid",
+                "description": "Вернуть agreementOrder по uuid",
+                "operationId": "3e8382dfb64131cd22a728fa7abb5ab0",
+                "parameters": [
+                    {
+                        "name": "OrderUnit::uuid",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заказчик успешно выбрал подрятчика, запись создана.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "order_unit_id": {
+                                            "$ref": "#/components/schemas/AgreementOrderResource"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Order Unit"
@@ -3431,6 +3488,28 @@
                         "description": "Статус утверждения со стороны Исполнителя",
                         "type": "boolean",
                         "example": true
+                    }
+                },
+                "type": "object"
+            },
+            "AgreementOrderResource": {
+                "title": "Agreement Order Accept Resource",
+                "description": "JSON ресурс AgreementOrder *Таблица - когда заказчик выбрал исполнителя*",
+                "properties": {
+                    "id": {
+                        "description": "Уникальный идентификатор ресурса",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+                    },
+                    "order_unit_id": {
+                        "$ref": "#/components/schemas/OrderUnitResource"
+                    },
+                    "organization_contractor_id": {
+                        "$ref": "#/components/schemas/OrganizationResource"
+                    },
+                    "organization_order_units_invoce_id": {
+                        "$ref": "#/components/schemas/OrgOrderInvoiceResource"
                     }
                 },
                 "type": "object"

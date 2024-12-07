@@ -32,7 +32,7 @@ class AgreementOrderUnitController extends Controller
         AgreementOrderRequest $request,
         AgreementOrderService $service,
     ) {
-        #TODO Проверять что заказ принадлежит user
+        #TODO Проверять что заказ принадлежит user (Добавить роли - либо у нас можно к любому заказу приставлять любые отклики)
         $validated = $request->validated();
 
         /**

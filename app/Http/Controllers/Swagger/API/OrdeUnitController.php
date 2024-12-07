@@ -584,8 +584,44 @@ use App\Http\Controllers\Controller;
 *
 * ),
 *
+* @OA\GET(
+*     path="api/orders/agreement/{OrderUnit::uuid}/agreement-order",
+*     tags={"Order Unit"},
+*     summary="Возвращаем AgreementOrder по uuid",
+*     description="Вернуть agreementOrder по uuid",
+*     @OA\Parameter(
+*          name="OrderUnit::uuid",
+*          in="path",
+*          description="UUID заказа",
+*          required=true,
+*          @OA\Schema(
+*              type="string",
+*              format="uuid"
+*          )
+*     ),
+*
+*     @OA\Response(
+*          response=200,
+*          description="Заказчик успешно выбрал подрятчика, запись создана.",
+*          @OA\JsonContent(
+*                @OA\Property(property="order_unit_id", ref="#/components/schemas/AgreementOrderResource", description="Ресурс AgreementOrder"),
+*          ),
+*     ),
+*
+*     @OA\Response(
+*           response=500,
+*           description="Общая ошибка сервера.",
+*           @OA\JsonContent(
+*               @OA\Property(property="message_error", type="string", example="Error server"),
+*               @OA\Property(property="code", type="integer", example="500"),
+*           ),
+*     ),
+*
+*
+* ),
+*
 * @OA\patch(
-
+*
 *     path="api/orders/agreement/{agreementOrderAccept::uuid}/agreement-accept",
 *     tags={"Order Unit"},
 *     summary="Утверждения Двух-стороннего договор, о принятии в работу Заказа, со стороны Заказчика/Подрядчика",

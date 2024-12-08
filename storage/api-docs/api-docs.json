@@ -834,6 +834,180 @@
                 }
             }
         },
+        "/api/offer-contractors": {
+            "get": {
+                "tags": [
+                    "Offer Contractor"
+                ],
+                "summary": "Получить всех подрядчиков.",
+                "operationId": "dafcfc22dc346aba602c617c10482824",
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат подрядчиков.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/OfferContractorResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return create offer contractors."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Offer Contractor"
+                ],
+                "summary": "Создать подрядчика.",
+                "operationId": "a8a586f88e94d225385c30e1bcf785a9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "city_name_start": {
+                                        "description": "Название начального города",
+                                        "type": "string",
+                                        "minLength": 2,
+                                        "example": "Москва"
+                                    },
+                                    "city_name_end": {
+                                        "description": "Название конечного города",
+                                        "type": "string",
+                                        "minLength": 2,
+                                        "example": "Санкт-Петербург"
+                                    },
+                                    "price_for_distance": {
+                                        "description": "Цена за расстояние",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 1500.5
+                                    },
+                                    "transport_id": {
+                                        "description": "UUID транспорта, должен существовать в таблице transports",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "user_id": {
+                                        "description": "UUID пользователя, должен существовать в таблице users",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "organization_id": {
+                                        "description": "UUID организации, должен существовать в таблице organizations",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "add_load_space": {
+                                        "description": "Дополнительное место для загрузки",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "road_back": {
+                                        "description": "Обратная дорога",
+                                        "type": "boolean",
+                                        "example": false,
+                                        "nullable": true
+                                    },
+                                    "directly_road": {
+                                        "description": "Прямая дорога",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "description": {
+                                        "description": "Описание",
+                                        "type": "string",
+                                        "maxLength": 1000,
+                                        "example": "Описание маршрута",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное создание подрядчика.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OfferContractorResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return create offer contractor."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/orders": {
             "get": {
                 "tags": [
@@ -3285,6 +3459,73 @@
                 },
                 "type": "object"
             },
+            "OfferContractorResource": {
+                "title": "Offer Contractor Resource",
+                "properties": {
+                    "city_name_start": {
+                        "description": "Название начального города",
+                        "type": "string",
+                        "minLength": 2,
+                        "example": "Москва"
+                    },
+                    "city_name_end": {
+                        "description": "Название конечного города",
+                        "type": "string",
+                        "minLength": 2,
+                        "example": "Санкт-Петербург"
+                    },
+                    "price_for_distance": {
+                        "description": "Цена за расстояние",
+                        "type": "number",
+                        "format": "float",
+                        "example": 1500.5
+                    },
+                    "transport_id": {
+                        "description": "UUID транспорта, должен существовать в таблице transports",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "user_id": {
+                        "description": "UUID пользователя, должен существовать в таблице users",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "organization_id": {
+                        "description": "UUID организации, должен существовать в таблице organizations",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "add_load_space": {
+                        "description": "Дополнительное место для загрузки",
+                        "type": "boolean",
+                        "example": true,
+                        "nullable": true
+                    },
+                    "road_back": {
+                        "description": "Обратная дорога",
+                        "type": "boolean",
+                        "example": false,
+                        "nullable": true
+                    },
+                    "directly_road": {
+                        "description": "Прямая дорога",
+                        "type": "boolean",
+                        "example": true,
+                        "nullable": true
+                    },
+                    "description": {
+                        "description": "Описание",
+                        "type": "string",
+                        "maxLength": 1000,
+                        "example": "Описание маршрута",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "AddressList": {
                 "properties": {
                     "address": {
@@ -3894,6 +4135,10 @@
         {
             "name": "Notification",
             "description": "Notification"
+        },
+        {
+            "name": "Offer Contractor",
+            "description": "Offer Contractor"
         },
         {
             "name": "Order Unit",

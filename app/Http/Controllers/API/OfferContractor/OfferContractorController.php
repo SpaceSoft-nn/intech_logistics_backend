@@ -9,7 +9,6 @@ use App\Modules\OfferContractor\Domain\Requests\OfferContractorCreateRequest;
 use App\Modules\OfferContractor\Domain\Resources\OfferContractorCollection;
 use App\Modules\OfferContractor\Domain\Resources\OfferContractorResource;
 use App\Modules\OfferContractor\Domain\Services\OfferContractorService;
-use Illuminate\Http\Request;
 
 use function App\Helpers\array_success;
 
@@ -18,13 +17,12 @@ class OfferContractorController extends Controller
 
     public function index()
     {
-
         /**
         * @var OfferContractor[]
         */
         $offerContractors = OfferContractor::get();
 
-        return response()->json(array_success(OfferContractorCollection::make($offerContractors), 'Return create offer contractor.'), 201);
+        return response()->json(array_success(OfferContractorCollection::make($offerContractors), 'Return create offer contractors.'), 201);
     }
 
     public function create(

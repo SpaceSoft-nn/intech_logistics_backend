@@ -2946,7 +2946,7 @@
         "/api/transports": {
             "get": {
                 "tags": [
-                    "Offer Contractor"
+                    "Transports"
                 ],
                 "summary": "Получить все доступные transports из таблицы.",
                 "operationId": "00a80df164b4ac58011de8305c3854f0",
@@ -4279,6 +4279,10 @@
         {
             "name": "Transfer",
             "description": "Transfer"
+        },
+        {
+            "name": "Transports",
+            "description": "Transports"
         },
         {
             "name": "Auth JWT",

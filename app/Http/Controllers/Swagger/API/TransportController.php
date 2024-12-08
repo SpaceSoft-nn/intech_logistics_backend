@@ -8,7 +8,7 @@ namespace App\Http\Controllers\Swagger\API;
 * @OA\Get(
 *      path="/api/transports",
 *      summary="Получить все доступные transports из таблицы.",
-*      tags={"Offer Contractor"},
+*      tags={"Transports"},
 *       @OA\Response(
 *           response=200,
 *           description="Успешный возврат всех транспортов.",

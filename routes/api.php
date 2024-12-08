@@ -11,6 +11,7 @@ use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Organization\OrganizationController;
 use App\Http\Controllers\API\Transfer\TransferContoller;
 use App\Http\Controllers\API\User\UserController;
+use App\Http\Controllers\OfferContractorController;
 use App\Modules\Auth\Presentation\HTTP\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -136,6 +137,14 @@ Route::prefix('/matrix-distance')->group(function () {
     Route::get('/', [MatrixDistanceController:: class, 'index']);
     Route::get('/filter', [MatrixDistanceController:: class, 'show']);
     Route::post('/', [MatrixDistanceController:: class, 'create']);
+
+});
+
+
+Route::prefix('/offer-contractors')->group(function () {
+
+    Route::get('/', [OfferContractorController::class, 'index']);
+    Route::post('/', [OfferContractorController::class, 'create']);
 
 });
 

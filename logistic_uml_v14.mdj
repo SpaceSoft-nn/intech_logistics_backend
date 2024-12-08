@@ -24412,6 +24412,201 @@
 							"headQualifiersCompartment": {
 								"$ref": "AAAAAAGTCLaKo+HOuUw="
 							}
+						},
+						{
+							"_type": "UMLClassView",
+							"_id": "AAAAAAGTorJKW+NzaPI=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"model": {
+								"$ref": "AAAAAAGTorJKWuNx2DE="
+							},
+							"subViews": [
+								{
+									"_type": "UMLNameCompartmentView",
+									"_id": "AAAAAAGTorJKW+N0tbg=",
+									"_parent": {
+										"$ref": "AAAAAAGTorJKW+NzaPI="
+									},
+									"model": {
+										"$ref": "AAAAAAGTorJKWuNx2DE="
+									},
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGTorJKW+N1le8=",
+											"_parent": {
+												"$ref": "AAAAAAGTorJKW+N0tbg="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"parentStyle": true,
+											"top": -16,
+											"height": 13
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGTorJKW+N2mvs=",
+											"_parent": {
+												"$ref": "AAAAAAGTorJKW+N0tbg="
+											},
+											"font": "Arial;13;1",
+											"parentStyle": true,
+											"left": 2365,
+											"top": 759,
+											"width": 135,
+											"height": 13,
+											"text": "offer_contractors"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGTorJKW+N3bTY=",
+											"_parent": {
+												"$ref": "AAAAAAGTorJKW+N0tbg="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"parentStyle": true,
+											"top": -16,
+											"width": 73.67724609375,
+											"height": 13,
+											"text": "(from Model)"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGTorJKW+N471s=",
+											"_parent": {
+												"$ref": "AAAAAAGTorJKW+N0tbg="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"parentStyle": true,
+											"top": -16,
+											"height": 13,
+											"horizontalAlignment": 1
+										}
+									],
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 2360,
+									"top": 752,
+									"width": 145,
+									"height": 25,
+									"stereotypeLabel": {
+										"$ref": "AAAAAAGTorJKW+N1le8="
+									},
+									"nameLabel": {
+										"$ref": "AAAAAAGTorJKW+N2mvs="
+									},
+									"namespaceLabel": {
+										"$ref": "AAAAAAGTorJKW+N3bTY="
+									},
+									"propertyLabel": {
+										"$ref": "AAAAAAGTorJKW+N471s="
+									}
+								},
+								{
+									"_type": "UMLAttributeCompartmentView",
+									"_id": "AAAAAAGTorJKW+N5DZ8=",
+									"_parent": {
+										"$ref": "AAAAAAGTorJKW+NzaPI="
+									},
+									"model": {
+										"$ref": "AAAAAAGTorJKWuNx2DE="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 2360,
+									"top": 777,
+									"width": 145,
+									"height": 10
+								},
+								{
+									"_type": "UMLOperationCompartmentView",
+									"_id": "AAAAAAGTorJKW+N6RTs=",
+									"_parent": {
+										"$ref": "AAAAAAGTorJKW+NzaPI="
+									},
+									"model": {
+										"$ref": "AAAAAAGTorJKWuNx2DE="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 2360,
+									"top": 787,
+									"width": 145,
+									"height": 10
+								},
+								{
+									"_type": "UMLReceptionCompartmentView",
+									"_id": "AAAAAAGTorJKW+N7s+k=",
+									"_parent": {
+										"$ref": "AAAAAAGTorJKW+NzaPI="
+									},
+									"model": {
+										"$ref": "AAAAAAGTorJKWuNx2DE="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"top": -8,
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLTemplateParameterCompartmentView",
+									"_id": "AAAAAAGTorJKW+N8cF4=",
+									"_parent": {
+										"$ref": "AAAAAAGTorJKW+NzaPI="
+									},
+									"model": {
+										"$ref": "AAAAAAGTorJKWuNx2DE="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"top": -8,
+									"width": 10,
+									"height": 10
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"containerChangeable": true,
+							"left": 2360,
+							"top": 752,
+							"width": 144,
+							"height": 160,
+							"nameCompartment": {
+								"$ref": "AAAAAAGTorJKW+N0tbg="
+							},
+							"attributeCompartment": {
+								"$ref": "AAAAAAGTorJKW+N5DZ8="
+							},
+							"operationCompartment": {
+								"$ref": "AAAAAAGTorJKW+N6RTs="
+							},
+							"receptionCompartment": {
+								"$ref": "AAAAAAGTorJKW+N7s+k="
+							},
+							"templateParameterCompartment": {
+								"$ref": "AAAAAAGTorJKW+N8cF4="
+							}
+						},
+						{
+							"_type": "UMLTextBoxView",
+							"_id": "AAAAAAGTorLn/RqKLzc=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 2384,
+							"top": 624,
+							"width": 96.43603515625,
+							"height": 90,
+							"text": "Преложения подрядчиков (или перевозчиков) взяться за работу"
 						}
 					]
 				},
@@ -28366,7 +28561,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGSmlg6pjFYkGc="
 							},
-							"name": "order_unit_id"
+							"name": "order_unit_id",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -29128,6 +29324,14 @@
 							"type": "float"
 						}
 					]
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAGTorJKWuNx2DE=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "offer_contractors"
 				}
 			]
 		},

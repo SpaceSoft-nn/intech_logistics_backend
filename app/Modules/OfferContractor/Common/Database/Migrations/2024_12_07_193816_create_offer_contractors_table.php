@@ -6,18 +6,32 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    //Предложения от перевозчиков (какого числа и откуда могут перевести грузы)
     public function up(): void
     {
         Schema::create('offer_contractors', function (Blueprint $table) {
-            $table->id();
 
-            $table->id();
-            $table->id();
-            
+            $table->uuid('id')->primary();
+
+            $table->string('city_name_start')->comment('Только город');
+            $table->string('city_name_end')->comment('Только город');
+
+            $table->string('price_for_distance')->comment('Дистанция за 1 км');
+
+            $table->string('description')->comment('Дистанция за 1 км')->nullable();
+
+            $table->uuid('transport_id')->constrained('transports');
+            $table->uuid('user_id')->constrained('users');
+            $table->uuid('organization_id')->constrained('organizations');
+            $table->uuid('order_unit_id')->constrained('order_units')->nullable()->comment('к какому заказу привязано предложения');
+
+            $table->boolean('add_load_space')->default(false)->comment('Возможен ли догруз');
+            $table->boolean('road_back')->default(false)->comment('Обратная дорога');
+            $table->boolean('directly_road')->default(false)->comment('Прямая дорога');
+
+
             $table->timestamps();
+
         });
     }
 

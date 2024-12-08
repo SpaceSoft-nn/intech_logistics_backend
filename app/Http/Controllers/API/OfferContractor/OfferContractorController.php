@@ -22,7 +22,7 @@ class OfferContractorController extends Controller
         */
         $offerContractors = OfferContractor::get();
 
-        return response()->json(array_success(OfferContractorCollection::make($offerContractors), 'Return create offer contractors.'), 201);
+        return response()->json(array_success(OfferContractorCollection::make($offerContractors), 'Return create offer contractors.'), 200);
     }
 
     public function create(

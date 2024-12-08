@@ -2943,6 +2943,59 @@
                 }
             }
         },
+        "/api/transports": {
+            "get": {
+                "tags": [
+                    "Offer Contractor"
+                ],
+                "summary": "Получить все доступные transports из таблицы.",
+                "operationId": "00a80df164b4ac58011de8305c3854f0",
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат всех транспортов.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TransportResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return transports all."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/auth/login": {
             "post": {
                 "tags": [
@@ -3522,6 +3575,77 @@
                         "maxLength": 1000,
                         "example": "Описание маршрута",
                         "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "TransportResource": {
+                "title": "Transport Resource",
+                "properties": {
+                    "id": {
+                        "description": "UUID транспорта",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "type": {
+                        "description": "Тип транспортного средства: грузовик, фуру, легковое, контейнерный",
+                        "type": "string",
+                        "example": "грузовик"
+                    },
+                    "brand_model": {
+                        "description": "Марка и модель - например: Volvo FH, MAN TGS",
+                        "type": "string",
+                        "example": "Volvo FH"
+                    },
+                    "year": {
+                        "description": "Год выпуска транспорта",
+                        "type": "string",
+                        "example": "2020"
+                    },
+                    "transport_number": {
+                        "description": "Номерной знак",
+                        "type": "string",
+                        "example": "A123BC77"
+                    },
+                    "body_volume": {
+                        "description": "Максимальная Вместимость",
+                        "type": "string",
+                        "example": "50 куб.м"
+                    },
+                    "body_weight": {
+                        "description": "Максимальная Масса груза",
+                        "type": "string",
+                        "example": "20 тонн"
+                    },
+                    "type_status": {
+                        "description": "Текущий статус транспортного средства: свободно, эксплуатация, ремонт",
+                        "type": "string",
+                        "enum": [
+                            "Свободен",
+                            "В Эксплуатации",
+                            "На ремонте"
+                        ],
+                        "example": "Свободен"
+                    },
+                    "description": {
+                        "description": "Описание/Заметка",
+                        "type": "string",
+                        "example": "Транспорт в хорошем состоянии",
+                        "nullable": true
+                    },
+                    "organization_id": {
+                        "description": "UUID организации",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000",
+                        "nullable": true
+                    },
+                    "driver_id": {
+                        "description": "UUID водителя",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
                     }
                 },
                 "type": "object"

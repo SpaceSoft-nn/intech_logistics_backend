@@ -11,6 +11,7 @@ use App\Http\Controllers\API\OrderUnit\AgreementOrderUnitController;
 use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Organization\OrganizationController;
 use App\Http\Controllers\API\Transfer\TransferContoller;
+use App\Http\Controllers\API\Transport\TransportController;
 use App\Http\Controllers\API\User\UserController;
 use App\Modules\Auth\Presentation\HTTP\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -143,10 +144,20 @@ Route::prefix('/matrix-distance')->group(function () {
 
     //Предложения перевозчика
 Route::prefix('/offer-contractors')->group(function () {
+
     Route::get('/', [OfferContractorController::class, 'index']);
     Route::post('/', [OfferContractorController::class, 'create']);
 
 });
+
+    //Endpoint transports
+Route::prefix('/transports')->group(function () {
+
+    Route::get('/', [TransportController::class, 'index']);
+    // Route::post('/', [OfferContractorController::class, 'create']);
+
+});
+
 
 
     //RegionEconomicFactor

@@ -79,7 +79,32 @@ namespace App\Http\Controllers;
 *         @OA\Property(property="directly_road", type="boolean", description="Прямая дорога", nullable=true, example=true),
 *         @OA\Property(property="description", type="string", description="Описание", nullable=true, maxLength=1000, example="Описание маршрута")
 *     }
-* )
+* ),
+*
+* @OA\Schema(
+*     schema="TransportResource",
+*     type="object",
+*     title="Transport Resource",
+*     properties={
+*         @OA\Property(property="id", type="string", format="uuid", description="UUID транспорта", example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="type", type="string", description="Тип транспортного средства: грузовик, фуру, легковое, контейнерный", example="грузовик"),
+*         @OA\Property(property="brand_model", type="string", description="Марка и модель - например: Volvo FH, MAN TGS", example="Volvo FH"),
+*         @OA\Property(property="year", type="string", description="Год выпуска транспорта", example="2020"),
+*         @OA\Property(property="transport_number", type="string", description="Номерной знак", example="A123BC77"),
+*         @OA\Property(property="body_volume", type="string", description="Максимальная Вместимость", example="50 куб.м"),
+*         @OA\Property(property="body_weight", type="string", description="Максимальная Масса груза", example="20 тонн"),
+*         @OA\Property(
+*             property="type_status",
+*             type="string",
+*             description="Текущий статус транспортного средства: свободно, эксплуатация, ремонт",
+*             enum={"Свободен", "В Эксплуатации", "На ремонте"},
+*             example="Свободен"
+*         ),
+*         @OA\Property(property="description", type="string", description="Описание/Заметка", nullable=true, example="Транспорт в хорошем состоянии"),
+*         @OA\Property(property="organization_id", type="string", format="uuid", description="UUID организации", nullable=true, example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="driver_id", type="string", format="uuid", description="UUID водителя", example="123e4567-e89b-12d3-a456-426614174000")
+*     }
+* ),
 *
 * //Схема при получении OrderUnitResource
 * @OA\Schema(

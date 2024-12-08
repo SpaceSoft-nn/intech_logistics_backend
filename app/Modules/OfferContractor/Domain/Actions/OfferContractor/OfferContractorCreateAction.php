@@ -18,9 +18,8 @@ class OfferContractorCreateAction
     private function run(OfferContractorVO $vo) : OfferContractor
     {
 
-        $offerContractor = OfferContractor::create($vo->toArrayNotNull());
 
-            try {
+        try {
 
             $offerContractor = OfferContractor::create($vo->toArrayNotNull());
 

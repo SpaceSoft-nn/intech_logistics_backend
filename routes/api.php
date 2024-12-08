@@ -6,12 +6,12 @@ use App\Http\Controllers\API\Auth\RegistrationController;
 use App\Http\Controllers\API\Matrix\MatrixDistanceController;
 use App\Http\Controllers\API\Matrix\RegionEconomicFactorController;
 use App\Http\Controllers\API\Notification\NotificationController;
+use App\Http\Controllers\API\OfferContractor\OfferContractorController;
 use App\Http\Controllers\API\OrderUnit\AgreementOrderUnitController;
 use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Organization\OrganizationController;
 use App\Http\Controllers\API\Transfer\TransferContoller;
 use App\Http\Controllers\API\User\UserController;
-use App\Http\Controllers\OfferContractorController;
 use App\Modules\Auth\Presentation\HTTP\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -132,6 +132,7 @@ Route::prefix('/transfer')->group(function () {
 
 });
 
+    //Матрица расстояний
 Route::prefix('/matrix-distance')->group(function () {
 
     Route::get('/', [MatrixDistanceController:: class, 'index']);
@@ -140,14 +141,12 @@ Route::prefix('/matrix-distance')->group(function () {
 
 });
 
-
+    //Предложения перевозчика
 Route::prefix('/offer-contractors')->group(function () {
-
     Route::get('/', [OfferContractorController::class, 'index']);
     Route::post('/', [OfferContractorController::class, 'create']);
 
 });
-
 
 
     //RegionEconomicFactor

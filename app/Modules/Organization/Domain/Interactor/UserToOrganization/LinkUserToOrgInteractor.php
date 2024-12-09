@@ -20,7 +20,7 @@ class LinkUserToOrgInteractor
      */
     public static function run(BaseDTO $dto) : Organization
     {
-        //Создаём организацию
+        //Создаём организацию (привязываем IRepository в provider)
         $organization = app(IRepository::class)->save($dto->organizationVO);
 
         //Привязываем к user

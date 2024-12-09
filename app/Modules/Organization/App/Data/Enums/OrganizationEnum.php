@@ -7,8 +7,8 @@ use InvalidArgumentException;
 
 enum OrganizationEnum : string
 {
-    case legal = "ООО"; //Проблема может бытьс case англ => ру буквы
-    case individual = "ИП"; //Проблема может бытьс case англ => ру буквы
+    case legal = "ООО";
+    case individual = "ИП";
 
 
     public static function returnObjectByString(?string $value) : ?self

@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('organizations', function (Blueprint $table) {
+
             $table->uuid('id')->primary();
 
             $table->uuid('owner_id')
@@ -25,7 +26,7 @@ return new class extends Migration
 
             $table->boolean('remuved')->default(false)->comment('Статус Закрыт/Открыт');
             $table->string('website')->nullable();
-            $table->string('type');
+            $table->string('type')->comment('Тип оргиназции: ООО, ИП и т.д');
             $table->text('description')->nullable();
             $table->string('okved')->nullable();
             $table->dateTime('founded_date');

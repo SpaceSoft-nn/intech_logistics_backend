@@ -230,56 +230,6 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OrgOrderInvoiceCollection::make($arrays), 'Возвращены все подрядчики откликнувшиеся на заказ.'), 200);
     }
 
-    /**
-    * Принятие подрятчика на заказ от заказчика.
-    */
-    public function agreementOrder(
-        OrderUnit $orderUnit,
-        AgreementOrderRequest $request,
-        AgreementOrderService $service,
-    ) {
-        #TODO Проверять что заказ принадлежит user
-        $validated = $request->validated();
-
-        /**
-        * @var AgreementOrderAccept
-        */
-        $model = $service->acceptCotractorToOrder(
-            AgreementOrderCreateDTO::make(
-                order_unit_id: $orderUnit->id,
-                organization_order_units_invoce_id: $validated['organization_order_units_invoce_id'],
-                organization_contractor_id: null,
-            )
-        );
-
-
-        return response()->json(array_success(AgreementOrderAcceptResource::make($model), 'Заказчик успешно выбрал подрятчика, запись создана.'), 201);
-    }
-
-    /**
-    * Двух сторонний договор, о принятии в работу Заказа,
-    * P.S Заказчик/Подрядчик - true/true - что бы создался Transfer
-    */
-    public function agreementAccept(
-        AgreementOrderAccept $agreementOrderAccept,
-        AuthService $auth,
-        AgreementOrderAcceptService $service,
-    ) {
-
-        #TODO вынести логику в сервес
-
-        /**
-        * @var User
-        */
-        $user = isAuthorized($auth);
-
-        $result = $service->acceptAgreement($user, $agreementOrderAccept);
-
-        return $result->status
-            ? response()->json(array_success(null, $result->message), 200)
-            : response()->json(array_success(null, $result->message), 403);
-    }
-
 
     /**
      * Поиск входящих векторов относительно главного вектора (заказа)

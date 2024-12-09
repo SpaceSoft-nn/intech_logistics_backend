@@ -81,16 +81,16 @@ Route::prefix('/orders')->group(function () {
 
     {
         //Возврат всех подрятчиков откликнувшиеся на заказ. (Временно возвращаем все записи из таблицы)
-        Route::get('/contractors', [OrderUnitController:: class, 'getContractorsAll'])->whereUuid('orderUnit', 'organization');
+        Route::get('/contractors', [OrderUnitController::class, 'getContractorsAll'])->whereUuid('orderUnit', 'organization');
 
         //Возврат всех подрятчиков откликнувшиеся на заказ.
-        Route::get('/{orderUnit}/contractors', [OrderUnitController:: class, 'getContractors'])->whereUuid('orderUnit', 'organization');
+        Route::get('/{orderUnit}/contractors', [OrderUnitController::class, 'getContractors'])->whereUuid('orderUnit', 'organization');
 
         //Добавление исполнителей к заказу
-        Route::post('/{orderUnit}/contractors/{organization}', [OrderUnitController:: class, 'addСontractor'])->whereUuid('orderUnit', 'organization');
+        Route::post('/{orderUnit}/contractors/{organization}', [OrderUnitController::class, 'addСontractor'])->whereUuid('orderUnit', 'organization');
+
 
         {   //AgreementOrderUnit
-
 
             #TODO Поменять сваггер
             Route::prefix('/agreement')->group(function () {

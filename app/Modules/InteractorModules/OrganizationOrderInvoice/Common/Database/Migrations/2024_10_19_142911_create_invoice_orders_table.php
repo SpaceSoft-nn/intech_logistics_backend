@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->date('date');
 
-            $table->text('comment');
+            $table->text('comment')->nullable();
 
             $table->timestamps();
 

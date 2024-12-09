@@ -15,14 +15,14 @@ class InvoiceOrderVO implements Arrayable
     public function __construct(
         public readonly string $price,
         public readonly string $date,
-        public readonly string $comment,
+        public readonly ?string $comment,
     ){}
 
     public static function make(
 
         string $price,
         string $date,
-        string $comment,
+        ?string $comment = null,
 
     ) : self {
 
@@ -49,7 +49,7 @@ class InvoiceOrderVO implements Arrayable
     {
         $price = Arr::get($array, "price");
         $date = Arr::get($array, "date");
-        $comment = Arr::get($array, "comment");
+        $comment = Arr::get($array, "comment", null);
 
 
         return self::make(

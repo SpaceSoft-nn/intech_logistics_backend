@@ -2994,6 +2994,131 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Transports"
+                ],
+                "summary": "Создать новый транспорт.",
+                "operationId": "6eba27b7ea6e18a42ff76a8c8c49be9c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "type": {
+                                        "description": "Тип транспортного средства",
+                                        "type": "string",
+                                        "enum": [
+                                            "car",
+                                            "semitruck",
+                                            "truck",
+                                            "container"
+                                        ],
+                                        "example": "semitruck"
+                                    },
+                                    "brand_model": {
+                                        "description": "Марка и модель",
+                                        "type": "string",
+                                        "example": "Volvo FH"
+                                    },
+                                    "year": {
+                                        "description": "Год выпуска транспорта",
+                                        "type": "integer",
+                                        "example": 2020
+                                    },
+                                    "transport_number": {
+                                        "description": "Номерной знак",
+                                        "type": "integer",
+                                        "example": 123456
+                                    },
+                                    "body_volume": {
+                                        "description": "Максимальная Вместимость",
+                                        "type": "integer",
+                                        "example": 50
+                                    },
+                                    "body_weight": {
+                                        "description": "Максимальная Масса груза",
+                                        "type": "integer",
+                                        "example": 20
+                                    },
+                                    "type_status": {
+                                        "description": "Текущий статус транспортного средства",
+                                        "type": "string",
+                                        "enum": [
+                                            "free",
+                                            "work",
+                                            "repair"
+                                        ],
+                                        "example": "free"
+                                    },
+                                    "organization_id": {
+                                        "description": "UUID организации",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "driver_id": {
+                                        "description": "UUID водителя",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000",
+                                        "nullable": true
+                                    },
+                                    "description": {
+                                        "description": "Описание/Заметка",
+                                        "type": "string",
+                                        "example": "Транспорт в хорошем состоянии",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное создание транспорта.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/TransportResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return create transports."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/auth/login": {

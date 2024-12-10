@@ -10,10 +10,8 @@ use Illuminate\Validation\Rules\Password;
 class UserLoginRequest extends ApiRequest
 {
 
-    protected $stopOnFirstFailure = true;
-
     public function authorize(): bool
-    {   
+    {
         return true;
     }
 

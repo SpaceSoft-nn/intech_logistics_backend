@@ -46,7 +46,7 @@ class MatrixDistanceController extends Controller
     }
 
 
-    public function create(
+    public function store(
         MatrixDistanceRequest $request,
         MatrixService $serviceMatrix,
     ) {

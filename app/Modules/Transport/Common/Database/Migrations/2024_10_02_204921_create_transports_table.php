@@ -25,10 +25,10 @@ return new class extends Migration
             $table->text('description')->nullable()->comment('Описание/Заметка');
 
             $table->uuid('organization_id')
-                ->nullable()
                 ->constrained('organizations', 'id')->noActionOnDelete();
 
             $table->uuid('driver_id')
+                ->nullable()
                 ->constrained('drivers', 'id')->noActionOnDelete();
 
             $table->timestamps();

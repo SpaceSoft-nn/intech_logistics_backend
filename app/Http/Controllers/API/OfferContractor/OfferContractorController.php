@@ -25,7 +25,7 @@ class OfferContractorController extends Controller
         return response()->json(array_success(OfferContractorCollection::make($offerContractors), 'Return create offer contractors.'), 200);
     }
 
-    public function create(
+    public function store(
         OfferContractorCreateRequest $request,
         OfferContractorService $serv,
     ) {

@@ -14,8 +14,6 @@ use Illuminate\Validation\Rule;
 class UserCreateRequest extends ApiRequest
 {
 
-    protected $stopOnFirstFailure = true;
-
     public function authorize(AuthServiceInterface $auth): bool
     {
         #TODO добавить в сервес auth работу с ролями

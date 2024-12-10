@@ -30,7 +30,7 @@ class TransferContoller
         return response()->json(array_success(TransferResource::make($transfer), 'Return Transfer.'), 200);
     }
 
-    public function create(
+    public function store(
 
         TransferCreateRequest $request,
         TransferService $transferService,

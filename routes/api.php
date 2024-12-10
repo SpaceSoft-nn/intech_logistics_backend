@@ -129,7 +129,7 @@ Route::prefix('/transfer')->group(function () {
 
     Route::get('', [TransferContoller:: class, 'index']);
     Route::get('/{transfer}', [TransferContoller:: class, 'show'])->whereUuid('transfer');
-    Route::post('', [TransferContoller:: class, 'create']);
+    Route::post('', [TransferContoller:: class, 'store']);
 
 });
 
@@ -138,7 +138,7 @@ Route::prefix('/matrix-distance')->group(function () {
 
     Route::get('/', [MatrixDistanceController:: class, 'index']);
     Route::get('/filter', [MatrixDistanceController:: class, 'show']);
-    Route::post('/', [MatrixDistanceController:: class, 'create']);
+    Route::post('/', [MatrixDistanceController:: class, 'store']);
 
 });
 
@@ -146,7 +146,7 @@ Route::prefix('/matrix-distance')->group(function () {
 Route::prefix('/offer-contractors')->group(function () {
 
     Route::get('/', [OfferContractorController::class, 'index']);
-    Route::post('/', [OfferContractorController::class, 'create']);
+    Route::post('/', [OfferContractorController::class, 'store']);
 
 });
 
@@ -154,7 +154,7 @@ Route::prefix('/offer-contractors')->group(function () {
 Route::prefix('/transports')->group(function () {
 
     Route::get('/', [TransportController::class, 'index']);
-    // Route::post('/', [OfferContractorController::class, 'create']);
+    Route::post('/', [TransportController::class, 'store']);
 
 });
 

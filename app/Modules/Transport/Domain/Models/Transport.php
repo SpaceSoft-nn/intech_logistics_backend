@@ -3,6 +3,7 @@
 namespace App\Modules\Transport\Domain\Models;
 
 use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
+use App\Modules\Transport\App\Data\Enums\TransportTypeEnum;
 use App\Modules\Transport\Domain\Factories\TransportFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,7 +32,7 @@ class Transport extends Model
         "type_status",
         "organization_id",
         "driver_id",
-        'description'
+        "description"
 
     ];
 
@@ -44,6 +45,7 @@ class Transport extends Model
     protected function casts(): array
     {
         return [
+            "type" => TransportTypeEnum::class,
             "type_status" => TransportStatusEnum::class,
         ];
     }

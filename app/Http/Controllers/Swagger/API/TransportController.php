@@ -37,7 +37,7 @@ namespace App\Http\Controllers\Swagger\API;
 *               @OA\Property(property="type", type="string", description="Тип транспортного средства", enum={"car", "semitruck", "truck", "container"}, example="semitruck"),
 *               @OA\Property(property="brand_model", type="string", description="Марка и модель", example="Volvo FH"),
 *               @OA\Property(property="year", type="integer", description="Год выпуска транспорта", example=2020),
-*               @OA\Property(property="transport_number", type="integer", description="Номерной знак", example=123456),
+*               @OA\Property(property="transport_number", type="string", description="Номерной знак", example=123456),
 *               @OA\Property(property="body_volume", type="integer", description="Максимальная Вместимость", example=50),
 *               @OA\Property(property="body_weight", type="integer", description="Максимальная Масса груза", example=20),
 *               @OA\Property(property="type_status", type="string", description="Текущий статус транспортного средства", enum={"free", "work", "repair"}, example="free"),

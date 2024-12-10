@@ -28,7 +28,7 @@ class TransportCreateRequest extends ApiRequest
             "type" => ['required', Rule::in($typeTransportEnum) ],
             "brand_model" => ['required', 'string', 'max:100'],
             "year" => ['required', 'numeric'],
-            "transport_number" => ['required', 'numeric'],
+            "transport_number" => ['required', 'string', 'max:9'],
             "body_volume" => ['required', 'numeric'],
             "body_weight" => ['required', 'numeric'],
             "type_status" => ['required', Rule::in($transportStatusEnum) ],

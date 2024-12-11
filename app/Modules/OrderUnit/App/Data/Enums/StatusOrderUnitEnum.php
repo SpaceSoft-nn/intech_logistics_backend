@@ -31,15 +31,17 @@ enum StatusOrderUnitEnum : string
     {
 
         return match ($value) {
+
             "draft" => StatusOrderUnitEnum::draft,
             "published" => StatusOrderUnitEnum::published,
             "private" => StatusOrderUnitEnum::private,
             "accepted" => StatusOrderUnitEnum::accepted,
-            "work" => StatusOrderUnitEnum::in_work,
+            "in_work" => StatusOrderUnitEnum::in_work,
             "completed_and_wait_payment" => StatusOrderUnitEnum::completed_and_wait_payment,
             "cancelled" => StatusOrderUnitEnum::cancelled,
             null => null,
             default => throw new Exception('Ошибка преобразование Enum StatusOrderUnitEnum', 500),
+
         };
     }
 
@@ -50,10 +52,10 @@ enum StatusOrderUnitEnum : string
             StatusOrderUnitEnum::draft => "draft",
             StatusOrderUnitEnum::published=> "published",
             StatusOrderUnitEnum::private => "private",
-            StatusOrderUnitEnum::accepted => "accept",
-            StatusOrderUnitEnum::in_work => "work",
+            StatusOrderUnitEnum::accepted => "accepted",
+            StatusOrderUnitEnum::in_work => "in_work",
             StatusOrderUnitEnum::completed_and_wait_payment => "completed_and_wait_payment",
-            StatusOrderUnitEnum::cancelled => "canceled",
+            StatusOrderUnitEnum::cancelled => "cancelled",
             null => null,
             default => throw new Exception('Ошибка преобразование Enum StatusOrderUnitEnum', 500),
         };

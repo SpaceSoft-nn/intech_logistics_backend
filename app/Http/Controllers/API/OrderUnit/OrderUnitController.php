@@ -157,14 +157,18 @@ class OrderUnitController extends Controller
     ) {
         $validated = $request->validated();
 
-        $status = OrderUnitUpdateAction::make(
-            OrderUnitUpdateDTO::make(
-                order: $orderUnit,
-                change_price: $validated['change_price'] ?? null,
-                change_time: $validated['change_time'] ?? null,
-                order_status: $validated['order_status'] ?? null,
-            )
+        /**
+         * @var OrderUnitUpdateDTO
+         */
+        $orderUnitUpdateDTO = OrderUnitUpdateDTO::make(
+            order: $orderUnit,
+            change_price: $validated['change_price'] ?? null,
+            change_time: $validated['change_time'] ?? null,
+            order_status: $validated['order_status'] ?? null,
         );
+
+
+        $status = OrderUnitUpdateAction::make($orderUnitUpdateDTO);
 
         return ($status)
             ? response()->json(array_success(null, 'Update order successfully.'), 200)

@@ -31,16 +31,22 @@ class OrderUnitUpdateAction
             */
             $order = $dto->order;
 
-            $order->change_price = $dto->change_price;
-            $order->change_time = $dto->change_time;
+            if(!is_null($dto->change_price)) { $order->change_price = $dto->change_price; }
+            if(!is_null($dto->change_time)) { $order->change_time = $dto->change_time; }
+
 
             { //Создаём новый статус и привязываем его
-                $t = OrderUnitStatusCreateAction::make(
-                    OrderUnitStatusVO::make(
-                        order_unit_id: $order->id,
-                        status: $dto->order_status->getNameCase(),
-                    ),
+
+
+                /**
+                 * @var OrderUnitStatusVO
+                 */
+                $orderUnitStatusVO = OrderUnitStatusVO::make(
+                    order_unit_id: $order->id,
+                    status: $dto->order_status->getNameCase(),
                 );
+
+                $t = OrderUnitStatusCreateAction::make($orderUnitStatusVO);
             }
 
 

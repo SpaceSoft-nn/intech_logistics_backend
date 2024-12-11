@@ -30,40 +30,37 @@ class CreateOrderUnitInteractor
     private function run(OrderUnitCreateDTO $dto) : ?OrderUnit
     {
 
-        #TODO Нужно использовать паттерн цепочка обязаностей (handler)
-        $order = DB::transaction(function($pdo) use($dto)  {
-
-            /**
-            * Получаем созданный заказ
-            * @var OrderUnit
-            */
-            $order = $this->createOrderUnit($dto->orderUnitVO);
-
-            { //Линковка заказа и Адрессов
-                /**
-                * @var OrderUnitAddressDTO
-                */
-                $orderUnitAddressDTO = $dto->orderUnitAddressDTO;
-                $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
-            }
-
-            // dd($order->addresses[0]->pivot->data_time);
-
-
-            //Нужно получать актуальное состояние что бы с ним работать корректно во стальных сервесах
-            $order = $order->refresh();
-
-
-            { //Создание CargoGoods[] и линковака с OrderUnit + Линковка с CargoUnit + валидация MGX и создание записей CargoUnit + уточнее слоёв Factory
-                $this->orderToCargoGoodInteractor->execute($order, $dto->cargoGoodVO);
-            }
-
-            return $order;
-        });
-
         try {
 
+            #TODO Нужно использовать паттерн цепочка обязаностей (handler)
+            $order = DB::transaction(function($pdo) use($dto)  {
 
+                /**
+                * Получаем созданный заказ
+                * @var OrderUnit
+                */
+                $order = $this->createOrderUnit($dto->orderUnitVO);
+
+                { //Линковка заказа и Адрессов
+                    /**
+                    * @var OrderUnitAddressDTO
+                    */
+                    $orderUnitAddressDTO = $dto->orderUnitAddressDTO;
+                    $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
+                }
+
+
+                //Нужно получать актуальное состояние что бы с ним работать корректно во стальных сервесах
+                $order = $order->refresh();
+
+
+                { //Создание CargoGoods[] и линковака с OrderUnit + Линковка с CargoUnit + валидация MGX и создание записей CargoUnit + уточнее слоёв Factory
+                    $this->orderToCargoGoodInteractor->execute($order, $dto->cargoGoodVO);
+                }
+
+                return $order;
+
+            });
 
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $th) {
@@ -76,8 +73,6 @@ class CreateOrderUnitInteractor
         catch (\Throwable $th) {
 
             $message = $th->getMessage();
-
-            dd($message);
 
             Mylog('Ошибка в CreateOrderUnitInteractor: ' . $th);
             throw new Exception('Ошибка в CreateOrderUnitInteractor', 500);

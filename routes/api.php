@@ -61,22 +61,22 @@ Route::prefix('/orders')->group(function () {
 
     {
         //Вернуть все записи
-        Route::get('/', [OrderUnitController:: class, 'index']);
+        Route::get('/', [OrderUnitController::class, 'index']);
 
         //Вернуть 1 запись по uuid
-        Route::get('/{orderUnit}', [OrderUnitController:: class, 'show'])->whereUuid('orderUnit');
+        Route::get('/{orderUnit}', [OrderUnitController::class, 'show'])->whereUuid('orderUnit');
 
-        Route::post('/', [OrderUnitController:: class, 'create']);
+        Route::post('/', [OrderUnitController::class, 'store']);
 
             //Поиск цены от параметров Order
-        Route::post('/select-offers', [OrderUnitController:: class, 'selectPrice']);
+        Route::post('/select-offers', [OrderUnitController::class, 'selectPrice']);
 
-        Route::patch('/{orderUnit}', [OrderUnitController:: class, 'update'])->whereUuid('orderUnit');
+        Route::patch('/{orderUnit}', [OrderUnitController::class, 'update'])->whereUuid('orderUnit');
     }
 
 
     //Алгоритм поиска доп заказов по главному заказу (вектора движение)
-    Route::get('/get-schem', [OrderUnitController:: class, 'algorithm']);
+    Route::get('/get-schem', [OrderUnitController::class, 'algorithm']);
 
 
     {

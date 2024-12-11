@@ -16,7 +16,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->string('type')->comment("Тип транспортного средства: грузовик, фуру, легковое, контейнерный ");
-            $table->string('brand_model')->comment('Марка и модель - например: Volvo FH, MAN TGS');
+            $table->string('brand_model')->comment('модель - например: Volvo FH, MAN TGS'); //марка и модель
+            $table->string('brand_model')->comment('модель - например: Volvo FH, MAN TGS');
             $table->string('year')->comment('Год выпуска транспорта');
             $table->string('transport_number')->comment('Номерной знак');
             $table->string('body_volume')->comment('Максимальная Вместимость');
@@ -27,7 +28,7 @@ return new class extends Migration
             $table->uuid('organization_id')
                 ->constrained('organizations', 'id')->noActionOnDelete();
 
-            $table->uuid('driver_id')
+            $table->uuid('driver_id') //1 ко многим у одной машины может быть несколько водителей.
                 ->nullable()
                 ->constrained('drivers', 'id')->noActionOnDelete();
 

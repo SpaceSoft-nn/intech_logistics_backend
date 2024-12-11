@@ -109,7 +109,7 @@ class OrderUnitController extends Controller
      * @param OrderUnitCreateRequest $request
      *
      */
-    public function create(
+    public function store(
         OrderUnitCreateRequest $request,
         OrderUnitService $service
     ) {

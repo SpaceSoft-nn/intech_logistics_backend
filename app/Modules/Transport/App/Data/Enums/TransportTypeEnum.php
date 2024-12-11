@@ -6,7 +6,13 @@ use Exception;
 
 enum TransportTypeEnum : string
 {
-    case car = 'Легковушка';
+
+    //Тип классификация ГИБДД
+    //Тип кузова
+    //Тип загрузки (справо/сверху)
+    //
+
+    case car = 'Малотанажка';
     case semitruck = 'Фура';
     case truck = 'Грузовик';
     case container = 'Контейнер';

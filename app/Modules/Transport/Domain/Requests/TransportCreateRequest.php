@@ -33,8 +33,8 @@ class TransportCreateRequest extends ApiRequest
             "brand_model" => ['required', 'string', 'max:100'],
             "year" => ['required', 'numeric'],
             "transport_number" => ['required', 'string', 'max:9'],
-            "body_volume" => ['required', 'decimal:2'],
-            "body_weight" => ['required', 'decimal:2'],
+            "body_volume" => ['required', 'numeric', 'min:1'],
+            "body_weight" => ['required', 'numeric', 'min:0'],
 
 
             "type_loading" => ['required', Rule::in($type_loading) ],

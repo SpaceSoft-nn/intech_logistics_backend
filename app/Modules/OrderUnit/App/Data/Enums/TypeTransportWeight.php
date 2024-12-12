@@ -7,6 +7,7 @@ use Exception;
 //Тип транспортного средства
 enum TypeTransportWeight : string
 {
+
     case small = '1.5 - 3 тонны';
     case medium = '5 - 10 тонн';
     case large = '10 - 20 тонн';

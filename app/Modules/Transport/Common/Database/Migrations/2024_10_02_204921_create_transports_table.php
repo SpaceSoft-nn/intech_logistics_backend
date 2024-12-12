@@ -15,14 +15,20 @@ return new class extends Migration
 
             $table->uuid('id')->primary();
 
-            $table->string('type')->comment("Тип транспортного средства: грузовик, фуру, легковое, контейнерный ");
-            $table->string('brand_model')->comment('модель - например: Volvo FH, MAN TGS'); //марка и модель
             $table->string('brand_model')->comment('модель - например: Volvo FH, MAN TGS');
+
+            $table->string('type_loading')->comment('Тип загрузки транспортного средства (cбоку, cверху и т.д)');
+            $table->string('type_weight')->comment('Тип транспортного средства в Тоннах');
+            $table->string('type_body')->comment('Тип Кузова: бортовой, цистерна и т.д');
+            $table->string('type_status')->comment('Текущий статус транспортного средства: свободно, эксплуатация, ремонт');
+
+
             $table->string('year')->comment('Год выпуска транспорта');
             $table->string('transport_number')->comment('Номерной знак');
+
             $table->string('body_volume')->comment('Максимальная Вместимость');
             $table->string('body_weight')->comment('Максимальная Масса груза');
-            $table->string('type_status')->comment('Текущий статус транспортного средства: свободно, эксплуатация, ремонт');
+
             $table->text('description')->nullable()->comment('Описание/Заметка');
 
             $table->uuid('organization_id')

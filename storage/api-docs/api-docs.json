@@ -3007,17 +3007,6 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "type": {
-                                        "description": "Тип транспортного средства",
-                                        "type": "string",
-                                        "enum": [
-                                            "car",
-                                            "semitruck",
-                                            "truck",
-                                            "container"
-                                        ],
-                                        "example": "semitruck"
-                                    },
                                     "brand_model": {
                                         "description": "Марка и модель",
                                         "type": "string",
@@ -3030,7 +3019,7 @@
                                     },
                                     "transport_number": {
                                         "description": "Номерной знак",
-                                        "type": "integer",
+                                        "type": "string",
                                         "example": 123456
                                     },
                                     "body_volume": {
@@ -3042,16 +3031,6 @@
                                         "description": "Максимальная Масса груза",
                                         "type": "integer",
                                         "example": 20
-                                    },
-                                    "type_status": {
-                                        "description": "Текущий статус транспортного средства",
-                                        "type": "string",
-                                        "enum": [
-                                            "free",
-                                            "work",
-                                            "repair"
-                                        ],
-                                        "example": "free"
                                     },
                                     "organization_id": {
                                         "description": "UUID организации",
@@ -3065,6 +3044,18 @@
                                         "format": "uuid",
                                         "example": "123e4567-e89b-12d3-a456-426614174000",
                                         "nullable": true
+                                    },
+                                    "type_body": {
+                                        "$ref": "#/components/schemas/TransportBodyTypeEnum"
+                                    },
+                                    "type_loading": {
+                                        "$ref": "#/components/schemas/TransportLoadingTypeEnum"
+                                    },
+                                    "type_status": {
+                                        "$ref": "#/components/schemas/TransportStatusEnum"
+                                    },
+                                    "type_weight": {
+                                        "$ref": "#/components/schemas/TransportTypeWeightEnum"
                                     },
                                     "description": {
                                         "description": "Описание/Заметка",
@@ -3743,15 +3734,17 @@
                         "type": "string",
                         "example": "20 тонн"
                     },
+                    "type_body": {
+                        "$ref": "#/components/schemas/RUTransportBodyTypeEnum"
+                    },
+                    "type_loading": {
+                        "$ref": "#/components/schemas/RUTransportLoadingTypeEnum"
+                    },
                     "type_status": {
-                        "description": "Текущий статус транспортного средства: свободно, эксплуатация, ремонт",
-                        "type": "string",
-                        "enum": [
-                            "Свободен",
-                            "В Эксплуатации",
-                            "На ремонте"
-                        ],
-                        "example": "Свободен"
+                        "$ref": "#/components/schemas/RUTransportStatusEnum"
+                    },
+                    "type_weight": {
+                        "$ref": "#/components/schemas/RUTransportTypeWeightEnum"
                     },
                     "description": {
                         "description": "Описание/Заметка",
@@ -4299,6 +4292,130 @@
                     }
                 },
                 "type": "object"
+            },
+            "TransportBodyTypeEnum": {
+                "description": "Тип кузова транспорта",
+                "type": "string",
+                "enum": [
+                    "flatbed",
+                    "curtainside",
+                    "box",
+                    "refrigerated",
+                    "tanker",
+                    "dump",
+                    "car_carrier",
+                    "logging",
+                    "crane",
+                    "concrete_mixer",
+                    "tow",
+                    "insulated",
+                    "container",
+                    "garbage",
+                    "livestock",
+                    "lowboy",
+                    "scrap_metal",
+                    "covered_flatbed",
+                    "bulk_powder_tanker",
+                    "side_curtain"
+                ],
+                "example": "flatbed"
+            },
+            "TransportLoadingTypeEnum": {
+                "description": "Тип загрузки транспорта",
+                "type": "string",
+                "enum": [
+                    "top",
+                    "side",
+                    "rear",
+                    "liquid_bulk",
+                    "dry_bulk"
+                ],
+                "example": "top"
+            },
+            "TransportStatusEnum": {
+                "description": "Статус транспорта",
+                "type": "string",
+                "enum": [
+                    "free",
+                    "work",
+                    "repair"
+                ],
+                "example": "free"
+            },
+            "TransportTypeWeightEnum": {
+                "description": "Весовая категория транспорта",
+                "type": "string",
+                "enum": [
+                    "extraSmall",
+                    "small",
+                    "medium",
+                    "large",
+                    "extraLarge",
+                    "superSize"
+                ],
+                "example": "medium"
+            },
+            "RUTransportBodyTypeEnum": {
+                "description": "Тип кузова транспорта",
+                "type": "string",
+                "enum": [
+                    "бортовой",
+                    "тентованный",
+                    "фургон",
+                    "рефрижератор",
+                    "цистерна",
+                    "самосвал",
+                    "автовоз",
+                    "лесовоз",
+                    "кран манипулятор",
+                    "бетономешалка",
+                    "эвакуатор",
+                    "изотермический",
+                    "контейнеровоз",
+                    "мусоровоз",
+                    "животновоз",
+                    "низкорамник",
+                    "ломовоз",
+                    "крытый бортовой",
+                    "автоцистерна для сыпучих материалов",
+                    "шторный полуприцеп"
+                ],
+                "example": "бортовой"
+            },
+            "RUTransportLoadingTypeEnum": {
+                "description": "Тип загрузки транспорта",
+                "type": "string",
+                "enum": [
+                    "верхняя загрузка",
+                    "боковая загрузка",
+                    "задняя загрузка",
+                    "наливная загрузка",
+                    "насыпная загрузка"
+                ],
+                "example": "верхняя загрузка"
+            },
+            "RUTransportStatusEnum": {
+                "description": "Статус транспорта",
+                "type": "string",
+                "enum": [
+                    "Свободен",
+                    "В Эксплуатации",
+                    "На ремонте"
+                ],
+                "example": "Свободен"
+            },
+            "RUTransportTypeWeightEnum": {
+                "description": "Весовая категория транспорта",
+                "type": "string",
+                "enum": [
+                    "до 0.8 тонны",
+                    "до 1.5 тонны",
+                    "до 3 тонны",
+                    "до 5 тонны",
+                    "до 10 тонны",
+                    "Более 10 тонны"
+                ],
+                "example": "до 3 тонны"
             },
             "BearerToken": {
                 "title": "Bearer Token Object",

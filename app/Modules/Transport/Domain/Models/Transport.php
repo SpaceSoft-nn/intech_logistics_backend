@@ -2,8 +2,11 @@
 
 namespace App\Modules\Transport\Domain\Models;
 
+use App\Modules\Transport\App\Data\Enums\TransportBodyType;
+use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
 use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
 use App\Modules\Transport\App\Data\Enums\TransportTypeEnum;
+use App\Modules\Transport\App\Data\Enums\TransportTypeWeight;
 use App\Modules\Transport\Domain\Factories\TransportFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,13 +26,17 @@ class Transport extends Model
 
     protected $fillable = [
 
-        "type",
         "brand_model",
         "year",
         "transport_number",
         "body_volume",
         "body_weight",
+
+        "type_loading",
+        "type_weight",
+        "type_body",
         "type_status",
+
         "organization_id",
         "driver_id",
         "description"
@@ -45,7 +52,9 @@ class Transport extends Model
     protected function casts(): array
     {
         return [
-            "type" => TransportTypeEnum::class,
+            "type_loading" => TransportLoadingType::class,
+            "type_weight" => TransportTypeWeight::class,
+            "type_body" =>  TransportBodyType::class,
             "type_status" => TransportStatusEnum::class,
         ];
     }

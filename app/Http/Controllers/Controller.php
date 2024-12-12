@@ -93,13 +93,10 @@ namespace App\Http\Controllers;
 *         @OA\Property(property="transport_number", type="string", description="Номерной знак", example="A123BC77"),
 *         @OA\Property(property="body_volume", type="string", description="Максимальная Вместимость", example="50 куб.м"),
 *         @OA\Property(property="body_weight", type="string", description="Максимальная Масса груза", example="20 тонн"),
-*         @OA\Property(
-*             property="type_status",
-*             type="string",
-*             description="Текущий статус транспортного средства: свободно, эксплуатация, ремонт",
-*             enum={"Свободен", "В Эксплуатации", "На ремонте"},
-*             example="Свободен"
-*         ),
+*         @OA\Property(property="type_body", ref="#/components/schemas/RUTransportBodyTypeEnum"),
+*         @OA\Property(property="type_loading", ref="#/components/schemas/RUTransportLoadingTypeEnum"),
+*         @OA\Property(property="type_status", ref="#/components/schemas/RUTransportStatusEnum"),
+*         @OA\Property(property="type_weight", ref="#/components/schemas/RUTransportTypeWeightEnum"),
 *         @OA\Property(property="description", type="string", description="Описание/Заметка", nullable=true, example="Транспорт в хорошем состоянии"),
 *         @OA\Property(property="organization_id", type="string", format="uuid", description="UUID организации", nullable=true, example="123e4567-e89b-12d3-a456-426614174000"),
 *         @OA\Property(property="driver_id", type="string", format="uuid", description="UUID водителя", example="123e4567-e89b-12d3-a456-426614174000")
@@ -352,6 +349,153 @@ namespace App\Http\Controllers;
 * ),
 *
 *
+*
+* ///////////Enums
+*
+*
+*
+* @OA\Schema(
+*     schema="TransportBodyTypeEnum",
+*     type="string",
+*     description="Тип кузова транспорта",
+*     enum={
+*         "flatbed",
+*         "curtainside",
+*         "box",
+*         "refrigerated",
+*         "tanker",
+*         "dump",
+*         "car_carrier",
+*         "logging",
+*         "crane",
+*         "concrete_mixer",
+*         "tow",
+*         "insulated",
+*         "container",
+*         "garbage",
+*         "livestock",
+*         "lowboy",
+*         "scrap_metal",
+*         "covered_flatbed",
+*         "bulk_powder_tanker",
+*         "side_curtain"
+*     },
+*     example="flatbed"
+* ),
+*
+* @OA\Schema(
+*     schema="TransportLoadingTypeEnum",
+*     type="string",
+*     description="Тип загрузки транспорта",
+*     enum={
+*         "top",
+*         "side",
+*         "rear",
+*         "liquid_bulk",
+*         "dry_bulk"
+*     },
+*     example="top"
+* ),
+*
+* @OA\Schema(
+*     schema="TransportStatusEnum",
+*     type="string",
+*     description="Статус транспорта",
+*     enum={
+*         "free",
+*         "work",
+*         "repair"
+*     },
+*     example="free"
+* ),
+*
+*
+* @OA\Schema(
+*     schema="TransportTypeWeightEnum",
+*     type="string",
+*     description="Весовая категория транспорта",
+*     enum={
+*         "extraSmall",
+*         "small",
+*         "medium",
+*         "large",
+*         "extraLarge",
+*         "superSize"
+*     },
+*     example="medium"
+* ),
+*
+* @OA\Schema(
+*     schema="RUTransportBodyTypeEnum",
+*     type="string",
+*     description="Тип кузова транспорта",
+*     enum={
+*         "бортовой",
+*         "тентованный",
+*         "фургон",
+*         "рефрижератор",
+*         "цистерна",
+*         "самосвал",
+*         "автовоз",
+*         "лесовоз",
+*         "кран манипулятор",
+*         "бетономешалка",
+*         "эвакуатор",
+*         "изотермический",
+*         "контейнеровоз",
+*         "мусоровоз",
+*         "животновоз",
+*         "низкорамник",
+*         "ломовоз",
+*         "крытый бортовой",
+*         "автоцистерна для сыпучих материалов",
+*         "шторный полуприцеп"
+*     },
+*     example="бортовой"
+* ),
+*
+* @OA\Schema(
+*     schema="RUTransportLoadingTypeEnum",
+*     type="string",
+*     description="Тип загрузки транспорта",
+*     enum={
+*         "верхняя загрузка",
+*         "боковая загрузка",
+*         "задняя загрузка",
+*         "наливная загрузка",
+*         "насыпная загрузка"
+*     },
+*     example="верхняя загрузка"
+* ),
+*
+* @OA\Schema(
+*     schema="RUTransportStatusEnum",
+*     type="string",
+*     description="Статус транспорта",
+*     enum={
+*         "Свободен",
+*         "В Эксплуатации",
+*         "На ремонте"
+*     },
+*     example="Свободен"
+* ),
+*
+*
+*
+* @OA\Schema(
+*     schema="RUTransportTypeWeightEnum",
+*     type="string",
+*     description="Весовая категория транспорта",
+*     enum={
+*         "до 0.8 тонны",
+*         "до 1.5 тонны",
+*         "до 3 тонны",
+*         "до 5 тонны",
+*         "до 10 тонны",
+*         "Более 10 тонны"
+*     },
+*     example="до 3 тонны"
+* ),
 *
 */
 abstract class Controller

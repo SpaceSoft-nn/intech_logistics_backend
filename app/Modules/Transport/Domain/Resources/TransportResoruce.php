@@ -13,13 +13,18 @@ class TransportResoruce extends JsonResource
         return [
 
             "id" => $this->id,
-            "type" => $this->type,
+
             "brand_model" => $this->brand_model,
             "year" => $this->year,
             "transport_number" => $this->transport_number,
             "body_volume" => $this->body_volume,
             "body_weight" => $this->body_weight,
+
+            "type_loading" => $this->type_loading,
+            "type_weight" => $this->type_weight,
+            "type_body" => $this->type_body,
             "type_status" => $this->type_status,
+
             "organization_id" => $this->organization_id,
             "driver_id" => $this->driver_id,
             "description" => $this->description,

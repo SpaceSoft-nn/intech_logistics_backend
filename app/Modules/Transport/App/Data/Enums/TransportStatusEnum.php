@@ -2,16 +2,11 @@
 
 namespace App\Modules\Transport\App\Data\Enums;
 
+use App\Modules\Base\Interface\IEnumStringToObject;
 use Exception;
 
-enum TransportStatusEnum : string
+enum TransportStatusEnum : string implements IEnumStringToObject
 {
-
-    //Тип классификация ГИБДД ??
-    //Тип кузова
-    //Тип загрузки (справо/сверху)
-    //
-
     case free = "Свободен";
     case work = "В Эксплуатации";
     case repair = "На ремонте";

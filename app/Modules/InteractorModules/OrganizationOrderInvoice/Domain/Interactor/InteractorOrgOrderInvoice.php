@@ -41,7 +41,10 @@ class InteractorOrgOrderInvoice
 
         try {
 
-            return DB::transaction(function ($pdo) use ($dto) {
+            /**
+             * @var OrganizationOrderUnitInvoice
+            */
+            $model = DB::transaction(function ($pdo) use ($dto) {
 
                 //создаём некую документацию от исполнителя, для заказчика - выбравший Заказ
                 $modelInvoce = $this->createInvoiceOrder($dto->invoiceOrderVO);
@@ -62,6 +65,8 @@ class InteractorOrgOrderInvoice
                 return $model;
 
             });
+
+            return $model;
 
         }
         catch (BusinessException $e) {

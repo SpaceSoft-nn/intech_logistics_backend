@@ -1858,7 +1858,7 @@
                 "operationId": "eed6963e94f4b0fa1d8db119da9302dc",
                 "parameters": [
                     {
-                        "name": "OrderUnit::uuid",
+                        "name": "orderUnit::uuid",
                         "in": "path",
                         "description": "UUID заказа",
                         "required": true,
@@ -1885,20 +1885,29 @@
                                 "allOf": [
                                     {
                                         "properties": {
+                                            "transport_id": {
+                                                "description": "Идентификатор транспорта организации в формате UUID. Может быть null.",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
                                             "price": {
                                                 "description": "Цена",
                                                 "type": "number",
-                                                "example": "1000"
+                                                "example": "1000",
+                                                "nullable": true
                                             },
                                             "date": {
                                                 "description": "Дата",
                                                 "type": "string",
-                                                "example": "2023-03-08"
+                                                "example": "2023-03-08",
+                                                "nullable": true
                                             },
                                             "comment": {
                                                 "description": "Комментарий",
                                                 "type": "string",
-                                                "example": "Комментарий"
+                                                "example": "Комментарий",
+                                                "nullable": true
                                             }
                                         },
                                         "type": "object"
@@ -1909,16 +1918,14 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "Успешный выбор заказчиком, конкретного подрядчика.",
+                    "201": {
+                        "description": "Successfully added a contractor to the order.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "data": {
-                                            "type": "string",
-                                            "example": null,
-                                            "nullable": true
+                                            "$ref": "#/components/schemas/OrgOrderInvoiceResource"
                                         },
                                         "message": {
                                             "type": "string",
@@ -1931,7 +1938,7 @@
                         }
                     },
                     "404": {
-                        "description": "Ошибка выбора конкретного подрядчика, заказчиком",
+                        "description": "Error added a contractor to the order.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3024,12 +3031,14 @@
                                     },
                                     "body_volume": {
                                         "description": "Максимальная Вместимость",
-                                        "type": "integer",
+                                        "type": "number",
+                                        "format": "float",
                                         "example": 50
                                     },
                                     "body_weight": {
                                         "description": "Максимальная Масса груза",
-                                        "type": "integer",
+                                        "type": "number",
+                                        "format": "float",
                                         "example": 20
                                     },
                                     "organization_id": {
@@ -4072,6 +4081,11 @@
                         "type": "string",
                         "format": "uuid",
                         "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+                    },
+                    "transport_id": {
+                        "description": "Значение транспорта организации",
+                        "type": "string",
+                        "format": "uuid"
                     },
                     "price": {
                         "description": "Цена ресурса",

@@ -17,15 +17,25 @@ return new class extends Migration
             $table->uuid('order_unit_id')
                 ->constrained('order_units')->noActionOnDelete();
 
-            $table->uuid('organization_id')
+            {
+                #TODO Нарушение 3 нормальной формы, транзитивная зависимость, сюда надо добавлять промежуточную таблицу user_organization
+                $table->uuid('organization_id')
                 ->constrained('organizations')->noActionOnDelete();
 
-            $table->uuid('invoice_order_id')->unique()
+                $table->uuid('user_id')
+                    ->nullable()
+                    ->constrained('user')
+                    ->comment('user который создавал данный отклик')
+                    ->noActionOnDelete();
+            }
+
+
+            $table->uuid('invoice_order_id')->unique()->comment("Документ при отклике, может быть один связь 1к1")
                 ->constrained('invoice_orders')->noActionOnDelete();
 
             $table->timestamps();
 
-            // Добавляем составной уникальный ключ на order_unit_id и organization_id
+            // Добавляем составной уникальный ключ на order_unit_id и organization_id #todo Тут могут быть проблемы в будущем
             $table->unique(['order_unit_id', 'organization_id']);
         });
     }

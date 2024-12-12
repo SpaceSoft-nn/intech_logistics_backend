@@ -14,6 +14,7 @@ class InvoceOrderResource extends JsonResource
         return [
 
             "id" => $this->id,
+            "transport_id" => $this->transport,
             "price" => $this->price,
             "date" => $this->date,
             "comment" => $this->comment,

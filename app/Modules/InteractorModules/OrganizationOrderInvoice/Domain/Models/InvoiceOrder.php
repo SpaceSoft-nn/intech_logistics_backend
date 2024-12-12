@@ -4,9 +4,12 @@ namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models;
 
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Factories\InvoiceOrderFactory;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
+use App\Modules\Transport\Domain\Models\Transport;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class InvoiceOrder extends Model
 {
@@ -21,6 +24,7 @@ class InvoiceOrder extends Model
 
     protected $fillable = [
 
+        "transport_id",
         "price",
         "date",
         "comment",
@@ -44,10 +48,14 @@ class InvoiceOrder extends Model
         ];
     }
 
-    public function organizationOrderUnitInvoice()
+    public function organizationOrderUnitInvoice() : HasOne
     {
         return $this->hasOne(OrganizationOrderUnitInvoice::class, 'invoice_order_id', 'id');
     }
 
+    public function transport() : BelongsTo
+    {
+        return $this->belongsTo(Transport::class, 'transport_id', 'id');
+    }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Transport\Domain\Models;
 
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
 use App\Modules\Transport\App\Data\Enums\TransportBodyType;
 use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
 use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
@@ -11,6 +12,7 @@ use App\Modules\Transport\Domain\Factories\TransportFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Transport extends Model
 {
@@ -59,5 +61,9 @@ class Transport extends Model
         ];
     }
 
-
+    //связь к документу - при отклике Перевозчика
+    public function invoiceOrders(): HasMany
+    {
+        return $this->hasMany(InvoiceOrder::class, 'transport_id');
+    }
 }

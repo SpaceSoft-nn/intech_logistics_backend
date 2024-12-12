@@ -27,7 +27,10 @@ class OrganizationOrderUnitInvoice extends Model
     protected $fillable = [
 
         "order_unit_id",
+
         "organization_id",
+        "user_id",
+
         "invoice_order_id",
 
     ];

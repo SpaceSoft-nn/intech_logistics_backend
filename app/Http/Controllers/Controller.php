@@ -232,6 +232,7 @@ namespace App\Http\Controllers;
 *     description="JSON ресурс с информацией о ресурсе",
 *     title="Your Resource",
 *     @OA\Property(property="id", type="string", format="uuid", description="Уникальный идентификатор ресурса", example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"),
+*     @OA\Property(property="transport_id", type="string", format="uuid", description="Значение транспорта организации"),
 *     @OA\Property(property="price", type="number", format="float", description="Цена ресурса", example=100000),
 *     @OA\Property(property="date", type="string", format="date", description="Дата ресурса", example="2024-10-31"),
 *     @OA\Property(property="comment", type="string", description="Текст комментария", example="Это комментарий от Подрядчика")

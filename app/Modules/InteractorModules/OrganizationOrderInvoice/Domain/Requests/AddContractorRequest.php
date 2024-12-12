@@ -8,8 +8,6 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\
 class AddContractorRequest extends ApiRequest
 {
 
-    protected $stopOnFirstFailure = true;
-
     public function authorize(): bool
     {
         return true;
@@ -19,8 +17,9 @@ class AddContractorRequest extends ApiRequest
     {
         return [
 
-            "price" => ['required', 'numeric'],
-            "date" => ['required', 'date'],
+            "transport_id" => ['required', 'uuid', "exists:transports,id"],
+            "price" => ['nullable', 'numeric'],
+            "date" => ['nullable', 'date'],
             "comment" => [ 'nullable', 'string', 'max:1000'],
 
         ];

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\OrderUnit;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Address\Domain\Models\Address;
-use App\Modules\Auth\Domain\Services\AuthService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\DTO\OrgOrderInvoiceCreateDTO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
@@ -12,7 +11,6 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Requests\AddCo
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceResource;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
-use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
@@ -20,27 +18,20 @@ use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdateAction;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
-use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use App\Modules\OrderUnit\Domain\Requests\AgreementOrderRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitSelectPriceRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitUpdateRequest;
-use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderAcceptResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderPriceResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
-use App\Modules\OrderUnit\Domain\Services\AgreementOrderAcceptService;
-use App\Modules\OrderUnit\Domain\Services\AgreementOrderService;
 use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
 use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\User\Domain\Models\User;
 use Illuminate\Http\Request;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
-use function App\Helpers\isAuthorized;
 
 class OrderUnitController extends Controller
 {

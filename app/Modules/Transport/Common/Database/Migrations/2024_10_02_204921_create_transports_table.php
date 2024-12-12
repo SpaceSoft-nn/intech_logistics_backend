@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('year')->comment('Год выпуска транспорта');
             $table->string('transport_number')->comment('Номерной знак');
 
-            $table->string('body_volume')->comment('Максимальная Вместимость');
-            $table->string('body_weight')->comment('Максимальная Масса груза');
+            $table->double('body_volume')->comment('Максимальная Вместимость');
+            $table->double('body_weight')->comment('Максимальная Масса груза');
 
             $table->text('description')->nullable()->comment('Описание/Заметка');
 

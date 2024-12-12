@@ -449,7 +449,7 @@ use App\Http\Controllers\Controller;
 *     summary="Добавление подрятчика к заказу",
 *     description="Добавление подрядчика к заказу",
 *     @OA\Parameter(
-*          name="OrderUnit::uuid",
+*          name="orderUnit::uuid",
 *          in="path",
 *          description="UUID заказа",
 *          required=true,
@@ -474,21 +474,31 @@ use App\Http\Controllers\Controller;
 *               allOf={
 *                  @OA\Schema(
 *                     @OA\Property(
+*                         property="transport_id",
+*                         type="string",
+*                         format="uuid",
+*                         description="Идентификатор транспорта организации в формате UUID. Может быть null.",
+*                         example="123e4567-e89b-12d3-a456-426614174000"
+*                     ),
+*                     @OA\Property(
 *                         property="price",
 *                         type="number",
 *                         description="Цена",
+*                         nullable=true,
 *                         example="1000"
 *                     ),
 *                     @OA\Property(
 *                         property="date",
 *                         type="string",
 *                         description="Дата",
+*                         nullable=true,
 *                         example="2023-03-08"
 *                     ),
 *                     @OA\Property(
 *                         property="comment",
 *                         type="string",
 *                         description="Комментарий",
+*                         nullable=true,
 *                         example="Комментарий"
 *                     ),
 *                  ),
@@ -497,17 +507,17 @@ use App\Http\Controllers\Controller;
 *       ),
 *
 *     @OA\Response(
-*          response=200,
-*          description="Успешный выбор заказчиком, конкретного подрядчика.",
+*          response=201,
+*          description="Successfully added a contractor to the order.",
 *          @OA\JsonContent(
-*              @OA\Property(property="data", type="string", nullable=true, example=null),
+*              @OA\Property(property="data", ref="#/components/schemas/OrgOrderInvoiceResource"),
 *              @OA\Property(property="message", type="string", example="Successfully added a contractor to the order."),
 *          ),
 *     ),
 *
 *     @OA\Response(
 *          response=404,
-*          description="Ошибка выбора конкретного подрядчика, заказчиком",
+*          description="Error added a contractor to the order.",
 *          @OA\JsonContent(
 *              @OA\Property(property="data", type="string", nullable=true, example=null),
 *              @OA\Property(property="message", type="string", example="Error added a contractor to the order."),

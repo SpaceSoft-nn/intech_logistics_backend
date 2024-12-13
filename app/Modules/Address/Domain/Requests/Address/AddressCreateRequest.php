@@ -23,42 +23,21 @@ class AddressCreateRequest extends ApiRequest
     {
         return [
 
-            // 'json' => ['required', 'json'],
-            // "region" => ['required', 'string' ],
-            // "city" => ['required', 'string'],
-            // "street" => ['required', 'string'],
-            // "latitude" => ['required', "numeric", 'between:-90,90'],
-            // "longitude" => ['required', "numeric", 'between:-180,180'],
-            // "building" => ['nullable', 'string', "max:50"],
-            // "apartament" => ['nullable', 'string', "max:50"],
-            // "postal_code" => ['nullable', 'string', "max:20"],
-            // "type_address" => ['nullable', 'string', "max:50"]
-
             'data' => ['required', 'array'],
             'data.data*' => ['required', 'array'],
 
             'data.data.postal_code' => ['sometimes', 'string'],
-            'data.data.country' => ['required', 'string'],
-            'data.data.city_with_type' => ['required', 'string'],
-            'data.data.region' => ['required', 'string'],
-            'data.data.street_with_type' => ['required', 'string'],
-            'data.data.house_type_full' => ['sometimes', 'string'],
-            'data.data.house' => ['sometimes', 'string'],
-            'data.data.geo_lat' => ['required', 'string'],
-            'data.data.geo_lon' => ['required', 'string'],
+            // 'data.country' => ['required', 'string'],
+            'data.city' => ['required', 'string'],
+            'data.region' => ['required', 'string'],
+            'data.street' => ['required', 'string'],
+            'data.house' => ['sometimes', 'string'],
+            'data.geo_lat' => ['required', 'string'],
+            'data.geo_lon' => ['required', 'string'],
 
             'data.unrestricted_value' => ['nullable', 'string'],
             'data.value' => ['nullable', 'string'],
 
-            // "region" => ['required', 'string' ],
-            // "city" => ['required', 'string'],
-            // "street" => ['required', 'string'],
-            // "latitude" => ['required', "numeric", 'between:-90,90'],
-            // "longitude" => ['required', "numeric", 'between:-180,180'],
-            // "building" => ['nullable', 'string', "max:50"],
-            // "apartament" => ['nullable', 'string', "max:50"],
-            // "postal_code" => ['nullable', 'string', "max:20"],
-            // "type_address" => ['nullable', 'string', "max:50"]
         ];
 
     }

@@ -22,10 +22,13 @@ class TransportController
 
     public function store(TransportCreateRequest $request)
     {
+
+
         /**
          * @var TransportVO
          */
         $transportVO = $request->createTransportVO();
+
 
         /**
         * @var Transport

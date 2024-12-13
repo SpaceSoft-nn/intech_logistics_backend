@@ -40,23 +40,5 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-        // {
-        //     $email = EmailList::create([
-        //         'value' => 'test@gmail.com',
-        //         'status' => true,
-        //     ]);
-
-        //     $phone = PhoneList::create([
-        //         'value' => '79200000000',
-        //         'status' => true,
-        //     ]);
-
-        //     User::factory()->create([
-        //         "password" => "Pass123!",
-        //         "email_id" =>  $email->id,
-        //         "phone_id" =>  $phone->id,
-        //     ]);
-        // }
-
     }
 }

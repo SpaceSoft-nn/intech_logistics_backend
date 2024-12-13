@@ -29,7 +29,6 @@ return new class extends Migration
             $table->boolean('road_back')->default(false)->comment('Обратная дорога');
             $table->boolean('directly_road')->default(false)->comment('Прямая дорога');
 
-
             $table->timestamps();
 
         });

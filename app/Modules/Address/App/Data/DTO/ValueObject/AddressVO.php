@@ -104,15 +104,14 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
     public static function returnObjectFromArray(array $array) : self
     {
 
-        $data = Arr::get($array, 'data.data');
+        $data = Arr::get($array, 'data');
 
-
-        $building =  Arr::get($data, 'house_type_full', null) . ' ' . Arr::get($data, 'house', null); //создаём правильное название дома
+        $building =  Arr::get($data, 'house', null);
 
         return new self(
-            region: Arr::get($data, 'region'), //Сделано country т.к в city_with_type и street_with_type - могут значение повторяться
-            city: Arr::get($data, 'city_with_type'),
-            street: Arr::get($data, 'street_with_type'),
+            region: Arr::get($data, 'region') ?? Arr::get($data, 'country'), //Сделано country т.к в city_with_type и street_with_type - могут значение повторяться
+            city: Arr::get($data, 'city'),
+            street: Arr::get($data, 'street'),
             building: $building,
             postal_code: Arr::get($data, 'postal_code', null),
             latitude: Arr::get($data, 'geo_lat'),

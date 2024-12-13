@@ -9,6 +9,7 @@ return new class extends Migration
     //Предложения от перевозчиков (какого числа и откуда могут перевести грузы)
     public function up(): void
     {
+        // Предложения от перевозчиков
         Schema::create('offer_contractors', function (Blueprint $table) {
 
             $table->uuid('id')->primary();

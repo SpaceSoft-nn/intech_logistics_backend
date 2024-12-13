@@ -15,6 +15,8 @@ class OrderUnitStatus extends Model
 
     protected $table = 'status_order';
 
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
     // protected static function newFactory()
     // {
     //     return OrderUnitFactory::new();

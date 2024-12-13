@@ -18,8 +18,6 @@ class CreateTransportAction
     private function run(TransportVO $vo) : Transport
     {
 
-        $transport = Transport::create($vo->toArrayNotNull());
-
         try {
 
             $transport = Transport::create($vo->toArrayNotNull());

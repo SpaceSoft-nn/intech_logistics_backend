@@ -54,20 +54,20 @@ class TransferCreateInterctor
                 //получаем agreementOrders в свойства класса $agreementOrders
                 $this->setAgreementOrders($dto->agreementOrder_id);
 
-                //создаём transfer
-                {
 
-                /**
-                 * @var TransferVO
-                 */
-                $vo = $this->createTransferVO($dto);
+                { //создаём transfer
+
+                    /**
+                     * @var TransferVO
+                     */
+                    $vo = $this->createTransferVO($dto);
 
 
-                /**
-                 * @var Transfer
-                 */
-                $transfer = $this->createTransfer($vo);
-                if(!$transfer) { throw new Exception("Ошибка в TransferCreateInterctor, при создании transfer", 500); }
+                    /**
+                     * @var Transfer
+                     */
+                    $transfer = $this->createTransfer($vo);
+                    if(!$transfer) { throw new Exception("Ошибка в TransferCreateInterctor, при создании transfer", 500); }
                 }
 
 

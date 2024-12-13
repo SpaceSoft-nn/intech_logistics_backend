@@ -7,7 +7,7 @@ use App\Modules\User\Domain\Models\User;
 use DateTime;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-
+use Ramsey\Uuid\Uuid;
 
 if (!function_exists('array_error'))
 {
@@ -40,7 +40,13 @@ if (!function_exists('uuid'))
 {
     function uuid(string $path = '') : string
     {
-        return (string) Str::uuid();
+
+        /**
+         * Добавлен uuid v6 за место v4, т.к у v6 есть сортировка прямо в начале записи по времени,
+         * и можно будет отсортирововать в бд по uuid более правильно, но не стоит забывать про подводные
+         * камни и колизии, например если есть несколько серверов с разным серверным временем
+         */
+        return Uuid::uuid6()->toString();
     }
 }
 

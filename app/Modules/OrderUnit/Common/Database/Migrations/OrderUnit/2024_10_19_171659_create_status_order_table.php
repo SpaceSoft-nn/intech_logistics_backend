@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->string('status')->comment('status order');
 
-            $table->timestamps();
+            $table->timestamps(3);
 
         });
     }

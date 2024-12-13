@@ -9,6 +9,7 @@ use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddress
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnitToCargoGood\OrderUnitToCargoGoodDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitStatus\OrderUnitStatusVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoGoodAction;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitSatus\OrderUnitStatusCreateAction;
 use App\Modules\OrderUnit\Domain\Models\CargoGood;
@@ -111,6 +112,23 @@ class OrderUnitFactory extends Factory
 
         });
     }
+
+    public function withStatusSet(StatusOrderUnitEnum $enum)
+    {
+        return $this->afterCreating(function (OrderUnit $order) use ($enum) {
+
+            //Создание статуса
+            OrderUnitStatusCreateAction::make(
+                OrderUnitStatusVO::make(
+                    order_unit_id: $order->id,
+                    status: $enum->getNameCase(),
+                )
+            );
+
+        });
+    }
+
+
 
     private function unionOrderStatus(OrderUnit $orderUnit)
     {

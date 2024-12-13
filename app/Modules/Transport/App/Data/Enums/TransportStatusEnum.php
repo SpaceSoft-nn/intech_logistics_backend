@@ -7,9 +7,9 @@ use Exception;
 
 enum TransportStatusEnum : string implements IEnumStringToObject
 {
-    case free = "Свободен";
-    case work = "В Эксплуатации";
-    case repair = "На ремонте";
+    case free = "свободен";
+    case work = "в работе";
+    case repair = "на ремонте";
 
     /**
     * Получить значение case в string и прислать объект

@@ -8,11 +8,11 @@ use Exception;
 //Тип загрузки транспортного средства
 enum TransportLoadingType : string implements IEnumStringToObject
 {
-    case top = 'верхняя загрузка';
-    case side = 'боковая загрузка';
-    case rear = 'задняя загрузка';
-    case liquid_bulk = 'наливная загрузка';
-    case dry_bulk = 'насыпная загрузка';
+    case top = 'верхняя';
+    case side = 'боковая';
+    case rear = 'задняя';
+    case liquid_bulk = 'наливная';
+    case dry_bulk = 'насыпная';
 
 
     /**

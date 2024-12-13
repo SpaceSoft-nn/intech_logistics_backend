@@ -6,17 +6,10 @@ use App\Modules\Address\Domain\Models\Address;
 use App\Modules\InteractorModules\AddressOrder\App\Data\DTO\OrderToAddressDTO;
 use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
 use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
-use App\Modules\OrderUnit\App\Data\DTO\OrderUnitToCargoGood\OrderUnitToCargoGoodDTO;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitStatus\OrderUnitStatusVO;
-use App\Modules\OrderUnit\Domain\Actions\LinkOrderUnitToCargoGoodAction;
-use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitSatus\OrderUnitStatusCreateAction;
-use App\Modules\OrderUnit\Domain\Models\CargoGood;
-use App\Modules\OrderUnit\Domain\Models\CargoUnit;
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\PalletSpace\Domain\Models\PalletSpace;
 use Cache;
-use DateTime;
 use Faker\Generator;
 use Illuminate\Database\Seeder;
 
@@ -52,7 +45,7 @@ class OrderUnitSeeder extends Seeder
         {
 
             //Заказ 1
-            $order = OrderUnit::factory()->withCargoGood()->withCargoGood()->create([
+            $order = OrderUnit::factory()->withCargoGood()->withCargoGood()->withStatusSet(StatusOrderUnitEnum::draft)->create([
 
                 'end_date_order' => $end_date_order,
                 "body_volume" => 10,
@@ -64,7 +57,7 @@ class OrderUnitSeeder extends Seeder
 
 
             ]);
-
+            
             //делаем связки через промежуточные таблицы
             {
 
@@ -88,7 +81,7 @@ class OrderUnitSeeder extends Seeder
 
         {
             //Заказ 2
-            $order = OrderUnit::factory()->withCargoGood()->create([
+            $order = OrderUnit::factory()->withStatusSet(StatusOrderUnitEnum::published)->withCargoGood()->create([
 
                 "end_date_order" => $end_date_order,
                 "body_volume" => 9,
@@ -121,7 +114,7 @@ class OrderUnitSeeder extends Seeder
 
         {
             //Заказ 3
-            $order = OrderUnit::factory()->withCargoGood()->create([
+            $order = OrderUnit::factory()->withStatusSet(StatusOrderUnitEnum::accepted)->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 3,
                 "description" => $this->faker->text(),
@@ -150,7 +143,7 @@ class OrderUnitSeeder extends Seeder
 
         {
             //Заказ 4
-            $order = OrderUnit::factory()->withCargoGood()->create([
+            $order = OrderUnit::factory()->withStatusSet(StatusOrderUnitEnum::in_work)->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 15,
                 "order_total" => 120000,
@@ -181,7 +174,7 @@ class OrderUnitSeeder extends Seeder
 
         {
             //Заказ 5
-            $order = OrderUnit::factory()->withCargoGood()->create([
+            $order = OrderUnit::factory()->withStatusSet(StatusOrderUnitEnum::completed_and_wait_payment)->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 20,
                 "description" => $this->faker->text(),
@@ -210,7 +203,7 @@ class OrderUnitSeeder extends Seeder
 
         {
             //Заказ 6
-            $order = OrderUnit::factory()->withCargoGood()->create([
+            $order = OrderUnit::factory()->withStatusSet(StatusOrderUnitEnum::cancelled)->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 31,
                 "description" => $this->faker->text(),
@@ -239,7 +232,7 @@ class OrderUnitSeeder extends Seeder
 
         {
             //Заказ 7
-            $order = OrderUnit::factory()->withCargoGood()->create([
+            $order = OrderUnit::factory()->withStatusSet(StatusOrderUnitEnum::private)->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 12,
                 "description" => $this->faker->text(),
@@ -268,7 +261,7 @@ class OrderUnitSeeder extends Seeder
 
         {
             //Заказ 8
-            $order = OrderUnit::factory()->withCargoGood()->create([
+            $order = OrderUnit::factory()->withStatusSet(StatusOrderUnitEnum::published)->withCargoGood()->create([
                 'end_date_order' => $end_date_order,
                 "body_volume" => 4,
                 "description" => $this->faker->text(),

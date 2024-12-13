@@ -17,7 +17,7 @@ enum StatusOrderUnitEnum : string
 
     case completed_and_wait_payment = "Выполнен и ожидает оплаты"; //Снят из общего доступа
 
-    case cancelled = " Отменен/Отозван"; // В работе
+    case cancelled = "Отменен/Отозван"; // В работе
 
     case private = "Закрыт"; //Запревачен (видно не всем)
 

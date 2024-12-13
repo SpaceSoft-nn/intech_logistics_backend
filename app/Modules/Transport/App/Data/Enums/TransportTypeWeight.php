@@ -13,7 +13,7 @@ enum TransportTypeWeight : string implements IEnumStringToObject
     case medium = 'до 3 тонны';
     case large = 'до 5 тонны';
     case extraLarge = 'до 10 тонны';
-    case superSize = 'Более 10 тонны';
+    case superSize = 'более 10 тонны';
 
     /**
     * Получить значение case в string и прислать объект

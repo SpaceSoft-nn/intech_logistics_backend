@@ -5,9 +5,16 @@ namespace App\Modules\OfferContractor\Domain\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * Таблица - предложения перевозчика
+ */
 class OfferContractor extends Model
-{
+{ //Таблица - предложения перевозчика
+
     use HasFactory, HasUuids;
 
     // protected static function newFactory()
@@ -53,4 +60,15 @@ class OfferContractor extends Model
 
         ];
     }
+
+    /**
+    * Связь к таблице откликов от заказчиков на предложение перевозчиков
+    * @return HasMany
+    */
+    public function offer_contractor_customer() : HasMany
+    {
+        return $this->hasMany(OfferContractorCustomer::class, 'offer_contractor_invoice_order_customers', 'offer_contractor_id', 'id');
+    }
+
+
 }

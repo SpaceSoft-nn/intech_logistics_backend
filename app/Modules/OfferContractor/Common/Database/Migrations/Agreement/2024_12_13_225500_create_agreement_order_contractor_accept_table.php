@@ -6,15 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
+        //Таблица согласование когда Перевозчик возьмёт в работу заказ
         Schema::create('agreement_order_contractor_accept', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->uuid('agreement_order_contractor_id')
+            $table->uuid('agreement_order_contractor_id')->unique() #TODO - Возможно надо будет убирать unique
                 ->constrained('agreement_order_contractors')->noActionOnDelete();
 
             $table->boolean('order_bool')->comment('Подтврждения со стороны организации: заказчика');
@@ -25,9 +24,7 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('agreement_order_contractor_accept');

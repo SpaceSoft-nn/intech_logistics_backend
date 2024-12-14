@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('offer_contractor_invoice_order_customers', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->uuid('invoice_order_customer_id')
+            $table->uuid('invoice_order_customer_id')->unique() #TODO возможно unique нужно будет убирать, т.к нужно будет использовать эту информацию как черновик для других откликов
                 ->constrained('invoice_order_customers')->noActionOnDelete();
 
             $table->uuid('offer_contractor_id')

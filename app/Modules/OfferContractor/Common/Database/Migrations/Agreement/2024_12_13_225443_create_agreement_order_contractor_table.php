@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create('agreement_order_contractors', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->uuid('offer_contractor_invoice_order_customer_id')
+            $table->uuid('offer_contractor_invoice_order_customer_id')->unique() #TODO - Возможно надо будет убирать unique
                 ->constrained('offer_contractor_invoice_order_customers')->noActionOnDelete();
 
             $table->uuid('order_unit_id')->comment('Создание заказа после согласование сторон')->nullable()

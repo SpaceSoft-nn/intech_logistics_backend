@@ -65,7 +65,7 @@ class AgreementOrderContractor extends Model
     public function order_unit() : BelongsTo
     {
         return $this->belongsTo(OrderUnit::class, 'order_units');
-    }п
+    }
 
     /**
     * Связь на таблицу согласование между заказчиком и перевозчиком

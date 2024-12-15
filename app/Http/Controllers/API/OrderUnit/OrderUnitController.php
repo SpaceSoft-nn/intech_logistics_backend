@@ -53,9 +53,6 @@ class OrderUnitController extends Controller
     */
     public function show(OrderUnit $orderUnit)
     {
-
-        dd($orderUnit->actual_status);
-
         return response()->json(array_success(OrderUnitResource::make($orderUnit), 'Return Order.'), 200);
     }
 

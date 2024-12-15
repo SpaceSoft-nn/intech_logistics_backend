@@ -18,4 +18,9 @@ class OfferContractorService
     {
         return $this->offerCotractorRep->create($vo);
     }
+
+    public function responseOfferContractor()
+    {
+        
+    }
 }

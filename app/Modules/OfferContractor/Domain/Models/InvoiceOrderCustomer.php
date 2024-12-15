@@ -2,6 +2,8 @@
 
 namespace App\Modules\OfferContractor\Domain\Models;
 
+use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
+use App\Modules\Transport\App\Data\Enums\TransportTypeWeight;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -48,7 +50,10 @@ class InvoiceOrderCustomer extends Model
     protected function casts(): array
     {
         return [
-
+            "start_date" => 'date',
+            "end_date" => 'date',
+            "type_transport_weight" => TransportTypeWeight::class,
+            "type_load_truck" => TransportLoadingType::class,
         ];
     }
 

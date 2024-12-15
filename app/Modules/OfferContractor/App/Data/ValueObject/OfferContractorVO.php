@@ -16,19 +16,17 @@ readonly class OfferContractorVO implements Arrayable
 
         public float $price_for_distance,
 
-
-
         public string $transport_id,
         public string $user_id,
         public string $organization_id,
 
 
-        public bool $add_load_space,
-        public bool $road_back,
-        public bool $directly_road,
+        public bool $add_load_space, //Возможен ли догруз
+        public bool $road_back, //Обратная дорога
+        public bool $directly_road, //Прямая дорога
 
 
-        public ?string $order_unit_id,
+        public ?string $order_unit_id, #TODO Подумать нужно ли это указывать?
         public ?string $description,
     ) {}
 

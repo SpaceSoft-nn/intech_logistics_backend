@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class AgreementOrder extends Model
 {
@@ -72,5 +73,10 @@ class AgreementOrder extends Model
     public function order() : BelongsTo
     {
         return $this->belongsTo(OrderUnit::class, 'order_unit_id');
+    }
+
+    public function transfer(): MorphToMany
+    {
+        return $this->morphToMany(Transfer::class, 'agreementable', 'transfer_agreement_pylymorphs');
     }
 }

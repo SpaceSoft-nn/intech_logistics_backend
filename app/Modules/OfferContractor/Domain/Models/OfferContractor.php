@@ -2,12 +2,11 @@
 
 namespace App\Modules\OfferContractor\Domain\Models;
 
+use App\Modules\OfferContractor\Domain\Factories\OfferContractorFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Таблица - предложения перевозчика
@@ -17,10 +16,10 @@ class OfferContractor extends Model
 
     use HasFactory, HasUuids;
 
-    // protected static function newFactory()
-    // {
-    //     return UserFactory::new();
-    // }
+    protected static function newFactory()
+    {
+        return OfferContractorFactory::new();
+    }
 
     protected $table = 'offer_contractors';
 

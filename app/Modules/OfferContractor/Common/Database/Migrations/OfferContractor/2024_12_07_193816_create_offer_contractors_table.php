@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('description')->comment('Дистанция за 1 км')->nullable();
 
             $table->uuid('transport_id')->constrained('transports');
-            $table->uuid('user_id')->constrained('users');
+            $table->uuid('user_id')->constrained('users')->nullable();
             $table->uuid('organization_id')->constrained('organizations');
-            $table->uuid('order_unit_id')->constrained('order_units')->nullable()->comment('к какому заказу привязано предложения');
+            $table->uuid('order_unit_id')->constrained('order_units')->nullable()->comment('к какому заказу привязано предложения'); #TODO Подумать нужно ли это указывать?
 
             $table->boolean('add_load_space')->default(false)->comment('Возможен ли догруз');
             $table->boolean('road_back')->default(false)->comment('Обратная дорога');

@@ -3,11 +3,13 @@
 namespace App\Modules\OfferContractor\Domain\Models;
 
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\Transfer\Domain\Models\Transfer;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class AgreementOrderContractor extends Model
 { //Таблица Когда перевозчик выбрал исполнителя "заказчика", то есть возьмёт в работу заказ
@@ -74,5 +76,10 @@ class AgreementOrderContractor extends Model
     public function agreement_order_contractor_accept() : HasOne
     {
         return $this->hasOne(OrderUnit::class, 'agreement_order_contractors');
+    }
+
+    public function transfer(): MorphToMany
+    {
+        return $this->morphToMany(Transfer::class, 'agreementable', 'transfer_agreement_pylymorphs');
     }
 }

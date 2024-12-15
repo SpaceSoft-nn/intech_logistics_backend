@@ -148,6 +148,9 @@ Route::prefix('/offer-contractors')->group(function () {
     Route::get('/', [OfferContractorController::class, 'index']);
     Route::post('/', [OfferContractorController::class, 'store']);
 
+    //Отклик Заказчика на предложения перевозчки
+    Route::post('/{offerContractor}/customer-add/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization');
+
 });
 
     //Endpoint transports

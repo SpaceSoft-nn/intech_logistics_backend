@@ -14,7 +14,8 @@ class OfferContractorServiceProvider extends ServiceProvider
     public function boot()
     {
         if($this->app->runningInConsole()){
-            $this->loadMigrationsFrom(dirname(__DIR__) . '/..' . '/Common' . '/Database' . "/Migrations");
+            $this->loadMigrationsFrom(dirname(__DIR__) . '/..' . '/Common' . '/Database' . "/Migrations" . "/Agreement");
+            $this->loadMigrationsFrom(dirname(__DIR__) . '/..' . '/Common' . '/Database' . "/Migrations" . "/OfferContractor");
         }
     }
 }

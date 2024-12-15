@@ -3,6 +3,7 @@
 namespace App\Modules\Transfer\Domain\Models;
 
 use App\Modules\Address\Domain\Models\Address;
+use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractor;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\CargoUnit;
 use App\Modules\Transfer\Domain\Factories\TransferFactory;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Transfer extends Model
 {
@@ -69,8 +71,20 @@ class Transfer extends Model
         return $this->belongsTo(Address::class, 'address_end_id');
     }
 
-    public function agreements(): BelongsToMany
+    // public function agreements(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(AgreementOrder::class, 'agreement_transfer', 'transfer_id' , 'agreement_id');
+    // }
+
+    //полиморфное отношение к таблица agreement (При выборе перевозчиком - заказчика)
+    public function agreement_contractor(): MorphToMany
     {
-        return $this->belongsToMany(AgreementOrder::class, 'agreement_transfer', 'transfer_id' , 'agreement_id');
+        return $this->morphToMany(AgreementOrderContractor::class , 'agreementable' ,'transfer_agreement_pylymorphs');
+    }
+
+    //полиморфное отношение к таблица agreement (При выборе заказчиком - перевозчика)
+    public function agreement_order(): MorphToMany
+    {
+        return $this->morphToMany(AgreementOrder::class , 'agreementable' ,'transfer_agreement_pylymorphs');
     }
 }

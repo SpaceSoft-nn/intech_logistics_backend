@@ -17,7 +17,7 @@ class AgreementOrderRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'id_organization_order_units_invoce' => ['required', 'uuid', 'exists:organization_order_unit_invoces,id'], // organization_order_units_invoce Откликнувшиеся перевозчики на заказ (Order)
+            'organization_order_units_invoce_id' => ['required', 'uuid', 'exists:organization_order_unit_invoces,id'], // organization_order_units_invoce Откликнувшиеся перевозчики на заказ (Order)
         ];
     }
 

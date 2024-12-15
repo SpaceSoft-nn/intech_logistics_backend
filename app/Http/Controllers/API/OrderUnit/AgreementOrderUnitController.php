@@ -41,7 +41,7 @@ class AgreementOrderUnitController extends Controller
         $model = $service->acceptCotractorToOrder(
             AgreementOrderCreateDTO::make(
                 order_unit_id: $orderUnit->id,
-                organization_order_units_invoce_id: $validated['id_organization_order_units_invoce'],
+                organization_order_units_invoce_id: $validated['organization_order_units_invoce_id'],
                 organization_contractor_id: null,
             )
         );

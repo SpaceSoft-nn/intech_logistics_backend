@@ -243,7 +243,7 @@ namespace App\Http\Controllers;
 *     title="Organization Order Invoice Resource",
 *     description="JSON ресурс - который отвечает за то, какой Подрядчик откликнулся на определённый заказ (с invoice_order (неким документом или информацией))",
 *     type="object",
-*     @OA\Property(property="id_contract", type="string", description="Id контракта, его нужно отправлять когда заказчик будет выбирать подрядичка", format="uuid", example="3fa85f64-5717-4562-b3fc-2c963f66afa6" ),
+*     @OA\Property(property="id_organization_order_units_invoce", type="string", description="Id контракта, его нужно отправлять когда заказчик будет выбирать подрядичка", format="uuid", example="3fa85f64-5717-4562-b3fc-2c963f66afa6" ),
 *     @OA\Property(property="organization_contract", type="object", nullable=true, ref="#/components/schemas/OrganizationResource"),
 *     @OA\Property(property="order", type="object", nullable=true, ref="#/components/schemas/OrderUnitResource"),
 *     @OA\Property(property="invoice_order", type="object", nullable=true, ref="#/components/schemas/InvoiceOrderResource")

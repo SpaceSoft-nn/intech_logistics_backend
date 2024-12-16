@@ -150,7 +150,13 @@ Route::prefix('/offer-contractors')->group(function () {
 
     //Отклик Заказчика на предложения перевозчки
     Route::post('/{offerContractor}/customer/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization');
+    //Получение всех предложений (по предложнию)
     Route::get('/{offerContractor}/customer', [OfferContractorController::class, 'getAddCustomer'])->whereUuid('offerContractor');
+
+    //перевозчик выбирает (организацию - заказчика) на исполнение заявки предложения
+    Route::post('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'agreementOffer'])->whereUuid('offerContractor');
+
+
 
 });
 

@@ -19,6 +19,9 @@ return new class extends Migration
             $table->uuid('order_unit_id')->comment('Создание заказа после согласование сторон')->nullable()
                 ->constrained('order_units')->noActionOnDelete();
 
+            $table->uuid('offer_contractor_id')->comment('Предложения к которому мы привязаны')->unique()
+                ->constrained('offer_contractors')->noActionOnDelete();
+
             {   #TODO Нужно заменять на таблицу user_organization для 3NF нормальной формы
 
                 $table->uuid('organization_contractor_id')->comment('Организация перевозчика')

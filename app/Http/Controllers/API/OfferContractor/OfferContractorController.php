@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\API\OfferContractor;
 
 use App\Http\Controllers\Controller;
+use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOfferDTO;
 use App\Modules\OfferContractor\App\Data\DTO\OfferCotractorAddCustomerDTO;
 use App\Modules\OfferContractor\App\Data\ValueObject\InvoiceOrderCustomerVO;
 use App\Modules\OfferContractor\App\Data\ValueObject\OfferContractorVO;
+use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractor;
 use App\Modules\OfferContractor\Domain\Models\OfferContractor;
 use App\Modules\OfferContractor\Domain\Models\OfferContractorCustomer;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorAddCustomerRequest;
+use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOfferRequest;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorCreateRequest;
+use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorResource;
 use App\Modules\OfferContractor\Domain\Resources\OfferContractorCollection;
 use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerCollection;
 use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerResource;
@@ -85,5 +89,27 @@ class OfferContractorController extends Controller
         $offerContractorCustomers = OfferContractorCustomer::where('offer_contractor_id', $offerContractor->id)->get();
 
         return response()->json(array_success(OfferContractorCustomerCollection::make($offerContractorCustomers), 'Возврат всех откликов по предложению.'), 200);
+    }
+
+    public function agreementOffer(
+        OfferContractor $offerContractor,
+        OfferContractorAgreementOfferRequest $request,
+        OfferContractorService $offerContractorService,
+    ) {
+
+
+        $validated = $request->validated();
+
+        /**
+        * @var AgreementOrderContractor
+        */
+        $agreementOrderContractor = $offerContractorService->agreementOffer(
+            OfferContractorAgreementOfferDTO::make(
+                offer_contractor_customer_id: $validated['offer_contractor_customer_id'],
+                offerContractor: $offerContractor,
+            )
+        );
+
+        return response()->json(array_success(AgreementOrderContractorResource::make($agreementOrderContractor), 'Организация заказчика, успешна была выбрана на исполнения предложения.'), 200);
     }
 }

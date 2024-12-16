@@ -27,6 +27,8 @@ class AgreementOrderContractor extends Model
 
         "offer_contractor_invoice_order_customer_id",
         "order_unit_id",
+        "offer_contractor_id",
+
         "organization_contractor_id",
         "user_id",
 
@@ -57,7 +59,7 @@ class AgreementOrderContractor extends Model
     */
     public function offer_contractor_invoice_order_customer() : BelongsTo
     {
-        return $this->belongsTo(InvoiceOrderCustomer::class, 'offer_contractors');
+        return $this->belongsTo(OfferContractorCustomer::class);
     }
 
     /**
@@ -75,7 +77,16 @@ class AgreementOrderContractor extends Model
     */
     public function agreement_order_contractor_accept() : HasOne
     {
-        return $this->hasOne(OrderUnit::class, 'agreement_order_contractors');
+        return $this->hasOne(AgreementOrderContractorAccept::class, 'agreement_order_contractor_id', 'id');
+    }
+
+    /**
+    *
+    * @return HasOne
+    */
+    public function offer_contractor() : BelongsTo
+    {
+        return $this->BelongsTo(OfferContractor::class, 'offer_contractor_id');
     }
 
     public function transfer(): MorphToMany

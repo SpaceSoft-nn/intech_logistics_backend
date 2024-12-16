@@ -2,14 +2,17 @@
 
 namespace App\Modules\OfferContractor\Domain\Services;
 
+use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOfferDTO;
 use App\Modules\OfferContractor\App\Data\DTO\OfferCotractorAddCustomerDTO;
 use App\Modules\OfferContractor\App\Data\ValueObject\OfferContractorVO;
 use App\Modules\OfferContractor\App\Repositories\OfferCotractorRepository;
+use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferContractorInteractor;
 use App\Modules\OfferContractor\Domain\Interactor\ResponseOfferContractorInteractor;
+use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractor;
 use App\Modules\OfferContractor\Domain\Models\OfferContractor;
 use App\Modules\OfferContractor\Domain\Models\OfferContractorCustomer;
 
-class OfferContractorService
+final class OfferContractorService
 {
 
     public function __construct(
@@ -36,5 +39,16 @@ class OfferContractorService
     public function responseOfferContractor(OfferCotractorAddCustomerDTO $dto) : OfferContractorCustomer
     {
         return ResponseOfferContractorInteractor::execute($dto);
+    }
+
+    /**
+     * Принимаем (оргиназацию заказчика) на исполнения предложения от перевозчика (то есть перевозчик выбрал заказ по отклику на предложения)
+     * @param OfferContractorAgreementOfferDTO $dto
+     *
+     * @return AgreementOrderContractor
+     */
+    public function agreementOffer(OfferContractorAgreementOfferDTO $dto) : AgreementOrderContractor
+    {
+        return AgreementOfferContractorInteractor::execute($dto);
     }
 }

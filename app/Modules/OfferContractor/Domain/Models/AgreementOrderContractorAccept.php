@@ -17,12 +17,11 @@ class AgreementOrderContractorAccept extends Model
     //     return UserFactory::new();
     // }
 
-    protected $table = 'agreement_order_contractors';
+    protected $table = 'agreement_order_contractor_accept';
 
     protected $fillable = [
 
         "agreement_order_contractor_id",
-        "agreement_order_contractors",
         "order_bool",
         "contractor_bool",
 

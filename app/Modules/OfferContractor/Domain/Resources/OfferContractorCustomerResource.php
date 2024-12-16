@@ -12,7 +12,7 @@ class OfferContractorCustomerResource extends JsonResource
     {
         return [
 
-            "id" => $this->id,
+            "id_offer_contractor_customer" => $this->id,
             "invoice_order_customer_id" => $this->invoice_order_customer_id,
             "offer_contractor_id" => $this->offer_contractor_id,
             "organization_id" => $this->organization_id,

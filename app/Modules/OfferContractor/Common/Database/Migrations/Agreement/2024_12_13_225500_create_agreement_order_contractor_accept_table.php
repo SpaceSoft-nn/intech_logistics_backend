@@ -16,8 +16,8 @@ return new class extends Migration
             $table->uuid('agreement_order_contractor_id')->unique() #TODO - Возможно надо будет убирать unique
                 ->constrained('agreement_order_contractors')->noActionOnDelete();
 
-            $table->boolean('order_bool')->comment('Подтврждения со стороны организации: заказчика');
-            $table->boolean('contractor_bool')->comment('Подтврждения со стороны организации: перевозчика');
+            $table->boolean('order_bool')->default(false)->comment('Подтврждения со стороны организации: заказчика');
+            $table->boolean('contractor_bool')->default(false)->comment('Подтврждения со стороны организации: перевозчика');
 
 
             $table->timestamps();

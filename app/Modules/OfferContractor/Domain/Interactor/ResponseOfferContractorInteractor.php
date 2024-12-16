@@ -26,6 +26,9 @@ class ResponseOfferContractorInteractor
      */
     private function run(OfferCotractorAddCustomerDTO $dto) : OfferContractorCustomer
     {
+        /**
+         * @var OfferContractorCustomer
+         */
         $offerContractorCustomer = DB::transaction(function () use ($dto) {
 
             /**

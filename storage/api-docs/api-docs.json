@@ -1008,6 +1008,235 @@
                 }
             }
         },
+        "/api/{offerContractor}/customer/{organization}": {
+            "post": {
+                "tags": [
+                    "Offer Contractor"
+                ],
+                "summary": "Добавить заказ для клиента.",
+                "operationId": "066f24f4f0f2ca0e34731601477942bb",
+                "parameters": [
+                    {
+                        "name": "offerContractor",
+                        "in": "path",
+                        "description": "ID предложения от Перевозчика",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    },
+                    {
+                        "name": "organization",
+                        "in": "path",
+                        "description": "ID организации - заказчика (кто откликнулся на заказ)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "order_total": {
+                                        "description": "Общая стоимость заказа",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 2000.5
+                                    },
+                                    "body_volume": {
+                                        "description": "Объем кузова",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 15.5
+                                    },
+                                    "type_product": {
+                                        "description": "Тип продукта",
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Товары народного потребления"
+                                    },
+                                    "type_load_truck": {
+                                        "$ref": "#/components/schemas/TransportStatusEnum"
+                                    },
+                                    "type_transport_weight": {
+                                        "$ref": "#/components/schemas/TransportTypeWeightEnum"
+                                    },
+                                    "start_address_id": {
+                                        "description": "UUID начального адреса, должен существовать в таблице addresses",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "end_address_id": {
+                                        "description": "UUID конечного адреса, должен существовать в таблице addresses",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "start_date": {
+                                        "description": "Дата начала",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-12-01"
+                                    },
+                                    "end_date": {
+                                        "description": "Дата завершения",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-12-05"
+                                    },
+                                    "description": {
+                                        "description": "Описание заказа",
+                                        "type": "string",
+                                        "maxLength": 1000,
+                                        "example": "Доставка из Москвы в Санкт-Петербург",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное добавление клиента к подрядчику.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OfferContractorCustomerResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Customer added to offer contractor successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Данная организация уже откликнулась на это предложения.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "description": "Флаг успешного выполнения",
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "info": {
+                                            "description": "Сообщение об ошибке",
+                                            "type": "string",
+                                            "example": "Данная организация уже откликнулась на это предложения."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/{offerContractor}/customer": {
+            "get": {
+                "tags": [
+                    "Offer Contractor"
+                ],
+                "summary": "Получить все отклики у предложения перевозчика.",
+                "operationId": "6647a5a2d0361335f59653f656ed640c",
+                "parameters": [
+                    {
+                        "name": "offerContractor",
+                        "in": "path",
+                        "description": "ID предложения перевозчика",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Возврат всех откликов по предложению.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/OfferContractorCustomerResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Возврат всех откликов по предложению."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/orders": {
             "get": {
                 "tags": [
@@ -2065,7 +2294,7 @@
                                 "allOf": [
                                     {
                                         "properties": {
-                                            "organization_order_units_invoce_id": {
+                                            "id_contractor": {
                                                 "description": "organization_order_units_invoce - откликнувшиеся подрядчики на заказ",
                                                 "type": "uuid",
                                                 "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
@@ -3637,9 +3866,81 @@
                 },
                 "type": "object"
             },
+            "InvoiceOrderCustomerResource": {
+                "title": "Invoice Order Customer Resource",
+                "description": "Ресурс для вывода данных о заказе клиента",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "order_total": {
+                        "description": "Цена/Выплата за заказ",
+                        "type": "string",
+                        "example": "2500.75"
+                    },
+                    "description": {
+                        "description": "Описание заказа",
+                        "type": "string",
+                        "example": "Доставка продуктов питания",
+                        "nullable": true
+                    },
+                    "body_volume": {
+                        "description": "Общий объем заказа",
+                        "type": "string",
+                        "example": "15.5"
+                    },
+                    "type_product": {
+                        "description": "Тип товара перевозки",
+                        "type": "string",
+                        "example": "Электроника"
+                    },
+                    "type_transport_weight": {
+                        "description": "Тип транспортного средства",
+                        "type": "string",
+                        "example": "medium"
+                    },
+                    "type_load_truck": {
+                        "description": "Тип загрузки трака",
+                        "type": "string",
+                        "example": "LTL"
+                    },
+                    "start_address_id": {
+                        "description": "ID адреса начала заказа",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "end_address_id": {
+                        "description": "ID адреса доставки",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174001"
+                    },
+                    "start_date": {
+                        "description": "Дата отправления",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-12-01"
+                    },
+                    "end_date": {
+                        "description": "Дата прибытия",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-12-05"
+                    }
+                },
+                "type": "object"
+            },
             "OfferContractorResource": {
                 "title": "Offer Contractor Resource",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a321-426614198000"
+                    },
                     "city_name_start": {
                         "description": "Название начального города",
                         "type": "string",
@@ -3700,6 +4001,27 @@
                         "maxLength": 1000,
                         "example": "Описание маршрута",
                         "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "OfferContractorCustomerResource": {
+                "title": "Offer Contractor Resource",
+                "description": "Отклили на предложения перевозчиков, от заказчиков",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4525-e89b-12d3-a456-426614174000"
+                    },
+                    "invoice_order_customer_id": {
+                        "$ref": "#/components/schemas/InvoiceOrderCustomerResource"
+                    },
+                    "offer_contractor_id": {
+                        "$ref": "#/components/schemas/OfferContractorResource"
+                    },
+                    "organization_id": {
+                        "$ref": "#/components/schemas/OrganizationResource"
                     }
                 },
                 "type": "object"
@@ -4111,7 +4433,7 @@
                 "title": "Organization Order Invoice Resource",
                 "description": "JSON ресурс - который отвечает за то, какой Подрядчик откликнулся на определённый заказ (с invoice_order (неким документом или информацией))",
                 "properties": {
-                    "id_contract": {
+                    "id_organization_order_units_invoce": {
                         "description": "Id контракта, его нужно отправлять когда заказчик будет выбирать подрядичка",
                         "type": "string",
                         "format": "uuid",

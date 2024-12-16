@@ -64,10 +64,30 @@ namespace App\Http\Controllers;
 * ),
 *
 * @OA\Schema(
+*     schema="InvoiceOrderCustomerResource",
+*     type="object",
+*     title="Invoice Order Customer Resource",
+*     description="Ресурс для вывода данных о заказе клиента",
+*     @OA\Property(property="id", type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000"),
+*     @OA\Property(property="order_total", type="string", description="Цена/Выплата за заказ", example="2500.75"),
+*     @OA\Property(property="description", type="string", nullable=true, description="Описание заказа", example="Доставка продуктов питания"),
+*     @OA\Property(property="body_volume", type="string", description="Общий объем заказа", example="15.5"),
+*     @OA\Property(property="type_product", type="string", description="Тип товара перевозки", example="Электроника"),
+*     @OA\Property(property="type_transport_weight", type="string", description="Тип транспортного средства", example="medium"),
+*     @OA\Property(property="type_load_truck", type="string", description="Тип загрузки трака", example="LTL"),
+*     @OA\Property(property="start_address_id", type="string", format="uuid", description="ID адреса начала заказа", example="123e4567-e89b-12d3-a456-426614174000"),
+*     @OA\Property(property="end_address_id", type="string", format="uuid", description="ID адреса доставки", example="123e4567-e89b-12d3-a456-426614174001"),
+*     @OA\Property(property="start_date", type="string", format="date", description="Дата отправления", example="2023-12-01"),
+*     @OA\Property(property="end_date", type="string", format="date", description="Дата прибытия", example="2023-12-05"),
+*
+* ),
+*
+* @OA\Schema(
 *     schema="OfferContractorResource",
 *     type="object",
 *     title="Offer Contractor Resource",
 *     properties={
+*         @OA\Property(property="id", type="string", format="uuid", example="123e4567-e89b-12d3-a321-426614198000"),
 *         @OA\Property(property="city_name_start", type="string", description="Название начального города", example="Москва", minLength=2),
 *         @OA\Property(property="city_name_end", type="string", description="Название конечного города", example="Санкт-Петербург", minLength=2),
 *         @OA\Property(property="price_for_distance", type="number", format="float", description="Цена за расстояние", example=1500.50),
@@ -78,6 +98,21 @@ namespace App\Http\Controllers;
 *         @OA\Property(property="road_back", type="boolean", description="Обратная дорога", nullable=true, example=false),
 *         @OA\Property(property="directly_road", type="boolean", description="Прямая дорога", nullable=true, example=true),
 *         @OA\Property(property="description", type="string", description="Описание", nullable=true, maxLength=1000, example="Описание маршрута")
+*     }
+* ),
+*
+*
+* @OA\Schema(
+*     schema="OfferContractorCustomerResource",
+*     type="object",
+*     description="Отклили на предложения перевозчиков, от заказчиков",
+*     title="Offer Contractor Resource",
+*     properties={
+*         @OA\Property(property="id", type="string", format="uuid", example="123e4525-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="invoice_order_customer_id", ref="#/components/schemas/InvoiceOrderCustomerResource", description="Ресурс абстрактного заказа при отклике"),
+*         @OA\Property(property="offer_contractor_id", ref="#/components/schemas/OfferContractorResource", description="Ресурс предложения от перевозчика"),
+*         @OA\Property(property="organization_id", ref="#/components/schemas/OrganizationResource", description="Ресурс организации"),
+*
 *     }
 * ),
 *
@@ -347,7 +382,10 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="type_Address", type="string", description="Тип адреса", nullable=true),
 *     @OA\Property(property="latitude", type="float", description="Широта адреса"),
 *     @OA\Property(property="longitude", type="float", description="Долгота адреса")
-* ),
+* )
+*
+*
+*
 *
 *
 *

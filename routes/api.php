@@ -149,7 +149,8 @@ Route::prefix('/offer-contractors')->group(function () {
     Route::post('/', [OfferContractorController::class, 'store']);
 
     //Отклик Заказчика на предложения перевозчки
-    Route::post('/{offerContractor}/customer-add/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization');
+    Route::post('/{offerContractor}/customer/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization');
+    Route::get('/{offerContractor}/customer', [OfferContractorController::class, 'getAddCustomer'])->whereUuid('offerContractor');
 
 });
 

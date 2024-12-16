@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\API\OfferContractor;
 
 use App\Http\Controllers\Controller;
+use App\Modules\OfferContractor\App\Data\DTO\OfferCotractorAddCustomerDTO;
 use App\Modules\OfferContractor\App\Data\ValueObject\InvoiceOrderCustomerVO;
 use App\Modules\OfferContractor\App\Data\ValueObject\OfferContractorVO;
 use App\Modules\OfferContractor\Domain\Models\OfferContractor;
+use App\Modules\OfferContractor\Domain\Models\OfferContractorCustomer;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorAddCustomerRequest;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorCreateRequest;
 use App\Modules\OfferContractor\Domain\Resources\OfferContractorCollection;
+use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerCollection;
+use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerResource;
 use App\Modules\OfferContractor\Domain\Resources\OfferContractorResource;
 use App\Modules\OfferContractor\Domain\Services\OfferContractorService;
 use App\Modules\Organization\Domain\Models\Organization;
@@ -54,9 +58,6 @@ class OfferContractorController extends Controller
         OfferContractorAddCustomerRequest $request,
         OfferContractorService $offerContractorService,
     ) {
-
-        dd($offerContractor, $organization);
-
         /**
         * @var InvoiceOrderCustomerVO
         *
@@ -64,5 +65,25 @@ class OfferContractorController extends Controller
         $invoiceOrderCustomerVO = $request->createInvoiceOrderCustomerVO();
 
 
+        /**
+         * @var OfferContractorCustomer
+        */
+        $offerContractorCustomer = $offerContractorService->responseOfferContractor(
+            OfferCotractorAddCustomerDTO::make(
+                invoiceOrderCustomerVO: $invoiceOrderCustomerVO,
+                organization: $organization,
+                offerContractor: $offerContractor,
+            ),
+        );
+
+        return response()->json(array_success(OfferContractorCustomerResource::make($offerContractorCustomer), 'Успешно добавлен отклик на предложения перевозчика.'), 201);
+
+    }
+
+    public function getAddCustomer(OfferContractor $offerContractor)
+    {
+        $offerContractorCustomers = OfferContractorCustomer::where('offer_contractor_id', $offerContractor->id)->get();
+
+        return response()->json(array_success(OfferContractorCustomerCollection::make($offerContractorCustomers), 'Возврат всех откликов по предложению.'), 200);
     }
 }

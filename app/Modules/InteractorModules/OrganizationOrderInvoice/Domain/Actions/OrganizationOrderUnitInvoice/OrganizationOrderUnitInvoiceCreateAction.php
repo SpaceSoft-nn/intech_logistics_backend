@@ -38,11 +38,6 @@ class OrganizationOrderUnitInvoiceCreateAction
     public static function run(string $orderId, string $orgId, string $invoiceId) : ?OrganizationOrderUnitInvoice
     {
 
-        $status = OrganizationOrderUnitInvoice::where('order_unit_id', $orderId)->where('organization_id', $orgId)->first();
-
-        //Если $orgId - уже откликнулась на заказ $orderId, выкидываем ошибку.
-        if($status) { throw new BusinessException('Данная организация уже откликнулась на этот заказ.'); }
-
         try {
 
             $model = OrganizationOrderUnitInvoice::create([

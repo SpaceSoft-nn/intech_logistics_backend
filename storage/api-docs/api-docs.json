@@ -1008,13 +1008,13 @@
                 }
             }
         },
-        "/api/{offerContractor}/customer/{organization}": {
+        "/api/offer-contractors/{offerContractor}/customer/{organization}": {
             "post": {
                 "tags": [
                     "Offer Contractor"
                 ],
-                "summary": "Добавить заказ для клиента.",
-                "operationId": "066f24f4f0f2ca0e34731601477942bb",
+                "summary": "Организация - заказчик - откликается на предложения перевозчика.",
+                "operationId": "e69fc0e368a0d688f1c087fb3d2a1acc",
                 "parameters": [
                     {
                         "name": "offerContractor",
@@ -1171,13 +1171,13 @@
                 }
             }
         },
-        "/api/{offerContractor}/customer": {
+        "/api/offer-contractors/{offerContractor}/customer": {
             "get": {
                 "tags": [
                     "Offer Contractor"
                 ],
                 "summary": "Получить все отклики у предложения перевозчика.",
-                "operationId": "6647a5a2d0361335f59653f656ed640c",
+                "operationId": "b82c22865ed87574de1a64b7eb949822",
                 "parameters": [
                     {
                         "name": "offerContractor",
@@ -1207,6 +1207,486 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Возврат всех откликов по предложению."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/offer-contractors/{offerContractor}/agreement-offer": {
+            "get": {
+                "tags": [
+                    "Offer Contractor"
+                ],
+                "summary": "Вернуть подтверждённую заявку (выбранная организация - заказчика на исполнение) по предложению (если имеется).",
+                "operationId": "35e0f099db82d518d5248fff4916369f",
+                "parameters": [
+                    {
+                        "name": "offerContractor",
+                        "in": "path",
+                        "description": "ID предложения от Перевозчика",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возврат записи о назначенном исполнителе в лице организации заказчика, по предложению перевозчика.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "oneOf": [
+                                                {
+                                                    "$ref": "#/components/schemas/AgreementOrderContractorResource"
+                                                }
+                                            ],
+                                            "nullable": true,
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Возвратили запись о назначенном исполнителе в лице организации заказчика, по предложению перевозчика."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Offer Contractor"
+                ],
+                "summary": "Выбрать организацию заказчика на исполнение предложения.",
+                "operationId": "138e904698095ef11e5d185e12da5f08",
+                "parameters": [
+                    {
+                        "name": "offerContractor",
+                        "in": "path",
+                        "description": "ID предложения от Перевозчика",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "offer_contractor_customer_id": {
+                                        "description": "UUID отклика заказчика, должен существовать в таблице offer_contractor_invoice_order_customers",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Организация заказчика успешно выбрана на исполнение предложения.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/AgreementOrderContractorResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Организация заказчика успешно выбрана на исполнение предложения."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "success",
+                                        "info"
+                                    ],
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "info": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Организация заказчика уже была выбрана для этого предложения.",
+                                                "Перевозчик для этого предложения уже выбрал организацию-заказчика."
+                                            ],
+                                            "example": "Организация заказчика уже была выбрана для этого предложения."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/offer-contractors/{agreementOrderContractorAccept}/agreement-offer-accept": {
+            "patch": {
+                "tags": [
+                    "Offer Contractor"
+                ],
+                "summary": "Утверждение двухстороннего договора о принятии в работу предложения и принятии заказа.",
+                "operationId": "888c43734a2305ad487629602faa471c",
+                "parameters": [
+                    {
+                        "name": "agreementOrderContractorAccept",
+                        "in": "path",
+                        "description": "ID принятия соглашения заказа подрядчика",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешное подтверждение с двух сторон.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/AgreementOrderContractorAcceptResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Успешное подтверждение с двух сторон."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/offer-contractors/{agreementOrderContractorAccept}/agreement-offer-order": {
+            "post": {
+                "tags": [
+                    "Offer Contractor"
+                ],
+                "summary": "Создание заказа после утверждения двух-стороннего договора на предложении от перевозчика.",
+                "operationId": "f99e0b8fcd8e3b0091714ba8e6d1de7a",
+                "parameters": [
+                    {
+                        "name": "agreementOrderContractorAccept",
+                        "in": "path",
+                        "description": "ID принятия соглашения заказа подрядчика",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "start_address_id": {
+                                                "description": "**UUID адреса начала. Поле обязательно и должно существовать в таблице addresses.**",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "end_address_id": {
+                                                "description": "**UUID адреса окончания. Поле обязательно и должно существовать в таблице addresses.**",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "start_date_delivery": {
+                                                "description": "**Дата начала заказа. Обязательное поле.**",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-10-01"
+                                            },
+                                            "end_date_delivery": {
+                                                "description": "**Дата окончания заказа. Обязательное поле.**",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-10-10"
+                                            },
+                                            "address_array": {
+                                                "description": "**Массив объектов с UUID адресов и датами (nullable) не обязательное поле - Данное поле предназначеное для промежуточных адрессов погрузки/разгрузки между главным адрессом движение.**",
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "description": "**UUID адреса. Обязательное поле.**",
+                                                            "type": "string",
+                                                            "format": "uuid",
+                                                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                                                        },
+                                                        "date": {
+                                                            "description": "**Дата. Обязательное поле.** - Это дата нужна для указание когда забрать груз",
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2023-10-01"
+                                                        },
+                                                        "type": {
+                                                            "description": "**Тип адреса. Обязательное поле. Возможные значения: 'sending' - Аддресс отправка, 'coming' - Адресс прибытия **",
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "sending",
+                                                                "coming"
+                                                            ],
+                                                            "example": "sending"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "nullable": true
+                                            },
+                                            "goods_array": {
+                                                "description": "Массив объектов, представляющих грузы. Обязательное поле. Минимум 1+ груз",
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "product_type": {
+                                                            "description": "**Тип продукта. Обязательное поле.**",
+                                                            "type": "string",
+                                                            "example": "Тип 1"
+                                                        },
+                                                        "type_pallet": {
+                                                            "description": "**Тип поддона. Обязательное поле. Возможные значения: 'eur', 'ecom', 'fin' **",
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "eur",
+                                                                "ecom",
+                                                                "fin"
+                                                            ],
+                                                            "example": "eur"
+                                                        },
+                                                        "cargo_units_count": {
+                                                            "description": "**Количество паллетов. Обязательное поле. Минимум 1.**",
+                                                            "type": "integer",
+                                                            "minimum": 1,
+                                                            "example": 5
+                                                        },
+                                                        "body_volume": {
+                                                            "description": "**Объем кузова. Обязательное поле. Минимум 0.**",
+                                                            "type": "number",
+                                                            "format": "float",
+                                                            "minimum": 0,
+                                                            "example": 12.5
+                                                        },
+                                                        "name_value": {
+                                                            "description": "**Название. Необязательное поле. Максимум 100 символов.**",
+                                                            "type": "string",
+                                                            "maxLength": 100,
+                                                            "example": "Название груза",
+                                                            "nullable": true
+                                                        },
+                                                        "description": {
+                                                            "description": "**Описание. Необязательное поле. Максимум 500 символов.**",
+                                                            "type": "string",
+                                                            "maxLength": 500,
+                                                            "example": "Описание груза",
+                                                            "nullable": true
+                                                        },
+                                                        "mgx": {
+                                                            "oneOf": [
+                                                                {
+                                                                    "$ref": "#/components/schemas/MgxObject"
+                                                                }
+                                                            ],
+                                                            "nullable": true,
+                                                            "description": "**Массогабаритные Характеристики - поле не обязательное, если указано, то будет валидироватья относительно количество паллетов**",
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type_transport_weight": {
+                                                "description": "**Тип транспортировки по габаритам. Обязательное поле.** small: 1.5-3 тонны, medium: 5 - 10 тонн, large: 10 - 20 тонн, extraLarge: 20 - 40 тонн, superSize: Более 40 тонн",
+                                                "type": "string",
+                                                "enum": [
+                                                    "small",
+                                                    "medium",
+                                                    "large",
+                                                    "extraLarge",
+                                                    "superSize"
+                                                ],
+                                                "example": "small"
+                                            },
+                                            "organization_id": {
+                                                "description": "**UUID организации. Поле обязательно и должно существовать в таблице organizations.**",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "end_date_order": {
+                                                "description": "**Дата окончания заказа. Обязательное поле.**",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-10-15"
+                                            },
+                                            "type_load_truck": {
+                                                "description": "**Тип загрузки грузовика. Обязательное поле. Возможные значения: ftl, ltl, custom.**",
+                                                "type": "string",
+                                                "enum": [
+                                                    "ftl",
+                                                    "ltl",
+                                                    "custom"
+                                                ],
+                                                "example": "ftl"
+                                            },
+                                            "order_total": {
+                                                "description": "**Цена заказа. Обязательное поле.**",
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": 50000
+                                            },
+                                            "description": {
+                                                "description": "**Описание (необязательное поле, максимум 1000 символов).**",
+                                                "type": "string",
+                                                "maxLength": 1000,
+                                                "example": "Это пример описания заказа.",
+                                                "nullable": true
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Заказ был успешно создан.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Заказ был успешно создан."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка создание заказа.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ошибка создание заказа."
                                         }
                                     },
                                     "type": "object"
@@ -4629,6 +5109,76 @@
                 },
                 "type": "object"
             },
+            "AgreementOrderContractorResource": {
+                "title": "Agreement Order Contractor Resource",
+                "properties": {
+                    "id_agreement_order_contractor": {
+                        "description": "UUID соглашения заказа подрядчика",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "offer_contractor_invoice_order_customer_id": {
+                        "description": "UUID отклика (организации - заказчика)",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "agreement_order_contractor_accept_id": {
+                        "description": "UUID Двух стороннего соглашения",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "order_unit_id": {
+                        "description": "UUID заказа",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "organization_contractor_id": {
+                        "description": "UUID организации перевозчика",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "user_id": {
+                        "description": "UUID пользователя заказчика",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    }
+                },
+                "type": "object"
+            },
+            "AgreementOrderContractorAcceptResource": {
+                "title": "Agreement Order Contractor Accept Resource",
+                "properties": {
+                    "id_agreement_order_contractor_accept": {
+                        "description": "UUID принятия соглашения заказа подрядчика",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "agreement_order_contractor_id": {
+                        "description": "UUID соглашения заказа подрядчика",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "order_bool": {
+                        "description": "Статус утверждения со стороны Заказчика",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "contractor_bool": {
+                        "description": "Статус утверждения со стороны Перевозчика",
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
+            },
             "TransportBodyTypeEnum": {
                 "description": "Тип кузова транспорта",
                 "type": "string",
@@ -4812,6 +5362,28 @@
                     }
                 },
                 "type": "object"
+            }
+        },
+        "responses": {
+            "500": {
+                "description": "Общая ошибка сервера.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message_error": {
+                                    "type": "string",
+                                    "example": "Error server"
+                                },
+                                "code": {
+                                    "type": "integer",
+                                    "example": "500"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
             }
         },
         "securitySchemes": {

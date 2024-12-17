@@ -382,8 +382,33 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="type_Address", type="string", description="Тип адреса", nullable=true),
 *     @OA\Property(property="latitude", type="float", description="Широта адреса"),
 *     @OA\Property(property="longitude", type="float", description="Долгота адреса")
-* )
+* ),
 *
+* @OA\Schema(
+*     schema="AgreementOrderContractorResource",
+*     type="object",
+*     title="Agreement Order Contractor Resource",
+*     properties={
+*         @OA\Property(property="id_agreement_order_contractor", type="string", format="uuid", description="UUID соглашения заказа подрядчика", example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="offer_contractor_invoice_order_customer_id", type="string", format="uuid", description="UUID отклика (организации - заказчика)", example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="agreement_order_contractor_accept_id", type="string", format="uuid", description="UUID Двух стороннего соглашения", example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="order_unit_id", type="string", format="uuid", description="UUID заказа", example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="organization_contractor_id", type="string", format="uuid", description="UUID организации перевозчика", example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="user_id", type="string", format="uuid", description="UUID пользователя заказчика", example="123e4567-e89b-12d3-a456-426614174000")
+*     }
+* ),
+*
+* @OA\Schema(
+*     schema="AgreementOrderContractorAcceptResource",
+*     type="object",
+*     title="Agreement Order Contractor Accept Resource",
+*     properties={
+*         @OA\Property(property="id_agreement_order_contractor_accept", type="string", format="uuid", description="UUID принятия соглашения заказа подрядчика", example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="agreement_order_contractor_id", type="string", format="uuid", description="UUID соглашения заказа подрядчика", example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="order_bool", type="boolean", description="Статус утверждения со стороны Заказчика", example=true),
+*         @OA\Property(property="contractor_bool", type="boolean", description="Статус утверждения со стороны Перевозчика", example=true)
+*     }
+* ),
 *
 *
 *

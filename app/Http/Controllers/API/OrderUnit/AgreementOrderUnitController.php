@@ -74,9 +74,6 @@ class AgreementOrderUnitController extends Controller
             : response()->json(array_success(null, $result->message), 403);
     }
 
-
-
-
     /**
      * #TODO Проверять что пользователь имеет отношение к AgreementOrderAccept
      * Получаем agreementOrderAccept по UUID

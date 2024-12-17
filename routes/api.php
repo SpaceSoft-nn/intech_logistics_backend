@@ -148,14 +148,24 @@ Route::prefix('/offer-contractors')->group(function () {
     Route::get('/', [OfferContractorController::class, 'index']);
     Route::post('/', [OfferContractorController::class, 'store']);
 
-    //Отклик Заказчика на предложения перевозчки
+    //Отклик Заказчика на предложения перевозчика
     Route::post('/{offerContractor}/customer/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization');
     //Получение всех предложений (по предложнию)
     Route::get('/{offerContractor}/customer', [OfferContractorController::class, 'getAddCustomer'])->whereUuid('offerContractor');
 
+
+    //Вернуть подвтреждённую заявку (выбранная организация - заказчика на исполнения) по предложению (если имется)
+    Route::get('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'getAgreementOffer'])->whereUuid('offerContractor');
+
     //перевозчик выбирает (организацию - заказчика) на исполнение заявки предложения
     Route::post('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'agreementOffer'])->whereUuid('offerContractor');
 
+    //Утверждения Двух сторонний договор, о принятии в работу Предложения и принятии заказа,
+    //P.S Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer
+    Route::patch('/{agreementOrderContractorAccept}/agreement-offer-accept', [OfferContractorController::class, 'agreementOfferAccept'])->whereUuid('agreementOrderContractorAccept');
+
+    //Создание заказа после утверждения двух-стороннего договора на предложении от перевозчика
+    Route::post('/{agreementOrderContractorAccept}/agreement-offer-order', [OfferContractorController::class, 'agreementOfferOrder'])->whereUuid('agreementOrderContractorAccept');
 
 
 });

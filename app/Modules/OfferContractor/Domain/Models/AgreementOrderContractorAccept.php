@@ -52,6 +52,6 @@ class AgreementOrderContractorAccept extends Model
     */
     public function agreement_order_contractor() : BelongsTo
     {
-        return $this->belongsTo(AgreementOrderContractor::class, 'agreement_order_contractors');
+        return $this->belongsTo(AgreementOrderContractor::class, 'agreement_order_contractor_id');
     }
 }

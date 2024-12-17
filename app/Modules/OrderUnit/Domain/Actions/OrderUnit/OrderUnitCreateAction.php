@@ -16,7 +16,7 @@ class OrderUnitCreateAction
     {
         return self::run($vo);
     }
-    
+
     /**
      * @param OrderUnitVO $vo
      *
@@ -24,7 +24,6 @@ class OrderUnitCreateAction
      */
     private static function run(OrderUnitVO $vo) : OrderUnit
     {
-        #TODO Отлавливать ошибки
 
         try {
 

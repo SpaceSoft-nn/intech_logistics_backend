@@ -29,7 +29,7 @@ class OrderUnitVO implements Arrayable
 
         public readonly string $organization_id,
         public ?string $user_id,
-        public ?string $contractors_id,
+        public ?string $contractor_id,
 
         public ?bool $add_load_space,
         public ?bool $change_price,
@@ -50,7 +50,7 @@ class OrderUnitVO implements Arrayable
         ?string $order_status = null,
 
         ?string $user_id = null,
-        ?string $contractors_id = null,
+        ?string $contractor_id = null,
         ?string $organization_id,
 
         bool $add_load_space,
@@ -71,7 +71,7 @@ class OrderUnitVO implements Arrayable
             order_status: StatusOrderUnitEnum::stringByCaseToObject($order_status),
 
             user_id: $user_id,
-            contractors_id: $contractors_id,
+            contractor_id: $contractor_id,
             organization_id: $organization_id,
 
             add_load_space: $add_load_space,
@@ -100,8 +100,57 @@ class OrderUnitVO implements Arrayable
             order_status: $this->order_status,
 
             user_id: $this->user_id,
-            contractors_id: $this->contractors_id,
+            contractor_id: $this->contractor_id,
             organization_id: $this->organization_id,
+
+            add_load_space: $this->add_load_space,
+            change_price: $this->change_price,
+            change_time: $this->change_time,
+        );
+    }
+
+    /**
+    * VO - Должен сохранять иммутабельность, поэтому делаем новый объект с заполненным полям
+    * @return self
+    */
+    public function setContractorId(string $contractor_id) : self
+    {
+        return new self (
+            body_volume: $this->body_volume,
+            order_total: $this->order_total,
+            description: $this->description,
+            end_date_order: $this->end_date_order,
+
+            type_load_truck: $this->type_load_truck,
+            type_transport_weight: $this->type_transport_weight,
+            order_status: $this->order_status,
+
+            user_id: $this->user_id,
+            contractor_id: $contractor_id,
+            organization_id: $this->organization_id,
+
+            add_load_space: $this->add_load_space,
+            change_price: $this->change_price,
+            change_time: $this->change_time,
+        );
+    }
+
+
+    public function setOrganizationId(string $organization_id) : self
+    {
+        return new self (
+            body_volume: $this->body_volume,
+            order_total: $this->order_total,
+            description: $this->description,
+            end_date_order: $this->end_date_order,
+
+            type_load_truck: $this->type_load_truck,
+            type_transport_weight: $this->type_transport_weight,
+            order_status: $this->order_status,
+
+            user_id: $this->user_id,
+            contractor_id: $this->contractor_id,
+            organization_id: $organization_id,
 
             add_load_space: $this->add_load_space,
             change_price: $this->change_price,
@@ -124,7 +173,7 @@ class OrderUnitVO implements Arrayable
             "order_status" => $this->order_status?->value,
 
             "user_id" => $this->user_id,
-            "contractors_id" => $this->contractors_id,
+            "contractor_id" => $this->contractor_id,
             "organization_id" => $this->organization_id,
 
             //служебные
@@ -148,7 +197,7 @@ class OrderUnitVO implements Arrayable
         $order_status = Arr::get($data, "order_status", null);
 
         $user_id = Arr::get($data, "user_id", null);
-        $contractors_id = Arr::get($data, "contractors_id", null);
+        $contractor_id = Arr::get($data, "contractor_id", null);
         $organization_id = Arr::get($data, "organization_id", null);
 
         $change_price = Arr::get($data, "change_price", null);
@@ -165,7 +214,7 @@ class OrderUnitVO implements Arrayable
             order_status: $order_status,
 
             user_id: $user_id,
-            contractors_id: $contractors_id,
+            contractor_id: $contractor_id,
             organization_id: $organization_id,
 
             add_load_space: self::filterEnumTypeLoad($type_load_truck),

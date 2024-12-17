@@ -54,7 +54,7 @@ class OrderUnitFactory extends Factory
 
                 user_id: $organization->owner_id,
                 organization_id: $organization->id,
-                contractors_id: null,
+                contractor_id: null,
                 add_load_space: OrderUnitVO::filterEnumTypeLoad($type_load_truck)
             );
 

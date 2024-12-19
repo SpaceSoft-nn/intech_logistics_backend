@@ -178,6 +178,7 @@ Route::prefix('/offer-contractors')->group(function () {
 Route::prefix('/transports')->group(function () {
 
     Route::get('/', [TransportController::class, 'index']);
+    Route::get('/{transport}', [TransportController::class, 'show'])->whereUuid('transport');
     Route::post('/', [TransportController::class, 'store']);
 
 });

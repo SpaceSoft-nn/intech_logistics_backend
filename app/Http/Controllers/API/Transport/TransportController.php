@@ -20,6 +20,11 @@ class TransportController
         return response()->json(array_success(TransportCollection::make($transports), 'Return all transports'), 200);
     }
 
+    public function show(Transport $transport)
+    {
+        return response()->json(array_success(TransportResoruce::make($transport), 'Return object transport'), 200);
+    }
+
     public function store(TransportCreateRequest $request)
     {
 

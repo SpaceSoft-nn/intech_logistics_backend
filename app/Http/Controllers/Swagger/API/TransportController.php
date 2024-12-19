@@ -67,7 +67,42 @@ namespace App\Http\Controllers\Swagger\API;
 *       ),
 * ),
 *
-*
+* @OA\Get(
+*      path="/api/transports/{transport}",
+*      summary="Получить транспорт по UUID.",
+*      tags={"Transports"},
+*      @OA\Parameter(
+*          name="transport",
+*          in="path",
+*          required=true,
+*          description="UUID транспорта",
+*          @OA\Schema(type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000")
+*      ),
+*      @OA\Response(
+*          response=200,
+*          description="Успешный возврат транспорта.",
+*          @OA\JsonContent(
+*              @OA\Property(property="data", type="object", ref="#/components/schemas/TransportResource"),
+*              @OA\Property(property="message", type="string", example="Return object transport.")
+*          )
+*      ),
+*      @OA\Response(
+*          response=404,
+*          description="Транспорт не найден.",
+*          @OA\JsonContent(
+*              @OA\Property(property="message_error", type="string", example="Transport not found."),
+*              @OA\Property(property="code", type="integer", example="404")
+*          )
+*      ),
+*      @OA\Response(
+*          response=500,
+*          description="Общая ошибка сервера.",
+*          @OA\JsonContent(
+*              @OA\Property(property="message_error", type="string", example="Error server"),
+*              @OA\Property(property="code", type="integer", example="500")
+*          )
+*      )
+* ),
 *
 *
 *

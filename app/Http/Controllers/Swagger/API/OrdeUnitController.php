@@ -681,6 +681,55 @@ use App\Http\Controllers\Controller;
 *
 * ),
 *
+* @OA\Post(
+*      path="/api/orders/{orderUnit}/status-transportation",
+*      summary="Установка статуса транспортировки для заказа.",
+*      tags={"Order Unit"},
+*      @OA\Parameter(
+*          name="orderUnit",
+*          in="path",
+*          required=true,
+*          description="UUID заказа",
+*          @OA\Schema(type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000")
+*      ),
+*      @OA\RequestBody(
+*          required=true,
+*          @OA\JsonContent(
+*              @OA\Property(
+*                  property="status",
+*                  type="string",
+*                  description="Статус транспортировки",
+*                  enum={"transit", "unloading", "loading"},
+*                  example="transit"
+*              )
+*          )
+*      ),
+*      @OA\Response(
+*          response=200,
+*          description="Успешная установка статуса транспортировки.",
+*          @OA\JsonContent(
+*              @OA\Property(property="data", type="null"),
+*              @OA\Property(property="message", type="string", example="Set status order transportation event.")
+*          )
+*      ),
+*      @OA\Response(
+*          response=404,
+*          description="Ошибка установки статуса транспортировки.",
+*          @OA\JsonContent(
+*              @OA\Property(property="data", type="null"),
+*              @OA\Property(property="message", type="string", example="Error set status order transportation event.")
+*          )
+*      ),
+*      @OA\Response(
+*          response=500,
+*          description="Общая ошибка сервера.",
+*          @OA\JsonContent(
+*              @OA\Property(property="message_error", type="string", example="Error server"),
+*              @OA\Property(property="code", type="integer", example="500")
+*          )
+*      )
+* ),
+*
 *
 */
 class OrdeUnitController extends Controller

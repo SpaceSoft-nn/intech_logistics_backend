@@ -108,6 +108,16 @@ class OrderUnit extends Model
         return $this->hasOne(OrderUnitStatus::class)->latest('created_at')->orderBy('id', 'desc');
     }
 
+    #TODO Вынести в репозиторий
+    public function actual_status_transportation_event(): HasOne
+    {
+        /**
+         * при latest - мы можем указать по какому столбцу возвращать P.S Может быть проблема,
+         * если uuid будет заполняться от разных серверов с разным временем - будет коллизия или не верный возврат статуса
+        */
+        return $this->hasOne(StatusTransportationEventModel::class)->latest('created_at')->orderBy('id', 'desc')->withDefault();
+    }
+
 
     public function addresses(): BelongsToMany
     {

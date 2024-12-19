@@ -2,19 +2,13 @@
 
 namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitStatus;
 
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
+
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use Illuminate\Contracts\Support\Arrayable;
 
 final readonly class OrderUnitStatusVO implements Arrayable
 {
 
-    /**
-     * @param OrderUnitVO $orderUnitVO
-     * @param OrderUnitAddressDTO $orderUnitAddressDTO
-     * @param CargoGoodVO[] $cargoGoodVO
-    */
     public function __construct(
 
         public string $order_unit_id,

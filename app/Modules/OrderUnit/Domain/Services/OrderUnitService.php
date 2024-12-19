@@ -3,9 +3,12 @@
 namespace App\Modules\OrderUnit\Domain\Services;
 
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\StatusTransportationEvent\StatusTransportationEventVO;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
+use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitSatus\CreateStatusTransportationEventOrderAction;
 use App\Modules\OrderUnit\Domain\Interactor\Order\CreateOrderUnitInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\OrderUnit\Domain\Models\StatusTransportationEventModel;
 use Exception;
 use Illuminate\Support\Collection;
 
@@ -20,6 +23,17 @@ class OrderUnitService
     public function createOrderUnit(OrderUnitCreateDTO $dto) : ?OrderUnit
     {
         return $this->createOrderUnitInteractor->execute($dto);
+    }
+
+    /**
+     * Установка статуса транспортировки: в пути, на разгрузке, на выгрузке
+     * @param StatusTransportationEventVO $vo
+     *
+     * @return StatusTransportationEventModel
+     */
+    public function setStatusTransportationEvent(StatusTransportationEventVO $vo) : StatusTransportationEventModel
+    {
+        return CreateStatusTransportationEventOrderAction::make($vo);
     }
 
 

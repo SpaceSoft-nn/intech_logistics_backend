@@ -2928,6 +2928,110 @@
                 ]
             }
         },
+        "/api/orders/{orderUnit}/status-transportation": {
+            "post": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Установка статуса транспортировки для заказа.",
+                "operationId": "89d0562927a9b3c0638e0f378df0913d",
+                "parameters": [
+                    {
+                        "name": "orderUnit",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "description": "Статус транспортировки",
+                                        "type": "string",
+                                        "enum": [
+                                            "transit",
+                                            "unloading",
+                                            "loading"
+                                        ],
+                                        "example": "transit"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешная установка статуса транспортировки.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Set status order transportation event."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка установки статуса транспортировки.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error set status order transportation event."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/organization": {
             "get": {
                 "tags": [
@@ -4309,6 +4413,10 @@
                     },
                     "order_status": {
                         "description": "Статус заказа",
+                        "type": "string"
+                    },
+                    "transportation_status": {
+                        "description": "Статус заказа при транспортировки: В пути, На разгрузке...",
                         "type": "string"
                     },
                     "user_id": {

@@ -58,6 +58,10 @@ Route::post('/addresses', [AddressController::class, 'create']);
     //orderUnit
 Route::prefix('/orders')->group(function () {
 
+    { //Установка статутса транспортировки события: в пути, на разгрузке...
+        #TODO Возможно в будущем uuid заказа нужно будет отправлять в теле запроса.
+        Route::post('/{orderUnit}/status-transportation', [OrderUnitController::class, 'setStatusTransportationEvent'])->whereUuid('orderUnit');
+    }
 
     {
         //Вернуть все записи

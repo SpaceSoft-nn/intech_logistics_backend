@@ -16,9 +16,11 @@ use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\StatusTransportationEvent\StatusTransportationEventVO;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdateAction;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\OrderUnit\Domain\Requests\CreateStatusTransportationEventRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitSelectPriceRequest;
@@ -223,6 +225,29 @@ class OrderUnitController extends Controller
         $arrays = OrganizationOrderUnitInvoice::all();
 
         return response()->json(array_success(OrgOrderInvoiceCollection::make($arrays), 'Возвращены все подрядчики откликнувшиеся на заказ.'), 200);
+    }
+
+    /**
+     * Установка статуса транспортировки для заказа
+     */
+    public function setStatusTransportationEvent(
+        OrderUnit $orderUnit,
+        CreateStatusTransportationEventRequest $request,
+        OrderUnitService $service,
+    ) {
+
+        $validated = $request->validated();
+
+        /**
+         * @var StatusTransportationEventVO
+         */
+        $vo = StatusTransportationEventVO::make(order_unit_id: $orderUnit, status: $validated['status']);
+
+        $status = $service->setStatusTransportationEvent($vo);
+
+        #TODO Нужно ли присылать данные модель статуса при ответе?
+        return $status ? response()->json(array_success(null, 'Set status order transportation event.'), 200)
+        : response()->json(array_success(null, 'Eror set status order transportation event.'), 404);
     }
 
 

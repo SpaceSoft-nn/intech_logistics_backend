@@ -49,6 +49,7 @@ namespace App\Http\Controllers;
 *    @OA\Property(property="address_is_array", type="boolean", description="Адрес в виде массива"),
 *    @OA\Property(property="goods_is_array", type="boolean", description="Товары в виде массива"),
 *    @OA\Property(property="order_status", type="string", description="Статус заказа"),
+*    @OA\Property(property="transportation_status", type="string", description="Статус заказа при транспортировки: В пути, На разгрузке..."),
 *    @OA\Property(property="user_id", ref="#/components/schemas/UserResource", description="Ресурс пользователя"),
 *    @OA\Property(property="organization_id", ref="#/components/schemas/OrganizationResource", description="Ресурс организации"),
 * ),

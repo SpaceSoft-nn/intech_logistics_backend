@@ -7,7 +7,6 @@ use App\Modules\Base\Requests\ApiRequest;
 class AgreementOrderRequest extends ApiRequest
 {
 
-    protected $stopOnFirstFailure = true;
 
     public function authorize(): bool
     {

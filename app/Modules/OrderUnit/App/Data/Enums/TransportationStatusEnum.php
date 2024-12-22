@@ -4,14 +4,15 @@ namespace App\Modules\OrderUnit\App\Data\Enums;
 
 use Exception;
 
-enum StatusTransportationEventOrderEnum : string
+enum TransportationStatusEnum : string
 {
+
+    case loading = 'На Погрузке';
 
     case transit = "В Пути";
 
     case unloading = 'На Разгрузке';
 
-    case loading = 'На Разгрузке';
 
 
     /**
@@ -26,9 +27,9 @@ enum StatusTransportationEventOrderEnum : string
 
         return match ($value) {
 
-            "transit" => StatusTransportationEventOrderEnum::transit,
-            "unloading" => StatusTransportationEventOrderEnum::unloading,
-            "loading" => StatusTransportationEventOrderEnum::loading,
+            "transit" => TransportationStatusEnum::transit,
+            "unloading" => TransportationStatusEnum::unloading,
+            "loading" => TransportationStatusEnum::loading,
             null => null,
             default => throw new Exception("Ошибка преобразование в класса: " . self::class, 500),
 
@@ -39,9 +40,9 @@ enum StatusTransportationEventOrderEnum : string
     {
         return match ($this)
         {
-            StatusTransportationEventOrderEnum::transit => "transit",
-            StatusTransportationEventOrderEnum::unloading => "unloading",
-            StatusTransportationEventOrderEnum::loading => "loading",
+            TransportationStatusEnum::transit => "transit",
+            TransportationStatusEnum::unloading => "unloading",
+            TransportationStatusEnum::loading => "loading",
             null => null,
             default => throw new Exception("Ошибка преобразование в класса: " . self::class, 500),
         };

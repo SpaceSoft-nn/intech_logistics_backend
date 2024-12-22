@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('enum_transportation_statuses', function (Blueprint $table) {
-            $table->id('id');
+            $table->id('id')->primary();
 
-            $table->string('enum')->comment('Название статуса');
+            $table->string('enum_name')->comment('Название статуса');
+            $table->string('enum_value')->comment('Значения Статуса');
 
             $table->timestamps();
         });

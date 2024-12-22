@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chain_status_tranportation', function (Blueprint $table) {
-            $table->id();
+        Schema::create('chain_tranportation_statuses', function (Blueprint $table) {
+            $table->uuid('id')->primary();
 
             $table->uuid('order_unit_id')
                 ->constrained('order_units')->noActionOnDelete();

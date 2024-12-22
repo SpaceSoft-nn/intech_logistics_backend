@@ -7,7 +7,6 @@ use App\Modules\User\Domain\Models\User;
 use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
 
-
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -17,10 +16,15 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
 
+
+
                 //Нужны первые сиды
             \App\Modules\Address\Common\Database\Seeders\AddressSeeder::class,
             \App\Modules\OrderUnit\Common\Database\Seeders\OrderUnitSeeder::class,
             \App\Modules\Transport\Common\Database\Seeders\TransportSeeder::class,
+
+                //Статусы транспортировки - обязательно после OrderUnit
+            \App\Modules\OrderUnit\Common\Database\Seeders\EnumTransportationStatusSeeder::class,
 
             //     //Дальше по цепочке сиды - эти сиды вынесены отдельно как склепок БД (Т.к по апи есть ограничение на бесплатные запросы)
             // // \App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceSeed::class,
@@ -35,6 +39,9 @@ class DatabaseSeeder extends Seeder
 
                 //Здесь будут создавать предложения от перевозчика
             \App\Modules\OfferContractor\Common\Database\Seeders\OfferContractorSeeder::class,
+
+                //Статусы транспортировки
+            \App\Modules\OrderUnit\Common\Database\Seeders\EnumTransportationStatusSeeder::class,
 
             //Сиды для прода (Презентации)
             ProdeSeed::class,

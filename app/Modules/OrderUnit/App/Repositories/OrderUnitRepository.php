@@ -9,8 +9,12 @@ use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitSatus\OrderUnitStatusCreateAction;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit as Model;
 use App\Modules\OrderUnit\Domain\Models\OrderUnitStatus;
+use App\Modules\OrderUnit\Domain\Models\Status\ChainTransportationStatus;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
+
+use function App\Helpers\Mylog;
 
 class OrderUnitRepository extends CoreRepository
 {
@@ -155,5 +159,27 @@ class OrderUnitRepository extends CoreRepository
         return $this->query()->where('organization_id', $uuid)->get();
     }
 
+    /**
+     * Вернуть актуальный статус транспортировки у Заказа
+     * @param string $uuid
+     *
+     * @return ?ChainTransportationStatus
+     */
+    public function getActualTransportationStatus(string $uuid) : ?ChainTransportationStatus
+    {
 
+        $collection = $this->query()->find($uuid)->chain_transportation_status->where('active_status', true);
+
+        if($collection->count() >= 2) {
+
+            Mylog('Ошибка в репозитории OrderUnitRepository, chain_transportation_status -
+            прислал нам две записи где есть true, такого не может быть, может быть только 1 акутальная запись:');
+
+            throw new Exception('Ошибка в репозитории, chain_transportation_status
+            прислал нам две записи где есть true, такого не может быть, может быть только 1 акутальная запись', 500);
+
+        }
+
+        return $collection->first();
+    }
 }

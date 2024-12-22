@@ -21,6 +21,7 @@ enum StatusOrderUnitEnum : string
 
     case private = "Закрыт"; //Запревачен (видно не всем)
 
+
     /**
     * Получить значение case в string и прислать объект
     * @param string $value

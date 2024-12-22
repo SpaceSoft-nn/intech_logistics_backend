@@ -7,6 +7,7 @@ use App\Modules\InteractorModules\AddressOrder\Domain\Models\OrderUnitAddress;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
+use App\Modules\OrderUnit\Domain\Models\Status\ChainTransportationStatus;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -136,6 +137,11 @@ class OrderUnit extends Model
     {
         //TODO Может быть баг - потом проверить
         return $this->belongsToMany(CargoGood::class, 'order_unit_cargo_good', 'order_unit_id' , 'cargo_good_id');
+    }
+
+    public function chain_transportation_status(): HasMany
+    {
+        return $this->hasMany(ChainTransportationStatus::class, 'order_unit_id', 'id');
     }
 
     public function mgx(): BelongsTo

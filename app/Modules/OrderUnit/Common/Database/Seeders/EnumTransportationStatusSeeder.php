@@ -24,6 +24,6 @@ class EnumTransportationStatusSeeder extends Seeder
             ]);
         }
 
-        ChainTransportationStatus::factory()->count(2)->create();
+        // ChainTransportationStatus::factory()->count(2)->create();
     }
 }

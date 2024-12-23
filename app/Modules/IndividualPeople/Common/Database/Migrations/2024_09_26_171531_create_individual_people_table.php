@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('other_contact');
-            $table->string('comment')->nullable();
+            $table->mediumText('comment')->nullable();
             $table->string('remuved')->default(false)->comment('Статус удаление');
 
             $table->uuid('personal_area_id')

@@ -3,6 +3,7 @@
 namespace App\Modules\OrderUnit\Domain\Resources\OrderUnit;
 
 use App\Modules\Address\Domain\Resources\AddressCollection;
+use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Resources\CargoGood\CargoGoodCollection;
 use App\Modules\Organization\Domain\Resources\OrganizationResource;
 use App\Modules\User\Domain\Resources\UserResource;
@@ -11,6 +12,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderUnitResource extends JsonResource
 {
+
+    public function __construct(
+        public OrderUnitRepository $rep
+    ) { }
+
 
     public function toArray(Request $request): array
     {
@@ -50,7 +56,7 @@ class OrderUnitResource extends JsonResource
             //
 
             "order_status" => $this->actual_status->status,
-            "transportation_status" => $this->actual_status_transportation_event,
+            "transportation_status" => $this->rep->getActualTransportationStatus($this->id), //при помощи репозитория получаем актуальный статус
 
             "user_id" => UserResource::make($this->user),
             "organization_id" => OrganizationResource::make($this->organization),

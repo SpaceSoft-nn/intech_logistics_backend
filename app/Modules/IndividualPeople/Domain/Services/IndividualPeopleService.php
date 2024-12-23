@@ -24,7 +24,7 @@ class IndividualPeopleService implements IIndividualPeopleService
     {
         return $this->rep->save($dto);
     }
-    /**
+    /**а
      * Вернуть Individual people по uuid
      * @param string $uuid
      *

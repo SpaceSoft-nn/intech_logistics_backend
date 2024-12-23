@@ -25,6 +25,7 @@ return [
     App\Modules\InteractorModules\AddressOrder\App\Providers\AddressOrderServiceProvide::class,
     App\Modules\InteractorModules\OrganizationOrderInvoice\App\Providers\OrganizationOrderInvoiceServiceProvider::class,
 
+
         #Auth Service
     App\Modules\Auth\App\Providers\AuthServiceProvider::class,
 

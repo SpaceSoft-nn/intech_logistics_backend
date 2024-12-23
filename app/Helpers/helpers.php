@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
+use App\Modules\Base\Error\BusinessException;
 use App\Modules\User\Domain\Models\User;
 use DateTime;
 use Illuminate\Support\Facades\Log;
@@ -91,6 +92,43 @@ if (!function_exists('add_time_random'))
         $deliveryEnd = $data_time->modify("+$daysToAdd days")->format('Y-m-d H:i:s');
 
         return $deliveryEnd;
+    }
+}
+
+if (!function_exists('isNullToBusinessException'))
+{
+    /**
+     * Если переданная переменная равна null, то выкидывать бизнес ошибку с заданным сообщением
+     * @param mixed $variable Переменная проверки
+     * @param string $messageError Сообщение об Ошикби
+     * @param int $code Код ошибки
+     *
+     * @return [type]
+     */
+    function isNullToBusinessException(mixed $variable, string $messageError, int $code = 400)
+    {
+
+        // Получаем стек вызовов
+        $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+
+        // Инициализируем переменные
+        $nameClass = 'Глобальный контекст';
+        $method = '';
+
+        // Проверяем, есть ли информация о вызвавшем классе и методе
+        if (isset($backtrace[1]['class'])) {
+            $nameClass = $backtrace[1]['class'];
+        }
+
+        if (isset($backtrace[1]['function'])) {
+            $method = $backtrace[1]['function'];
+        }
+
+        if(is_null($variable)) {
+            Mylog("Ошибка в классе: {$nameClass}, метод: {$method}, сообщение об ошибке: " . $messageError);
+            throw new BusinessException($messageError, $code);
+        }
+
     }
 }
 

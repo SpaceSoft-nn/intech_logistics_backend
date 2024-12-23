@@ -13,9 +13,9 @@ final readonly class ChainTransportationStatusVO implements Arrayable
     public function __construct(
 
         public string $order_unit_id,
-        public string $from_status_id,
-        public string $to_status_id,
+        public int $from_status_id,
         public bool $active_status,
+        public ?string $to_status_id,
         public ?string $comment,
 
     ) {}
@@ -23,9 +23,9 @@ final readonly class ChainTransportationStatusVO implements Arrayable
     public static function make(
 
         string $order_unit_id,
-        string $from_status_id,
-        string $to_status_id,
+        int $from_status_id,
         bool $active_status,
+        ?string $to_status_id = null,
         ?string $comment = null,
 
     ) : self {
@@ -38,6 +38,17 @@ final readonly class ChainTransportationStatusVO implements Arrayable
             comment: $comment,
         );
 
+    }
+
+    public function setToStatusId(string $id)
+    {
+        return self::make(
+            order_unit_id: $this->order_unit_id,
+            from_status_id: $this->from_status_id,
+            to_status_id: $id,
+            active_status: $this->active_status,
+            comment: $this->comment,
+        );
     }
 
     public function toArray() : array

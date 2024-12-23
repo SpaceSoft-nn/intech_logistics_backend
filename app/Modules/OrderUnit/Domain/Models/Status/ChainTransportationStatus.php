@@ -14,7 +14,7 @@ class ChainTransportationStatus extends Model
 
     use HasFactory, HasUuids;
 
-    protected $table = 'chain_tranportation_statuses';
+    protected $table = 'chain_transportation_statuses';
 
     protected static function newFactory()
     {
@@ -46,14 +46,19 @@ class ChainTransportationStatus extends Model
     protected function casts(): array
     {
         return [
-            'enum_status' => StatusOrderUnitEnum::class,
+
         ];
     }
 
-    //следующий статус в цепочке
-    public function to_status(): BelongsTo
+    public function status(): BelongsTo
     {
-        return $this->belongsTo(EnumTransportationStatus::class, 'to_status', 'id')->withDefault();
+        return $this->belongsTo(EnumTransportationStatus::class, 'from_status_id', 'id');
+    }
+
+    //следующий статус в цепочке
+    public function next_status(): BelongsTo
+    {
+        return $this->belongsTo(ChainTransportationStatus::class, 'to_status_id', 'id');
     }
 
 }

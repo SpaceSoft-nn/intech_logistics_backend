@@ -11,24 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chain_transportation_statuses', function (Blueprint $table) {
+        Schema::create('transporation_status_events', function (Blueprint $table) {
+
             $table->uuid('id')->primary();
 
-            $table->uuid('order_unit_id')
+            $table->foreignUuid('order_unit_id')->comment('ссылка на заказ')
                 ->constrained('order_units')->noActionOnDelete();
 
-            $table->foreignId('from_status_id')->nullable()->comment('Значение статуса у записи')
+            $table->foreignId('enum_transporatrion_status_id')->comment('ссылка на таблицу enum/const в бд на статусы')
                 ->constrained('enum_transportation_statuses')->noActionOnDelete();
 
-
-            $table->string('comment')->nullable();
-
-            $table->boolean('active_status')->comment('Активный статус у определённого заказа в данный момент');
-
             $table->timestamps();
+
         });
-
-
     }
 
     /**
@@ -36,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chain_status_tranportation');
+        Schema::dropIfExists('transporation_status_event');
     }
 };

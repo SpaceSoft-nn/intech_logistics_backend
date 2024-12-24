@@ -4,8 +4,7 @@ namespace App\Modules\IndividualPeople\Domain\Requests;
 
 use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
-use App\Modules\Notification\Domain\Rule\EmailRule;
-use App\Modules\Notification\Domain\Rule\PhoneRule;
+
 
 class CreateIndividualPeopleRequest extends ApiRequest
 {

@@ -562,6 +562,111 @@ namespace App\Http\Controllers;
 *     example="до 3 тонны"
 * ),
 *
+* @OA\Schema(
+*     schema="IndividualPeopleResource",
+*     type="object",
+*     title="IndividualPeopleResource",
+*     description="Individual People Resource",
+*     @OA\Property(
+*         property="id_individual_people",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the individual person",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="first_name",
+*         type="string",
+*         description="First name of the individual person",
+*         example="John"
+*     ),
+*     @OA\Property(
+*         property="last_name",
+*         type="string",
+*         description="Last name of the individual person",
+*         example="Doe"
+*     ),
+*     @OA\Property(
+*         property="father_name",
+*         type="string",
+*         description="Father's name of the individual person",
+*         example="Smith"
+*     ),
+*     @OA\Property(
+*         property="position",
+*         type="string",
+*         description="Позиция (пока что обычный string)",
+*         example="Manager"
+*     ),
+*     @OA\Property(
+*         property="other_contact",
+*         type="string",
+*         description="Other contact information of the individual person",
+*         example="Some contact info"
+*     ),
+*     @OA\Property(
+*         property="personal_area_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the personal area - id кабинета",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="email",
+*         type="string",
+*         format="email",
+*         description="Email",
+*         example="john.doe@example.com"
+*     ),
+*     @OA\Property(
+*         property="phone",
+*         type="string",
+*         description="Phone number of the individual person",
+*         example="71234567890"
+*     ),
+*     @OA\Property(
+*         property="comment",
+*         type="string",
+*         description="Comment about the individual person",
+*         example="Some comment"
+*     )
+* ),
+*
+* @OA\Schema(
+*     schema="DriverPeopleResource",
+*     type="object",
+*     title="DriverPeopleResource",
+*     description="Driver People Resource",
+*     @OA\Property(
+*         property="id_driver_people",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the driver person",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="personal_area_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the personal area",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="individual_people_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the individual person",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="organization_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the organization",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     )
+* ),
+*
 */
 abstract class Controller
 {

@@ -204,6 +204,475 @@
                 }
             }
         },
+        "/api/individual-people/drivers": {
+            "get": {
+                "tags": [
+                    "DriverPeople"
+                ],
+                "summary": "Получить список водителей",
+                "operationId": "27ab6ecaad4bb59312b7bae9845e3cdc",
+                "responses": {
+                    "200": {
+                        "description": "Список водителей",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/DriverPeopleResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return all driver people."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "DriverPeople"
+                ],
+                "summary": "Создать нового водителя",
+                "operationId": "09fd1f8198946f17f32fdad3ae9a664f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "personal_area_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "individual_people_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "organization_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Водитель создан",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/DriverPeopleResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Create driver people."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка при создании водителя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Failed create driver people."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/individual-people/drivers/{driverPeople}": {
+            "get": {
+                "tags": [
+                    "DriverPeople"
+                ],
+                "summary": "Получить информацию о конкретном водителе",
+                "operationId": "1209eb535815ca1da7e3d2f9949cac9b",
+                "parameters": [
+                    {
+                        "name": "driverPeople",
+                        "in": "path",
+                        "description": "UUID водителя",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Информация о водителе",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/DriverPeopleResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return driver people for uuid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Водитель не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Такого водителя не существует."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/individual-people": {
+            "get": {
+                "tags": [
+                    "IndividualPeople"
+                ],
+                "summary": "Получить список физических лиц",
+                "operationId": "1bd92311b7de7f59fbcaf052b6f6d71c",
+                "responses": {
+                    "200": {
+                        "description": "Список Физических лиц",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/IndividualPeopleResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return all individual people."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "IndividualPeople"
+                ],
+                "summary": "Создать новое физическо лицо",
+                "operationId": "b5ab9648836c46d2d65a281813bba8d8",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "father_name": {
+                                        "type": "string",
+                                        "example": "Smith"
+                                    },
+                                    "position": {
+                                        "type": "string",
+                                        "example": "Manager"
+                                    },
+                                    "other_contact": {
+                                        "type": "string",
+                                        "example": "Some contact info"
+                                    },
+                                    "personal_area_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "71234567890",
+                                        "nullable": true
+                                    },
+                                    "comment": {
+                                        "type": "string",
+                                        "example": "Some comment",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Физическое лицо создано",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/IndividualPeopleResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Create individual people."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка при создании физического лица",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Failed create individual people."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/individual-people/{individualPeople}": {
+            "get": {
+                "tags": [
+                    "IndividualPeople"
+                ],
+                "summary": "Получить информацию о конкретном физическом лице",
+                "operationId": "666301e95f4842fe739e4024848a078b",
+                "parameters": [
+                    {
+                        "name": "individualPeople",
+                        "in": "path",
+                        "description": "UUID физического лица",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Информация о физическом лице",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/IndividualPeopleResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return individual people for uuid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "физическое лицо не найдено",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Такого индивидуального человека не существует."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "tags": [
@@ -3934,6 +4403,89 @@
                 }
             }
         },
+        "/api/transports/{transport}": {
+            "get": {
+                "tags": [
+                    "Transports"
+                ],
+                "summary": "Получить транспорт по UUID.",
+                "operationId": "00e6ef541195af676596e31dcae8cf3f",
+                "parameters": [
+                    {
+                        "name": "transport",
+                        "in": "path",
+                        "description": "UUID транспорта",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат транспорта.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/TransportResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return object transport."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Транспорт не найден.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Transport not found."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "404"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/auth/login": {
             "post": {
                 "tags": [
@@ -5411,6 +5963,97 @@
                 ],
                 "example": "до 3 тонны"
             },
+            "IndividualPeopleResource": {
+                "title": "IndividualPeopleResource",
+                "description": "Individual People Resource",
+                "properties": {
+                    "id_individual_people": {
+                        "description": "UUID of the individual person",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "first_name": {
+                        "description": "First name of the individual person",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "last_name": {
+                        "description": "Last name of the individual person",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "father_name": {
+                        "description": "Father's name of the individual person",
+                        "type": "string",
+                        "example": "Smith"
+                    },
+                    "position": {
+                        "description": "Позиция (пока что обычный string)",
+                        "type": "string",
+                        "example": "Manager"
+                    },
+                    "other_contact": {
+                        "description": "Other contact information of the individual person",
+                        "type": "string",
+                        "example": "Some contact info"
+                    },
+                    "personal_area_id": {
+                        "description": "UUID of the personal area - id кабинета",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "email": {
+                        "description": "Email",
+                        "type": "string",
+                        "format": "email",
+                        "example": "john.doe@example.com"
+                    },
+                    "phone": {
+                        "description": "Phone number of the individual person",
+                        "type": "string",
+                        "example": "71234567890"
+                    },
+                    "comment": {
+                        "description": "Comment about the individual person",
+                        "type": "string",
+                        "example": "Some comment"
+                    }
+                },
+                "type": "object"
+            },
+            "DriverPeopleResource": {
+                "title": "DriverPeopleResource",
+                "description": "Driver People Resource",
+                "properties": {
+                    "id_driver_people": {
+                        "description": "UUID of the driver person",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "personal_area_id": {
+                        "description": "UUID of the personal area",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "individual_people_id": {
+                        "description": "UUID of the individual person",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "organization_id": {
+                        "description": "UUID of the organization",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    }
+                },
+                "type": "object"
+            },
             "BearerToken": {
                 "title": "Bearer Token Object",
                 "properties": {
@@ -5505,6 +6148,14 @@
         {
             "name": "Address",
             "description": "Address"
+        },
+        {
+            "name": "DriverPeople",
+            "description": "DriverPeople"
+        },
+        {
+            "name": "IndividualPeople",
+            "description": "IndividualPeople"
         },
         {
             "name": "Login\\Registration",

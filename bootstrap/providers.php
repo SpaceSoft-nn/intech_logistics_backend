@@ -29,4 +29,3 @@ return [
     App\Modules\Auth\App\Providers\AuthServiceProvider::class,
 
 ];
-ва

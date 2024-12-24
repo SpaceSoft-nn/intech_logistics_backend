@@ -12,6 +12,7 @@ use App\Http\Controllers\API\OfferContractor\OfferContractorController;
 use App\Http\Controllers\API\OrderUnit\AgreementOrderUnitController;
 use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Organization\OrganizationController;
+use App\Http\Controllers\API\Test\TestController;
 use App\Http\Controllers\API\Transfer\TransferContoller;
 use App\Http\Controllers\API\Transport\TransportController;
 use App\Http\Controllers\API\User\UserController;
@@ -203,7 +204,7 @@ Route::prefix('/individual-people')->group(function () {
 
 });
 
-
+Route::get('/test', [TestController::class, 'index']);
 
     //RegionEconomicFactor
 Route::get('/region-economic-status', [RegionEconomicFactorController:: class, 'get']);

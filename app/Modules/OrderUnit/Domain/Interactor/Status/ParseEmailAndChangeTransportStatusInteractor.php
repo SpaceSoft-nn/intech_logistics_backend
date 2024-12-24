@@ -7,10 +7,13 @@ use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\OrderUnit\Domain\Models\Status\TransporationStatus;
 use App\Modules\OrderUnit\Domain\Services\TransportationStatusService;
 use App\Modules\Transport\Domain\Models\Transport;
 use DB;
+use Exception;
 
+use function App\Helpers\isNullToBusinessException;
 
 class ParseEmailAndChangeTransportStatusInteractor
 {
@@ -21,12 +24,12 @@ class ParseEmailAndChangeTransportStatusInteractor
         private TransportationStatusService $transportationStatusService,
     ) {}
 
-    public function execute(string $email)
+    public function execute(string $email) : ?TransporationStatus
     {
         return $this->run($email);
     }
 
-    private function run(string $email)
+    private function run(string $email) : ?TransporationStatus
     {
         #TODO Пересмотреть логику получение заказа + работу сервеса отправлять в очередь
 
@@ -47,44 +50,59 @@ class ParseEmailAndChangeTransportStatusInteractor
              */
             $transport = $this->getTransportForDriverPeople($driverPeople);
 
-
             /**
              * @var OrderUnit
              */
             $order = $this->getOrderUnitAndInWorkForTransport($transport);
 
-            dd($order);
-
+            /**
+             * @var ?TransporationStatus
+             */
             $status = $this->transportationStatusService->setTransportationStatus($order->id);
         }
 
-        dd($status);
-
+        return $status;
 
     }
 
     private function getIndividualPeopleForEmail(string $email) : ?IndividualPeople
     {
-        //проверку
-        return $this->individualPeopleRepository->findByEmail($email);
+
+        $model = $this->individualPeopleRepository->findByEmail($email);
+
+        isNullToBusinessException($model, "Не найден Individual People по значению email: {$email}", 404);
+
+        return $model;
+
     }
 
     private function getDriverPeopleForIndividualPeople(IndividualPeople $individualPeople) : DriverPeople
     {
-        //проверка
-        return $individualPeople->driverPeople;
+        $model = $individualPeople->driverPeople;
+
+        isNullToBusinessException($model, "Не найден driver People по значению связи individual People : {$individualPeople}", 404);
+
+        return $model;
     }
 
     private function getTransportForDriverPeople(DriverPeople $driverPeople) : ?Transport
     {
         //проверка
-        return $driverPeople->transport;
+        $model = $driverPeople->transport;
+
+        isNullToBusinessException($model, "Не найден Transport по значению связи с Driver People: {$driverPeople}", 404);
+
+        return $model;
     }
 
     private function getOrderUnitAndInWorkForTransport(Transport $transport) : ?OrderUnit
     {
         //проверка
-        return $this->orderUnitRepository->getOrderUnitAndStatusInWork($transport->id);
+        $model = $this->orderUnitRepository->getOrderUnitAndStatusInWork($transport->id);
+
+        isNullToBusinessException($model, "Не найден Order Unit по значению связи с Transport, с условие, что заказ должен быть в Работе: {$transport}", 404);
+
+        return $model;
     }
 
 }

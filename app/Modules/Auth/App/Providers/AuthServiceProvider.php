@@ -29,7 +29,5 @@ class AuthServiceProvider extends ServiceProvider
             return new AuthService($app->make(AuthSanctum::class));
         });
 
-
-
     }
 }

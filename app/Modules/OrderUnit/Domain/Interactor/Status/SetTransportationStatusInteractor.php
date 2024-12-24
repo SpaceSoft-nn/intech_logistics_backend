@@ -23,12 +23,12 @@ class SetTransportationStatusInteractor
         public TransportationStatusReposiroty $transportationStatusReposiroty,
     ) {}
 
-    public function execute(string $order_unit_id) : TransporationStatus
+    public function execute(string $order_unit_id) : ?TransporationStatus
     {
         return $this->run($order_unit_id);
     }
 
-    private function run(string $order_unit_id) : TransporationStatus
+    private function run(string $order_unit_id) : ?TransporationStatus
     {
         /**
          * @var TransporationStatus

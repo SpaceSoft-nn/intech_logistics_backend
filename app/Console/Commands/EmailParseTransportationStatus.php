@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Console\Commands;
+
+use App\Modules\OrderUnit\Domain\Services\ParseEmailService;
+use Illuminate\Console\Command;
+use Webklex\IMAP\Facades\Client;
+
+class EmailParseTransportationStatus extends Command
+{
+    public function __construct(
+        private ParseEmailService $service,
+    ) {
+        parent::__construct();
+    }
+
+    protected $signature = 'email:parse';
+
+    protected $description = 'Парсинг почты и изменения статуса транспортировки.';
+
+
+    public function handle()
+    {
+        $this->parseEmail();
+    }
+
+    public function parseEmail()
+    {
+
+        /** @var \Webklex\PHPIMAP\Client $client */
+        $client = Client::account('default');
+
+        /** @var \Webklex\PHPIMAP\Client $client */
+        $client->connect();
+
+        try {
+
+            // Выбор папки "Входящие"
+            $folder = $client->getFolder('INBOX');
+
+            // Получение непрочитанных писем
+            $messages = $folder->query()->unseen()->get();
+
+            foreach ($messages as $message) {
+
+                /** @var Webklex\PHPIMAP\Address $from */
+                $from = $message->getFrom()->first();
+
+                $email = $from->mail;
+
+                $status = $this->service->parseEmailAndChangeTransportStatus($email);
+
+                if($status) { $message->setFlag('SEEN'); }
+
+            }
+
+        } finally {
+            $client->disconnect();
+        }
+    }
+
+
+}

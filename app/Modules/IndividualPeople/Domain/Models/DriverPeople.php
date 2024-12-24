@@ -3,10 +3,11 @@
 namespace App\Modules\IndividualPeople\Domain\Models;
 
 use App\Modules\IndividualPeople\Domain\Factories\DriverPeopleFactory;
+use App\Modules\Transport\Domain\Models\Transport;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class DriverPeople extends Model
 {
@@ -39,5 +40,10 @@ class DriverPeople extends Model
         return [
 
         ];
+    }
+
+    public function transport() : HasOne
+    {
+        return $this->hasOne(Transport::class ,'driver_id');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Modules\Transport\Domain\Models;
 
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Transport\App\Data\Enums\TransportBodyType;
 use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
 use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
@@ -65,5 +66,10 @@ class Transport extends Model
     public function invoiceOrders(): HasMany
     {
         return $this->hasMany(InvoiceOrder::class, 'transport_id');
+    }
+
+    public function order_units(): HasMany
+    {
+        return $this->hasMany(OrderUnit::class, 'transport_id');
     }
 }

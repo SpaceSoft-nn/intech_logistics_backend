@@ -2,13 +2,12 @@
 
 namespace App\Modules\Transport\Domain\Factories;
 
-use App\Modules\IndividualFace\Domain\Models\Driver;
+use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
 use App\Modules\Transport\App\Data\Enums\TransportBodyType;
 use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
 use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
-use App\Modules\Transport\App\Data\Enums\TransportTypeEnum;
 use App\Modules\Transport\App\Data\Enums\TransportTypeWeight;
 use App\Modules\Transport\Domain\Models\Transport;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,7 +19,7 @@ class TransportFactory extends Factory
     public function definition(): array
     {
 
-        $driver = Driver::factory()->create();
+        $driver = DriverPeople::factory()->create();
 
         $type_loading = array_column(TransportLoadingType::cases(), 'name');
         $type_weight = array_column(TransportTypeWeight::cases(), 'name');

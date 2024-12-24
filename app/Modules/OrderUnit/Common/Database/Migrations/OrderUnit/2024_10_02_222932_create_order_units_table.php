@@ -38,6 +38,9 @@ return new class extends Migration
             $table->uuid('contractor_id')->comment('Выбранный подрядчик на заказ.')->nullable()
                 ->constrained('organizations')->noActionOnDelete();
 
+            $table->uuid('transport_id')->comment('Выбранный транспорта перевозчика')->nullable()
+                ->constrained('transports')->noActionOnDelete();
+
 
                 //служебнеы поля
             $table->boolean('add_load_space')->default(false)->comment('Возможен ли догруз');

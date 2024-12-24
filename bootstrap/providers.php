@@ -11,7 +11,6 @@ return [
     App\Modules\InteractorModules\Registration\App\Providers\RegistrationServiceProvider::class, //сервес объединение User + Organization
     App\Modules\IndividualPeople\App\Providers\IndividualPeopleServiceProvider::class,
     App\Modules\Permission\App\Providers\PerrmissionServoceProvider::class, // Сервес прав по бинарной таблице
-    App\Modules\IndividualFace\App\Providers\IndividualFaceServiceProvider::class,
     App\Modules\Transport\App\Providers\TransportServiceProvider::class,
     App\Modules\Address\App\Providers\AddressServiceProvider::class,
     App\Modules\OrderUnit\App\Providers\OrderUnitServiceProvider::class,

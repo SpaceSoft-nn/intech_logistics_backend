@@ -24,4 +24,11 @@ final class TransportationStatusService
     }
 
 
+
+    public function parseEmailAndChangeTransportStatus(string $email)
+    {
+
+    }
+
+
 }

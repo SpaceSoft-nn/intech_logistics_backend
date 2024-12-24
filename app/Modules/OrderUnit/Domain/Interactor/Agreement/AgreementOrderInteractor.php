@@ -4,6 +4,7 @@ namespace App\Modules\OrderUnit\Domain\Interactor\Agreement;
 
 use App\Modules\Base\Error\BusinessException;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Repositories\OrganizationOrderUnitInvoiceRepository;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
 use App\Modules\OrderUnit\App\Repositories\AgreementOrderRepository;
@@ -110,10 +111,20 @@ final class AgreementOrderInteractor
             $organizationOrderUnitInvoiceModel = $this->organizationOrderUnitInvoiceRep->get($agreement_order_id);
 
             /**
+            * @var InvoiceOrder
+            */
+            $invoiceOrder = $organizationOrderUnitInvoiceModel->invoice_order;
+
+            /**
             * @var OrderUnit
             */
             $order = $this->orderUnitRep->get($order_id);
+
+            //устанавливаем организацию перевозчика
             $order->contractor_id = $organizationOrderUnitInvoiceModel->organization_id;
+
+            //Устанавливаем транспорт организации
+            $order->transport_id = $invoiceOrder->transport_id;
 
         } catch (\Throwable $th) {
 

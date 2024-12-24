@@ -4,6 +4,7 @@ use App\Http\Controllers\API\Address\AddressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegistrationController;
 use App\Http\Controllers\API\IndividualPeople\IndividualPeopleController;
+use App\Http\Controllers\API\IndividualPeople\TypePeople\DriverPeopleController;
 use App\Http\Controllers\API\Matrix\MatrixDistanceController;
 use App\Http\Controllers\API\Matrix\RegionEconomicFactorController;
 use App\Http\Controllers\API\Notification\NotificationController;
@@ -193,9 +194,9 @@ Route::prefix('/individual-people')->group(function () {
 
     Route::prefix('/drivers')->group(function () {
 
-        Route::get('/', [TransportController::class, 'index']);
-        Route::get('/{transport}', [TransportController::class, 'show'])->whereUuid('transport');
-        Route::post('/', [TransportController::class, 'store']);
+        Route::get('/', [DriverPeopleController::class, 'index']);
+        Route::get('/{driverPeople}', [DriverPeopleController::class, 'show'])->whereUuid('driverPeople');
+        Route::post('/', [DriverPeopleController::class, 'store']);
 
     });
 

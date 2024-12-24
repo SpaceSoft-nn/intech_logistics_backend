@@ -26,7 +26,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->primary(['personal_area_id', 'individual_people_id', 'organization_id']);
+            $table->unique(['personal_area_id', 'individual_people_id', 'organization_id']);
 
         });
     }

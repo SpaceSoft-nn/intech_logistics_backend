@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\Modules\OrderUnit\Domain\Services\ParseEmailService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Webklex\IMAP\Facades\Client;
+
 
 class EmailParseTransportationStatus extends Command
 {
@@ -14,7 +16,7 @@ class EmailParseTransportationStatus extends Command
         parent::__construct();
     }
 
-    protected $signature = 'email:parse';
+    protected $signature = 'email:parse-status';
 
     protected $description = 'Парсинг почты и изменения статуса транспортировки.';
 
@@ -26,7 +28,8 @@ class EmailParseTransportationStatus extends Command
 
     public function parseEmail()
     {
-
+        Log::info('Запущена команда из кроны');
+        
         /** @var \Webklex\PHPIMAP\Client $client */
         $client = Client::account('default');
 

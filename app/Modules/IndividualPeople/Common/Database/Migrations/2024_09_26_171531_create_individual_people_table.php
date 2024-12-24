@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('father_name')->comment('Отчество');
 
             $table->string('position');
-            $table->string('phone')->nullable();
-            $table->string('email')->nullable();
+            $table->string('phone')->uniqid()->nullable(); #TODO - должен быть уканильный?
+            $table->string('email')->uniqid()->nullable(); #TODO - должен быть уканильный?
             $table->string('other_contact');
             $table->mediumText('comment')->nullable();
             $table->string('remuved')->default(false)->comment('Статус удаление');

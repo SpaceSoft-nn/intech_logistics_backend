@@ -4,6 +4,7 @@ namespace App\Modules\IndividualPeople\App\Data\DTO;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\IndividualPeople\App\Data\DTO\Base\BaseDTO;
+use Arr;
 use Illuminate\Contracts\Support\Arrayable;
 
 class CreateIndividualPeopleDTO extends BaseDTO implements Arrayable
@@ -20,7 +21,7 @@ class CreateIndividualPeopleDTO extends BaseDTO implements Arrayable
         public readonly string $position,
 
         public readonly string $other_contact,
-        public readonly string $comment,
+        public readonly ?string $comment,
 
         public readonly ?string $phone,
         public readonly ?string $email,
@@ -37,8 +38,9 @@ class CreateIndividualPeopleDTO extends BaseDTO implements Arrayable
         string $father_name,
         string $position,
         string $other_contact,
-        string $comment,
+
         string $personal_area_id,
+        ?string $comment = null,
         ?string $phone = null,
         ?string $email = null,
         ?string $remuved = null,
@@ -87,5 +89,19 @@ class CreateIndividualPeopleDTO extends BaseDTO implements Arrayable
         ];
     }
 
-
+    public static function fromArrayToObject(array $data)
+    {
+        return static::make(
+            first_name: Arr::get($data, "first_name"),
+            last_name: Arr::get($data, "last_name"),
+            father_name: Arr::get($data, "father_name"),
+            position: Arr::get($data, "position"),
+            other_contact: Arr::get($data, "other_contact"),
+            email: Arr::get($data, "email"),
+            remuved: Arr::get($data, "remuved"),
+            personal_area_id: Arr::get($data, "personal_area_id"),
+            comment: Arr::get($data, "comment" , null),
+            phone: Arr::get($data, "phone", null),
+        );
+    }
 }

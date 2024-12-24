@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Address\AddressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegistrationController;
+use App\Http\Controllers\API\IndividualPeople\IndividualPeopleController;
 use App\Http\Controllers\API\Matrix\MatrixDistanceController;
 use App\Http\Controllers\API\Matrix\RegionEconomicFactorController;
 use App\Http\Controllers\API\Notification\NotificationController;
@@ -180,6 +181,24 @@ Route::prefix('/transports')->group(function () {
     Route::get('/', [TransportController::class, 'index']);
     Route::get('/{transport}', [TransportController::class, 'show'])->whereUuid('transport');
     Route::post('/', [TransportController::class, 'store']);
+
+});
+
+Route::prefix('/individual-people')->group(function () {
+
+
+    Route::get('/', [IndividualPeopleController::class, 'index']);
+    Route::get('/{individualPeople}', [IndividualPeopleController::class, 'show'])->whereUuid('individualPeople');
+    Route::post('/', [IndividualPeopleController::class, 'store']);
+
+    Route::prefix('/drivers')->group(function () {
+
+        Route::get('/', [TransportController::class, 'index']);
+        Route::get('/{transport}', [TransportController::class, 'show'])->whereUuid('transport');
+        Route::post('/', [TransportController::class, 'store']);
+
+    });
+
 
 });
 

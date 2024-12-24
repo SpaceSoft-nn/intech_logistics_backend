@@ -15,6 +15,7 @@ class IndividualPeopleService implements IIndividualPeopleService
     ) {}
 
     /**
+     * #TODO CreateIndividualPeopleDTO - Менять на Value Object
      * Создание Individual People
      * @param CreateIndividualPeopleDTO $dto
      *

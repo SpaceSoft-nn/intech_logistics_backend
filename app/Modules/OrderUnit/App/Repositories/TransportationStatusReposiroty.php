@@ -54,7 +54,14 @@ class TransportationStatusReposiroty extends CoreRepository
                 ->get();
     }
 
-    public function getLastRecord(string $order_unit_id)
+
+    /**
+     * Вернуть последнию созданную запись по времени
+     * @param string $order_unit_id
+     *
+     * @return ?Model
+     */
+    public function getLastRecord(string $order_unit_id)  : ?Model
     {
         return $this->query()->where('order_unit_id', $order_unit_id)->latest()->first();
     }

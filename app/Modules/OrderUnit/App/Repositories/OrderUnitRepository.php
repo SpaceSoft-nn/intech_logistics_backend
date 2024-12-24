@@ -182,4 +182,20 @@ class OrderUnitRepository extends CoreRepository
 
         return $collection->first();
     }
+
+    /**
+     * #TODO Может быть баг, когда у нас может быть несколько заказов в работе у одного транспорта, нужно делать проверки, first -
+     * вернёт последний, который может быть не актульный для данного вывода
+     * Вернуть заказ по транспорту, который находится в работе
+     * @param string $transport_id
+     *
+     * @return [type]
+    */
+    public function getOrderUnitAndStatusInWork(string $transport_id)
+    {
+        return $this->query()->where('transport_id', $transport_id)
+            ->whereHas('actual_status', function ($query) {
+                $query->where('status', StatusOrderUnitEnum::in_work);
+            })->first();
+    }
 }

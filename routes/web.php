@@ -1,38 +1,51 @@
 <?php
 
+use App\Modules\OrderUnit\Domain\Services\TransportationStatusService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Webklex\IMAP\Facades\Client;
 
 Route::get('/', function (Request $request) {
 
-    // Подключение к почтовому ящику
-    $client = Client::account('default');
-    $client->connect();
+    try {
 
-    // Выбор папки "Входящие"
-    $folder = $client->getFolder('INBOX');
+        $service = app(TransportationStatusService::class);
 
-    // Получение непрочитанных писем
-    $messages = $folder->query()->seen()->get();
+        /** @var \Webklex\PHPIMAP\Client $client */
+        $client = Client::account('default');
 
-    foreach ($messages as $message) {
+        /** @var \Webklex\PHPIMAP\Client $client */
+        $client->connect();
+
+        // Выбор папки "Входящие"
+        $folder = $client->getFolder('INBOX');
+
+        // Получение непрочитанных писем
+        $messages = $folder->query()->unseen()->get();
+
+        foreach ($messages as $message) {
+
+            /** @var Webklex\PHPIMAP\Address $from */
+            $from = $message->getFrom()->first();
+
+            $email = $from->mail;
 
 
-        // Парсинг сообщения
-        $subject = $message->getSubject();
-        $body = $message->getTextBody();
-        $from = $message->getFrom();
+            $service->parseEmailAndChangeTransportStatus($email);
+
+            dd('Окончание');
 
 
-        // Ваш код обработки сообщения
-        // Например, проверка содержимого и выполнение действий
+            // $message->setFlag('Seen');
+        }
 
-        // Отметить письмо как прочитанное
-        $message->setFlag('Seen');
+
+    } finally {
+
+        $client->disconnect();
+
     }
 
-    $client->disconnect();
 
     // return view('welcome');
 });

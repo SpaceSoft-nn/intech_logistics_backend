@@ -3,11 +3,15 @@
 namespace App\Modules\IndividualPeople\Domain\Services\TypePeople;
 
 use App\Modules\IndividualPeople\App\Data\ValueObject\DriverPeopleVO;
-use App\Modules\IndividualPeople\Domain\Actions\TypePeople\CreateDriverPeopleAction;
+use App\Modules\IndividualPeople\App\Repositories\DriverPeopleRepository;
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 
 class DriverPeopleService
 {
+    public function __construct(
+        public DriverPeopleRepository $rep,
+    ) { }
+
     /**
      * Создание записи DriverPeople
      * @param DriverPeopleVO $vo
@@ -16,6 +20,6 @@ class DriverPeopleService
      */
     public function createDriverPeople(DriverPeopleVO $vo) : DriverPeople
     {
-        return CreateDriverPeopleAction::make($vo);
+        return $this->rep->save($vo);
     }
 }

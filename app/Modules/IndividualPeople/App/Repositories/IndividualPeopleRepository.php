@@ -36,4 +36,9 @@ class IndividualPeopleRepository extends CoreRepository implements IRepository
         return $this->query()->find($uuid);
     }
 
+    public function findByEmail(string $email) : ?Model
+    {
+        return $this->query()->where('email', $email)->first();
+    }
+
 }

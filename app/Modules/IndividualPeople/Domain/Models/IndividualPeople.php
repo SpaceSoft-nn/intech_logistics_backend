@@ -111,4 +111,9 @@ class IndividualPeople extends Model
             'remuved' => 'boolean',
         ];
     }
+
+    public function driverPeople()
+    {
+        return $this->hasOne(DriverPeople::class, 'individual_people_id');
+    }
 }

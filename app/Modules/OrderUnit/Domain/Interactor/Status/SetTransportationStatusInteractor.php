@@ -23,15 +23,17 @@ class SetTransportationStatusInteractor
         public TransportationStatusReposiroty $transportationStatusReposiroty,
     ) {}
 
-    public function execute(string $order_unit_id)
+    public function execute(string $order_unit_id) : TransporationStatus
     {
         return $this->run($order_unit_id);
     }
 
-    private function run(string $order_unit_id)
+    private function run(string $order_unit_id) : TransporationStatus
     {
-
-        DB::transaction(function () use ($order_unit_id) {
+        /**
+         * @var TransporationStatus
+         */
+        $transporationStatusEvent = DB::transaction(function () use ($order_unit_id) {
 
             /**
              * @var OrderUnit
@@ -54,7 +56,7 @@ class SetTransportationStatusInteractor
                 $enumStatus = TypeStateAddressEnum::objectAddressEnumToEnumTransportationStatus($chain[0]);
 
 
-                $this->createTransporationStatusEvent(
+                return $this->createTransporationStatusEvent(
                     order: $orderUnit,
                     enum: $enumStatus,
                 );
@@ -67,7 +69,7 @@ class SetTransportationStatusInteractor
 
                 if ($this->checkingUploadongOrUnloading($last) && $count != count($chain) ) {
 
-                    $this->createTransporationStatusEvent($orderUnit, TransportationStatusEnum::transit);
+                    return $this->createTransporationStatusEvent($orderUnit, TransportationStatusEnum::transit);
 
                 } else {
 
@@ -82,13 +84,17 @@ class SetTransportationStatusInteractor
                      */
                     $enumStatus = TypeStateAddressEnum::objectAddressEnumToEnumTransportationStatus($chainCount);
 
-                    $this->createTransporationStatusEvent(
+                    return $this->createTransporationStatusEvent(
                         order: $orderUnit,
                         enum: $enumStatus,
                     );
                 }
             }
+
+            return $transporationStatusEvent;
         });
+
+        return $transporationStatusEvent;
     }
 
     private function getOrderUnit(string $order_unit_id): OrderUnit

@@ -20,6 +20,8 @@ Route::get('/', function (Request $request) {
         // Выбор папки "Входящие"
         $folder = $client->getFolder('INBOX');
 
+        dd($folder);
+
         // Получение непрочитанных писем
         $messages = $folder->query()->unseen()->get();
 
@@ -30,6 +32,7 @@ Route::get('/', function (Request $request) {
 
             $email = $from->mail;
 
+            dd($email);
 
             $service->parseEmailAndChangeTransportStatus($email);
 

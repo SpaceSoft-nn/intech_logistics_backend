@@ -6,8 +6,8 @@ use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
-use Arr;
 use Illuminate\Contracts\Support\Arrayable;
+use Arr;
 
 class OrderUnitVO implements Arrayable
 {
@@ -18,8 +18,6 @@ class OrderUnitVO implements Arrayable
         public readonly string $end_date_order,
         public readonly ?float $body_volume,
         public readonly string $order_total,
-
-
 
         public readonly TypeTransportWeight $type_transport_weight,
         public readonly TypeLoadingTruckMethod $type_load_truck,
@@ -34,6 +32,7 @@ class OrderUnitVO implements Arrayable
         public ?bool $add_load_space,
         public ?bool $change_price,
         public ?bool $change_time,
+        public ?bool $lot_tender_id,
 
     ) {}
 
@@ -56,6 +55,7 @@ class OrderUnitVO implements Arrayable
         bool $add_load_space,
         ?bool $change_price = null,
         ?bool $change_time = null,
+        ?bool $lot_tender_id = null,
 
     ) : self {
 
@@ -77,6 +77,7 @@ class OrderUnitVO implements Arrayable
             add_load_space: $add_load_space,
             change_price: $change_price,
             change_time: $change_time,
+            lot_tender_id: $lot_tender_id,
 
         );
 
@@ -106,6 +107,7 @@ class OrderUnitVO implements Arrayable
             add_load_space: $this->add_load_space,
             change_price: $this->change_price,
             change_time: $this->change_time,
+            lot_tender_id: $this->lot_tender_id,
         );
     }
 
@@ -132,6 +134,7 @@ class OrderUnitVO implements Arrayable
             add_load_space: $this->add_load_space,
             change_price: $this->change_price,
             change_time: $this->change_time,
+            lot_tender_id: $this->lot_tender_id,
         );
     }
 
@@ -155,6 +158,7 @@ class OrderUnitVO implements Arrayable
             add_load_space: $this->add_load_space,
             change_price: $this->change_price,
             change_time: $this->change_time,
+            lot_tender_id: $this->lot_tender_id,
         );
     }
 
@@ -180,6 +184,7 @@ class OrderUnitVO implements Arrayable
             "add_load_space" => $this->add_load_space,
             "change_price" => $this->change_price,
             "change_time" => $this->change_time,
+            "lot_tender_id "=> $this->lot_tender_id,
 
         ];
     }
@@ -202,6 +207,7 @@ class OrderUnitVO implements Arrayable
 
         $change_price = Arr::get($data, "change_price", null);
         $change_time = Arr::get($data, "change_time", null);
+        $lot_tender_id = Arr::get($data, "lot_tender_id" ,'null');
 
         return static::make(
             end_date_order: $end_date_order,
@@ -220,6 +226,7 @@ class OrderUnitVO implements Arrayable
             add_load_space: self::filterEnumTypeLoad($type_load_truck),
             change_price: $change_price,
             change_time: $change_time,
+            lot_tender_id: $lot_tender_id,
         );
     }
 

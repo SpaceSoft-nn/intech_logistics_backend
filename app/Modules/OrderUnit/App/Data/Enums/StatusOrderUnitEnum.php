@@ -19,6 +19,8 @@ enum StatusOrderUnitEnum : string
 
     case cancelled = "Отменен/Отозван"; // В работе
 
+    case pre_order = "Предзаказ"; // Предзаказ - когда заказ зависит от Тендера
+
     case private = "Закрыт"; //Запревачен (видно не всем)
 
 

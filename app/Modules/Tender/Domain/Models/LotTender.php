@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Modules\Tender\Domain\Models;
+
+use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
+use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
+class LotTender extends Model
+{
+    use HasFactory, HasUuids;
+
+    protected $table = 'lot_tenders';
+
+    // protected static function newFactory()
+    // {
+    //     return OrganizationFactory::new();
+    // }
+
+    protected $fillable = [
+
+        "general_count_transport",
+        "price_for_km",
+        "body_volume_for_order",
+        "type_transport_weight",
+        "type_load_truck",
+        "date_start",
+        "period",
+        "day_period",
+
+    ];
+
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            "price_for_km" => 'double',
+            "body_volume_for_order" => 'double',
+            "type_transport_weight" => TypeTransportWeight::class,
+            "type_load_truck" => TypeLoadingTruckMethod::class,
+            "date_start" => 'date',
+        ];
+    }
+
+    public function agreement_document_tender(): HasOne
+    {
+        return $this->hasOne(AgreementDocumentTender::class, 'lot_tender_id');
+    }
+
+    public function application_document_tender(): HasMany
+    {
+        return $this->hasMany(ApplicationDocumentTender::class, 'lot_tender_id');
+    }
+
+    public function specifica_date_period(): HasMany
+    {
+        return $this->hasMany(SpecificalDatePeriod::class, 'lot_tender_id');
+    }
+}

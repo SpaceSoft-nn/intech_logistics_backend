@@ -15,6 +15,7 @@ class AddressSeeder extends Seeder
 
     private function createAddress()
     {
+
         {
             //Заказ 1
             $AddressStart1 = Address::factory()->create([

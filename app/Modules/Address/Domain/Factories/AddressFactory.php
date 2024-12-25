@@ -3,7 +3,6 @@
 namespace App\Modules\Address\Domain\Factories;
 
 use App\Modules\Address\App\Data\DTO\ValueObject\AddressVO;
-use App\Modules\Address\App\Data\Enums\TypeAddressEnum;
 use App\Modules\Address\Domain\Models\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

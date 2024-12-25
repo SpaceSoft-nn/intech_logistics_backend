@@ -1,6 +1,7 @@
 <?php
 
 
+
 return [
     App\Providers\AppServiceProvider::class,
 
@@ -19,6 +20,7 @@ return [
     App\Modules\GAR\App\Providers\GARServiceProvider::class,
     App\Modules\InteractorModules\AgreementTransfer\App\Providers\AgreementTransferServiceProvider::class,
     App\Modules\OfferContractor\App\Providers\OfferContractorServiceProvider::class,
+    App\Modules\Tender\App\Providers\TenderServiceProvider::class,
 
         #Interactor Service
     App\Modules\InteractorModules\AddressOrder\App\Providers\AddressOrderServiceProvide::class,

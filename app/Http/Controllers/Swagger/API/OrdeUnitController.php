@@ -317,6 +317,7 @@ use App\Http\Controllers\Controller;
 *                                 "published",
 *                                 "accepted",
 *                                 "in_work",
+*                                 "pre_order",
 *                                 "completed_and_wait_payment",
 *                                 "cancelled",
 *                                 "private",

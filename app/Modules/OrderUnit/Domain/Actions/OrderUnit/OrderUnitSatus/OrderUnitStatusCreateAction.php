@@ -32,8 +32,10 @@ class OrderUnitStatusCreateAction
 
         } catch (\Throwable $th) {
 
-            Mylog('Ошибка в OrderUnitStatusCreateAction при создании записи');
-            throw new Exception('Ошибка в OrderUnitCreateAction', 500);
+            $nameClass = self::class;
+
+            Mylog("Ошибка в {$nameClass} при создании записи: " . $th);
+            throw new Exception('Ошибка в классе: ' . $nameClass, 500);
 
         }
 

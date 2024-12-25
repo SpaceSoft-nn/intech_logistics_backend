@@ -20,6 +20,7 @@ final readonly class LotTenderVO implements Arrayable
         public TypeLoadingTruckMethod $type_load_truck,
         public string $date_start,
         public int $period,
+        public string $organization_id,
         public ?int $day_period,
     ) {}
 
@@ -33,6 +34,7 @@ final readonly class LotTenderVO implements Arrayable
         string $type_load_truck,
         string $date_start,
         int $period,
+        string $organization_id,
         ?int $day_period = null,
 
     ) : self {
@@ -45,6 +47,7 @@ final readonly class LotTenderVO implements Arrayable
             type_load_truck: TypeLoadingTruckMethod::stringByCaseToObject($type_load_truck),
             date_start: $date_start,
             period: $period,
+            organization_id: $organization_id,
             day_period: $day_period,
         );
 
@@ -61,6 +64,7 @@ final readonly class LotTenderVO implements Arrayable
             "type_load_truck" => $this->type_load_truck,
             "date_start" => $this->date_start,
             "period" => $this->period,
+            "organization_id" => $this->organization_id,
             "day_period" => $this->day_period,
         ];
     }
@@ -76,6 +80,7 @@ final readonly class LotTenderVO implements Arrayable
             type_load_truck: Arr::get($data, 'type_load_truck'),
             date_start: Arr::get($data, 'date_start'),
             period: Arr::get($data, 'period'),
+            organization_id: Arr::get($data, 'organization_id'),
             day_period: Arr::get($data, 'day_period', null),
         );
     }

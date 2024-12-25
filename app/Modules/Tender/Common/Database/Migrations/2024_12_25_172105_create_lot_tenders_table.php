@@ -8,7 +8,7 @@ return new class extends Migration
 {
 
     public function up(): void
-    { //Лот тендера
+    {//Лот тендера
         Schema::create('lot_tenders', function (Blueprint $table) {
 
             $table->uuid('id')->primary();
@@ -26,15 +26,16 @@ return new class extends Migration
             $table->unsignedSmallInteger('period')->comment('Количество дней, например в течении 60 дней');
             $table->unsignedSmallInteger('day_period')->nullable()->comment('Как должен выполняться тендер пример: каждые 5 дней');
 
+            $table->foreignUuid('organization_id')->unique()
+                ->constrained('organizations')->noActionOnDelete();
+
 
             $table->timestamps();
 
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('lot_tenders');

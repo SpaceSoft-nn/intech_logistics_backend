@@ -12,6 +12,7 @@ use App\Http\Controllers\API\OfferContractor\OfferContractorController;
 use App\Http\Controllers\API\OrderUnit\AgreementOrderUnitController;
 use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Organization\OrganizationController;
+use App\Http\Controllers\API\Tender\LotTenderController;
 use App\Http\Controllers\API\Test\TestController;
 use App\Http\Controllers\API\Transfer\TransferContoller;
 use App\Http\Controllers\API\Transport\TransportController;
@@ -201,6 +202,12 @@ Route::prefix('/individual-people')->group(function () {
 
     });
 
+
+});
+
+Route::prefix('/tender')->group(function () {
+
+    Route::post('/lot', [LotTenderController::class, 'store']);
 
 });
 

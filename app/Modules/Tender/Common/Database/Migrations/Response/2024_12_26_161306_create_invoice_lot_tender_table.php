@@ -22,6 +22,7 @@ return new class extends Migration
                 ->constrained('lot_tender_responses')->noActionOnDelete();
 
             $table->double('price_for_km')->comment('количество транспорта');
+
             $table->mediumText('comment')->comment('количество транспорта');
 
             $table->timestamps();

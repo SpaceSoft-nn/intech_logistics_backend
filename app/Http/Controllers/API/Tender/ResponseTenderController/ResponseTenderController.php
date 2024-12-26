@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
 use App\Modules\Tender\Domain\Models\LotTender;
-use App\Modules\Tender\Domain\Requests\CreateLotTenderRequest;
+use App\Modules\Tender\Domain\Requests\CreateResponseTenderRequest;
+use App\Modules\Tender\Domain\Services\AgreementTenderService;
 
 class ResponseTenderController extends Controller
 {
@@ -14,11 +15,13 @@ class ResponseTenderController extends Controller
     public function addСontractorForTender(
         LotTender $lotTender,
         Organization $organization,
-        CreateLotTenderRequest $request,
+        CreateResponseTenderRequest $request,
+        AgreementTenderService $service,
     ) {
-        /** @var CreateResponseTenderDTO */
-        $createResponseTenderDTO = $request->CreateResponseTenderDTO()->setOrganizationId($organization->id);
+        /** @var CreateResponseTenderDTO создаём DTO для сервиса, указываем дополнительные поля пересоздавая экземпляр */
+        $createResponseTenderDTO = $request->CreateResponseTenderDTO()
+            ->setOrganizationId($organization->id)->setLotTenderId($lotTender->id);
 
-        dd($createResponseTenderDTO);
+        $model =  $service->respondToTender()
     }
 }

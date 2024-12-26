@@ -2,16 +2,26 @@
 
 namespace App\Modules\Tender\Domain\Services;
 
-use App\Modules\Tender\App\Data\DTO\CreateLotTenderServiceDTO;
-use App\Modules\Tender\Domain\Models\LotTender;
+use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
+use App\Modules\Tender\Domain\Interactor\CreateResponseTenderInteractor;
+use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
 
-final class TenderService
+final class AgreementTenderService
 {
-    public function __construct() { }
+    public function __construct(
+        private CreateResponseTenderInteractor $createResponseTenderInteractor,
+    ) { }
 
-    public function respondToTender(CreateLotTenderServiceDTO $dto) : LotTender
+    /**
+     * Перевозчик откликается на тендер, создание записи:
+     * InvoiceLotTender  и LotTenderResponse
+     * @param CreateResponseTenderDTO $dto
+     *
+     * @return LotTenderResponse
+     */
+    public function respondToTender(CreateResponseTenderDTO $dto) : LotTenderResponse
     {
-        return $this->createLotTenderInteractor->execute($dto);
+        return $this->createResponseTenderInteractor->execute($dto);
     }
 }
 

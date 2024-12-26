@@ -10,8 +10,8 @@ final readonly class CreateResponseTenderDTO
     public function __construct(
 
         public string $transport_id,
-        public string $lot_tender_respons_id,
         public float $price_for_km,
+        public ?string $lot_tender_id,
         public ?string $organizaion_id,
         public ?string $comment,
 
@@ -21,9 +21,20 @@ final readonly class CreateResponseTenderDTO
     {
         return self::make(
             transport_id: $this->transport_id,
-            lot_tender_respons_id: $this->lot_tender_respons_id,
             price_for_km: $this->price_for_km,
+            lot_tender_id: $this->lot_tender_id,
             organizaion_id: $organizaion_id,
+            comment: $this->comment,
+        );
+    }
+
+    public function setLotTenderId(string $lot_tender_id) : self
+    {
+        return self::make(
+            transport_id: $this->transport_id,
+            price_for_km: $this->price_for_km,
+            lot_tender_id: $lot_tender_id,
+            organizaion_id: $this->organizaion_id,
             comment: $this->comment,
         );
     }
@@ -32,8 +43,8 @@ final readonly class CreateResponseTenderDTO
     public static function make(
 
         string $transport_id,
-        string $lot_tender_respons_id,
         string $price_for_km,
+        ?string $lot_tender_id,
         ?string $organizaion_id,
         ?string $comment = null,
 
@@ -41,8 +52,8 @@ final readonly class CreateResponseTenderDTO
 
         return new self(
             transport_id: $transport_id,
-            lot_tender_respons_id: $lot_tender_respons_id,
             price_for_km: $price_for_km,
+            lot_tender_id: $lot_tender_id,
             organizaion_id: $organizaion_id,
             comment: $comment,
         );
@@ -53,10 +64,10 @@ final readonly class CreateResponseTenderDTO
     {
         return self::make(
             transport_id: Arr::get($data, 'transport_id'),
-            lot_tender_respons_id: Arr::get($data, 'lot_tender_respons_id'),
             price_for_km: Arr::get($data, 'price_for_km'),
-            organizaion_id: Arr::get($data, 'organizaion_id'),
-            comment: Arr::get($data, 'comment'),
+            lot_tender_id: Arr::get($data, 'lot_tender_id', null),
+            organizaion_id: Arr::get($data, 'organizaion_id', null),
+            comment: Arr::get($data, 'comment', null),
         );
     }
 

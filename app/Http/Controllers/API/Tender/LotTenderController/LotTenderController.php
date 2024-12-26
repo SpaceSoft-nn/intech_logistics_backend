@@ -80,4 +80,10 @@ class LotTenderController extends Controller
             abort(404, 'Файл не найден.');
         }
     }
+
+    public function createOrderByTender(
+
+    ) {
+
+    }
 }

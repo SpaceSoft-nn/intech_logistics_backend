@@ -12,16 +12,16 @@ final readonly class AgreementTenderAcceptVO implements Arrayable
 
     public function __construct(
         public string $agreement_tender_id,
-        public bool $tender_creater_bool,
-        public bool $contractor_bool,
+        public ?bool $tender_creater_bool,
+        public ?bool $contractor_bool,
     ) {}
 
 
     public static function make(
 
         string $agreement_tender_id,
-        bool $tender_creater_bool,
-        bool $contractor_bool,
+        ?bool $tender_creater_bool = null,
+        ?bool $contractor_bool = null,
 
     ) : self {
 

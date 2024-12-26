@@ -17,9 +17,11 @@ class CreateAgreementTenderAction
 
     private function run(AgreementTenderVO $vo) : AgreementTender
     {
+
+        $model = AgreementTender::create($vo->toArrayNotNull());
+
         try {
 
-            $model = AgreementTender::create($vo->toArrayNotNull());
 
         } catch (\Throwable $th) {
 

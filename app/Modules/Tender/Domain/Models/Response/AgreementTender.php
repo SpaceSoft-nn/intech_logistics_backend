@@ -5,6 +5,7 @@ namespace App\Modules\Tender\Domain\Models\Response;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class AgreementTender extends Model
 {
@@ -19,7 +20,7 @@ class AgreementTender extends Model
 
     protected $fillable = [
 
-        "lot_tender_respons_id",
+        "lot_tender_response_id",
         "organization_tender_create_id",
         "lot_tender_id",
 
@@ -36,6 +37,11 @@ class AgreementTender extends Model
         return [
 
         ];
+    }
+
+    protected function agreement_tender_accept(): HasOne
+    {
+        return $this->hasOne(AgreementTenderAccept::class, 'agreement_tender_id');
     }
 
 }

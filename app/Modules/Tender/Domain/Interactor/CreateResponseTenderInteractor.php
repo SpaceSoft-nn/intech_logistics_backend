@@ -36,10 +36,10 @@ final class CreateResponseTenderInteractor
             /** @var LotTenderResponse */
             $lotTenderResponse = $this->createLotTenderResponseVO($dto);
 
-            /** @var LotTenderResponse */
-            $lotTenderResponse = $this->createInvoiceLotTender($dto, $lotTenderResponse->id);
+            /** @var InvoiceLotTender  */
+            $invoiceLotTender = $this->createInvoiceLotTender($dto, $lotTenderResponse->id);
 
-            dd($lotTenderResponse, $lotTenderResponse);
+            return $lotTenderResponse;
 
         });
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->foreignUuid('agreement_tender_id')
-                ->constrained('agreement_tender')->noActionOnDelete();
+                ->constrained('agreement_tenders')->noActionOnDelete();
 
             $table->boolean('tender_creater_bool')->default(false)->comment('Статус организации: создателя тендера');
             $table->boolean('contractor_bool')->default(false)->comment('Статус организации: откликнувшиеся на тендер');

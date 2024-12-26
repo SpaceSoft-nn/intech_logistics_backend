@@ -17,6 +17,7 @@ class CreateInvoiceLotTenderAction
 
     private function run(InvoiceLotTenderVO $vo) : InvoiceLotTender
     {
+
         try {
 
             $model = InvoiceLotTender::create($vo->toArrayNotNull());

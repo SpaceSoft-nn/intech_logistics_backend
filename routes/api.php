@@ -13,6 +13,7 @@ use App\Http\Controllers\API\OrderUnit\AgreementOrderUnitController;
 use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Organization\OrganizationController;
 use App\Http\Controllers\API\Tender\LotTenderController\LotTenderController;
+use App\Http\Controllers\API\Tender\ResponseTenderController\ResponseTenderController;
 use App\Http\Controllers\API\Test\TestController;
 use App\Http\Controllers\API\Transfer\TransferContoller;
 use App\Http\Controllers\API\Transport\TransportController;
@@ -123,7 +124,6 @@ Route::prefix('/orders')->group(function () {
 
             });
 
-
         }
 
     }
@@ -205,9 +205,17 @@ Route::prefix('/individual-people')->group(function () {
 
 });
 
-Route::prefix('/tender')->group(function () {
+Route::prefix('/tenders')->group(function () {
 
-    Route::post('/lot', [LotTenderController::class, 'store']);
+    Route::post('/', [LotTenderController::class, 'store']);
+    Route::get('/', [LotTenderController::class, 'index'])->whereUuid('agreementDocumentTender');
+    Route::get('/{lotTender}', [LotTenderController::class, 'show'])->whereUuid('lotTender');
+
+    {
+        //Добавление исполнителей к заказу
+        Route::post('/{lotTender}/contractors/{organization}', [ResponseTenderController::class, 'addСontractorForTender'])->whereUuid('orderUnit', 'organization');
+
+    }
 
 });
 

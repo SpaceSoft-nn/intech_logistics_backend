@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Modules\Tender\Domain\Interactor;
-
+use App\Modules\Base\Error\BusinessException;
 use App\Modules\Tender\App\Data\DTO\CreateLotTenderServiceDTO;
 use App\Modules\Tender\App\Data\ValueObject\AgreementDocumentTenderVO;
 use App\Modules\Tender\App\Data\ValueObject\ApplicationDocumentTenderVO;
@@ -16,8 +16,8 @@ use App\Modules\Tender\Domain\Models\ApplicationDocumentTender;
 use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Models\SpecificalDatePeriod;
 use App\Modules\Tender\Domain\Services\DocumentFileService;
-use DB;
 use Illuminate\Http\UploadedFile;
+use DB;
 
 /**
  * Интерактор для создание LotTender - так же логика добавление файлов + адрессов к LotTender
@@ -38,6 +38,13 @@ final class CreateLotTenderInteractor
 
     public function run(CreateLotTenderServiceDTO $dto) : LotTender
     {
+
+        //делаю проверку что должен быть указан только один из параметров
+        if($dto->lotTenderVO->day_period && $dto->arraySpecificalDatePeriod)
+        {
+            throw new BusinessException('указан day_period и specific_date_periods, нужно указывать либо только перидичность выполнения, либо только конкретные даты.' , 400);
+        }
+
         /** @var LotTender */
         $model = DB::transaction(function () use ($dto) {
 
@@ -103,7 +110,6 @@ final class CreateLotTenderInteractor
     {
         return CreateAgreementDocumentTenderAction::make($vo);
     }
-
 
 
     /**

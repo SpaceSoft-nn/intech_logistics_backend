@@ -21,7 +21,7 @@ class CreateLotTenderRequest extends ApiRequest
     }
 
 
-    public function authorize(AuthServiceInterface $auth): bool
+    public function authorize(): bool
     {
         return true;
     }
@@ -45,7 +45,7 @@ class CreateLotTenderRequest extends ApiRequest
             'organization_id' => ['required' , 'uuid', 'exists:organizations,id'],
 
             'period' => ['required' , 'integer'],
-            'day_period' => ['required' , 'integer'],
+            'day_period' => ['sometimes' , 'integer'],
 
             'agreement_document' => ['required', File::types(['pdf', 'doc', 'docx', 'rtf', 'odt'])->max(16384)],
 
@@ -106,7 +106,5 @@ class CreateLotTenderRequest extends ApiRequest
         return isset($data['specific_date_periods']) && !is_null(isset($data['specific_date_periods'])) ? $data['specific_date_periods'] : null;
 
     }
-
-
 
 }

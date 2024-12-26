@@ -31,6 +31,7 @@ class LotTender extends Model
         "date_start",
         "period",
         "day_period",
+        "organization_id",
 
     ];
 

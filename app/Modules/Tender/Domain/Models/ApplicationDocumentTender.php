@@ -22,8 +22,8 @@ class ApplicationDocumentTender extends Model
 
         "lot_tender_id",
         "path",
-        "value",
-        "mediumText",
+        "disk",
+        "description",
 
     ];
 

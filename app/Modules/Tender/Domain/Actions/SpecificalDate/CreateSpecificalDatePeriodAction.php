@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\Tender\App\Data\ValueObject;
+namespace App\Modules\Tender\Domain\Actions\SpecificalDate;
 
+use App\Modules\Tender\App\Data\ValueObject\SpecificalDatePeriodVO;
 use App\Modules\Tender\Domain\Models\SpecificalDatePeriod;
-use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
-use App\Modules\Transport\Domain\Models\Transport;
+
 use Exception;
 
 use function App\Helpers\Mylog;

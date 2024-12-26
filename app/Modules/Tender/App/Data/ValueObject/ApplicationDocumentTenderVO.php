@@ -13,8 +13,7 @@ final readonly class ApplicationDocumentTenderVO implements Arrayable
     public function __construct(
         public string $lot_tender_id,
         public string $path,
-        public string $value,
-        public string $description,
+        public ?string $description,
     ) {}
 
 
@@ -22,8 +21,7 @@ final readonly class ApplicationDocumentTenderVO implements Arrayable
 
         string $lot_tender_id,
         string $path,
-        string $value,
-        string $description,
+        ?string $description = null,
 
     ) : self {
 
@@ -31,7 +29,6 @@ final readonly class ApplicationDocumentTenderVO implements Arrayable
 
             lot_tender_id: $lot_tender_id,
             path: $path,
-            value: $value,
             description: $description,
 
         );
@@ -44,7 +41,6 @@ final readonly class ApplicationDocumentTenderVO implements Arrayable
         return [
             "lot_tender_id" => $this->lot_tender_id,
             "path" => $this->path,
-            "value" => $this->value,
             "description" => $this->description,
         ];
     }
@@ -55,7 +51,6 @@ final readonly class ApplicationDocumentTenderVO implements Arrayable
         return self::make(
             lot_tender_id: Arr::get($data, 'lot_tender_id'),
             path: Arr::get($data, 'path'),
-            value: Arr::get($data, 'value'),
             description: Arr::get($data, 'description'),
         );
 

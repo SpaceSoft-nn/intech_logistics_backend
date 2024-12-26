@@ -22,6 +22,7 @@ class AgreementDocumentTender extends Model
 
         "lot_tender_id",
         "path",
+        "disk",
         "description",
 
     ];

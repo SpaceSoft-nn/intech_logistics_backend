@@ -12,14 +12,20 @@ return new class extends Migration
 
         Schema::create('agreement_document_tenders', function (Blueprint $table) {
 
-            $table->id('uuid')->primary();
+            $table->uuid('id')->primary();
 
             $table->foreignUuid('lot_tender_id')->unique()
                 ->constrained('lot_tenders')->noActionOnDelete();
 
-            $table->string('path')->comment('Указание пути');
+            #TODO Когда-нибудь понадобится
+            // $table->string('original_name');
+            // $table->string('unique_name')->unique();
 
-            $table->mediumText('description');
+            $table->string('path')->unique()->comment('Указание пути к файлу с полным названием');
+
+            $table->string('disk')->default('tender_documents')->comment('Диск хранения файла');
+
+            $table->mediumText('description')->nullable();
 
             $table->timestamps();
 

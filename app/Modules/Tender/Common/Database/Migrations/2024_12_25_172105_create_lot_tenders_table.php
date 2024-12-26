@@ -26,7 +26,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('period')->comment('Количество дней, например в течении 60 дней');
             $table->unsignedSmallInteger('day_period')->nullable()->comment('Как должен выполняться тендер пример: каждые 5 дней');
 
-            $table->foreignUuid('organization_id')->unique()
+            $table->foreignUuid('organization_id')
                 ->constrained('organizations')->noActionOnDelete();
 
 

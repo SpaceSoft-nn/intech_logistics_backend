@@ -13,7 +13,7 @@ final readonly class AgreementDocumentTenderVO implements Arrayable
     public function __construct(
         public string $lot_tender_id,
         public string $path,
-        public string $description,
+        public ?string $description,
     ) {}
 
 
@@ -21,7 +21,7 @@ final readonly class AgreementDocumentTenderVO implements Arrayable
 
         string $lot_tender_id,
         string $path,
-        string $description,
+        ?string $description = null,
 
     ) : self {
 

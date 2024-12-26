@@ -11,16 +11,21 @@ return new class extends Migration
     {   //Ссылка на файлы приложения
         Schema::create('application_document_tenders', function (Blueprint $table) {
 
-            $table->id('uuid')->primary();
+            $table->uuid('id')->primary();
 
             $table->foreignUuid('lot_tender_id')
                 ->constrained('lot_tenders')->noActionOnDelete();
 
-            $table->string('path')->comment('Указание пути к файлу');
+            $table->string('path')->unique()->comment('Указание пути к файлу');
 
-            $table->string('value')->comment('Значение файла пример: мед книжка');
+            #TODO Когда-нибудь понадобится
+            // $table->string('original_name');
+            // $table->string('unique_name')->unique();
 
-            $table->mediumText('description');
+
+            $table->string('disk')->default('tender_documents')->comment('Диск хранения файла');
+
+            $table->mediumText('description')->nullable();
 
             $table->timestamps();
 

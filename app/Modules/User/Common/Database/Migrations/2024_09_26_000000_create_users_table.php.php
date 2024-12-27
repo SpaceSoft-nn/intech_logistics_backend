@@ -29,12 +29,12 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('personal_area', 'id')->noActionOnDelete();
 
-            $table->uuid('email_id')
+            $table->foreignUuid('email_id')
                 ->nullable()
                 ->unique()
                 ->constrained('email_list', 'id')->noActionOnDelete();
 
-            $table->uuid('phone_id')
+            $table->foreignUuid('phone_id')
                 ->nullable()
                 ->unique()
                 ->constrained('phone_list', 'id')->noActionOnDelete();

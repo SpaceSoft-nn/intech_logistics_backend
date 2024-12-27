@@ -26,6 +26,7 @@ class LoginController
             )
         );
 
+
         return $json_token ?
             response()->json(array_success($json_token, 'Successfully login.'), 200)
         :

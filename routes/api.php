@@ -216,11 +216,18 @@ Route::prefix('/tenders')->group(function () {
         Route::post('/{lotTender}/contractors/{organization}', [ResponseTenderController::class, 'addСontractorForTender'])->whereUuid('lotTender', 'organization');
 
         //Вернуть всех исполнителей откликнувшиеся на Тендер
-        Route::get('/{lotTender}/contractors/', [ResponseTenderController::class, 'getСontractorForTender'])->whereUuid('lotTender');
-        
+        Route::get('/{lotTender}/contractors', [ResponseTenderController::class, 'getСontractorForTender'])->whereUuid('lotTender');
 
         //Выбор создателям тендера, перевозчика (подрядчика) на выполнения тендера
         Route::post('/{lotTenderResponse}/agreement-tender', [ResponseTenderController::class, 'agreementTender'])->whereUuid('lotTenderResponse');
+
+        //Подтврждения соглашения с двух сторон, о взятие тендера и работу со стороны перевозчика, и отдачи в работу со стороны создателя тендера
+        Route::post('/{lotTenderResponse}/agreement-tender-accept', [ResponseTenderController::class, 'agreementTenderAccept'])->whereUuid('lotTenderResponse');
+
+
+
+        //Дополнения заказа по тендеру
+        Route::post('/{lotTender}/orders', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender');
 
     }
 

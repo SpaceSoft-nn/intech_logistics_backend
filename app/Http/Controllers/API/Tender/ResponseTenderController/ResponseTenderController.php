@@ -74,4 +74,11 @@ class ResponseTenderController extends Controller
 
         return response()->json(array_success(LotTenderResponseCollection::make($model), 'Return all lot tender Response.'), 200);
     }
+
+    public function agreementTenderAccept()
+    {
+        
+    }
+
 }
+

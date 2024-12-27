@@ -41,7 +41,6 @@ class DatabaseSeeder extends Seeder
             \App\Modules\OfferContractor\Common\Database\Seeders\OfferContractorSeeder::class,
 
 
-
             //Сиды для прода (Презентации)
             ProdeSeed::class,
 

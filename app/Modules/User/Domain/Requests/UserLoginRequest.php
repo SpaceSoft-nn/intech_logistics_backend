@@ -23,6 +23,7 @@ class UserLoginRequest extends ApiRequest
     {
         $email = $this->input('email');
         $phone = $this->input('phone');
+
         //выкидываем ошибку - если у нас прислали email и phone вместе
         abort_if( isset($email) && isset($phone) , 400, 'Only Email or Phone');
     }

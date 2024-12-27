@@ -8,6 +8,7 @@ use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
 use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
 use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Requests\CreateLotTenderRequest;
+use App\Modules\Tender\Domain\Requests\CreateOrderByRequest;
 use App\Modules\Tender\Domain\Resources\LotTenderCollection;
 use App\Modules\Tender\Domain\Resources\LotTenderResource;
 use App\Modules\Tender\Domain\Services\TenderService;
@@ -81,9 +82,12 @@ class LotTenderController extends Controller
         }
     }
 
-    public function createOrderByTender(
-
+    public function addInfoOrderByTender(
+        LotTender $lotTender,
+        CreateOrderByRequest $request,
     ) {
 
     }
+
+    
 }

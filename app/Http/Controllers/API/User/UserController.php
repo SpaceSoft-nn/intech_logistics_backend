@@ -48,7 +48,7 @@ class UserController
         ));
 
         #TODO возвращать объект
-        dd($model);
+        dd('Это бАГ!');
     }
 
 }

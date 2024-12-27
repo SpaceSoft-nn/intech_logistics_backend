@@ -134,10 +134,11 @@ class AuthSanctum implements AuthInterface
 
             $email = EmailList::where('value', $credentials->email)->first();
 
-            //делаем проверку, если данного телефона нет
+            //делаем проверку, если данной почты нет
             if(is_null($email)) { return false; };
 
             $user = $email->user;
+
 
         } else {
             $phone = PhoneList::where('value', $credentials->phone)->first();

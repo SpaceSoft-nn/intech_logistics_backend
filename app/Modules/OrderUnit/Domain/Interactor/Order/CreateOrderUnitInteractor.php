@@ -33,6 +33,7 @@ class CreateOrderUnitInteractor
         try {
 
             #TODO Нужно использовать паттерн цепочка обязаностей (handler)
+            /** @var OrderUnit */
             $order = DB::transaction(function($pdo) use($dto)  {
 
                 /**

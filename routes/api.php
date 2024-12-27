@@ -40,12 +40,6 @@ Route::prefix('user')->controller(AuthController::class)->group(function () {
 
 });
 
-Route::prefix('auth')->controller(AuthController::class)->group(function () {
-    Route::post('/me', [AuthController:: class, 'user'])->middleware(['auth:sanctum']);
-});
-
-
-
 
 //routing аутентификации по токену
 Route::prefix('auth')->controller(AuthController::class)->group(function () {

@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('type_body')->comment('Тип Кузова: бортовой, цистерна и т.д');
             $table->string('type_status')->comment('Текущий статус транспортного средства: свободно, эксплуатация, ремонт');
 
-
             $table->string('year')->comment('Год выпуска транспорта');
             $table->string('transport_number')->comment('Номерной знак');
 

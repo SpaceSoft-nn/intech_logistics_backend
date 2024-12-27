@@ -32,56 +32,47 @@ class RegistrationController
 
 
         //#TODO изменить логику (RegistrationDTO вынести сразу в request для создание)
+        /**
+        * @var User|array
+        */
+        $model = $registerService->registerUser(RegistrationDTO::make(
+            UserCreateDTO::make($userVO),
+            phone: $validated['phone'] ?? null,
+            email: $validated['email'] ?? null,
+        ));
 
-        /** @var Model */
-        $model = DB::transaction(function () use ($registerService, $userVO, $validated) {
-
-              /**
-            * @var User|array
-            */
-            $model = $registerService->registerUser(RegistrationDTO::make(
-                UserCreateDTO::make($userVO),
-                phone: $validated['phone'] ?? null,
-                email: $validated['email'] ?? null,
-            ));
-
-            //Возвращаем информацию об ошибки нотификации P.S Переделать на глобальный обработчик
-            if(is_array($model)) { return array_error(message: $model['message']); }
+        //Возвращаем информацию об ошибки нотификации P.S Переделать на глобальный обработчик
+        if(is_array($model)) { return array_error(message: $model['message']); }
 
 
-            { #TODO Временно отключена в сервесе нотификация по телефону и email, сделан быстрый код для регистрации (потом убрать)
-                try {
+        { #TODO Временно отключена в сервесе нотификация по телефону и email, сделан быстрый код для регистрации (потом убрать)
+            try {
 
 
-                    if(isset($validated['phone']))
-                    {
-                        $phoneModel = $model->phone()->create(['value' => $validated['phone'], 'status' => true]);
-                        $model->phone_id = $phoneModel->id;
-                        $model->save();
+                if(isset($validated['phone']))
+                {
+                    $phoneModel = $model->phone()->create(['value' => $validated['phone'], 'status' => true]);
+                    $model->phone_id = $phoneModel->id;
+                    $model->save();
 
-                    } else {
+                } else {
 
-                        $emailModel = $model->email()->create(['value' => $validated['email'], 'status' => true]);
-                        $model->email_id = $emailModel->id;
-                        $model->save();
-                    }
-
-                } catch (\Throwable $th) {
-
-                    if(isset($validated['phone'])) {
-                        throw new BusinessException('Пользователь с такими данными phone уже существует.', 409);
-                    } else {
-                        throw new BusinessException('Пользователь с такими данными email уже существует.', 409);
-                    }
-
+                    $emailModel = $model->email()->create(['value' => $validated['email'], 'status' => true]);
+                    $model->email_id = $emailModel->id;
+                    $model->save();
                 }
 
+            } catch (\Throwable $th) {
+
+                if(isset($validated['phone'])) {
+                    throw new BusinessException('Пользователь с такими данными phone уже существует.', 409);
+                } else {
+                    throw new BusinessException('Пользователь с такими данными email уже существует.', 409);
+                }
 
             }
 
-            return $model;
-
-        });
+        }
 
 
         $token = $auth->loginUser($model);

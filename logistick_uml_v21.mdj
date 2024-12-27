@@ -32277,6 +32277,24 @@
 										},
 										{
 											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGUA8RVcl/Tluk=",
+											"_parent": {
+												"$ref": "AAAAAAGUA6Q28TQ1dyI="
+											},
+											"model": {
+												"$ref": "AAAAAAGUA8RVYV8oI7Q="
+											},
+											"font": "Arial;13;0",
+											"parentStyle": true,
+											"left": 3245,
+											"top": 460,
+											"width": 176.271484375,
+											"height": 13,
+											"text": "+lot_tender_response_id: uuid",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
 											"_id": "AAAAAAGUA6Y1vTMcHms=",
 											"_parent": {
 												"$ref": "AAAAAAGUA6Q28TQ1dyI="
@@ -32287,7 +32305,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3245,
-											"top": 460,
+											"top": 475,
 											"width": 176.271484375,
 											"height": 13,
 											"text": "+price_for_km",
@@ -32305,28 +32323,10 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3245,
-											"top": 475,
-											"width": 176.271484375,
-											"height": 13,
-											"text": "+comment",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGUA8RVcl/Tluk=",
-											"_parent": {
-												"$ref": "AAAAAAGUA6Q28TQ1dyI="
-											},
-											"model": {
-												"$ref": "AAAAAAGUA8RVYV8oI7Q="
-											},
-											"font": "Arial;13;0",
-											"parentStyle": true,
-											"left": 3245,
 											"top": 490,
 											"width": 176.271484375,
 											"height": 13,
-											"text": "+lot_tender_response_id: uuid",
+											"text": "+comment",
 											"horizontalAlignment": 0
 										}
 									],
@@ -40571,6 +40571,15 @@
 						},
 						{
 							"_type": "UMLAttribute",
+							"_id": "AAAAAAGUA8RVYV8oI7Q=",
+							"_parent": {
+								"$ref": "AAAAAAGUA6Q28TQtIao="
+							},
+							"name": "lot_tender_response_id",
+							"type": "uuid"
+						},
+						{
+							"_type": "UMLAttribute",
 							"_id": "AAAAAAGUA6Y1rzJxdLQ=",
 							"_parent": {
 								"$ref": "AAAAAAGUA6Q28TQtIao="
@@ -40584,15 +40593,6 @@
 								"$ref": "AAAAAAGUA6Q28TQtIao="
 							},
 							"name": "comment"
-						},
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAGUA8RVYV8oI7Q=",
-							"_parent": {
-								"$ref": "AAAAAAGUA6Q28TQtIao="
-							},
-							"name": "lot_tender_response_id",
-							"type": "uuid"
 						}
 					]
 				},

@@ -34,9 +34,17 @@ Route::get('/organization', [OrganizationController::class, 'index']);
 Route::get('/organization/{organization}', [OrganizationController:: class, 'show'])->whereUuid('organization');
 Route::post('/organization', [OrganizationController::class, 'create']);
 
-
     //User
-Route::post('/user', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
+Route::prefix('user')->controller(AuthController::class)->group(function () {
+    Route::post('/', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
+
+});
+
+Route::prefix('auth')->controller(AuthController::class)->group(function () {
+    Route::post('/me', [AuthController:: class, 'user'])->middleware(['auth:sanctum']);
+});
+
+
 
 
 //routing аутентификации по токену

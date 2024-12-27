@@ -26,6 +26,12 @@ class UserResource extends JsonResource
             'personal_area_id' => $this->personal_area_id,
             'email_id' => $this->email?->value ?? null,
             'phone_id' => $this->phone?->value ?? null ,
+            'type_cabinet' => $this->organizations->map(function ($organization) {
+                return [
+                    'organization_id' => $organization->id,
+                    'type_cabinet' => $organization->pivot->type_cabinet,
+                ];
+            }),
         ];
     }
 }

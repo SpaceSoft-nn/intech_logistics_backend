@@ -412,6 +412,64 @@ namespace App\Http\Controllers;
 * ),
 *
 *
+* @OA\Schema(
+*     schema="AgreementTenderAcceptResource",
+*     type="object",
+*     title="Agreement Order Contractor Accept Resource",
+*     properties={
+*         @OA\Property(property="id_agreement_order_contractor_accept", type="string", format="uuid", description="UUID принятия соглашения заказа подрядчика", example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="agreement_order_contractor_id", type="string", format="uuid", description="UUID соглашения заказа подрядчика", example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="order_bool", type="boolean", description="Статус утверждения со стороны Заказчика", example=true),
+*         @OA\Property(property="contractor_bool", type="boolean", description="Статус утверждения со стороны Перевозчика", example=true)
+*     }
+* ),
+*
+*
+* @OA\Schema(
+*     schema="AgreementTenderResource",
+*     type="object",
+*     @OA\Property(property="id_areement_tender", type="string", format="uuid", description="ID соглашения тендера"),
+*     @OA\Property(property="lot_tender_response_id", type="string", format="uuid", description="uuid lot_tender_respons"),
+*     @OA\Property(property="organization_tender_create_id", type="string", format="uuid", description="ID организации создателя тендера"),
+*     @OA\Property(property="lot_tender_id", type="string", format="uuid", description="ID лота тендера"),
+*     @OA\Property(property="agreement_tender_accept_id", ref="#/components/schemas/AgreementTenderAcceptResource", description="Соглашение тендера")
+* ),
+*
+* @OA\Schema(
+*     schema="LotTenderResponseResource",
+*     type="object",
+*     @OA\Property(property="id_lot_tender_response", type="string", format="uuid", description="ID ответа на лот тендера"),
+*     @OA\Property(property="lot_tender_id", type="string", format="uuid", description="ID лота тендера"),
+*     @OA\Property(property="organization_contractor_id", type="string", format="uuid", description="ID организации подрядчика"),
+*     @OA\Property(property="invoice_lot_tender_id", type="string", format="uuid", description="ID Описание при отклике перевозчика")
+* ),
+*
+* @OA\Schema(
+*     schema="SpecificaDatePeriodResource",
+*     type="object",
+*     @OA\Property(property="id_specifica_date_period", type="integer", description="ID специфической даты периода"),
+*     @OA\Property(property="date", type="string", format="date", description="Конкрентая дата для Тендера (Выполнения заказа)"),
+*     @OA\Property(property="count_transport", type="integer", description="Количество транспорта")
+* ),
+*
+* @OA\Schema(
+*     schema="LotTenderResource",
+*     type="object",
+*     @OA\Property(property="id_lot_tender", type="string", format="uuid", description="ID лота тендера"),
+*     @OA\Property(property="general_count_transport", type="string", format="uuid", description="Общее количество транспорта"),
+*     @OA\Property(property="price_for_km", type="number", format="float", description="Цена за км"),
+*     @OA\Property(property="body_volume_for_order", type="number", format="float", description="Объем кузова для заказа"),
+*     @OA\Property(property="type_transport_weight", type="string", description="Тип веса транспорта"),
+*     @OA\Property(property="type_load_truck", type="string", description="Тип загрузки грузовика"),
+*     @OA\Property(property="date_start", type="string", format="date", description="Дата начала"),
+*     @OA\Property(property="period", type="string", format="uuid", description="Период"),
+*     @OA\Property(property="day_period", type="string", format="uuid", description="Дневной период"),
+*     @OA\Property(property="organization_id", type="string", format="uuid", description="ID организации"),
+*     @OA\Property(property="agreement_document_tender_link", type="string", format="url", description="Ссылка на документ соглашения тендера - договор - будет обязательный и только один"),
+*     @OA\Property(property="array_application_document_tender_link", type="array", @OA\Items(type="string", format="url"), description="Ссылки на документы приложения для тендера"),
+*     @OA\Property(property="array_specifica_date_period", type="array", @OA\Items(ref="#/components/schemas/SpecificaDatePeriodResource"), description="Массив специфических дат периода, здесь указываются конкретные даты тендера + количество транспорта")
+* ),
+*
 *
 *
 *

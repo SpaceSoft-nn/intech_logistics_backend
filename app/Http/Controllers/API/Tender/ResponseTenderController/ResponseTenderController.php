@@ -8,12 +8,14 @@ use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
 use App\Modules\Tender\App\Data\ValueObject\Response\AgreementTenderVO;
 use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Models\Response\AgreementTender;
+use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
 use App\Modules\Tender\Domain\Requests\CreateAgreementTenderRequest;
 use App\Modules\Tender\Domain\Requests\CreateResponseTenderRequest;
 use App\Modules\Tender\Domain\Resources\Response\AgreementTenderResource;
 use App\Modules\Tender\Domain\Resources\Response\LotTenderResponseResource;
 use App\Modules\Tender\Domain\Services\AgreementTenderService;
 use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
+use App\Modules\Tender\Domain\Resources\Response\AgreementTenderAcceptResource;
 use App\Modules\Tender\Domain\Resources\Response\LotTenderResponseCollection;
 
 use function App\Helpers\array_error;
@@ -75,9 +77,16 @@ class ResponseTenderController extends Controller
         return response()->json(array_success(LotTenderResponseCollection::make($model), 'Return all lot tender Response.'), 200);
     }
 
-    public function agreementTenderAccept()
-    {
-        
+    public function agreementTenderAccept(
+        AgreementTenderAccept $agreementTenderAccept,
+        AgreementTenderService $agreementTenderSerivce
+    ) {
+        $model = $agreementTenderSerivce->agreementTenderAccept($agreementTenderAccept);
+
+        return $model ?
+        response()->json(array_success(AgreementTenderAcceptResource::make($model), 'Successfully agreement tender accept.'), 200)
+        :
+        response()->json(array_error(null, 'Error agreement tender accept.'), 400);
     }
 
 }

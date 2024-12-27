@@ -226,7 +226,7 @@ Route::prefix('/tenders')->group(function () {
         //Вернуть всех исполнителей откликнувшиеся на Тендер
         Route::get('/{lotTender}/contractors', [ResponseTenderController::class, 'getСontractorForTender'])->whereUuid('lotTender');
 
-        //Выбор создателям тендера, перевозчика (подрядчика) на выполнения тендера
+        // Выбор "создателем тендера" - перевозчика на выполнение тендера
         Route::post('/{lotTenderResponse}/agreement-tender', [ResponseTenderController::class, 'agreementTender'])->whereUuid('lotTenderResponse');
 
         //Подтврждения соглашения с двух сторон, о взятие тендера и работу со стороны перевозчика, и отдачи в работу со стороны создателя тендера

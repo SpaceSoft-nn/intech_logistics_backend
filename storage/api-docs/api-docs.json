@@ -2672,6 +2672,7 @@
                                                     "published",
                                                     "accepted",
                                                     "in_work",
+                                                    "pre_order",
                                                     "completed_and_wait_payment",
                                                     "cancelled",
                                                     "private"
@@ -3983,6 +3984,605 @@
                                         "message_error": {
                                             "type": "string",
                                             "example": "Error receiving token."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tenders": {
+            "get": {
+                "tags": [
+                    "Tender"
+                ],
+                "summary": "Получить все лоты тендера",
+                "operationId": "936f6120514dbe89f042f11d7e98d9ea",
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат всех лотов тендера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/LotTenderResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return all lot tender."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tender"
+                ],
+                "summary": "Создать Lot Tender",
+                "operationId": "6af75442898911272fce394c81f3e9c3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "general_count_transport": {
+                                        "description": "Общее количество транспорта",
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "price_for_km": {
+                                        "description": "Цена за км",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 5.5
+                                    },
+                                    "body_volume_for_order": {
+                                        "description": "Объем кузова для заказа",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 50
+                                    },
+                                    "type_transport_weight": {
+                                        "description": "**Тип транспортировки по габаритам. Обязательное поле.** small: 1.5-3 тонны, medium: 5 - 10 тонн, large: 10 - 20 тонн, extraLarge: 20 - 40 тонн, superSize: Более 40 тонн",
+                                        "type": "string",
+                                        "enum": [
+                                            "small",
+                                            "medium",
+                                            "large",
+                                            "extraLarge",
+                                            "superSize"
+                                        ],
+                                        "example": "small"
+                                    },
+                                    "type_load_truck": {
+                                        "description": "**Тип загрузки грузовика. Обязательное поле. Возможные значения: ftl, ltl, custom.**",
+                                        "type": "string",
+                                        "enum": [
+                                            "ftl",
+                                            "ltl",
+                                            "custom"
+                                        ],
+                                        "example": "ftl"
+                                    },
+                                    "date_start": {
+                                        "description": "Дата начала",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-10-01"
+                                    },
+                                    "organization_id": {
+                                        "description": "UUID организации",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "period": {
+                                        "description": "Период",
+                                        "type": "integer",
+                                        "example": 30
+                                    },
+                                    "day_period": {
+                                        "description": "Дневной период",
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "agreement_document": {
+                                        "description": "Документ соглашения",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "application_document": {
+                                        "type": "array",
+                                        "items": {
+                                            "description": "Документ заявки",
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "specific_date_periods": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "date": {
+                                                    "description": "Дата",
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2023-10-01"
+                                                },
+                                                "count_transport": {
+                                                    "description": "Количество транспорта",
+                                                    "type": "integer",
+                                                    "example": 5
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное создание лота тендера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/LotTenderResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Create lot tender."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка при создании лота тендера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Failed to create lot tender."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tenders/{lotTender}": {
+            "get": {
+                "tags": [
+                    "Tender"
+                ],
+                "summary": "Получить лот тендера по UUID",
+                "operationId": "4c5edc8d72813fb5cb2981431d71cd3f",
+                "parameters": [
+                    {
+                        "name": "lotTender",
+                        "in": "path",
+                        "description": "UUID лота тендера",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат лота тендера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/LotTenderResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return lot tender."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Лот тендера не найден.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Lot tender not found."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 404
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tenders/{lotTender}/contractors/{organization}": {
+            "post": {
+                "tags": [
+                    "Tender"
+                ],
+                "summary": "Добавление исполнителей к заказу",
+                "operationId": "0c9c84cf6518d1eeb354fc8797ab1de7",
+                "parameters": [
+                    {
+                        "name": "lotTender",
+                        "in": "path",
+                        "description": "UUID лота тендера",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    },
+                    {
+                        "name": "organization",
+                        "in": "path",
+                        "description": "UUID организации",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "transport_id": {
+                                        "description": "UUID транспорта",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "price_for_km": {
+                                        "description": "Цена за км",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 5.5
+                                    },
+                                    "comment": {
+                                        "description": "Комментарий",
+                                        "type": "string",
+                                        "example": "Комментарий к тендеру"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное добавление исполнителя к заказу.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/LotTenderResponseResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Create lot tender response."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка при добавлении исполнителя к заказу.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Failed to create lot tender response."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tenders/{lotTender}/contractors": {
+            "get": {
+                "tags": [
+                    "Tender"
+                ],
+                "summary": "Вернуть всех исполнителей откликнувшиеся на Тендер",
+                "operationId": "1fc508833040b271192a9f998616c4f1",
+                "parameters": [
+                    {
+                        "name": "lotTender",
+                        "in": "path",
+                        "description": "UUID лота тендера",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат всех исполнителей откликнувшихся на тендер.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/LotTenderResponseResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return all lot tender Response."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tenders/{lotTenderResponse}/agreement-tender": {
+            "post": {
+                "tags": [
+                    "Tender"
+                ],
+                "summary": "Выбор 'создателем тендера' - перевозчика на выполнение тендера",
+                "operationId": "49ce80634a061ee69fae47acf45b746d",
+                "parameters": [
+                    {
+                        "name": "lotTenderResponse",
+                        "in": "path",
+                        "description": "UUID отклик на лот тендера",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "organization_tender_create_id": {
+                                        "description": "UUID организации создателя тендера",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное создание соглашения тендера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/AgreementTenderResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Create agreement tender."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка при создании соглашения тендера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Failed to create agreement tender."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
                                         }
                                     },
                                     "type": "object"
@@ -5839,6 +6439,178 @@
                 },
                 "type": "object"
             },
+            "AgreementTenderAcceptResource": {
+                "title": "Agreement Order Contractor Accept Resource",
+                "properties": {
+                    "id_agreement_order_contractor_accept": {
+                        "description": "UUID принятия соглашения заказа подрядчика",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "agreement_order_contractor_id": {
+                        "description": "UUID соглашения заказа подрядчика",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "order_bool": {
+                        "description": "Статус утверждения со стороны Заказчика",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "contractor_bool": {
+                        "description": "Статус утверждения со стороны Перевозчика",
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
+            },
+            "AgreementTenderResource": {
+                "properties": {
+                    "id_areement_tender": {
+                        "description": "ID соглашения тендера",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "lot_tender_response_id": {
+                        "description": "uuid lot_tender_respons",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "organization_tender_create_id": {
+                        "description": "ID организации создателя тендера",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "lot_tender_id": {
+                        "description": "ID лота тендера",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "agreement_tender_accept_id": {
+                        "$ref": "#/components/schemas/AgreementTenderAcceptResource"
+                    }
+                },
+                "type": "object"
+            },
+            "LotTenderResponseResource": {
+                "properties": {
+                    "id_lot_tender_response": {
+                        "description": "ID ответа на лот тендера",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "lot_tender_id": {
+                        "description": "ID лота тендера",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "organization_contractor_id": {
+                        "description": "ID организации подрядчика",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "invoice_lot_tender_id": {
+                        "description": "ID Описание при отклике перевозчика",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "type": "object"
+            },
+            "SpecificaDatePeriodResource": {
+                "properties": {
+                    "id_specifica_date_period": {
+                        "description": "ID специфической даты периода",
+                        "type": "integer"
+                    },
+                    "date": {
+                        "description": "Конкрентая дата для Тендера (Выполнения заказа)",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "count_transport": {
+                        "description": "Количество транспорта",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "LotTenderResource": {
+                "properties": {
+                    "id_lot_tender": {
+                        "description": "ID лота тендера",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "general_count_transport": {
+                        "description": "Общее количество транспорта",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "price_for_km": {
+                        "description": "Цена за км",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "body_volume_for_order": {
+                        "description": "Объем кузова для заказа",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "type_transport_weight": {
+                        "description": "Тип веса транспорта",
+                        "type": "string"
+                    },
+                    "type_load_truck": {
+                        "description": "Тип загрузки грузовика",
+                        "type": "string"
+                    },
+                    "date_start": {
+                        "description": "Дата начала",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "period": {
+                        "description": "Период",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "day_period": {
+                        "description": "Дневной период",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "organization_id": {
+                        "description": "ID организации",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "agreement_document_tender_link": {
+                        "description": "Ссылка на документ соглашения тендера - договор - будет обязательный и только один",
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "array_application_document_tender_link": {
+                        "description": "Ссылки на документы приложения для тендера",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "url"
+                        }
+                    },
+                    "array_specifica_date_period": {
+                        "description": "Массив специфических дат периода, здесь указываются конкретные даты тендера + количество транспорта",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SpecificaDatePeriodResource"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "TransportBodyTypeEnum": {
                 "description": "Тип кузова транспорта",
                 "type": "string",
@@ -6184,6 +6956,10 @@
         {
             "name": "Region Economic",
             "description": "Region Economic"
+        },
+        {
+            "name": "Tender",
+            "description": "Tender"
         },
         {
             "name": "Transfer",

@@ -18,7 +18,7 @@ use App\Http\Controllers\API\Test\TestController;
 use App\Http\Controllers\API\Transfer\TransferContoller;
 use App\Http\Controllers\API\Transport\TransportController;
 use App\Http\Controllers\API\User\UserController;
-use App\Modules\Auth\Presentation\HTTP\Controllers\AuthController;
+use App\Modules\Auth\Presentation\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 

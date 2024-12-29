@@ -25,8 +25,10 @@ class MgxCreateAction
 
         } catch (\Throwable $th) {
 
-            Mylog('Ошибка при создании Mgx в Action');
-            throw new Exception('Ошибка при создании Mgx в Action', 500);
+            $nameClass = self::class;
+
+            Mylog("Ошибка в {$nameClass} при создании записи: " . $th);
+            throw new Exception('Ошибка в классе: ' . $nameClass, 500);
 
         }
 

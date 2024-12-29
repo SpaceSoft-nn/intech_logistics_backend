@@ -33,9 +33,10 @@ class CreateCargoUnitAction
             $сargoUnit = CargoUnit::create($vo->toArrayNotNull());
 
         } catch (\Throwable $th) {
+            $nameClass = self::class;
 
-            Mylog('Ошибка в Action CreateCargoUnitAction, при создании модели');
-            throw new Exception('Ошибка в CreateCargoUnitAction', 500);
+            Mylog("Ошибка в {$nameClass} при создании записи: " . $th);
+            throw new Exception('Ошибка в классе: ' . $nameClass, 500);
 
         }
 

@@ -32,7 +32,7 @@ class OrderUnitVO implements Arrayable
         public ?bool $add_load_space,
         public ?bool $change_price,
         public ?bool $change_time,
-        public ?bool $lot_tender_id,
+        public ?string $lot_tender_id, // Если заказ создаётся по бизнес-логики Тендера
 
     ) {}
 
@@ -55,7 +55,7 @@ class OrderUnitVO implements Arrayable
         bool $add_load_space,
         ?bool $change_price = null,
         ?bool $change_time = null,
-        ?bool $lot_tender_id = null,
+        ?string $lot_tender_id = null,
 
     ) : self {
 
@@ -161,7 +161,6 @@ class OrderUnitVO implements Arrayable
             lot_tender_id: $this->lot_tender_id,
         );
     }
-
 
     public function toArray() : array
     {

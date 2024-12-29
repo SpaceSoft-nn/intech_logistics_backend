@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignUuid('lot_tender_response_id')
                 ->constrained('lot_tender_responses')->noActionOnDelete();
 
-            $table->foreignUuid('organization_tender_create_id')->comment('Организация - которая создала Тендер')
+            $table->foreignUuid('organization_contractor_id')->comment('Организация - которая откликнулась на заказ')
                 ->constrained('organizations')->noActionOnDelete();
 
             $table->foreignUuid('lot_tender_id')

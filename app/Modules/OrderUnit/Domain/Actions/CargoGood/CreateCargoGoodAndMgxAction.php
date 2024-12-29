@@ -30,7 +30,7 @@ class CreateCargoGoodAndMgxAction
     */
     private function run(CargoGoodVO $vo) : CargoGood
     {
-        
+
         try {
 
             $сargoGood = CargoGood::create($vo->toArrayNotNull());
@@ -47,8 +47,10 @@ class CreateCargoGoodAndMgxAction
 
         } catch (\Throwable $th) {
 
-            Mylog('Ошибка в Action CreateCargoGoodAndMgxAction, при создании модели:' . $th);
-            throw new Exception('Ошибка в CreateCargoGoodAction', 500);
+            $nameClass = self::class;
+
+            Mylog("Ошибка в {$nameClass} при создании записи: " . $th);
+            throw new Exception('Ошибка в классе: ' . $nameClass, 500);
 
         }
 

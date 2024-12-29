@@ -4,10 +4,11 @@ namespace App\Modules\OrderUnit\Domain\Services;
 
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
+use App\Modules\OrderUnit\Domain\Interactor\Order\CreateOrderUnitHasTenderInteractor;
 use App\Modules\OrderUnit\Domain\Interactor\Order\CreateOrderUnitInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use Exception;
 use Illuminate\Support\Collection;
+use Exception;
 
 class OrderUnitService
 {
@@ -15,10 +16,17 @@ class OrderUnitService
     public function __construct(
         public OrderUnitRepository $repOrder,
         public CreateOrderUnitInteractor $createOrderUnitInteractor,
+        public CreateOrderUnitHasTenderInteractor $сreateOrderUnitHasTenderInteractor,
     ) {}
 
     public function createOrderUnit(OrderUnitCreateDTO $dto) : ?OrderUnit
     {
+
+        if(!is_null($dto->orderUnitVO->lot_tender_id)){
+            //Если в VO существует ссылка на lot_tender_id - выбираем бизнес логику по созданию lot_tender_id
+            return $this->сreateOrderUnitHasTenderInteractor->execute($dto->orderUnitVO);
+        }
+
         return $this->createOrderUnitInteractor->execute($dto);
     }
 

@@ -41,6 +41,8 @@ return new class extends Migration
             $table->uuid('transport_id')->comment('Выбранный транспорта перевозчика')->nullable()
                 ->constrained('transports')->noActionOnDelete();
 
+            $table->uuid('lot_tender_id')->comment('Если заказ создатёся по бизнес-логики Тендера')->nullable()
+                ->constrained('lot_tenders')->noActionOnDelete();
 
 
 
@@ -49,10 +51,8 @@ return new class extends Migration
             $table->boolean('change_price')->default(false)->comment('Возможна изменения цены (торг)');
             $table->boolean('change_time')->default(false)->comment('Возможна Изменение времени');
 
-                //Нужно делать триггер (если адрессов или грузов больше 1, то устанавливать через триггер bool:true)
             $table->boolean('address_is_array')->default(false)->comment('Если у нас больше двух адрессов');
             $table->boolean('goods_is_array')->default(false)->comment('Если у заказа больше одного груза');
-
 
             $table->timestamps();
 

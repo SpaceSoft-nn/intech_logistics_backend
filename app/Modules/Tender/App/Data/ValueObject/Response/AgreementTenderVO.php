@@ -12,7 +12,7 @@ final readonly class AgreementTenderVO implements Arrayable
 
     public function __construct(
         public string $lot_tender_response_id,
-        public string $organization_tender_create_id,
+        public string $organization_contractor_id,
         public string $lot_tender_id,
     ) {}
 
@@ -20,14 +20,14 @@ final readonly class AgreementTenderVO implements Arrayable
     public static function make(
 
         string $lot_tender_response_id,
-        string $organization_tender_create_id,
+        string $organization_contractor_id,
         string $lot_tender_id,
 
     ) : self {
 
         return new self(
             lot_tender_response_id: $lot_tender_response_id,
-            organization_tender_create_id: $organization_tender_create_id,
+            organization_contractor_id: $organization_contractor_id,
             lot_tender_id: $lot_tender_id,
         );
 
@@ -38,7 +38,7 @@ final readonly class AgreementTenderVO implements Arrayable
     {
         return [
             "lot_tender_response_id" => $this->lot_tender_response_id,
-            "organization_tender_create_id" => $this->organization_tender_create_id,
+            "organization_contractor_id" => $this->organization_contractor_id,
             "lot_tender_id" => $this->lot_tender_id,
         ];
     }
@@ -48,7 +48,7 @@ final readonly class AgreementTenderVO implements Arrayable
 
         return self::make(
             lot_tender_response_id: Arr::get($data, 'lot_tender_response_id'),
-            organization_tender_create_id: Arr::get($data, 'organization_tender_create_id'),
+            organization_contractor_id: Arr::get($data, 'organization_contractor_id'),
             lot_tender_id: Arr::get($data, 'lot_tender_id'),
         );
 

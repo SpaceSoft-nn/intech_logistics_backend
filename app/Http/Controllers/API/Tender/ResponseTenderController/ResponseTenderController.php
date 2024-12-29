@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\API\Tender\ResponseTenderController;
 
 use App\Http\Controllers\Controller;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
+use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
 use App\Modules\Tender\App\Data\ValueObject\Response\AgreementTenderVO;
@@ -55,7 +58,7 @@ class ResponseTenderController extends Controller
 
         $agreementTenderVO = AgreementTenderVO::make(
             lot_tender_response_id: $lotTenderResponse->id,
-            organization_tender_create_id: $validated['organization_tender_create_id'] ?? null,
+            organization_contractor_id: $validated['organization_contractor_id'] ?? null,
             lot_tender_id: $lotTenderResponse->lot_tender_id,
         );
 
@@ -77,11 +80,24 @@ class ResponseTenderController extends Controller
         return response()->json(array_success(LotTenderResponseCollection::make($model), 'Return all lot tender Response.'), 200);
     }
 
+    //Двух-соторонне соглашения
     public function agreementTenderAccept(
         AgreementTenderAccept $agreementTenderAccept,
-        AgreementTenderService $agreementTenderSerivce
+        AgreementTenderService $agreementTenderSerivce,
+        OrderUnitService $orderUnitService,
     ) {
+
+        /** @var AgreementTenderAccept */
         $model = $agreementTenderSerivce->agreementTenderAccept($agreementTenderAccept);
+
+        if($model->tender_creater_bool && $model->contractor_bool)
+        {
+            $orderUnitService->createOrderUnit(
+                OrderUnitCreateDTO::make(
+
+                ),
+            );
+        }
 
         return $model ?
         response()->json(array_success(AgreementTenderAcceptResource::make($model), 'Successfully agreement tender accept.'), 200)

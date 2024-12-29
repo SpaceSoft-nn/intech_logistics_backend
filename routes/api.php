@@ -229,7 +229,7 @@ Route::prefix('/tenders')->group(function () {
         // Выбор "создателем тендера" - перевозчика на выполнение тендера
         Route::post('/{lotTenderResponse}/agreement-tender', [ResponseTenderController::class, 'agreementTender'])->whereUuid('lotTenderResponse');
 
-        //Подтврждения соглашения с двух сторон, о взятие тендера и работу со стороны перевозчика, и отдачи в работу со стороны создателя тендера
+        //Подтверждения соглашения с двух сторон, о взятие тендера и работу со стороны перевозчика, и отдачи в работу со стороны создателя тендера
         Route::post('/{lotTenderResponse}/agreement-tender-accept', [ResponseTenderController::class, 'agreementTenderAccept'])->whereUuid('lotTenderResponse');
 
 

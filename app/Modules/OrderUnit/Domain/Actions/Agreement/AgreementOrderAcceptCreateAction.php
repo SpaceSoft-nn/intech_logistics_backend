@@ -5,6 +5,8 @@ namespace App\Modules\OrderUnit\Domain\Actions\Agreement;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use Exception;
 
+use function App\Helpers\Mylog;
+
 class AgreementOrderAcceptCreateAction
 {
 
@@ -32,7 +34,10 @@ class AgreementOrderAcceptCreateAction
 
         } catch (\Throwable $th) {
 
-            throw new Exception('Ошибка в AgreementOrderAcceptCreateAction', 500);
+            $nameClass = self::class;
+
+            Mylog("Ошибка в {$nameClass} при создании записи: " . $th);
+            throw new Exception('Ошибка в классе: ' . $nameClass, 500);
 
         }
 

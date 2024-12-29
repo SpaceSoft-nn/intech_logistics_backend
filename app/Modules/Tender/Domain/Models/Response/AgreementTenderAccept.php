@@ -5,6 +5,7 @@ namespace App\Modules\Tender\Domain\Models\Response;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AgreementTenderAccept extends Model
 {
@@ -37,6 +38,11 @@ class AgreementTenderAccept extends Model
             "tender_creater_bool" => "boolean",
             "contractor_id" => "boolean",
         ];
+    }
+
+    protected function agreement_tender(): BelongsTo
+    {
+        return $this->belongsTo(AgreementTender::class, 'agreement_tender_id');
     }
 
 }

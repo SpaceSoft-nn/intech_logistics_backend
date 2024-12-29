@@ -37,6 +37,7 @@ class LinkCargoUnitToCargoGoodAction
             return true;
 
         } catch (\Throwable $th) {
+            
 
             Mylog($th, 'Ошибка при линковке связи многие:многие - LinkOrderUnitToCargoGoodAction');
             throw new \Exception('Ошибка в связывании LinkOrderUnitToCargoGoodAction', 500);

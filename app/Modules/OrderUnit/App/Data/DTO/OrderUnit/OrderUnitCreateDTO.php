@@ -13,14 +13,14 @@ final readonly class OrderUnitCreateDTO
 
     /**
      * @param OrderUnitVO $orderUnitVO
-     * @param OrderUnitAddressDTO $orderUnitAddressDTO
-     * @param CargoGoodVO[] $cargoGoodVO
+     * @param ?OrderUnitAddressDTO $orderUnitAddressDTO
+     * @param ?CargoGoodVO[] $cargoGoodVO
     */
     public function __construct(
 
         public OrderUnitVO $orderUnitVO,
-        public OrderUnitAddressDTO $orderUnitAddressDTO,
-        public array $cargoGoodVO,
+        public ?OrderUnitAddressDTO $orderUnitAddressDTO,
+        public ?array $cargoGoodVO,
 
     ) {
 
@@ -36,8 +36,8 @@ final readonly class OrderUnitCreateDTO
     public static function make(
 
         OrderUnitVO $orderUnitVO,
-        OrderUnitAddressDTO $orderUnitAddressDTO,
-        ?array $cargoGoodVO,
+        ?OrderUnitAddressDTO $orderUnitAddressDTO = null,
+        ?array $cargoGoodVO = null,
 
     ) : self {
 

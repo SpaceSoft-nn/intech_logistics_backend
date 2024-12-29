@@ -215,7 +215,7 @@ namespace App\Http\Controllers\Swagger\API;
 *     @OA\RequestBody(
 *         required=true,
 *         @OA\JsonContent(
-*             @OA\Property(property="organization_tender_create_id", type="string", format="uuid", description="UUID организации создателя тендера", example="123e4567-e89b-12d3-a456-426614174000")
+*             @OA\Property(property="organization_contractor_id", type="string", format="uuid", description="UUID организации пордяичка откликнувшиеся на тендер", example="123e4567-e89b-12d3-a456-426614174000")
 *         )
 *     ),
 *     @OA\Response(

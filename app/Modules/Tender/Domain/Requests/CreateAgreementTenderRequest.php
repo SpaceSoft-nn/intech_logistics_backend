@@ -20,7 +20,7 @@ class CreateAgreementTenderRequest extends ApiRequest
         return [
 
             //Организация создателя тендера
-            'organization_tender_create_id' => ['required' , 'uuid', 'exists:organizations,id'], #TODO Брать потом из токена
+            'organization_contractor_id' => ['required' , 'uuid', 'exists:organizations,id'], #TODO Брать потом из токена
 
         ];
 

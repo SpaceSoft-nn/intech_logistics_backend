@@ -90,15 +90,6 @@ class ResponseTenderController extends Controller
         /** @var AgreementTenderAccept */
         $model = $agreementTenderSerivce->agreementTenderAccept($agreementTenderAccept);
 
-        if($model->tender_creater_bool && $model->contractor_bool)
-        {
-            $orderUnitService->createOrderUnit(
-                OrderUnitCreateDTO::make(
-
-                ),
-            );
-        }
-
         return $model ?
         response()->json(array_success(AgreementTenderAcceptResource::make($model), 'Successfully agreement tender accept.'), 200)
         :

@@ -1,5 +1,5 @@
 <?php
-namespace App\Modules\Auth\Presentation\HTTP\Controllers;
+namespace App\Modules\Auth\Presentation\Http\Controllers;
 
 use App\Modules\Auth\App\Data\DTO\UserAttemptDTO;
 use App\Modules\Auth\Domain\Traits\TraitController;

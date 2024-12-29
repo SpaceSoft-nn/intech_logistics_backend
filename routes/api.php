@@ -18,7 +18,7 @@ use App\Http\Controllers\API\Test\TestController;
 use App\Http\Controllers\API\Transfer\TransferContoller;
 use App\Http\Controllers\API\Transport\TransportController;
 use App\Http\Controllers\API\User\UserController;
-use App\Modules\Auth\Presentation\HTTP\Controllers\AuthController;
+use App\Modules\Auth\Presentation\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -39,12 +39,6 @@ Route::prefix('user')->controller(AuthController::class)->group(function () {
     Route::post('/', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
 
 });
-
-Route::prefix('auth')->controller(AuthController::class)->group(function () {
-    Route::post('/me', [AuthController:: class, 'user'])->middleware(['auth:sanctum']);
-});
-
-
 
 
 //routing аутентификации по токену

@@ -4,58 +4,7 @@ namespace App\Modules\Auth\Presentation\Http\Controllers\Swagger\Jwt;
 use App\Modules\Auth\Presentation\Http\Controllers\Controller;
 
 /**
- * @OA\Post(
- *
- *      path="/api/auth/login",
- *      summary="вернуть токен для user по email/phone и password",
- *      tags={"Auth JWT"},
- *
- *      @OA\RequestBody(
- *          required=true,
- *          @OA\JsonContent(
- *              allOf={
- *                 @OA\Schema(
- *                      @OA\Property(property="email", type="string", example="test@gmail.com"),
- *                      @OA\Property(property="phone", type="number", example="+79200264425"),
- *                      @OA\Property(property="password", type="string", example="Pas123!"),
- *                  )
- *              },
- *
- *          )
- *      ),
- *
- *      @OA\Response(
- *          response=200,
- *          description="Ok",
- *          @OA\JsonContent(
- *              @OA\Property(property="data", type="object",
- *                  @OA\Property(property="access_token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MTQwMDMwNTcsImV4cCI6MTcxNDAwNjY1NywibmJmIjoxNzE0MDAzMDU3LCJqdGkiOiJaampTNWRmOHZtdHNZbWJ0Iiwic3ViIjoiMSIsInBydiI6IjRhNmUyNTJkNDljYzM1ZjlhNmQyODk3ZmRlNGY5MzE0NmU3YzgwMmMifQ.6J4NAHBKlRIG5ZAtgIwXHuToFnG1mCCXwgxrf6rL9DY"),
- *                  @OA\Property(property="token_type", type="number", example="Bearer"),
- *                  @OA\Property(property="expires_in", type="integer", example="3600"),
- *              ),
- *              @OA\Property(property="message", type="string", example="Successfully login."),
- *          ),
- *      ),
- *
- *      @OA\Response(
- *          response=404,
- *          description="Not Found - Пользователь с указанными данными не найден.",
- *          @OA\JsonContent(
- *               @OA\Property(property="message_error", type="string", example="Not Found - Пользователь с указанными данными не найден"),
- *               @OA\Property(property="code", type="integer", example="404"),
- *          ),
- *      ),
- *
- *      @OA\Response(
- *          response=500,
- *          description="Общая ошибка сервера.",
- *          @OA\JsonContent(
- *              @OA\Property(property="message_error", type="string", example="Общая ошибка сервера."),
- *              @OA\Property(property="code", type="integer", example="500"),
- *          ),
- *      ),
- * ),
- *
+ * 
  * @OA\Post(
  *
  *      path="/api/auth/me",

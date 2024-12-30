@@ -77,6 +77,7 @@ Route::prefix('/orders')->group(function () {
         //Вернуть 1 запись по uuid
         Route::get('/{orderUnit}', [OrderUnitController::class, 'show'])->whereUuid('orderUnit');
 
+        //Создать заказ
         Route::post('/', [OrderUnitController::class, 'store']);
 
             //Поиск цены от параметров Order
@@ -229,8 +230,8 @@ Route::prefix('/tenders')->group(function () {
         //Получить все заказы по тендеру
         Route::get('/{lotTender}/orders', [LotTenderController::class, 'getAllOrderFromTender'])->whereUuid('lotTender');
 
-        //Дополнения заказа по тендеру
-        Route::post('/{lotTender}/orders', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender');
+        //Добавить к заказу дополнительную информацию
+        Route::patch('/{lotTender}/orders/{orderUnit}', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender', 'orderUnit');
 
     }
 

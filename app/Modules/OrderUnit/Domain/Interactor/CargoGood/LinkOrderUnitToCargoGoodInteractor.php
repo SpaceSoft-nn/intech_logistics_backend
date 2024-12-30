@@ -47,6 +47,7 @@ final class LinkOrderUnitToCargoGoodInteractor
     {
 
         #TODO Нужно использовать паттерн цепочка обязаностей (handler)
+        /** @var OrderUnit */
         $order = DB::transaction(function($pdo) use($order, $cargoGoodsVO)  {
 
             //Высчитыаем общий объём всех грузов для Order

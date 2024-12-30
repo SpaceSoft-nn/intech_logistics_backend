@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\API\Tender\LotTenderController;
 
 use App\Http\Controllers\Controller;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
+use App\Modules\Tender\App\Data\DTO\AddInfoOrderByTenderDTO;
 use App\Modules\Tender\App\Data\DTO\CreateLotTenderServiceDTO;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
 use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
 use App\Modules\Tender\Domain\Models\LotTender;
+use App\Modules\Tender\Domain\Requests\AddInfoOrderByTenderRequest;
 use App\Modules\Tender\Domain\Requests\CreateLotTenderRequest;
 use App\Modules\Tender\Domain\Requests\CreateOrderByRequest;
 use App\Modules\Tender\Domain\Resources\LotTenderCollection;
@@ -88,6 +92,37 @@ class LotTenderController extends Controller
     public function getAllOrderFromTender(LotTender $lotTender)
     {
         return response()->json(array_success(OrderUnitCollection::make($lotTender->order_unit), 'Return all order unit by lot tender.'), 200);
+    }
+
+    public function addInfoOrderByTender(
+        LotTender $lotTender,
+        OrderUnit $orderUnit,
+        AddInfoOrderByTenderRequest $request,
+        TenderService $service,
+    ) {
+
+        #TODO LotTender $lotTender, - проверять что lot относится к пользователю + order
+
+        /**
+        * @var ?CargoGoodVO[]
+        */
+        $cargoGoodVO = $request->createCargoGoodVO();
+
+        /**
+        * @var OrderUnitAddressDTO
+        */
+        $orderUnitAddressDTO = $request->createOrderUnitAddressDTO();
+
+
+        $model = $service->addInfoOrderByTender(
+            AddInfoOrderByTenderDTO::make(
+                orderUnit: $orderUnit,
+                orderUnitAddressDTO: $orderUnitAddressDTO,
+                cargoGoodVO: $cargoGoodVO,
+            )
+        );
+
+        return response()->json(array_success(OrderUnitResource::make($model), 'Successful update order unit By tender.'), 200);
     }
 
 

@@ -244,6 +244,148 @@ namespace App\Http\Controllers\Swagger\API;
 *     )
 * ),
 *
+* @OA\Post(
+*     path="/api/tenders/{agreementTenderAccept}/agreement-tender-accept",
+*     summary="Подтверждение соглашения с двух сторон + создание заказов по Tender при двух стороннем соглашении",
+*     tags={"Tender"},
+*     @OA\Parameter(
+*         name="agreementTenderAccept",
+*         in="path",
+*         required=true,
+*         description="UUID ресурс соглашения тендера с двух сторон",
+*         @OA\Schema(type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000")
+*     ),
+*     @OA\Response(
+*         response=200,
+*         description="Успешное подтверждение соглашения тендера.",
+*         @OA\JsonContent(
+*             @OA\Property(property="data", ref="#/components/schemas/AgreementTenderAcceptResource"),
+*             @OA\Property(property="message", type="string", example="Agreement tender accepted.")
+*         )
+*     ),
+*     @OA\Response(
+*         response=400,
+*         description="Ошибка при подтверждении соглашения тендера.",
+*         @OA\JsonContent(
+*             @OA\Property(property="message_error", type="string", example="Failed to accept agreement tender."),
+*             @OA\Property(property="code", type="integer", example=400)
+*         )
+*     ),
+*     @OA\Response(
+*         response=500,
+*         description="Общая ошибка сервера.",
+*         @OA\JsonContent(
+*             @OA\Property(property="message_error", type="string", example="Error server"),
+*             @OA\Property(property="code", type="integer", example=500)
+*         )
+*     )
+* ),
+*
+*@OA\Get(
+*     path="/api/tenders/{lotTender}/orders",
+*     summary="Получить все заказы по тендеру",
+*     tags={"Tender"},
+*     @OA\Parameter(
+*         name="lotTender",
+*         in="path",
+*         required=true,
+*         description="UUID лота тендера",
+*         @OA\Schema(type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000")
+*     ),
+*     @OA\Response(
+*         response=200,
+*         description="Успешный возврат всех заказов по тендеру.",
+*         @OA\JsonContent(
+*             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/OrderUnitResource")),
+*             @OA\Property(property="message", type="string", example="Return all orders for tender.")
+*         )
+*     ),
+*     @OA\Response(
+*         response=500,
+*         description="Общая ошибка сервера.",
+*         @OA\JsonContent(
+*             @OA\Property(property="message_error", type="string", example="Error server"),
+*             @OA\Property(property="code", type="integer", example=500)
+*         )
+*     )
+* ),
+*
+* @OA\Patch(
+*     path="/api/tenders/{lotTender}/orders/{orderUnit}",
+*     summary="Добавить к заказу *важную дополнительную информацию",
+*     tags={"Tender"},
+*     @OA\Parameter(
+*         name="lotTender",
+*         in="path",
+*         required=true,
+*         description="UUID лота тендера",
+*         @OA\Schema(type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000")
+*     ),
+*     @OA\Parameter(
+*         name="orderUnit",
+*         in="path",
+*         required=true,
+*         description="UUID заказа",
+*         @OA\Schema(type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000")
+*     ),
+*     @OA\RequestBody(
+*         required=true,
+*         @OA\JsonContent(
+*             @OA\Property(property="start_address_id", type="string", format="uuid", description="UUID адреса начала", example="123e4567-e89b-12d3-a456-426614174000"),
+*             @OA\Property(property="end_address_id", type="string", format="uuid", description="UUID адреса окончания", example="123e4567-e89b-12d3-a456-426614174000"),
+*             @OA\Property(property="start_date_delivery", type="string", format="date", description="Дата начала доставки", example="2023-10-01"),
+*             @OA\Property(property="end_date_delivery", type="string", format="date", description="Дата окончания доставки", example="2023-10-10"),
+*             @OA\Property(
+*                 property="goods_array",
+*                 type="array",
+*                 description="Массив грузов",
+*                 @OA\Items(
+*                     @OA\Property(property="name_value", type="string", description="Название груза", example="Товар 1"),
+*                     @OA\Property(property="product_type", type="string", description="Тип продукта", example="Тип 1"),
+*                     @OA\Property(property="type_pallet", type="string", description="Тип паллеты", example="Тип 1"),
+*                     @OA\Property(property="cargo_units_count", type="integer", description="Количество единиц груза", example=10),
+*                     @OA\Property(property="body_volume", type="number", format="float", description="Объем кузова", example=50.0),
+*                     @OA\Property(property="description", type="string", description="Описание груза", example="Описание груза")
+*                 )
+*             ),
+*             @OA\Property(
+*                 property="address_array",
+*                 type="array",
+*                 description="Массив адресов",
+*                 @OA\Items(
+*                     @OA\Property(property="id", type="string", format="uuid", description="UUID адреса", example="123e4567-e89b-12d3-a456-426614174000"),
+*                     @OA\Property(property="date", type="string", format="date", description="Дата", example="2023-10-01"),
+*                     @OA\Property(property="type", type="string", description="Тип адреса", example="Тип 1")
+*                 )
+*             )
+*         )
+*     ),
+*     @OA\Response(
+*         response=200,
+*         description="Успешное добавление дополнительной информации к заказу.",
+*         @OA\JsonContent(
+*             @OA\Property(property="data", ref="#/components/schemas/OrderUnitResource"),
+*             @OA\Property(property="message", type="string", example="Additional information added to order.")
+*         )
+*     ),
+*     @OA\Response(
+*         response=400,
+*         description="Ошибка при добавлении дополнительной информации к заказу.",
+*         @OA\JsonContent(
+*             @OA\Property(property="message_error", type="string", example="Failed to add additional information to order."),
+*             @OA\Property(property="code", type="integer", example=400)
+*         )
+*     ),
+*     @OA\Response(
+*         response=500,
+*         description="Общая ошибка сервера.",
+*         @OA\JsonContent(
+*             @OA\Property(property="message_error", type="string", example="Error server"),
+*             @OA\Property(property="code", type="integer", example=500)
+*         )
+*     )
+* )
+*
 *
 *
 *

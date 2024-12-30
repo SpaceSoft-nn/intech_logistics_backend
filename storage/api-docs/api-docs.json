@@ -4518,8 +4518,8 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "organization_tender_create_id": {
-                                        "description": "UUID организации создателя тендера",
+                                    "organization_contractor_id": {
+                                        "description": "UUID организации пордяичка откликнувшиеся на тендер",
                                         "type": "string",
                                         "format": "uuid",
                                         "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -4559,6 +4559,351 @@
                                         "message_error": {
                                             "type": "string",
                                             "example": "Failed to create agreement tender."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tenders/{agreementTenderAccept}/agreement-tender-accept": {
+            "post": {
+                "tags": [
+                    "Tender"
+                ],
+                "summary": "Подтверждение соглашения с двух сторон + создание заказов по Tender при двух стороннем соглашении",
+                "operationId": "3a90077a20000848aec28686f4220baa",
+                "parameters": [
+                    {
+                        "name": "agreementTenderAccept",
+                        "in": "path",
+                        "description": "UUID ресурс соглашения тендера с двух сторон",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешное подтверждение соглашения тендера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/AgreementTenderAcceptResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Agreement tender accepted."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка при подтверждении соглашения тендера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Failed to accept agreement tender."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tenders/{lotTender}/orders": {
+            "get": {
+                "tags": [
+                    "Tender"
+                ],
+                "summary": "Получить все заказы по тендеру",
+                "operationId": "ce6522202560a11a3eaa705215aef63c",
+                "parameters": [
+                    {
+                        "name": "lotTender",
+                        "in": "path",
+                        "description": "UUID лота тендера",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат всех заказов по тендеру.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/OrderUnitResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return all orders for tender."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tenders/{lotTender}/orders/{orderUnit}": {
+            "patch": {
+                "tags": [
+                    "Tender"
+                ],
+                "summary": "Добавить к заказу *важную дополнительную информацию",
+                "operationId": "051d2d23085669bea8f53ee9032f334e",
+                "parameters": [
+                    {
+                        "name": "lotTender",
+                        "in": "path",
+                        "description": "UUID лота тендера",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    },
+                    {
+                        "name": "orderUnit",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "start_address_id": {
+                                        "description": "UUID адреса начала",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "end_address_id": {
+                                        "description": "UUID адреса окончания",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "start_date_delivery": {
+                                        "description": "Дата начала доставки",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-10-01"
+                                    },
+                                    "end_date_delivery": {
+                                        "description": "Дата окончания доставки",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-10-10"
+                                    },
+                                    "goods_array": {
+                                        "description": "Массив грузов",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "name_value": {
+                                                    "description": "Название груза",
+                                                    "type": "string",
+                                                    "example": "Товар 1"
+                                                },
+                                                "product_type": {
+                                                    "description": "Тип продукта",
+                                                    "type": "string",
+                                                    "example": "Тип 1"
+                                                },
+                                                "type_pallet": {
+                                                    "description": "Тип паллеты",
+                                                    "type": "string",
+                                                    "example": "Тип 1"
+                                                },
+                                                "cargo_units_count": {
+                                                    "description": "Количество единиц груза",
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "body_volume": {
+                                                    "description": "Объем кузова",
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 50
+                                                },
+                                                "description": {
+                                                    "description": "Описание груза",
+                                                    "type": "string",
+                                                    "example": "Описание груза"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "address_array": {
+                                        "description": "Массив адресов",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "UUID адреса",
+                                                    "type": "string",
+                                                    "format": "uuid",
+                                                    "example": "123e4567-e89b-12d3-a456-426614174000"
+                                                },
+                                                "date": {
+                                                    "description": "Дата",
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2023-10-01"
+                                                },
+                                                "type": {
+                                                    "description": "Тип адреса",
+                                                    "type": "string",
+                                                    "example": "Тип 1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное добавление дополнительной информации к заказу.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OrderUnitResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Additional information added to order."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка при добавлении дополнительной информации к заказу.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Failed to add additional information to order."
                                         },
                                         "code": {
                                             "type": "integer",

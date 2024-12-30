@@ -44,7 +44,7 @@ enum StatusOrderUnitEnum : string
             "completed_and_wait_payment" => StatusOrderUnitEnum::completed_and_wait_payment,
             "cancelled" => StatusOrderUnitEnum::cancelled,
             null => null,
-            default => throw new Exception('Ошибка преобразование Enum StatusOrderUnitEnum', 500),
+            default => self::stringValueCaseToObject($value),
 
         };
     }
@@ -61,6 +61,23 @@ enum StatusOrderUnitEnum : string
             StatusOrderUnitEnum::pre_order => "pre_order",
             StatusOrderUnitEnum::completed_and_wait_payment => "completed_and_wait_payment",
             StatusOrderUnitEnum::cancelled => "cancelled",
+            null => null,
+            default => throw new Exception('Ошибка преобразование Enum StatusOrderUnitEnum', 500),
+        };
+    }
+
+    public static function stringValueCaseToObject(string $value) : self
+    {
+        return match ($value)
+        {
+            "Черновик" => StatusOrderUnitEnum::draft,
+            "Сбор предложений" => StatusOrderUnitEnum::published,
+            "Закрыт" => StatusOrderUnitEnum::private,
+            "Принят" => StatusOrderUnitEnum::accepted,
+            "В работе" => StatusOrderUnitEnum::in_work,
+            "Предзаказ" => StatusOrderUnitEnum::pre_order,
+            "Выполнен и ожидает оплаты" => StatusOrderUnitEnum::completed_and_wait_payment,
+            "Отменен/Отозван" => StatusOrderUnitEnum::cancelled,
             null => null,
             default => throw new Exception('Ошибка преобразование Enum StatusOrderUnitEnum', 500),
         };

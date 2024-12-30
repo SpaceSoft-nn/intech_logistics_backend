@@ -84,7 +84,6 @@ class ResponseTenderController extends Controller
     public function agreementTenderAccept(
         AgreementTenderAccept $agreementTenderAccept,
         AgreementTenderService $agreementTenderSerivce,
-        OrderUnitService $orderUnitService,
     ) {
 
         /** @var AgreementTenderAccept */

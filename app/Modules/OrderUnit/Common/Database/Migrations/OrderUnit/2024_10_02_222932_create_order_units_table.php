@@ -41,9 +41,6 @@ return new class extends Migration
             $table->uuid('transport_id')->comment('Выбранный транспорта перевозчика')->nullable()
                 ->constrained('transports')->noActionOnDelete();
 
-            $table->uuid('lot_tender_id')->comment('Если заказ создатёся по бизнес-логики Тендера')->nullable()
-                ->constrained('lot_tenders')->noActionOnDelete();
-
 
 
                 //служебнеы поля

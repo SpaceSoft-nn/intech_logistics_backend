@@ -14,7 +14,8 @@ return new class extends Migration
     {
         Schema::table('order_units', function (Blueprint $table) {
 
-            $table->foreignUuid('lot_tender_id')->nullable()
+
+            $table->foreignUuid('lot_tender_id')->comment('Если заказ создатёся по бизнес-логики Тендера')->nullable()
                 ->constrained('lot_tenders')->noActionOnDelete();
 
         });

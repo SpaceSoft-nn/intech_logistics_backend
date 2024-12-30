@@ -24,6 +24,16 @@ enum TypeLoadingTruckMethod : string
             "ftl" => TypeLoadingTruckMethod::ftl,
             "ltl" => TypeLoadingTruckMethod::ltl,
             "custom" => TypeLoadingTruckMethod::custom,
+            default => self::stringValueCaseToObject($value),
+        };
+    }
+
+    public static function stringValueCaseToObject(string $value) : self
+    {
+        return match ($value) {
+            "Полная Загрузка Грузовика" => TypeLoadingTruckMethod::ftl,
+            "Частичная загрузка грузовика" => TypeLoadingTruckMethod::ltl,
+            "Своя Оплата" => TypeLoadingTruckMethod::custom,
             default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
         };
     }

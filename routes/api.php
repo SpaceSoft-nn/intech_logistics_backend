@@ -224,9 +224,10 @@ Route::prefix('/tenders')->group(function () {
         Route::post('/{lotTenderResponse}/agreement-tender', [ResponseTenderController::class, 'agreementTender'])->whereUuid('lotTenderResponse');
 
         //Подтверждения соглашения с двух сторон, о взятие тендера и работу со стороны перевозчика, и отдачи в работу со стороны создателя тендера
-        Route::post('/{lotTenderResponse}/agreement-tender-accept', [ResponseTenderController::class, 'agreementTenderAccept'])->whereUuid('lotTenderResponse');
+        Route::post('/{agreementTenderAccept}/agreement-tender-accept', [ResponseTenderController::class, 'agreementTenderAccept'])->whereUuid('agreementTenderAccept');
 
-
+        //Получить все заказы по тендеру
+        Route::get('/{lotTender}/orders', [LotTenderController::class, 'getAllOrderFromTender'])->whereUuid('lotTender');
 
         //Дополнения заказа по тендеру
         Route::post('/{lotTender}/orders', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender');

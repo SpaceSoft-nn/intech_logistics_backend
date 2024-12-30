@@ -46,7 +46,6 @@ class CreateOrderUnitHasTenderInteractor
                 /** @var OrderUnit */
                 return $this->createOrderUnit($vo);
 
-
             });
 
         } catch (\Throwable $th) {

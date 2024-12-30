@@ -24,12 +24,15 @@ final readonly class OrderUnitCreateDTO
 
     ) {
 
-        foreach ($cargoGoodVO as $cargo) {
-            if (!$cargo instanceof CargoGoodVO) {
-                Mylog("Ошибка в OrderUnitCreateDTO в переменной $cargoGoodVO, получен не правильный тип в массиве");
-                throw new InvalidArgumentException('Ошибка в OrderUnitCreateDTO в переменной $cargoGoodVO', 500);
+        if($cargoGoodVO){
+            foreach ($cargoGoodVO as $cargo) {
+                if (!$cargo instanceof CargoGoodVO) {
+                    Mylog("Ошибка в OrderUnitCreateDTO в переменной $cargoGoodVO, получен не правильный тип в массиве");
+                    throw new InvalidArgumentException('Ошибка в OrderUnitCreateDTO в переменной $cargoGoodVO', 500);
+                }
             }
         }
+
 
     }
 

@@ -13,13 +13,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class OrderUnitResource extends JsonResource
 {
 
-    public function __construct(
-        public OrderUnitRepository $rep
-    ) { }
-
-
     public function toArray(Request $request): array
     {
+        #TODO продумать как это можно переделать?
+        $rep = app(OrderUnitRepository::class);
+
+        #TODO Делается из-за того что я использовал триггеры в бд и мне нужно сохранять состояние правильно в bool значение, надо убрать триггеры
         //Обновляем, что бы получить актуальные данные из бд
         $this->refresh();
 
@@ -56,10 +55,13 @@ class OrderUnitResource extends JsonResource
             //
 
             "order_status" => $this->actual_status->status,
-            "transportation_status" => $this->rep->getActualTransportationStatus($this->id), //при помощи репозитория получаем актуальный статус
 
             "user_id" => UserResource::make($this->user),
             "organization_id" => OrganizationResource::make($this->organization),
+
+            //Tender
+            "lot_tender_id" => $this->lot_tender,
+            //
 
         ];
     }

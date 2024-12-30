@@ -9,6 +9,7 @@ use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
 use App\Modules\OrderUnit\Domain\Models\Status\ChainTransportationStatus;
 use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -43,11 +44,11 @@ class OrderUnit extends Model
 
         "product_type",
         "type_load_truck",
-        "order_status",
 
         "user_id",
         "organization_id",
         "contractor_id",
+        "lot_tender_id",
 
         //bool
         "add_load_space",
@@ -128,10 +129,6 @@ class OrderUnit extends Model
         return $this->belongsToMany(CargoGood::class, 'order_unit_cargo_good', 'order_unit_id' , 'cargo_good_id');
     }
 
-    public function chain_transportation_status(): HasMany
-    {
-        return $this->hasMany(ChainTransportationStatus::class, 'order_unit_id', 'id');
-    }
 
     public function mgx(): BelongsTo
     {
@@ -153,5 +150,9 @@ class OrderUnit extends Model
         return $this->belongsTo(Organization::class, 'contractor_id');
     }
 
+    public function lot_tender(): BelongsTo
+    {
+        return $this->belongsTo(LotTender::class, 'lot_tender_id', 'id');
+    }
 
 }

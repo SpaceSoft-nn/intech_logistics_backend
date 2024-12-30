@@ -159,29 +159,6 @@ class OrderUnitRepository extends CoreRepository
         return $this->query()->where('organization_id', $uuid)->get();
     }
 
-    /**
-     * Вернуть актуальный статус транспортировки у Заказа
-     * @param string $uuid
-     *
-     * @return ?ChainTransportationStatus
-     */
-    public function getActualTransportationStatus(string $uuid) : ?ChainTransportationStatus
-    {
-
-        $collection = $this->query()->find($uuid)->chain_transportation_status->where('active_status', true);
-
-        if($collection->count() >= 2) {
-
-            Mylog('Ошибка в репозитории OrderUnitRepository, chain_transportation_status -
-            прислал нам две записи где есть true, такого не может быть, может быть только 1 акутальная запись:');
-
-            throw new Exception('Ошибка в репозитории, chain_transportation_status
-            прислал нам две записи где есть true, такого не может быть, может быть только 1 акутальная запись', 500);
-
-        }
-
-        return $collection->first();
-    }
 
     /**
      * #TODO Может быть баг, когда у нас может быть несколько заказов в работе у одного транспорта, нужно делать проверки, first -

@@ -24,9 +24,8 @@ class OrderUnitCreateAction
      */
     private static function run(OrderUnitVO $vo) : OrderUnit
     {
-
         try {
-
+            
             $order = OrderUnit::create($vo->toArrayNotNull());
 
             #TODO Мы здесь создаём статус, нужно ли эту логику переносить как триггер?

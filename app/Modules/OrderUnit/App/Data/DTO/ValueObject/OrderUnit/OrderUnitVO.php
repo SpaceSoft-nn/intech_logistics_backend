@@ -25,7 +25,7 @@ class OrderUnitVO implements Arrayable
 
         public ?string $description,
 
-        public readonly string $organization_id,
+        public ?string $organization_id,
         public ?string $user_id,
         public ?string $contractor_id,
 
@@ -38,21 +38,22 @@ class OrderUnitVO implements Arrayable
 
     public static function make(
 
-        ?float $body_volume,
         string $order_total,
         string $end_date_order,
 
         string $type_load_truck,
         string $type_transport_weight,
 
+        bool $add_load_space,
+
+        ?float $body_volume = null,
         ?string $description = null,
         ?string $order_status = null,
 
         ?string $user_id = null,
         ?string $contractor_id = null,
-        ?string $organization_id,
+        ?string $organization_id = null,
 
-        bool $add_load_space,
         ?bool $change_price = null,
         ?bool $change_time = null,
         ?string $lot_tender_id = null,
@@ -183,7 +184,7 @@ class OrderUnitVO implements Arrayable
             "add_load_space" => $this->add_load_space,
             "change_price" => $this->change_price,
             "change_time" => $this->change_time,
-            "lot_tender_id "=> $this->lot_tender_id,
+            "lot_tender_id"=> $this->lot_tender_id,
 
         ];
     }

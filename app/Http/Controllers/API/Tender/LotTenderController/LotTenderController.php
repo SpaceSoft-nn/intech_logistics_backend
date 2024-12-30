@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\Tender\LotTenderController;
 
 use App\Http\Controllers\Controller;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
 use App\Modules\Tender\App\Data\DTO\CreateLotTenderServiceDTO;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
 use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
@@ -82,12 +84,11 @@ class LotTenderController extends Controller
         }
     }
 
-    public function addInfoOrderByTender(
-        LotTender $lotTender,
-        CreateOrderByRequest $request,
-    ) {
-
+    //получить все заказы по тендеру
+    public function getAllOrderFromTender(LotTender $lotTender)
+    {
+        return response()->json(array_success(OrderUnitCollection::make($lotTender->order_unit), 'Return all order unit by lot tender.'), 200);
     }
 
-    
+
 }

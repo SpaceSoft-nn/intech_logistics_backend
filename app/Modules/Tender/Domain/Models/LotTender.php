@@ -4,9 +4,11 @@ namespace App\Modules\Tender\Domain\Models;
 
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -65,5 +67,9 @@ class LotTender extends Model
     public function specifica_date_period(): HasMany
     {
         return $this->hasMany(SpecificalDatePeriod::class, 'lot_tender_id');
+    }
+    public function order_unit(): HasMany
+    {
+        return $this->hasMany(OrderUnit::class, 'lot_tender_id');
     }
 }

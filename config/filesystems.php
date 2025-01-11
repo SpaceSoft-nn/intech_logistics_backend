@@ -60,7 +60,7 @@ return [
         'tender_documents' => [
             'driver' => 'local',
             'root' => storage_path('app/public/files/tenders/documents'),
-            'url' => env('APP_URL') . '/storage/files/tender/documents',
+            'url' => env('APP_URL') . '/storage/files/tenders/documents',
             'visibility' => 'public',
         ],
 

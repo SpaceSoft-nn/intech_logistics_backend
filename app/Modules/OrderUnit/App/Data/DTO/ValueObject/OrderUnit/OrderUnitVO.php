@@ -184,7 +184,7 @@ class OrderUnitVO implements Arrayable
             "add_load_space" => $this->add_load_space,
             "change_price" => $this->change_price,
             "change_time" => $this->change_time,
-            "lot_tender_id"=> $this->lot_tender_id,
+            "lot_tender_id" => $this->lot_tender_id,
 
         ];
     }
@@ -207,7 +207,7 @@ class OrderUnitVO implements Arrayable
 
         $change_price = Arr::get($data, "change_price", null);
         $change_time = Arr::get($data, "change_time", null);
-        $lot_tender_id = Arr::get($data, "lot_tender_id" ,'null');
+        $lot_tender_id = Arr::get($data, "lot_tender_id" , null);
 
         return static::make(
             end_date_order: $end_date_order,

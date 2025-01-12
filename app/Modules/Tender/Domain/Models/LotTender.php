@@ -5,6 +5,8 @@ namespace App\Modules\Tender\Domain\Models;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
+use App\Modules\Tender\App\Data\Enums\TypeTenderEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -52,8 +54,13 @@ class LotTender extends Model
         return [
             "price_for_km" => 'double',
             "body_volume_for_order" => 'double',
+
             "type_transport_weight" => TypeTransportWeight::class,
             "type_load_truck" => TypeLoadingTruckMethod::class,
+            "status_tender" => StatusTenderEnum::class,
+            "type_tender" => TypeTenderEnum::class,
+
+
             "date_start" => 'date',
         ];
     }

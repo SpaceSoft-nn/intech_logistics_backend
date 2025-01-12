@@ -6,6 +6,7 @@ use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
+use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
 use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Models\Response\AgreementTender;
 use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
@@ -44,10 +45,13 @@ final class AgreementTenderAcceptInteractor
             /** @var AgreementTender */
             $agreement_tender = $agreementTenderAccept->agreement_tender;
 
-            /** @var LotTender */
-            $lot_tender = $agreement_tender->lot_tender;
 
-            DB::transaction(function () use ($agreement_tender, $lot_tender) {
+
+            DB::transaction(function () use ($agreement_tender) {
+
+                /** @var LotTender */
+                $lot_tender = $agreement_tender->lot_tender()->lockForUpdate()->first();
+
                 //если есть конкретно указаные даты.
                 if($lot_tender->specifica_date_period)
                 {
@@ -125,10 +129,10 @@ final class AgreementTenderAcceptInteractor
                         dto: OrderUnitCreateDTO::make(orderUnitVO: $orderUnitVO)
                     );
 
-                    dd($order_unit);
-
-                    $array[] =  $order_unit;
                 }
+
+                $lot_tender->status_tender = StatusTenderEnum::in_work; #TODO Решить потом какой статус ставить?
+                $lot_tender->save();
             });
 
         }

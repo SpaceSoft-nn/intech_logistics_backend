@@ -61,7 +61,6 @@ class LotTender extends Model
             "status_tender" => StatusTenderEnum::class,
             "type_tender" => TypeTenderEnum::class,
 
-
             "date_start" => 'date',
         ];
     }

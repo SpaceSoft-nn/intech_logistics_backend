@@ -15,6 +15,8 @@ namespace App\Http\Controllers\Swagger\API;
 *             @OA\Property(property="body_volume_for_order", type="number", format="float", description="Объем кузова для заказа", example=50.0),
 *             @OA\Property(property="type_transport_weight", type="string", description="**Тип транспортировки по габаритам. Обязательное поле.** small: 1.5-3 тонны, medium: 5 - 10 тонн, large: 10 - 20 тонн, extraLarge: 20 - 40 тонн, superSize: Более 40 тонн", enum={"small", "medium", "large", "extraLarge", "superSize"}, example="small"),
 *             @OA\Property(property="type_load_truck", type="string", description="**Тип загрузки грузовика. Обязательное поле. Возможные значения: ftl, ltl, custom.**", enum={"ftl", "ltl", "custom"}, example="ftl"),
+*             @OA\Property(property="status_tender", type="string", description="**Статус Тендера: червнок, в работе и т.д**", enum={"draft", "in_work", "accepted"}, example="accepted"),
+*             @OA\Property(property="type_tender", type="string", description="**Тип Тендера**", enum={"periodic", "single"}, example="periodic"),
 *             @OA\Property(property="date_start", type="string", format="date", description="Дата начала", example="2023-10-01"),
 *             @OA\Property(property="organization_id", type="string", format="uuid", description="UUID организации", example="123e4567-e89b-12d3-a456-426614174000"),
 *             @OA\Property(property="period", type="integer", description="Период", example=30),

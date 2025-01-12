@@ -461,6 +461,8 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="body_volume_for_order", type="number", format="float", description="Объем кузова для заказа"),
 *     @OA\Property(property="type_transport_weight", type="string", description="Тип веса транспорта"),
 *     @OA\Property(property="type_load_truck", type="string", description="Тип загрузки грузовика"),
+*     @OA\Property(property="status_tender", type="string", description="Статус Тендера: черновик, в работе и т.д"),
+*     @OA\Property(property="type_tender", type="string", description="Тип Тендера: Периодический/Разовый "),
 *     @OA\Property(property="date_start", type="string", format="date", description="Дата начала"),
 *     @OA\Property(property="period", type="string", format="uuid", description="Период"),
 *     @OA\Property(property="day_period", type="string", format="uuid", description="Дневной период"),

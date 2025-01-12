@@ -4097,6 +4097,25 @@
                                         ],
                                         "example": "ftl"
                                     },
+                                    "status_tender": {
+                                        "description": "**Статус Тендера: червнок, в работе и т.д**",
+                                        "type": "string",
+                                        "enum": [
+                                            "draft",
+                                            "in_work",
+                                            "accepted"
+                                        ],
+                                        "example": "accepted"
+                                    },
+                                    "type_tender": {
+                                        "description": "**Тип Тендера**",
+                                        "type": "string",
+                                        "enum": [
+                                            "periodic",
+                                            "single"
+                                        ],
+                                        "example": "periodic"
+                                    },
                                     "date_start": {
                                         "description": "Дата начала",
                                         "type": "string",
@@ -6799,6 +6818,14 @@
                     },
                     "type_load_truck": {
                         "description": "Тип загрузки грузовика",
+                        "type": "string"
+                    },
+                    "status_tender": {
+                        "description": "Статус Тендера: черновик, в работе и т.д",
+                        "type": "string"
+                    },
+                    "type_tender": {
+                        "description": "Тип Тендера: Периодический/Разовый ",
                         "type": "string"
                     },
                     "date_start": {

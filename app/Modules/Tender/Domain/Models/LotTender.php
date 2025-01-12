@@ -33,6 +33,7 @@ class LotTender extends Model
 
         "type_transport_weight",
         "type_load_truck",
+
         "status_tender",
         "type_tender",
 

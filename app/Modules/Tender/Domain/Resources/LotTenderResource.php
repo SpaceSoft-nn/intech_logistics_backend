@@ -18,8 +18,13 @@ class LotTenderResource extends JsonResource
             'general_count_transport' => $this->general_count_transport,
             'price_for_km' => $this->price_for_km,
             'body_volume_for_order' => $this->body_volume_for_order,
+
             'type_transport_weight' => $this->type_transport_weight,
             'type_load_truck' => $this->type_load_truck,
+
+            'status_tender' => $this->status_tender,
+            'type_tender' => $this->type_tender,
+
             'date_start' => $this->date_start,
             'period' => $this->period,
             'day_period' => $this->day_period,

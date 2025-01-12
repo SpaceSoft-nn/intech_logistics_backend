@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string("type_transport_weight")->comment('Тип транспортного средства: small - 1.5-3тонны, medium 5-10тонны');
             $table->string("type_load_truck")->comment('Тип транспортного средства: small - 1.5-3тонны, medium 5-10тонны');
 
+            $table->string("status_tender")->default('Черновик')->comment('Статус Тендера: в работе, черновик..');
+            $table->string("type_tender")->comment('Разовый/Переодический');
+
             $table->date('date_start')->comment('Дата начало тендера');
 
             $table->unsignedSmallInteger('period')->comment('Количество дней, например в течении 60 дней');

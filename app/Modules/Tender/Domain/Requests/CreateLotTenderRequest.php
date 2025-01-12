@@ -6,6 +6,7 @@ use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
 use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
+use App\Modules\Tender\App\Data\Enums\TypeTenderEnum;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rules\File;
@@ -31,6 +32,7 @@ class CreateLotTenderRequest extends ApiRequest
 
         $typeLoadingTruckMethod = array_column(TypeLoadingTruckMethod::cases(), 'name');
         $typeTransportWeight = array_column(TypeTransportWeight::cases(), 'name');
+        $typeTender = array_column(TypeTenderEnum::cases(), 'name');
 
         return [
 
@@ -41,18 +43,20 @@ class CreateLotTenderRequest extends ApiRequest
             'type_transport_weight' => ['required' , Rule::in($typeTransportWeight)],
             'type_load_truck' => ['required' , Rule::in($typeLoadingTruckMethod)],
 
+            'type_tender' => ['required' , Rule::in($typeTender)],
+
             'date_start' => ['required' , 'date'],
             'organization_id' => ['required' , 'uuid', 'exists:organizations,id'],
 
             'period' => ['required' , 'integer'],
-            'day_period' => ['sometimes' , 'integer'],
+            'day_period' => ['required_if:type_tender,periodic' , 'integer', 'prohibited_if:type_tender,single'],
 
             'agreement_document' => ['required', File::types(['pdf', 'doc', 'docx', 'rtf', 'odt'])->max(16384)],
 
             'application_document' => ['nullable', 'array'],
             'application_document*' => ['required', File::types(['pdf', 'doc', 'docx', 'rtf', 'odt'])->max(16384)],
 
-            'specific_date_periods' => ['nullable', 'array'],
+            'specific_date_periods' => ['required_if:type_tender,single', 'array', 'prohibited_if:type_tender,periodic'],
             'specific_date_periods.*.date' => ['required', 'date'],
             'specific_date_periods.*.count_transport' => ['required', 'integer'],
 

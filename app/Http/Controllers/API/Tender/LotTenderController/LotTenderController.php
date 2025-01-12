@@ -49,6 +49,8 @@ class LotTenderController extends Controller
         /** @var LotTenderVO */
         $lorTenderVO = $request->createLotTenderVO();
 
+        dd(1);
+
         /** @var UploadedFile */
         $agreementDocumentTenderFile = $request->getArrayAgreementDocumentTender();
 

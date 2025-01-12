@@ -28,8 +28,12 @@ class LotTender extends Model
         "general_count_transport",
         "price_for_km",
         "body_volume_for_order",
+
         "type_transport_weight",
         "type_load_truck",
+        "status_tender",
+        "type_tender",
+
         "date_start",
         "period",
         "day_period",

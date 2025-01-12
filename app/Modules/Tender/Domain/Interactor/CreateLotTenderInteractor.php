@@ -42,6 +42,7 @@ final class CreateLotTenderInteractor
         //делаю проверку что должен быть указан только один из параметров
         if($dto->lotTenderVO->day_period && $dto->arraySpecificalDatePeriod)
         {
+            #TODO логика чу-чуть изменена в валидации, добавлен тип - можно оставить, но лучше в будущем сделать проверки на основе типов
             throw new BusinessException('указан day_period и specific_date_periods, нужно указывать либо только перидичность выполнения, либо только конкретные даты.' , 400);
         }
 

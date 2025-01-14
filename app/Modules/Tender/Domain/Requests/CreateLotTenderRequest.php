@@ -49,7 +49,11 @@ class CreateLotTenderRequest extends ApiRequest
             'organization_id' => ['required' , 'uuid', 'exists:organizations,id'],
 
             'period' => ['required' , 'integer'],
-            'day_period' => ['required_if:type_tender,periodic' , 'integer', 'prohibited_if:type_tender,single'],
+
+
+            'week_period' => ['required_if:type_tender,periodic' , 'prohibited_if:type_tender,single', 'array'],
+            'week_period.*.week' => ['required', 'date'],
+            'week_period' => ['required_if:type_tender,periodic' , 'prohibited_if:type_tender,single', 'array'],
 
             'agreement_document' => ['required', File::types(['pdf', 'doc', 'docx', 'rtf', 'odt'])->max(16384)],
 

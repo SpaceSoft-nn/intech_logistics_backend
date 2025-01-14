@@ -2,17 +2,21 @@
 
 namespace App\Modules\Tender\Domain\Models;
 
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
-use App\Modules\Tender\App\Data\Enums\TypeTenderEnum;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Modules\Tender\App\Data\Enums\TypeTenderEnum;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Modules\Tender\Domain\Models\SpecificalDatePeriod;
+use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
+use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
+use App\Modules\Tender\Domain\Models\ApplicationDocumentTender;
+use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
+use App\Modules\Organization\Domain\Factories\OrganizationFactory;
 
 class LotTender extends Model
 {

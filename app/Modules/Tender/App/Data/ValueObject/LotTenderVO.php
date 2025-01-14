@@ -28,7 +28,6 @@ final readonly class LotTenderVO implements Arrayable
         public string $organization_id,
 
         public ?StatusTenderEnum $status_tender,
-        public ?int $day_period,
     ) {}
 
 
@@ -45,7 +44,6 @@ final readonly class LotTenderVO implements Arrayable
         string $type_tender,
 
         ?StatusTenderEnum $status_tender = null,
-        ?int $day_period = null,
 
     ) : self {
 
@@ -63,7 +61,6 @@ final readonly class LotTenderVO implements Arrayable
             organization_id: $organization_id,
 
             status_tender: $status_tender,
-            day_period: $day_period,
         );
 
     }
@@ -85,7 +82,6 @@ final readonly class LotTenderVO implements Arrayable
             "organization_id" => $this->organization_id,
 
             "status_tender" => $this->status_tender,
-            "day_period" => $this->day_period,
         ];
     }
 
@@ -105,7 +101,6 @@ final readonly class LotTenderVO implements Arrayable
             organization_id: Arr::get($data, 'organization_id'),
 
             status_tender: Arr::get($data, 'status_tender', null),
-            day_period: Arr::get($data, 'day_period', null),
         );
     }
 

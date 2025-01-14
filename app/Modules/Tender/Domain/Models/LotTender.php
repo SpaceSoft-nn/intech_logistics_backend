@@ -10,13 +10,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Modules\Tender\App\Data\Enums\TypeTenderEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Modules\Tender\Domain\Models\SpecificalDatePeriod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
 use App\Modules\Tender\Domain\Models\ApplicationDocumentTender;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-use App\Modules\Organization\Domain\Factories\OrganizationFactory;
+
 
 class LotTender extends Model
 {
@@ -65,7 +64,7 @@ class LotTender extends Model
             "status_tender" => StatusTenderEnum::class,
             "type_tender" => TypeTenderEnum::class,
 
-            "date_start" => 'date',
+            // "date_start" => 'datetime',
         ];
     }
 

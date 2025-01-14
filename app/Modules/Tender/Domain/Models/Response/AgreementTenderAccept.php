@@ -18,9 +18,13 @@ class AgreementTenderAccept extends Model
     //     return OrganizationFactory::new();
     // }
 
+
+
     protected $fillable = [
 
         "agreement_tender_id",
+
+            //boolean
         "tender_creater_bool",
         "contractor_bool",
 

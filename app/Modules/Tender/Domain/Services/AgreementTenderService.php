@@ -2,17 +2,14 @@
 
 namespace App\Modules\Tender\Domain\Services;
 
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
 use App\Modules\Tender\App\Data\ValueObject\Response\AgreementTenderVO;
 use App\Modules\Tender\Domain\Interactor\AgreementTenderAcceptInteractor;
 use App\Modules\Tender\Domain\Interactor\CreateAgreementTenderInteractor;
 use App\Modules\Tender\Domain\Interactor\CreateResponseTenderInteractor;
-use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Models\Response\AgreementTender;
 use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
 use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
-use Illuminate\Support\Carbon;
 
 final class AgreementTenderService
 {

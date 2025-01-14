@@ -12,6 +12,7 @@ class WeekPeriodCollection extends ResourceCollection
 
     public function toArray(Request $request): array
     {
+        //проходим по элементам, возвращаем только value, all - выводим массив как php
         return $this->collection->map(fn($resource) => $resource->value)->all();
     }
 }

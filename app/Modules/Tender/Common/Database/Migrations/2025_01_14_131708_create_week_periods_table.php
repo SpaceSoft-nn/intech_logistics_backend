@@ -13,6 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('week_periods', function (Blueprint $table) {
+
             $table->uuid('id')->primary();
 
             $table->foreignUuid('lot_tender_id')
@@ -30,6 +31,7 @@ return new class extends Migration
 
 
             $table->timestamps();
+
         });
     }
 

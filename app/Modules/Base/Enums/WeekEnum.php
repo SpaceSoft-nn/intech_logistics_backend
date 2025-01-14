@@ -2,6 +2,7 @@
 
 namespace App\Modules\Base\Enums;
 
+use Str;
 
 enum WeekEnum : string
 {
@@ -10,7 +11,7 @@ enum WeekEnum : string
     case wednesday = 'Среда';
     case thursday = 'Четверг';
     case friday = 'Пятница';
-    case saturday = 'Субботу';
+    case saturday = 'Суббота';
     case sunday = 'Воскресенье';
 
      /**
@@ -21,6 +22,8 @@ enum WeekEnum : string
     */
     public static function stringByCaseToObject(?string $value) : ?self
     {
+
+        $value = Str::lower($value);
 
         return match ($value) {
             "monday" => WeekEnum::monday,

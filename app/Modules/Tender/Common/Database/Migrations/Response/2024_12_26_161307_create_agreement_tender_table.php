@@ -15,7 +15,8 @@ return new class extends Migration
 
             $table->uuid('id')->primary();
 
-            $table->foreignUuid('lot_tender_response_id')
+
+            $table->foreignUuid('lot_tender_response_id')->unique() //unique - не может быть множество одинаковых записей на подтврждения - только 1 уникальная
                 ->constrained('lot_tender_responses')->noActionOnDelete();
 
             $table->foreignUuid('organization_contractor_id')->comment('Организация - которая откликнулась на заказ')

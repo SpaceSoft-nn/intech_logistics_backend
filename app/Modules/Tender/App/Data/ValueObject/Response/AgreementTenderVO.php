@@ -12,7 +12,7 @@ final readonly class AgreementTenderVO implements Arrayable
 
     public function __construct(
         public string $lot_tender_response_id,
-        public string $organization_contractor_id,
+        public string $organization_contractor_id, // органиация заказчика, которая создала тендер
         public string $lot_tender_id,
     ) {}
 

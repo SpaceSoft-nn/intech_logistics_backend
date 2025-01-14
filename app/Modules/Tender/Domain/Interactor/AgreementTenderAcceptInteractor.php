@@ -2,6 +2,7 @@
 
 namespace App\Modules\Tender\Domain\Interactor;
 
+use App\Modules\Base\Enums\WeekEnum;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
@@ -12,6 +13,7 @@ use App\Modules\Tender\Domain\Models\Response\AgreementTender;
 use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
 use DB;
 use Illuminate\Support\Carbon;
+use Str;
 
 // Бизнес логика на согласование Тендера с двух сторон - здесь же создаются заказы (pre-order)
 final class AgreementTenderAcceptInteractor
@@ -40,17 +42,19 @@ final class AgreementTenderAcceptInteractor
 
 
         //проверять что соглашения подписаны с обоих сторон
-        if($agreementTenderAccept->tender_creater_bool && $agreementTenderAccept->contractor_bool)
+        // if($agreementTenderAccept->tender_creater_bool && $agreementTenderAccept->contractor_bool)
+        if(true)
         {
             /** @var AgreementTender */
             $agreement_tender = $agreementTenderAccept->agreement_tender;
 
-
-
             DB::transaction(function () use ($agreement_tender) {
 
-                /** @var LotTender */
-                $lot_tender = $agreement_tender->lot_tender()->lockForUpdate()->first();
+
+
+                /** @var LotTender lockForUpdate - блокируем для обновления */
+                $lot_tender = $agreement_tender->lot_tender->lockForUpdate()->first();
+
 
                 //если есть конкретно указаные даты.
                 if($lot_tender->specifica_date_period)
@@ -100,36 +104,78 @@ final class AgreementTenderAcceptInteractor
                     }
 
 
-                } else { //если нету конкретных дат
+                }
+
+                //Если установлена периодичность
+                if($lot_tender->week_period)
+                {
 
                     { //Высчитывает дату
-                        $carbon_date_start = Carbon::createFromFormat('d,m,Y', $lot_tender->date_start);
+
+                        //устанавливаем время локализации ру
+                        Carbon::setLocale('ru');
+
+                        //получаем начальную дату
+                        $carbon_date_start = Carbon::createFromFormat('Y-m-d', $lot_tender->date_start);
 
                         //получем конечную дату в зависимости от периода #TODO Потом нужно устанавливать в зависимости от километража
-                        $carbon_date_end = $carbon_date_start->addDays($lot_tender->period);
+                        $carbon_date_end = $carbon_date_start->copy()->addDays($lot_tender->period);
+
+                        $currentDate = $carbon_date_start->copy(); // копируем дату - работаем с новым объектом и проходимся по нему
+
+                        while ($currentDate->lte($carbon_date_end)) {
+
+                            //Получаем название недели в ру - мапим в Enum, значение переводим в заглавную букву.
+                            $weekCarbonToEnum = WeekEnum::from(Str::ucfirst($currentDate->copy()->translatedFormat('l')));
+
+
+                            foreach ($lot_tender->week_period as $object) {
+
+                                // Проверяем, является ли текущий день недели нужным
+                                if ( $weekCarbonToEnum == $object->value )
+                                {
+                                    $resultDates[] = $currentDate->toDateString(); // Добавляем дату в массив
+                                }
+
+                            }
+
+                            $currentDate->addDay(); // Переходим к следующему дню
+
+                        }
+
+                        dd($resultDates);
+
                     }
 
-                    $orderUnitVO = OrderUnitVO::make(
-                        end_date_order: $carbon_date_end->toDateString(),
-                        body_volume: $lot_tender->body_volume_for_order,
-                        order_status: StatusOrderUnitEnum::pre_order->value,
-                        order_total: $lot_tender->price_for_km,
-                        type_transport_weight: $lot_tender->type_transport_weight->value,
-                        type_load_truck: $lot_tender->type_load_truck->value,
-                        organization_id: $lot_tender->organization_id,
-                        user_id: null, #TODO Продумать логику при ролях, как указывать правильно
-                        contractor_id: $agreement_tender->organization_contractor_id, //указываем подрядчика на выполнения заказа
-                        lot_tender_id: $lot_tender->id,
-                        add_load_space: false, #TODO Продумать что тут указывать?
-                    );
+                    //создаём заказы в заависимости от указанных дней недели + перодности (например 60) и понедельник
+                    foreach ($resultDates as $date) {
+                        
+                        $orderUnitVO = OrderUnitVO::make(
+                            end_date_order: $carbon_date_end->toDateString(),
+                            body_volume: $lot_tender->body_volume_for_order,
+                            order_status: StatusOrderUnitEnum::pre_order->value,
+                            order_total: $lot_tender->price_for_km,
+                            type_transport_weight: $lot_tender->type_transport_weight->value,
+                            type_load_truck: $lot_tender->type_load_truck->value,
+                            organization_id: $lot_tender->organization_id,
+                            user_id: null, #TODO Продумать логику при ролях, как указывать правильно
+                            contractor_id: $agreement_tender->organization_contractor_id, //указываем подрядчика на выполнения заказа
+                            lot_tender_id: $lot_tender->id,
+                            add_load_space: false, #TODO Продумать что тут указывать?
+                        );
 
 
-                    //создаём заказы
-                    $order_unit = $this->orderUnitService->createOrderUnit(
-                        dto: OrderUnitCreateDTO::make(orderUnitVO: $orderUnitVO)
-                    );
+                        //создаём заказы
+                        $order_unit = $this->orderUnitService->createOrderUnit(
+                            dto: OrderUnitCreateDTO::make(orderUnitVO: $orderUnitVO)
+                        );
+
+                    }
+
+
 
                 }
+
 
                 $lot_tender->status_tender = StatusTenderEnum::in_work; #TODO Решить потом какой статус ставить?
                 $lot_tender->save();

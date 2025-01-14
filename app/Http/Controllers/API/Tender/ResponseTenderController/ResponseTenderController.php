@@ -83,11 +83,11 @@ class ResponseTenderController extends Controller
     //Двух-соторонне соглашения
     public function agreementTenderAccept(
         AgreementTenderAccept $agreementTenderAccept,
-        AgreementTenderService $agreementTenderSerivce,
+        AgreementTenderService $agreementTenderService,
     ) {
 
         /** @var AgreementTenderAccept */
-        $model = $agreementTenderSerivce->agreementTenderAccept($agreementTenderAccept);
+        $model = $agreementTenderService->agreementTenderAccept($agreementTenderAccept);
 
         return $model ?
         response()->json(array_success(AgreementTenderAcceptResource::make($model), 'Successfully agreement tender accept.'), 200)

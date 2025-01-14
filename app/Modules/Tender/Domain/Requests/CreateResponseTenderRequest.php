@@ -20,7 +20,7 @@ class CreateResponseTenderRequest extends ApiRequest
 
             'transport_id' => ['required' , 'uuid', 'exists:transports,id'],
             'price_for_km' => ['required' , 'numeric', "min:1"],
-            'comment' => ['nullable' , 'string', "max:1000"],
+            'comment' => ['required' , 'string', "min:3" , "max:1000"],
 
         ];
 

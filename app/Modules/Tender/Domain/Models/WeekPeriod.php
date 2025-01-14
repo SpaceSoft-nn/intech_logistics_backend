@@ -2,7 +2,7 @@
 
 namespace App\Modules\Tender\Domain\Models;
 
-use App\Modules\Base\Enums\WeekEnums;
+use App\Modules\Base\Enums\WeekEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,7 +35,7 @@ class WeekPeriod extends Model
     protected function casts(): array
     {
         return [
-            'value' => WeekEnums::class,
+            'value' => WeekEnum::class,
         ];
     }
 

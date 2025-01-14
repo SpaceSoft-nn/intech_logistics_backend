@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Tender\LotTenderController;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Base\Enums\WeekEnum;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
@@ -46,17 +47,21 @@ class LotTenderController extends Controller
         TenderService $service,
     ) {
 
-        /** @var LotTenderVO */
+        /** @var LotTenderVO value object лота тендера*/
         $lorTenderVO = $request->createLotTenderVO();
 
-        /** @var UploadedFile */
+        /** @var UploadedFile главный документ тендера */
         $agreementDocumentTenderFile = $request->getArrayAgreementDocumentTender();
 
-        /** @var ?UploadedFile[] */
+        /** @var ?UploadedFile[] дополнительные приложения - файлы */
         $arrayApplicationDocumentTenderFiles = $request->getArrayApplicationDocumentTender();
 
-        /** @var ?array */
+        /** @var ?array получаем массив дат выполнения тендера */
         $arraySpecificalDatePeriod = $request->getArraySpecificalDatePeriod();
+
+        /** @var ?WeekEnum[] получаем массив дней недель */
+        $arrayWeekPeriod = $request->getArrayWeekPeriod();
+
 
         /** @var CreateLotTenderServiceDTO */
         $createLotTenderServiceDTO = CreateLotTenderServiceDTO::make(
@@ -64,7 +69,9 @@ class LotTenderController extends Controller
             agreementDocumentTenderFile: $agreementDocumentTenderFile,
             arrayApplicationDocumentTenderFiles: $arrayApplicationDocumentTenderFiles,
             arraySpecificalDatePeriod: $arraySpecificalDatePeriod,
+            arrayWeekPeriod:  $arrayWeekPeriod,
         );
+
 
         /**
          * @var LotTender

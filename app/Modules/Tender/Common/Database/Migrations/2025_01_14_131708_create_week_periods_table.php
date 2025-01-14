@@ -1,6 +1,6 @@
 <?php
 
-use App\Modules\Base\Enums\WeekEnums;
+use App\Modules\Base\Enums\WeekEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,17 +15,17 @@ return new class extends Migration
         Schema::create('week_periods', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->foreignUuid('lot_tender_id')->unique()
+            $table->foreignUuid('lot_tender_id')
                 ->constrained('lot_tenders')->noActionOnDelete();
 
             $table->enum('value', [
-                WeekEnums::monday,
-                WeekEnums::tuesday,
-                WeekEnums::wednesday,
-                WeekEnums::thursday,
-                WeekEnums::friday,
-                WeekEnums::saturday,
-                WeekEnums::sunday,
+                WeekEnum::monday->value,
+                WeekEnum::tuesday->value,
+                WeekEnum::wednesday->value,
+                WeekEnum::thursday->value,
+                WeekEnum::friday->value,
+                WeekEnum::saturday->value,
+                WeekEnum::sunday->value,
             ]);
 
 

@@ -83,8 +83,14 @@ class LotTender extends Model
     {
         return $this->hasMany(SpecificalDatePeriod::class, 'lot_tender_id');
     }
+
     public function order_unit(): HasMany
     {
         return $this->hasMany(OrderUnit::class, 'lot_tender_id');
+    }
+
+    public function week_period() : HasMany
+    {
+        return $this->hasMany(WeekPeriod::class, 'lot_tender_id');
     }
 }

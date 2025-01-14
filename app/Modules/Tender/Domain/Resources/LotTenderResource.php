@@ -27,7 +27,9 @@ class LotTenderResource extends JsonResource
 
             'date_start' => $this->date_start,
             'period' => $this->period,
-            'day_period' => $this->day_period,
+
+            'week_period' => WeekPeriodCollection::make($this->week_period),
+
             'organization_id' => $this->organization_id,
             'agreement_document_tender_link' => $this->createFileLinkDownload($this->agreement_document_tender),
             'array_application_document_tender_link' => $this->createFileLinkDownloadArray($this->application_document_tender),

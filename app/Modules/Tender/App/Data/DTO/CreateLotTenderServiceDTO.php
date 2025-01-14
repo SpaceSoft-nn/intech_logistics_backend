@@ -2,6 +2,7 @@
 
 namespace App\Modules\Tender\App\Data\DTO;
 
+use App\Modules\Base\Enums\WeekEnum;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
 use Illuminate\Http\UploadedFile;
 
@@ -13,6 +14,7 @@ final readonly class CreateLotTenderServiceDTO
     *  @var UploadedFile $agreementDocumentTenderFile
     *  @var ?UploadedFile[] $arrayApplicationDocumentTenderFiles
     *  @var ?array $arraySpecificalDatePeriod
+    *  @var ?WeekEnum[] $arrayWeekPeriod
     */
     public function __construct(
 
@@ -20,6 +22,7 @@ final readonly class CreateLotTenderServiceDTO
         public UploadedFile $agreementDocumentTenderFile,
         public ?array $arrayApplicationDocumentTenderFiles,
         public ?array $arraySpecificalDatePeriod,
+        public ?array $arrayWeekPeriod,
 
     ) { }
 
@@ -28,6 +31,7 @@ final readonly class CreateLotTenderServiceDTO
     *  @var UploadedFile $agreementDocumentTenderFile
     *  @var ?array $arrayApplicationDocumentTenderFiles
     *  @var ?array $arraySpecificalDatePeriod
+    *  @var ?WeekEnum[] $arrayWeekPeriod
     */
     public static function make(
 
@@ -35,6 +39,7 @@ final readonly class CreateLotTenderServiceDTO
         UploadedFile $agreementDocumentTenderFile,
         ?array $arrayApplicationDocumentTenderFiles = null,
         ?array $arraySpecificalDatePeriod = null,
+        ?array $arrayWeekPeriod = null,
 
     ) : self {
 
@@ -43,66 +48,9 @@ final readonly class CreateLotTenderServiceDTO
             agreementDocumentTenderFile: $agreementDocumentTenderFile,
             arrayApplicationDocumentTenderFiles: $arrayApplicationDocumentTenderFiles,
             arraySpecificalDatePeriod: $arraySpecificalDatePeriod,
+            arrayWeekPeriod: $arrayWeekPeriod,
         );
 
     }
-
-    //  /**
-    // *  @var LotTenderVO $lotTenderVO
-    // *  @var ?array $agreementDocumentTenderFile
-    // *  @var ?array[] $arrayApplicationDocumentTenderFiles
-    // *  @var ?array[] $arraySpecificalDatePeriod
-    // */
-    // public static function createDtoForArray(
-    //     LotTenderVO $lotTenderVO,
-    //     ?array $agreementDocumentTenderFile,
-    //     ?array $arrayApplicationDocumentTenderFiles,
-    //     ?array $arraySpecificalDatePeriod,
-    // ) : self {
-
-    //     $lotTenderVO_virable = $lotTenderVO;
-    //     $agreementDocumentTenderFile_virable = $$agreementDocumentTenderFile;
-
-    //     $arrayApplicationDocumentTenderFiles_virable = self::createApplicationDocumentTenderVO($arrayApplicationDocumentTenderFiles);
-    //     $arraySpecificalDatePeriod_virable = self::createSpecificalDatePeriodVO($arraySpecificalDatePeriod);
-
-    //     return self::make(
-    //         lotTenderVO: $lotTenderVO_virable,
-    //         agreementDocumentTenderFile: $agreementDocumentTenderFile_virable,
-    //         arrayApplicationDocumentTenderFile: $arrayApplicationDocumentTenderFiles_virable,
-    //         arraySpecificalDatePeriod: $arraySpecificalDatePeriod_virable,
-    //     );
-
-    // }
-
-    // private function createApplicationDocumentTenderVO(?array $data) : ?array
-    // {
-    //     $array = [];
-    //     foreach ($data as $object) {
-    //         $array[] = ApplicationDocumentTenderVO::fromArrayToObject($object);
-    //     }
-
-    //     return $array;
-    // }
-
-    // private function createApplicationDocumentTenderVO(?array $data) : ?array
-    // {
-    //     $array = [];
-    //     foreach ($data as $object) {
-    //         $array[] = ApplicationDocumentTenderVO::fromArrayToObject($object);
-    //     }
-
-    //     return $array;
-    // }
-
-    // private function createSpecificalDatePeriodVO(?array $data) : ?array
-    // {
-    //     $array = [];
-    //     foreach ($data as $object) {
-    //         $array[] = SpecificalDatePeriodVO::fromArrayToObject($object);
-    //     }
-
-    //     return $array;
-    // }
 
 }

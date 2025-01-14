@@ -2,7 +2,7 @@
 
 namespace App\Modules\Tender\Domain\Requests;
 
-use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
+use App\Modules\Base\Enums\WeekEnum;
 use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
@@ -33,6 +33,7 @@ class CreateLotTenderRequest extends ApiRequest
         $typeLoadingTruckMethod = array_column(TypeLoadingTruckMethod::cases(), 'name');
         $typeTransportWeight = array_column(TypeTransportWeight::cases(), 'name');
         $typeTender = array_column(TypeTenderEnum::cases(), 'name');
+        $week = array_column(WeekEnum::cases(), 'name');
 
         return [
 
@@ -51,9 +52,8 @@ class CreateLotTenderRequest extends ApiRequest
             'period' => ['required' , 'integer'],
 
 
-            'week_period' => ['required_if:type_tender,periodic' , 'prohibited_if:type_tender,single', 'array'],
-            'week_period.*.week' => ['required', 'date'],
-            'week_period' => ['required_if:type_tender,periodic' , 'prohibited_if:type_tender,single', 'array'],
+            'week_period' => ['required_if:type_tender,periodic' , 'prohibited_if:type_tender,single', 'array', Rule::in($week), 'distinct:strict'],
+            // 'week_period.*.week' => ['required', Rule::in($week), 'distinct:strict'],
 
             'agreement_document' => ['required', File::types(['pdf', 'doc', 'docx', 'rtf', 'odt'])->max(16384)],
 
@@ -113,6 +113,28 @@ class CreateLotTenderRequest extends ApiRequest
 
         return isset($data['specific_date_periods']) && !is_null(isset($data['specific_date_periods'])) ? $data['specific_date_periods'] : null;
 
+    }
+
+    public function getArrayWeekPeriod() : ?array
+    {
+        //вызываем 1 раз $this->validate(), что бюы его запомнить в переменную и не вызывать в других функциях по новой
+        $data = $this->validated ?? $this->validated();
+
+        $array = [];
+
+        if(isset($data['week_period']) && !is_null(isset($data['week_period'])))
+        {
+            foreach ($data['week_period'] as $item) {
+                $array[] = WeekEnum::stringByCaseToObject($item);
+            }
+
+        } else {
+
+            return null;
+
+        }
+
+        return $array;
     }
 
 }

@@ -7,10 +7,12 @@ use App\Modules\Tender\App\Data\ValueObject\AgreementDocumentTenderVO;
 use App\Modules\Tender\App\Data\ValueObject\ApplicationDocumentTenderVO;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
 use App\Modules\Tender\App\Data\ValueObject\SpecificalDatePeriodVO;
+use App\Modules\Tender\App\Data\ValueObject\WeekPeriodVO;
 use App\Modules\Tender\Domain\Actions\Document\CreateAgreementDocumentTenderAction;
 use App\Modules\Tender\Domain\Actions\Document\CreateApplicationDocumentTenderAction;
 use App\Modules\Tender\Domain\Actions\LotTender\CreateLotTenderAction;
 use App\Modules\Tender\Domain\Actions\SpecificalDate\CreateSpecificalDatePeriodAction;
+use App\Modules\Tender\Domain\Actions\SpecificalDate\CreateWeekPeriodAction;
 use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
 use App\Modules\Tender\Domain\Models\ApplicationDocumentTender;
 use App\Modules\Tender\Domain\Models\LotTender;
@@ -40,10 +42,10 @@ final class CreateLotTenderInteractor
     {
 
         //делаю проверку что должен быть указан только один из параметров
-        if($dto->lotTenderVO->day_period && $dto->arraySpecificalDatePeriod)
+        if($dto->arrayWeekPeriod && $dto->arraySpecificalDatePeriod)
         {
             #TODO логика чу-чуть изменена в валидации, добавлен тип - можно оставить, но лучше в будущем сделать проверки на основе типов
-            throw new BusinessException('указан day_period и specific_date_periods, нужно указывать либо только перидичность выполнения, либо только конкретные даты.' , 400);
+            throw new BusinessException('указан week_period и specific_date_periods, нужно указывать либо только перидичность выполнения, либо только конкретные даты.' , 400);
         }
 
         /** @var LotTender */
@@ -61,6 +63,19 @@ final class CreateLotTenderInteractor
             if($dto->arrayApplicationDocumentTenderFiles) {
                 foreach ($dto->arrayApplicationDocumentTenderFiles as $object) {
                     $this->createAndSaveApplicationDocumentTender($object, $lotTender->id);
+                }
+            }
+
+            //Создаём записи дней недели при выборе тендера как периодность выполнения
+            if($dto->arrayWeekPeriod)
+            {
+                foreach ($dto->arrayWeekPeriod as $enum) {
+                    $this->createWeekPeriod(
+                        WeekPeriodVO::make(
+                            lot_tender_id: $lotTender->id,
+                            value: $enum,
+                        )
+                    );
                 }
             }
 
@@ -120,7 +135,7 @@ final class CreateLotTenderInteractor
      *
      * @return ApplicationDocumentTender
      */
-    public function createAndSaveApplicationDocumentTender(UploadedFile $uploadedFile, string $lot_tender_id) : ApplicationDocumentTender
+    private function createAndSaveApplicationDocumentTender(UploadedFile $uploadedFile, string $lot_tender_id) : ApplicationDocumentTender
     {
         $path_save = $this->servFile->saveFile($uploadedFile, 'applications', 'tender_documents');
 
@@ -137,9 +152,14 @@ final class CreateLotTenderInteractor
         return CreateApplicationDocumentTenderAction::make($vo);
     }
 
-    public function сreateSpecificalDatePeriod(SpecificalDatePeriodVO $vo) : SpecificalDatePeriod
+    private function сreateSpecificalDatePeriod(SpecificalDatePeriodVO $vo) : SpecificalDatePeriod
     {
         return CreateSpecificalDatePeriodAction::make($vo);
+    }
+
+    private function createWeekPeriod(WeekPeriodVO $vo)
+    {
+        return CreateWeekPeriodAction::make($vo);
     }
 
 }

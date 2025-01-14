@@ -13,7 +13,10 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->date('end_date_order')->nullable()->comment('До какой даты заказ будет активен');
+            $table->date('exemplary_date_start')->nullable()->comment('Примерная дата начала заказ');
+
             $table->string('body_volume')->nullable()->comment('Общий объём заказа'); #TODO убрать ->nullable()
+
             $table->string('order_total')->comment('Цена/Выплата за заказ');
             $table->string('description')->nullable();
 

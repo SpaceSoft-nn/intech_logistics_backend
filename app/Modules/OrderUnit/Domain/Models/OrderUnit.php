@@ -7,7 +7,6 @@ use App\Modules\InteractorModules\AddressOrder\Domain\Models\OrderUnitAddress;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
-use App\Modules\OrderUnit\Domain\Models\Status\ChainTransportationStatus;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\User\Domain\Models\User;
@@ -34,6 +33,7 @@ class OrderUnit extends Model
     protected $fillable = [
 
         "end_date_order",
+        "exemplary_date_start",
 
         "body_volume",
         "order_total",

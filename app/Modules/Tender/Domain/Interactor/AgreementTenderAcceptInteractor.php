@@ -134,7 +134,7 @@ final class AgreementTenderAcceptInteractor
                                 // Проверяем, является ли текущий день недели нужным
                                 if ( $weekCarbonToEnum == $object->value )
                                 {
-                                    $resultDates[] = $currentDate->toDateString(); // Добавляем дату в массив
+                                    $resultDates[] = $currentDate->format('d-m-Y'); // Добавляем дату в массив
                                 }
 
                             }
@@ -143,15 +143,14 @@ final class AgreementTenderAcceptInteractor
 
                         }
 
-                        dd($resultDates);
-
                     }
 
                     //создаём заказы в заависимости от указанных дней недели + перодности (например 60) и понедельник
                     foreach ($resultDates as $date) {
-                        
+
                         $orderUnitVO = OrderUnitVO::make(
                             end_date_order: $carbon_date_end->toDateString(),
+                            exemplary_date_start: $date,
                             body_volume: $lot_tender->body_volume_for_order,
                             order_status: StatusOrderUnitEnum::pre_order->value,
                             order_total: $lot_tender->price_for_km,
@@ -164,14 +163,12 @@ final class AgreementTenderAcceptInteractor
                             add_load_space: false, #TODO Продумать что тут указывать?
                         );
 
-
                         //создаём заказы
                         $order_unit = $this->orderUnitService->createOrderUnit(
                             dto: OrderUnitCreateDTO::make(orderUnitVO: $orderUnitVO)
                         );
 
                     }
-
 
 
                 }

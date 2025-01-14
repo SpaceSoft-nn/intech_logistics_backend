@@ -9,18 +9,19 @@ use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use Illuminate\Contracts\Support\Arrayable;
 use Arr;
 
-class OrderUnitVO implements Arrayable
+readonly class  OrderUnitVO implements Arrayable
 {
     use FilterArrayTrait;
 
     public function __construct(
 
-        public readonly string $end_date_order,
-        public readonly ?float $body_volume,
-        public readonly string $order_total,
+        public string $end_date_order,
+        public ?string $exemplary_date_start, // примерная дата отправки
+        public ?float $body_volume,
+        public string $order_total,
 
-        public readonly TypeTransportWeight $type_transport_weight,
-        public readonly TypeLoadingTruckMethod $type_load_truck,
+        public TypeTransportWeight $type_transport_weight,
+        public TypeLoadingTruckMethod $type_load_truck,
         public ?StatusOrderUnitEnum $order_status,
 
         public ?string $description,
@@ -46,6 +47,7 @@ class OrderUnitVO implements Arrayable
 
         bool $add_load_space,
 
+        ?string $exemplary_date_start = null,
         ?float $body_volume = null,
         ?string $description = null,
         ?string $order_status = null,
@@ -65,7 +67,10 @@ class OrderUnitVO implements Arrayable
             body_volume: $body_volume,
             order_total: $order_total,
             description: $description,
+
+            //date
             end_date_order: $end_date_order,
+            exemplary_date_start: $exemplary_date_start,
 
             type_load_truck: TypeLoadingTruckMethod::stringByCaseToObject($type_load_truck),
             type_transport_weight: TypeTransportWeight::stringByCaseToObject($type_transport_weight),
@@ -95,7 +100,10 @@ class OrderUnitVO implements Arrayable
             body_volume: $body_volume,
             order_total: $this->order_total,
             description: $this->description,
+
+            //date
             end_date_order: $this->end_date_order,
+            exemplary_date_start: $this->exemplary_date_start,
 
             type_load_truck: $this->type_load_truck,
             type_transport_weight: $this->type_transport_weight,
@@ -122,7 +130,10 @@ class OrderUnitVO implements Arrayable
             body_volume: $this->body_volume,
             order_total: $this->order_total,
             description: $this->description,
+
+            //date
             end_date_order: $this->end_date_order,
+            exemplary_date_start: $this->exemplary_date_start,
 
             type_load_truck: $this->type_load_truck,
             type_transport_weight: $this->type_transport_weight,
@@ -146,7 +157,10 @@ class OrderUnitVO implements Arrayable
             body_volume: $this->body_volume,
             order_total: $this->order_total,
             description: $this->description,
+
+            //date
             end_date_order: $this->end_date_order,
+            exemplary_date_start: $this->exemplary_date_start,
 
             type_load_truck: $this->type_load_truck,
             type_transport_weight: $this->type_transport_weight,
@@ -168,6 +182,8 @@ class OrderUnitVO implements Arrayable
         return [
 
             "end_date_order" => $this->end_date_order,
+            "exemplary_date_start" => $this->exemplary_date_start,
+
             "body_volume" => $this->body_volume,
             "order_total" => $this->order_total,
             "description" => $this->description,
@@ -193,6 +209,9 @@ class OrderUnitVO implements Arrayable
     {
 
         $end_date_order = Arr::get($data, "end_date_order");
+        $exemplary_date_start = Arr::get($data, "exemplary_date_start" , null);
+
+
         $body_volume = Arr::get($data, "body_volume", null);
         $order_total = Arr::get($data, "order_total");
         $description = Arr::get($data, "description", null);
@@ -210,7 +229,10 @@ class OrderUnitVO implements Arrayable
         $lot_tender_id = Arr::get($data, "lot_tender_id" , null);
 
         return static::make(
+
             end_date_order: $end_date_order,
+            exemplary_date_start: $exemplary_date_start,
+
             body_volume: $body_volume,
             order_total: $order_total,
             description: $description,

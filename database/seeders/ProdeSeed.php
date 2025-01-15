@@ -20,7 +20,7 @@ use Illuminate\Database\Seeder;
 
 class ProdeSeed extends Seeder
 {
-   
+
     public function run(): void
     {
 
@@ -35,14 +35,13 @@ class ProdeSeed extends Seeder
             $user = $this->createUser(
                 email: 'customer@gmail.com',
                 phone: '79200000000',
-                typeCabinet: TypeCabinetEnum::сarrier,
+                typeCabinet: TypeCabinetEnum::customer,
                 userValue: $user,
             );
 
             //создаём OrderUnit для user
             $this->createOrderUnit($user);
         }
-
 
         $user = [
             "first_name" => 'Георгий',
@@ -57,6 +56,8 @@ class ProdeSeed extends Seeder
             typeCabinet: TypeCabinetEnum::сarrier,
             userValue: $user,
         );
+
+
     }
 
     /**
@@ -71,6 +72,7 @@ class ProdeSeed extends Seeder
     public function createUser(string $email, string $phone, ?TypeCabinetEnum $typeCabinet = null, ?array $userValue = null) : User
     {
         {
+
             { // создаём данные email и phone
                 $email = EmailList::create([
                     // 'value' => 'test@gmail.com',
@@ -84,12 +86,15 @@ class ProdeSeed extends Seeder
                     'status' => true,
                 ]);
 
+                $userValue['email_id'] = $email->id;
+                $userValue['phone_id'] = $phone->id;
+
+                //создаём user и активируем его в factory
+                $user = User::factory()->create($userValue);
+
                 Arr::get($userValue, "email_id", $email->id);
                 Arr::get($userValue, "phone_id", $phone->id);
             }
-
-            //создаём user и активируем его в factory
-            $user = User::factory()->create($userValue);
 
             $orgArray = Organization::factory()->make()->toArray();
             //меняем user на своего

@@ -28,7 +28,8 @@ class DriverPeopleFactory extends Factory
          */
         $individualPeople = IndividualPeople::factory()->create();
 
-        $VO = DriverPeopleVO::make(
+
+        $vo = DriverPeopleVO::make(
             personal_area_id: $personal_area->id,
             individual_people_id: $individualPeople->id,
             organization_id: null,
@@ -38,6 +39,6 @@ class DriverPeopleFactory extends Factory
         );
 
 
-        return $VO->toArrayNotNull();
+        return $vo->toArrayNotNull();
     }
 }

@@ -25,6 +25,9 @@ class DriverPeople extends Model
         'personal_area_id',
         'individual_people_id',
         'organization_id',
+        "series",
+        "number",
+        "date_get",
 
     ];
 

@@ -18,9 +18,9 @@ class DriverPeopleResource extends JsonResource
             "individual_people_id" => $this->individual_people_id,
             "organization_id" => $this->organization_id,
 
-            "series" => $this->organization_id,
-            "number" => $this->organization_id,
-            "date_get" => $this->organization_id,
+            "series" => $this->series,
+            "number" => $this->number,
+            "date_get" => $this->date_get,
 
         ];
     }

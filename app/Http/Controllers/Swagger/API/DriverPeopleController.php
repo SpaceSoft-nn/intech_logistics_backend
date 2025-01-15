@@ -73,7 +73,10 @@ namespace App\Http\Controllers\Swagger\API;
 *          @OA\JsonContent(
 *              @OA\Property(property="personal_area_id", type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000"),
 *              @OA\Property(property="individual_people_id", type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000"),
-*              @OA\Property(property="organization_id", nullable=true, type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000")
+*              @OA\Property(property="organization_id", nullable=true, type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000"),
+*              @OA\Property(property="series", type="integer", format="int32", example="####"),
+*              @OA\Property(property="number", type="integer", format="int32", example="######"),
+*              @OA\Property(property="date_get", type="string", format="date", example="01.01.2025"),
 *          )
 *      ),
 *      @OA\Response(

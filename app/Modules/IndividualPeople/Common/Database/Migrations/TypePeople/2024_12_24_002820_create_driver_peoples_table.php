@@ -24,6 +24,10 @@ return new class extends Migration
             $table->uuid('organization_id')->nullable()
                 ->constrained('organizations', 'id')->noActionOnDelete();
 
+            $table->string('series')->comment('Серия Водительского Удостоверения');
+            $table->string('number')->comment('Номер Водительского Удостоверения');
+            $table->date('date_get')->comment('Дата получения Водительского Удостоверения');
+
             $table->timestamps();
 
             $table->unique(['personal_area_id', 'individual_people_id', 'organization_id']);

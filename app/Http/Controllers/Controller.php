@@ -725,7 +725,28 @@ namespace App\Http\Controllers;
 *         format="uuid",
 *         description="UUID of the organization",
 *         example="123e4567-e89b-12d3-a456-426614174000"
-*     )
+*     ),
+*     @OA\Property(
+*         property="series",
+*         type="integer",
+*         format="int32",
+*         description="Серия Водительского Удостоверения",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="number",
+*         type="integer",
+*         format="int32",
+*         description="UUID of the organization",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="date_get",
+*         type="string",
+*         format="date",
+*         description="UUID of the organization",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
 * ),
 *
 */

@@ -283,6 +283,21 @@
                                         "format": "uuid",
                                         "example": "123e4567-e89b-12d3-a456-426614174000",
                                         "nullable": true
+                                    },
+                                    "series": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "####"
+                                    },
+                                    "number": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "######"
+                                    },
+                                    "date_get": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "01.01.2025"
                                     }
                                 },
                                 "type": "object"
@@ -7099,6 +7114,24 @@
                         "description": "UUID of the organization",
                         "type": "string",
                         "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "series": {
+                        "description": "Серия Водительского Удостоверения",
+                        "type": "integer",
+                        "format": "int32",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "number": {
+                        "description": "UUID of the organization",
+                        "type": "integer",
+                        "format": "int32",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "date_get": {
+                        "description": "UUID of the organization",
+                        "type": "string",
+                        "format": "date",
                         "example": "123e4567-e89b-12d3-a456-426614174000"
                     }
                 },

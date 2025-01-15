@@ -22,6 +22,10 @@ class CreateDriverPeopleRequest extends ApiRequest
             'individual_people_id' => ['required', 'uuid', 'exists:individual_peoples,id'],
             'organization_id' => ['nullable', 'uuid', 'exists:organizations,id'], #TODO - Должно браться из токена по user?
 
+            'series' => ['required', 'regex:/^\d{4}$/'],
+            'number' => ['required', 'regex:/^\d{6}$/'],
+            'date_get' => ['required', 'date'],
+
         ];
     }
 

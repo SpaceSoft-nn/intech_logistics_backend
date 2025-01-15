@@ -5765,6 +5765,12 @@
                         "type": "string",
                         "format": "date"
                     },
+                    "exemplary_date_start": {
+                        "description": "Дата 'примерного' начала заказа",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true
+                    },
                     "body_volume": {
                         "description": "Объем кузова",
                         "type": "number",

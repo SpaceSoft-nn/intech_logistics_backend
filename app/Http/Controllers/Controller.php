@@ -25,6 +25,7 @@ namespace App\Http\Controllers;
 *    title="Json Ресурс OrderUnit",
 *    @OA\Property(property="id", type="string", format="uuid"),
 *    @OA\Property(property="end_date_order", type="string", format="date", description="Дата окончания заказа"),
+*    @OA\Property(property="exemplary_date_start", nullable=true, type="string", format="date", description="Дата 'примерного' начала заказа"),
 *    @OA\Property(property="body_volume", type="number", format="float", description="Объем кузова"),
 *    @OA\Property(property="order_total", type="number", format="float", description="Общая стоимость заказа"),
 *    @OA\Property(property="description", type="string", description="Описание заказа"),

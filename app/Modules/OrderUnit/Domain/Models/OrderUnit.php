@@ -79,6 +79,7 @@ class OrderUnit extends Model
             "type_load_truck" => TypeLoadingTruckMethod::class,
             "type_transport_weight" => TypeTransportWeight::class,
             'end_date_order' => "datetime",
+            'exemplary_date_start' => "datetime",
 
             'add_load_space' => "boolean",
             'change_price' => "boolean",

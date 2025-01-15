@@ -31,7 +31,10 @@ class OrderUnitResource extends JsonResource
         return [
 
             "id" => $this->id,
+
             "end_date_order" => $this->end_date_order ? $this->end_date_order->format('Y-m-d') : null,
+            "exemplary_date_start" => $this->exemplary_date_start ? $this->exemplary_date_start->format('Y-m-d') : null,
+
             "body_volume" => $this->body_volume,
             "order_total" => $this->order_total,
             "description" => $this->description,

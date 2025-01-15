@@ -64,7 +64,6 @@ class CreateOrderUnitInteractor
 
             });
 
-
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $th) {
 
             $message = $th->getMessage();

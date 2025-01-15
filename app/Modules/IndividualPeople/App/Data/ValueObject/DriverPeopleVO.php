@@ -17,7 +17,7 @@ final readonly class DriverPeopleVO implements Arrayable
         public string $personal_area_id,
         public string $individual_people_id,
         public ?string $organization_id,
-
+        
 
     ) { }
 

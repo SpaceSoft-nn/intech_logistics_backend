@@ -2,6 +2,7 @@
 
 namespace App\Modules\User\Domain\Resources;
 
+use App\Modules\Organization\Domain\Resources\OrganizationResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,7 +29,7 @@ class UserResource extends JsonResource
             'phone_id' => $this->phone?->value ?? null ,
             'type_cabinet' => $this->organizations->map(function ($organization) {
                 return [
-                    'organization_id' => $organization->id,
+                    'organization_id' => OrganizationResource::make($organization),
                     'type_cabinet' => $organization->pivot->type_cabinet,
                 ];
             }),

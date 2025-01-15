@@ -8,7 +8,7 @@ return new class extends Migration
 {
 
     public function up(): void
-    {//Лот тендера
+    {   //Лот тендера
         Schema::create('lot_tenders', function (Blueprint $table) {
 
             $table->uuid('id')->primary();
@@ -30,7 +30,6 @@ return new class extends Migration
 
             $table->foreignUuid('organization_id')
                 ->constrained('organizations')->noActionOnDelete();
-
 
             $table->timestamps();
 

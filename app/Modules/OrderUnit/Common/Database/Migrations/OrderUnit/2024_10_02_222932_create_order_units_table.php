@@ -45,7 +45,6 @@ return new class extends Migration
                 ->constrained('transports')->noActionOnDelete();
 
 
-
                 //служебнеы поля
             $table->boolean('add_load_space')->default(false)->comment('Возможен ли догруз');
             $table->boolean('change_price')->default(false)->comment('Возможна изменения цены (торг)');

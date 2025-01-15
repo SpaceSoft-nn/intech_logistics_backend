@@ -2,21 +2,19 @@
 
 namespace Database\Seeders;
 
-use App\Modules\Notification\Domain\Models\EmailList;
-use App\Modules\Notification\Domain\Models\PhoneList;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
-use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
-use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
-use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Organization\Domain\Services\OrganizationService;
-use App\Modules\User\Domain\Models\User;
 use Arr;
 use Illuminate\Database\Seeder;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\Notification\Domain\Models\EmailList;
+use App\Modules\Notification\Domain\Models\PhoneList;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
+use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
+use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
+use App\Modules\Organization\Domain\Services\OrganizationService;
+use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 
 class ProdeSeed extends Seeder
 {
@@ -56,7 +54,6 @@ class ProdeSeed extends Seeder
             typeCabinet: TypeCabinetEnum::сarrier,
             userValue: $user,
         );
-
 
     }
 

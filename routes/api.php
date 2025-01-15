@@ -211,7 +211,7 @@ Route::prefix('/individual-people')->group(function () {
 Route::prefix('/tenders')->group(function () {
 
     Route::post('/', [LotTenderController::class, 'store']);
-    Route::get('/', [LotTenderController::class, 'index'])->whereUuid('agreementDocumentTender');
+    Route::get('/', [LotTenderController::class, 'index']);
     Route::get('/{lotTender}', [LotTenderController::class, 'show'])->whereUuid('lotTender');
 
     {
@@ -224,7 +224,7 @@ Route::prefix('/tenders')->group(function () {
         // Выбор "создателем тендера" - перевозчика на выполнение тендера
         Route::post('/{lotTenderResponse}/agreement-tender', [ResponseTenderController::class, 'agreementTender'])->whereUuid('lotTenderResponse');
 
-        //Подтверждения соглашения с двух сторон, о взятие тендера и работу со стороны перевозчика, и отдачи в работу со стороны создателя тендера, создание заказов после утверждения
+        //Подтверждения соглашения с двух сторон, о взятие тендера и работу со стороны перевозчика, и отдачи в работу со стороны создателя тендера, !создание заказов после утверждения!
         Route::post('/{agreementTenderAccept}/agreement-tender-accept', [ResponseTenderController::class, 'agreementTenderAccept'])->whereUuid('agreementTenderAccept');
 
         //Получить все заказы по тендеру

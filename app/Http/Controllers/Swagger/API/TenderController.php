@@ -20,7 +20,16 @@ namespace App\Http\Controllers\Swagger\API;
 *             @OA\Property(property="date_start", type="string", format="date", description="Дата начала", example="2023-10-01"),
 *             @OA\Property(property="organization_id", type="string", format="uuid", description="UUID организации", example="123e4567-e89b-12d3-a456-426614174000"),
 *             @OA\Property(property="period", type="integer", description="Период", example=30),
-*             @OA\Property(property="day_period", type="integer", description="Дневной период", example=5),
+*             @OA\Property(
+*                 property="week_period",
+*                 type="array",
+*                 description="**Дни недели**",
+*                 @OA\Items(
+*                     type="string",
+*                     enum={"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"},
+*                     example="friday"
+*                 )
+*             ),
 *             @OA\Property(property="agreement_document", type="string", format="binary", description="Документ соглашения"),
 *             @OA\Property(
 *                 property="application_document",

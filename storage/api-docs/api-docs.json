@@ -4133,10 +4133,22 @@
                                         "type": "integer",
                                         "example": 30
                                     },
-                                    "day_period": {
-                                        "description": "Дневной период",
-                                        "type": "integer",
-                                        "example": 5
+                                    "week_period": {
+                                        "description": "**Дни недели**",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "enum": [
+                                                "monday",
+                                                "tuesday",
+                                                "wednesday",
+                                                "thursday",
+                                                "friday",
+                                                "saturday",
+                                                "sunday"
+                                            ],
+                                            "example": "friday"
+                                        }
                                     },
                                     "agreement_document": {
                                         "description": "Документ соглашения",

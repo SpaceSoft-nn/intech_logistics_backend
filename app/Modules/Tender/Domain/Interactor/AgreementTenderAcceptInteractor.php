@@ -42,8 +42,7 @@ final class AgreementTenderAcceptInteractor
 
 
         //проверять что соглашения подписаны с обоих сторон
-        // if($agreementTenderAccept->tender_creater_bool && $agreementTenderAccept->contractor_bool)
-        if(true)
+        if($agreementTenderAccept->tender_creater_bool && $agreementTenderAccept->contractor_bool)
         {
             /** @var AgreementTender */
             $agreement_tender = $agreementTenderAccept->agreement_tender;

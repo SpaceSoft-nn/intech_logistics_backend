@@ -2,14 +2,14 @@
 
 namespace App\Modules\OrderUnit\Domain\Interactor\Order;
 
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
-use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
-use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitCreateAction;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use DB;
 use Exception;
-
 use function App\Helpers\Mylog;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
+
+use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitCreateAction;
 
 // Бизнес логика для создание заказа, когда заказ создатёся от Тендера
 class CreateOrderUnitHasTenderInteractor
@@ -65,7 +65,7 @@ class CreateOrderUnitHasTenderInteractor
 
         if(is_null($vo->order_status)) {
             //Если статус заказа не указан, устанавливаем что он в статусе: предзаказ
-            $vo->order_status = StatusOrderUnitEnum::pre_order;
+            $vo = $vo->setOrderStatus(StatusOrderUnitEnum::pre_order);
         }
 
         return OrderUnitCreateAction::make($vo);

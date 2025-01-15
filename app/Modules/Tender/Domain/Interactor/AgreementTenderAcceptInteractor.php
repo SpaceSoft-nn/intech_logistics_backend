@@ -50,8 +50,6 @@ final class AgreementTenderAcceptInteractor
 
             DB::transaction(function () use ($agreement_tender) {
 
-
-
                 /** @var LotTender lockForUpdate - блокируем для обновления */
                 $lot_tender = $agreement_tender->lot_tender->lockForUpdate()->first();
 
@@ -132,7 +130,7 @@ final class AgreementTenderAcceptInteractor
                             foreach ($lot_tender->week_period as $object) {
 
                                 // Проверяем, является ли текущий день недели нужным
-                                if ( $weekCarbonToEnum == $object->value )
+                                if ( $weekCarbonToEnum === $object->value )
                                 {
                                     $resultDates[] = $currentDate->format('d-m-Y'); // Добавляем дату в массив
                                 }
@@ -168,14 +166,15 @@ final class AgreementTenderAcceptInteractor
                             dto: OrderUnitCreateDTO::make(orderUnitVO: $orderUnitVO)
                         );
 
-                    }
 
+
+                    }
 
                 }
 
-
                 $lot_tender->status_tender = StatusTenderEnum::in_work; #TODO Решить потом какой статус ставить?
                 $lot_tender->save();
+
             });
 
         }

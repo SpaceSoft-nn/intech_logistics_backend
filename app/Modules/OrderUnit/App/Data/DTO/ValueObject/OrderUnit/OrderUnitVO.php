@@ -15,11 +15,14 @@ readonly class  OrderUnitVO implements Arrayable
 
     public function __construct(
 
+        //date
         public string $end_date_order,
         public ?string $exemplary_date_start, // примерная дата отправки
+
         public ?float $body_volume,
         public string $order_total,
 
+        //enum
         public TypeTransportWeight $type_transport_weight,
         public TypeLoadingTruckMethod $type_load_truck,
         public ?StatusOrderUnitEnum $order_status,
@@ -30,6 +33,7 @@ readonly class  OrderUnitVO implements Arrayable
         public ?string $user_id,
         public ?string $contractor_id,
 
+        //bool
         public ?bool $add_load_space,
         public ?bool $change_price,
         public ?bool $change_time,
@@ -141,6 +145,32 @@ readonly class  OrderUnitVO implements Arrayable
 
             user_id: $this->user_id,
             contractor_id: $contractor_id,
+            organization_id: $this->organization_id,
+
+            add_load_space: $this->add_load_space,
+            change_price: $this->change_price,
+            change_time: $this->change_time,
+            lot_tender_id: $this->lot_tender_id,
+        );
+    }
+
+    public function setOrderStatus(StatusOrderUnitEnum $orderStatus) : self
+    {
+        return new self (
+            body_volume: $this->body_volume,
+            order_total: $this->order_total,
+            description: $this->description,
+
+            //date
+            end_date_order: $this->end_date_order,
+            exemplary_date_start: $this->exemplary_date_start,
+
+            type_load_truck: $this->type_load_truck,
+            type_transport_weight: $this->type_transport_weight,
+            order_status: $orderStatus,
+
+            user_id: $this->user_id,
+            contractor_id: $this->contractor_id,
             organization_id: $this->organization_id,
 
             add_load_space: $this->add_load_space,

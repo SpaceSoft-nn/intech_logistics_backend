@@ -10,8 +10,6 @@ use App\Modules\InteractorModules\Registration\Domain\Services\RegistrationServi
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\Domain\Models\User;
-use DB;
-use Illuminate\Database\Eloquent\Model;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;

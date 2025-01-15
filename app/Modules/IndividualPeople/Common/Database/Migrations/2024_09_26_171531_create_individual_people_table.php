@@ -26,6 +26,10 @@ return new class extends Migration
             $table->mediumText('comment')->nullable();
             $table->string('remuved')->default(false)->comment('Статус удаление');
 
+            $table->uuid('individualable_id')->nullable();
+            $table->string('individualable_type')->nullable();
+
+
             $table->uuid('personal_area_id')
                 ->constrained('personal_area', 'id')->noActionOnDelete();
 

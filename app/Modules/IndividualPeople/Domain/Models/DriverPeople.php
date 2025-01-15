@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class DriverPeople extends Model
 {
@@ -48,5 +49,10 @@ class DriverPeople extends Model
     public function transport() : HasOne
     {
         return $this->hasOne(Transport::class ,'driver_id');
+    }
+
+    public function individual_people(): MorphOne
+    {
+        return $this->morphOne(IndividualPeople::class, 'individualable');
     }
 }

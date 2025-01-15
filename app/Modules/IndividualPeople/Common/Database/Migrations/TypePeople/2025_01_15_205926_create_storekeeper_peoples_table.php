@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('storekeeper_peoples', function (Blueprint $table) {
 
-            $table->id();
-
             $table->uuid('id')->primary();
 
             $table->uuid('personal_area_id')

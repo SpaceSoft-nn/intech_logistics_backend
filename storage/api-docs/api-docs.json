@@ -4009,6 +4009,229 @@
                 }
             }
         },
+        "/api/individual-people/storekeeper": {
+            "get": {
+                "tags": [
+                    "StorekeeperPeople"
+                ],
+                "summary": "Получить список кладовщиков",
+                "operationId": "be8afdd04d2e42a7bb94d683ed963d74",
+                "responses": {
+                    "200": {
+                        "description": "Список кладовщиков",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/StorekeeperPeopleResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return all storekeeper people."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "StorekeeperPeople"
+                ],
+                "summary": "Создать нового кладовщика",
+                "operationId": "73bdc419d8f25d3c7d4a100429b5e541",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "personal_area_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "individual_people_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "organization_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Кладовщик создан",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/StorekeeperPeopleResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Create storekeeper people."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка при создании кладовщика",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Failed create storekeeper people."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/individual-people/storekeeper/{storekeeper}": {
+            "get": {
+                "tags": [
+                    "StorekeeperPeople"
+                ],
+                "summary": "Получить информацию о конкретном кладовщике",
+                "operationId": "7b6c28130f9982c46e14fc0c8b21093a",
+                "parameters": [
+                    {
+                        "name": "storekeeper",
+                        "in": "path",
+                        "description": "UUID кладовщика",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Информация о кладовщике",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/StorekeeperPeopleResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return storekeeper people for uuid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Кладовщик не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Такого кладовщика не существует."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Общая ошибка сервера."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/tenders": {
             "get": {
                 "tags": [
@@ -7137,6 +7360,37 @@
                 },
                 "type": "object"
             },
+            "StorekeeperPeopleResource": {
+                "title": "StorekeeperPeopleResource",
+                "description": "Storekeeper People Resource",
+                "properties": {
+                    "id_storekeeper_people": {
+                        "description": "UUID of the driver person",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "personal_area_id": {
+                        "description": "UUID of the personal area",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "individual_people_id": {
+                        "description": "UUID of the individual person",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "organization_id": {
+                        "description": "UUID of the organization",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    }
+                },
+                "type": "object"
+            },
             "BearerToken": {
                 "title": "Bearer Token Object",
                 "properties": {
@@ -7267,6 +7521,10 @@
         {
             "name": "Region Economic",
             "description": "Region Economic"
+        },
+        {
+            "name": "StorekeeperPeople",
+            "description": "StorekeeperPeople"
         },
         {
             "name": "Tender",

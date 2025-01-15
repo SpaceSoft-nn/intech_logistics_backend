@@ -1,25 +1,26 @@
 <?php
 
-use App\Http\Controllers\API\Address\AddressController;
-use App\Http\Controllers\API\Auth\LoginController;
-use App\Http\Controllers\API\Auth\RegistrationController;
-use App\Http\Controllers\API\IndividualPeople\IndividualPeopleController;
-use App\Http\Controllers\API\IndividualPeople\TypePeople\DriverPeopleController;
-use App\Http\Controllers\API\Matrix\MatrixDistanceController;
-use App\Http\Controllers\API\Matrix\RegionEconomicFactorController;
-use App\Http\Controllers\API\Notification\NotificationController;
-use App\Http\Controllers\API\OfferContractor\OfferContractorController;
-use App\Http\Controllers\API\OrderUnit\AgreementOrderUnitController;
-use App\Http\Controllers\API\OrderUnit\OrderUnitController;
-use App\Http\Controllers\API\Organization\OrganizationController;
-use App\Http\Controllers\API\Tender\LotTenderController\LotTenderController;
-use App\Http\Controllers\API\Tender\ResponseTenderController\ResponseTenderController;
-use App\Http\Controllers\API\Test\TestController;
-use App\Http\Controllers\API\Transfer\TransferContoller;
-use App\Http\Controllers\API\Transport\TransportController;
-use App\Http\Controllers\API\User\UserController;
-use App\Modules\Auth\Presentation\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\Test\TestController;
+use App\Http\Controllers\API\User\UserController;
+use App\Http\Controllers\API\Auth\LoginController;
+use App\Http\Controllers\API\Address\AddressController;
+use App\Http\Controllers\API\Transfer\TransferContoller;
+use App\Http\Controllers\API\Auth\RegistrationController;
+use App\Http\Controllers\API\OrderUnit\OrderUnitController;
+use App\Http\Controllers\API\Transport\TransportController;
+use App\Http\Controllers\API\Matrix\MatrixDistanceController;
+use App\Http\Controllers\API\Notification\NotificationController;
+use App\Http\Controllers\API\Organization\OrganizationController;
+use App\Modules\Auth\Presentation\Http\Controllers\AuthController;
+use App\Http\Controllers\API\Matrix\RegionEconomicFactorController;
+use App\Http\Controllers\API\OrderUnit\AgreementOrderUnitController;
+use App\Http\Controllers\API\OfferContractor\OfferContractorController;
+use App\Http\Controllers\API\IndividualPeople\IndividualPeopleController;
+use App\Http\Controllers\API\Tender\LotTenderController\LotTenderController;
+use App\Http\Controllers\API\IndividualPeople\TypePeople\DriverPeopleController;
+use App\Http\Controllers\API\IndividualPeople\TypePeople\StorekeeperPeopleController;
+use App\Http\Controllers\API\Tender\ResponseTenderController\ResponseTenderController;
 
 
 Route::post('/registration', RegistrationController::class);
@@ -202,6 +203,14 @@ Route::prefix('/individual-people')->group(function () {
         Route::get('/', [DriverPeopleController::class, 'index']);
         Route::get('/{driverPeople}', [DriverPeopleController::class, 'show'])->whereUuid('driverPeople');
         Route::post('/', [DriverPeopleController::class, 'store']);
+
+    });
+
+    Route::prefix('/storekeepers')->group(function () {
+
+        Route::get('/', [StorekeeperPeopleController::class, 'index']);
+        Route::get('/{storekeeper}', [StorekeeperPeopleController::class, 'show'])->whereUuid('storekeeper');
+        Route::post('/', [StorekeeperPeopleController::class, 'store']);
 
     });
 

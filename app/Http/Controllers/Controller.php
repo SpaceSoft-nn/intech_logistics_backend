@@ -749,6 +749,41 @@ namespace App\Http\Controllers;
 *     ),
 * ),
 *
+* @OA\Schema(
+*     schema="StorekeeperPeopleResource",
+*     type="object",
+*     title="StorekeeperPeopleResource",
+*     description="Storekeeper People Resource",
+*     @OA\Property(
+*         property="id_storekeeper_people",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the driver person",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="personal_area_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the personal area",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="individual_people_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the individual person",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="organization_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the organization",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+* ),
+*
 */
 abstract class Controller
 {

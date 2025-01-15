@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
+use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
+use App\Modules\IndividualPeople\Domain\Models\StorekeeperPeople;
 use Illuminate\Database\Seeder;
-use App\Modules\User\Domain\Models\User;
-use App\Modules\Notification\Domain\Models\EmailList;
-use App\Modules\Notification\Domain\Models\PhoneList;
+
 
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
         $this->call([
 
                 //Нужны первые сиды
@@ -39,6 +41,9 @@ class DatabaseSeeder extends Seeder
 
                 //Здесь будут создавать предложения от перевозчика
             \App\Modules\OfferContractor\Common\Database\Seeders\OfferContractorSeeder::class,
+
+                //Сидлы для кладовщиков
+            \App\Modules\IndividualPeople\Common\Database\Seeders\StorekeeperPeopleSeed::class,
 
 
             //Сиды для прода (Презентации)

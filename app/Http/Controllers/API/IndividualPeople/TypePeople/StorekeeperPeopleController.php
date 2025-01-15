@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\API\IndividualPeople\TypePeople;
 
 use App\Http\Controllers\Controller;
-use App\Modules\IndividualPeople\App\Data\ValueObject\DriverPeopleVO;
-use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
-use App\Modules\IndividualPeople\Domain\Models\StorekeeperPeople;
-use App\Modules\IndividualPeople\Domain\Requests\TypePeoples\CreateDriverPeopleRequest;
-use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleCollection;
-use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleResource;
-use App\Modules\IndividualPeople\Domain\Services\TypePeople\DriverPeopleService;
-use App\Modules\IndividualPeople\Domain\Services\TypePeople\StorekeeperPeopleService;
+use App\Modules\IndividualPeople\App\Data\ValueObject\StorekeeperPeopleVO;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use App\Modules\IndividualPeople\Domain\Models\StorekeeperPeople;
+use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleResource;
+use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleCollection;
+use App\Modules\IndividualPeople\Domain\Services\TypePeople\StorekeeperPeopleService;
+use App\Modules\IndividualPeople\Domain\Requests\TypePeoples\CreateStorekeeperPeopleRequest;
+use App\Modules\IndividualPeople\Domain\Resources\TypePeople\StorekeeperPeopleCollection;
+use App\Modules\IndividualPeople\Domain\Resources\TypePeople\StorekeeperPeopleResource;
 
 class StorekeeperPeopleController extends Controller
 {
@@ -22,32 +22,32 @@ class StorekeeperPeopleController extends Controller
     {
         $driverPeoples = StorekeeperPeople::all();
 
-        return response()->json(array_success(DriverPeopleCollection::make($driverPeoples), 'Return all storekeeper people.'), 200);
+        return response()->json(array_success(StorekeeperPeopleCollection::make($driverPeoples), 'Return all storekeeper people.'), 200);
     }
 
 
     public function show(
         StorekeeperPeople $storekeeperPeople
     ) {
-        return response()->json(array_success(DriverPeopleResource::make($storekeeperPeople), 'Return storekeeper people for uuid.'), 200);
+        return response()->json(array_success(StorekeeperPeopleResource::make($storekeeperPeople), 'Return storekeeper people for uuid.'), 200);
     }
 
     public function store(
-        CreateDriverPeopleRequest $request,
+        CreateStorekeeperPeopleRequest $request,
         StorekeeperPeopleService $service,
     ) {
 
         /**
          * @var StorekeeperPeopleVO
          */
-        $storekeeperPeopleVO = $request->createDriverPeopleVO();
+        $storekeeperPeopleVO = $request->createStorekeeperPeopleVO();
 
         $model = $service->createStorekeeperPeople($storekeeperPeopleVO);
 
         return $model ?
-            response()->json(array_success(DriverPeopleResource::make($model), 'Create driver people.'), 201)
+            response()->json(array_success(StorekeeperPeopleResource::make($model), 'Create storekeeper people.'), 201)
             :
-            response()->json(array_error(DriverPeopleResource::make($model), 'Faild create driver people.'), 404);
+            response()->json(array_error(null, 'Faild create storekeeper people.'), 404);
     }
 
 

@@ -6,6 +6,7 @@ use App\Modules\IndividualPeople\Domain\Factories\IndividualPeopleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  *
@@ -115,5 +116,11 @@ class IndividualPeople extends Model
     public function driverPeople()
     {
         return $this->hasOne(DriverPeople::class, 'individual_people_id');
+    }
+
+    //полимофрное отношения к Роли: Водитель, Кладовщик и т.д
+    public function individualable(): MorphTo
+    {
+        return $this->morphTo(__FUNCTION__, 'individualable_type', 'individualable_id');
     }
 }

@@ -6,6 +6,7 @@ use App\Modules\IndividualPeople\Domain\Factories\StorekeeperPeopleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class StorekeeperPeople extends Model
 {
@@ -37,6 +38,11 @@ class StorekeeperPeople extends Model
         return [
 
         ];
+    }
+
+    public function individual_people(): MorphOne
+    {
+        return $this->morphOne(IndividualPeople::class, 'individualable');
     }
 
 }

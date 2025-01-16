@@ -66,8 +66,8 @@ final readonly class AvizoPhoneVO implements Arrayable
     public static function fromArrayToObject(array $data) : self
     {
         return self::make(
-            sender: Arr::get($data, 'sender'),
-            confirming: Arr::get($data, 'confirming'),
+            sender: Arr::get($data, 'phone_sender'),
+            confirming: Arr::get($data, 'phone_confirmation'),
         );
     }
 }

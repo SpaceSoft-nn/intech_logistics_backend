@@ -39,7 +39,7 @@ class AvizoPhone extends Model
     protected function casts(): array
     {
         return [
-           'status_confirmation' => 'bolean',
+           'status_confirmation' => 'boolean',
         ];
     }
 

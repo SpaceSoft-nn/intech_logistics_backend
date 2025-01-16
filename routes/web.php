@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Avizo\AvizoEmailController;
+use App\Http\Controllers\API\Avizo\AvizoPhoneController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,7 @@ Route::prefix('/avizos')->group(function () {
         Route::any('/{uuid}/confirm', [AvizoEmailController::class, 'confirm'])->name('avizos.emails.confirm')->whereUuid('uuid');
 
     });
+
 
 });
 

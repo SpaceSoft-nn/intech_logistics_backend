@@ -2,7 +2,9 @@
 
 namespace App\Modules\Avizo\Domain\Requests\AvizoPhone;
 
+use App\Modules\Avizo\App\Data\ValueObject\AvizoPhoneVO;
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\Notification\Domain\Rule\PhoneRule;
 
 class CreateAvizoPhoneRequest extends ApiRequest
 {
@@ -16,8 +18,14 @@ class CreateAvizoPhoneRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'organization_order_units_invoce_id' => ['required', 'uuid', 'exists:organization_order_unit_invoces,id'], // organization_order_units_invoce Откликнувшиеся перевозчики на заказ (Order)
+           "phone_sender" => ['required', "numeric", "regex:/^(7|8)(\d{10})$/"], //отрпавитель
+           "phone_confirmation" => ['required', "numeric", "regex:/^(7|8)(\d{10})$/"], //подтвреждающий
         ];
+    }
+
+    public function createAvisoEmailVO() : AvizoPhoneVO
+    {
+        return AvizoPhoneVO::fromArrayToObject($this->validated());
     }
 
 }

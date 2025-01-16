@@ -8,6 +8,7 @@ use App\Http\Controllers\API\Address\AddressController;
 use App\Http\Controllers\API\Transfer\TransferContoller;
 use App\Http\Controllers\API\Auth\RegistrationController;
 use App\Http\Controllers\API\Avizo\AvizoEmailController;
+use App\Http\Controllers\API\Avizo\AvizoPhoneController;
 use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Transport\TransportController;
 use App\Http\Controllers\API\Matrix\MatrixDistanceController;
@@ -260,8 +261,9 @@ Route::prefix('/avizos')->group(function () {
 
     Route::prefix('/phones')->group(function () {
 
-        Route::post('/', [AvizoEmailController::class, 'store']);
-        Route::post('/{uuid}/confirm', [AvizoEmailController::class, 'confirm']);
+        Route::post('/', [AvizoPhoneController::class, 'store']);
+
+        Route::post('/confirm', [AvizoPhoneController::class, 'confirm']);
 
     });
 

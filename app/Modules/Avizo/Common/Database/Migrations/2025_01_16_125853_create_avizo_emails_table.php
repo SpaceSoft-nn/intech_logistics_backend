@@ -12,20 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('avizo_emails', function (Blueprint $table) {
-            $table->id();
 
-            $table->string('sender')->comment('Отправитель подтверждения');
-            $table->string('confirming')->comment('Подтверждающий');
+            $table->uuid('id')->primary();
 
             $table->string('sender')->comment('Отправитель');
             $table->string('confirming')->comment('Подтверждающий');
 
-            $table->boolean('status_sender')->comment('Статус подтверждения со стороны отправителя');
-            $table->boolean('status_confirming')->comment('Статус подтверждения со стороны подтверждающего');
+            // $table->boolean('status_sender')->comment('Статус подтверждения со стороны отправителя');
+            $table->boolean('status_confirmation')->comment('Статус подтверждения со стороны подтверждающего');
 
             $table->string('url')->comment('Url для подтверждения');
-            $table->string('code_liftime')->comment('Время жизни кода');
-
+            
+            $table->uuid('uuid')->comment('uuid подтврждения');
+            $table->string('url_liftime')->comment('Время жизни кода');
 
 
             $table->timestamps();

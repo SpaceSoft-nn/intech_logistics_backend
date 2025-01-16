@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('confirming')->comment('Подтверждающий');
 
 
-            $table->boolean('status_sender')->default(true)->comment('Статус подтверждения со стороны отправителя'); //иницаитор отправления, всегда должен быть bool в подтверждении статуса
-            $table->boolean('status_confirming')->default(false)->comment('Статус подтверждения со стороны подтверждающего');
+            // $table->boolean('status_sender')->default(true)->comment('Статус подтверждения со стороны отправителя'); //иницаитор отправления, всегда должен быть bool в подтверждении статуса
+            $table->boolean('status_confirmation')->default(false)->comment('Статус подтверждения со стороны подтверждающего');
 
             $table->string('code')->comment('Код для подтврждения');
             $table->string('code_liftime')->comment('Время жизни кода');

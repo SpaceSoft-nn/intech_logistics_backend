@@ -7,6 +7,7 @@ use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Address\AddressController;
 use App\Http\Controllers\API\Transfer\TransferContoller;
 use App\Http\Controllers\API\Auth\RegistrationController;
+use App\Http\Controllers\API\Avizo\AvizoEmailController;
 use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Transport\TransportController;
 use App\Http\Controllers\API\Matrix\MatrixDistanceController;
@@ -243,6 +244,23 @@ Route::prefix('/tenders')->group(function () {
         Route::patch('/{lotTender}/orders/{orderUnit}', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender', 'orderUnit');
 
     }
+
+});
+
+Route::prefix('/avizos')->group(function () {
+
+    Route::prefix('/emails')->group(function () {
+
+        Route::post('/', [AvizoEmailController::class, 'store']);
+        Route::post('/{uuid}/confirm', [AvizoEmailController::class, 'store']);
+
+    });
+
+    Route::prefix('/phones')->group(function () {
+
+
+
+    });
 
 });
 

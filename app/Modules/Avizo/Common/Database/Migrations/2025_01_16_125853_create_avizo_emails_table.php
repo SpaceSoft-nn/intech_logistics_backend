@@ -22,8 +22,8 @@ return new class extends Migration
             $table->boolean('status_confirmation')->comment('Статус подтверждения со стороны подтверждающего');
 
             $table->string('url')->comment('Url для подтверждения');
-            
-            $table->uuid('uuid')->comment('uuid подтврждения');
+
+            $table->uuid('uuid')->index()->comment('uuid подтврждения');
             $table->string('url_liftime')->comment('Время жизни кода');
 
 

@@ -34,6 +34,7 @@ final readonly class AvizoEmailVO implements Arrayable
 
     ) : self {
 
+
         $uuid = uuid();
         $url = '/avizos/emails/' . $uuid . '/confirm';
 
@@ -44,6 +45,7 @@ final readonly class AvizoEmailVO implements Arrayable
 
        $object = new self();
 
+
        $object->sender = $sender;
        $object->confirming = $confirming;
        $object->url = $url;
@@ -52,7 +54,6 @@ final readonly class AvizoEmailVO implements Arrayable
        $object->status_confirmation = $status_confirmation;
 
        return $object;
-
     }
 
 
@@ -68,11 +69,11 @@ final readonly class AvizoEmailVO implements Arrayable
         ];
     }
 
-    public function fromArrayToObject(array $data) : self
+    public static function fromArrayToObject(array $data) : self
     {
         return self::make(
-            sender: Arr::get($data, 'sender'),
-            confirming: Arr::get($data, 'sender'),
+            sender: Arr::get($data, 'email_sender'),
+            confirming: Arr::get($data, 'email_confirmation'),
         );
     }
 }

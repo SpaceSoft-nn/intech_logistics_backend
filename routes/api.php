@@ -252,7 +252,9 @@ Route::prefix('/avizos')->group(function () {
     Route::prefix('/emails')->group(function () {
 
         Route::post('/', [AvizoEmailController::class, 'store']);
-        Route::post('/{uuid}/confirm', [AvizoEmailController::class, 'confirm']);
+
+        //Перенесён в web
+        // Route::post('/{uuid}/confirm', [AvizoEmailController::class, 'confirm'])->name('avizos.emails.confirm');
 
     });
 

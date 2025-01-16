@@ -26,6 +26,7 @@ class AvizoEmail extends Model
         "confirming",
 
         "status_confirmation",
+        "uuid",
 
         "url",
         "url_liftime",
@@ -41,7 +42,7 @@ class AvizoEmail extends Model
     protected function casts(): array
     {
         return [
-            'status_confirmation' => 'bolean',
+            'status_confirmation' => 'boolean',
         ];
     }
 

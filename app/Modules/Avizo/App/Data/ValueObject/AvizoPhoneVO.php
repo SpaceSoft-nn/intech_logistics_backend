@@ -7,7 +7,6 @@ use Arr;
 use Illuminate\Contracts\Support\Arrayable;
 
 use function App\Helpers\code;
-use function App\Helpers\uuid;
 
 final readonly class AvizoPhoneVO implements Arrayable
 {
@@ -64,11 +63,11 @@ final readonly class AvizoPhoneVO implements Arrayable
         ];
     }
 
-    public function fromArrayToObject(array $data) : self
+    public static function fromArrayToObject(array $data) : self
     {
         return self::make(
             sender: Arr::get($data, 'sender'),
-            confirming: Arr::get($data, 'sender'),
+            confirming: Arr::get($data, 'confirming'),
         );
     }
 }

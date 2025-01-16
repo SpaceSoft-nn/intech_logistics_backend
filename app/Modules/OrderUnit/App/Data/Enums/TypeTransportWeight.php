@@ -13,7 +13,7 @@ enum TypeTransportWeight : string
     case medium = 'до 3 тонны';
     case large = 'до 5 тонны';
     case extraLarge = 'до 10 тонны';
-    case superSize = 'более 10 тонны';
+    case superSize = 'более 10 тонн';
 
     // Пример использования
     function getWeightCategoryDescription(TypeTransportWeight $category): string {

@@ -3,8 +3,9 @@
 
 
 return [
-    App\Providers\AppServiceProvider::class,
 
+    App\Providers\AppServiceProvider::class,
+    
         #Custom Service
     App\Modules\Notification\App\Providers\Notification\NotificationServiceProvider::class,
     App\Modules\User\App\Providers\UserServiceProvider::class,
@@ -21,6 +22,7 @@ return [
     App\Modules\InteractorModules\AgreementTransfer\App\Providers\AgreementTransferServiceProvider::class,
     App\Modules\OfferContractor\App\Providers\OfferContractorServiceProvider::class,
     App\Modules\Tender\App\Providers\TenderServiceProvider::class,
+    App\Modules\Avizo\App\Providers\AvizoServiceProvider::class,
 
         #Interactor Service
     App\Modules\InteractorModules\AddressOrder\App\Providers\AddressOrderServiceProvide::class,

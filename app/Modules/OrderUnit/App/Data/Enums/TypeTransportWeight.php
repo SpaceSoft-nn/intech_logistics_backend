@@ -8,15 +8,17 @@ use Exception;
 enum TypeTransportWeight : string
 {
 
-    case small = '1.5 - 3 тонны';
-    case medium = '5 - 10 тонн';
-    case large = '10 - 20 тонн';
-    case extraLarge = '20 - 40 тонн';
-    case superSize = 'Более 40 тонн';
+    case extraSmall = 'до 0.8 тонны';
+    case small = 'до 1.5 тонны';
+    case medium = 'до 3 тонны';
+    case large = 'до 5 тонны';
+    case extraLarge = 'до 10 тонны';
+    case superSize = 'более 10 тонны';
 
     // Пример использования
     function getWeightCategoryDescription(TypeTransportWeight $category): string {
         return match($category) {
+            TypeTransportWeight::extraSmall => 'Сверх Маленькая категория груза:' . TypeTransportWeight::extraSmall->value,
             TypeTransportWeight::small => 'Маленькая категория груза:' . TypeTransportWeight::small->value,
             TypeTransportWeight::medium => 'Средняя категория груза:' . TypeTransportWeight::medium->value,
             TypeTransportWeight::large => 'Большая категория груза:' . TypeTransportWeight::large->value,
@@ -36,6 +38,7 @@ enum TypeTransportWeight : string
     public static function stringByCaseToObject(?string $value) : self
     {
         return match ($value) {
+            "extraSmall" => TypeTransportWeight::small,
             "small" => TypeTransportWeight::small,
             "medium" => TypeTransportWeight::medium,
             "large" => TypeTransportWeight::large,
@@ -54,11 +57,12 @@ enum TypeTransportWeight : string
     public static function stringValueCaseToObject(string $value) : self
     {
         return match ($value) {
-            "1.5 - 3 тонны" => TypeTransportWeight::small,
-            "5 - 10 тонн" => TypeTransportWeight::medium,
-            "10 - 20 тонн" => TypeTransportWeight::large,
-            "20 - 40 тонн" => TypeTransportWeight::extraLarge,
-            "Более 40 тонн" => TypeTransportWeight::superSize,
+            'до 0.8 тонны'  => TypeTransportWeight::extraSmall,
+            'до 1.5 тонны'  => TypeTransportWeight::small,
+            'до 3 тонны'  => TypeTransportWeight::medium,
+            'до 5 тонны'  => TypeTransportWeight::large,
+            'до 10 тонны'  => TypeTransportWeight::extraLarge,
+            'более 10 тонны'  => TypeTransportWeight::superSize,
             default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
         };
     }
@@ -67,7 +71,7 @@ enum TypeTransportWeight : string
 
 
 // ### Самые распространенные грузоподъемности в России:
-
+#TODO Чуть поменяли максимальную загруженность
 // - 1,5 - 3 тонны:
 //   - Часто используются для небольших коммерческих перевозок и доставки товаров в городских условиях.
 //   - Примеры: малотоннажные грузовики типа "Газель".

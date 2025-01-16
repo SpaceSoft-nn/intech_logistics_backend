@@ -9,7 +9,7 @@ use Exception;
 
 use function App\Helpers\Mylog;
 
-class CreateWeekPeriodAction
+class CreateAvizoPhoneAction
 {
 
     public static function make(AvizoPhoneVO $vo) : AvizoPhone

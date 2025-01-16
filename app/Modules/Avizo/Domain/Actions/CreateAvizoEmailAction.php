@@ -8,7 +8,7 @@ use Exception;
 
 use function App\Helpers\Mylog;
 
-class CreateWeekPeriodAction
+class CreateAvizoEmailAction
 {
 
     public static function make(AvizoEmailVO $vo) : AvizoEmail

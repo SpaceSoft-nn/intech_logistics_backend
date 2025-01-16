@@ -45,8 +45,9 @@ class NotificationChannelService implements INotificationChannel
      */
     private function InteractorSendEmail(SendNotificationDTO $dto) : array
     {
-        return DB::transaction(function () use ($dto)
-        {
+        /** @var array */
+        $array = DB::transaction(function () use ($dto) {
+
             //объединение логики создание записей в интерактор send+list table
             $interactor = app(InteractorSendNotification::class);
             $status = $interactor->runSendEmail($dto);
@@ -74,6 +75,8 @@ class NotificationChannelService implements INotificationChannel
             ];
         });
 
+        return $array;
+
     }
 
     /**
@@ -84,8 +87,8 @@ class NotificationChannelService implements INotificationChannel
      */
     private function InteractorSendPhone(SendNotificationDTO $dto) : array
     {
-        return DB::transaction(function () use ($dto)
-        {
+        /** @var array */
+        $array = DB::transaction(function () use ($dto) {
             //объединение логики создание записей в интерактор send+list table
             $interactor = app(InteractorSendNotification::class);
             $status = $interactor->runSendPhone($dto);
@@ -108,6 +111,8 @@ class NotificationChannelService implements INotificationChannel
             ];
 
         });
+
+        return $array;
 
     }
 

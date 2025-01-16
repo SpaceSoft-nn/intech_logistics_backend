@@ -2,13 +2,12 @@
 
 namespace App\Helpers;
 
-use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
-use App\Modules\Base\Error\BusinessException;
-use App\Modules\User\Domain\Models\User;
 use DateTime;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\Log;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\Base\Error\BusinessException;
+use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
 
 if (!function_exists('array_error'))
 {
@@ -130,6 +129,15 @@ if (!function_exists('isNullToBusinessException'))
         }
 
     }
+}
+
+if (!function_exists('code')) {
+
+    function code() : int
+    {
+        return rand(100_000, 999_999);
+    }
+
 }
 
 

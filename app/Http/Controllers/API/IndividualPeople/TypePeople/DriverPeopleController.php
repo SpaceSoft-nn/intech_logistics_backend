@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\IndividualPeople\TypePeople;
 
 use App\Http\Controllers\Controller;
+use App\Modules\IndividualPeople\App\Data\DTO\CreateDriverPeopleDTO;
 use App\Modules\IndividualPeople\App\Data\ValueObject\DriverPeopleVO;
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Requests\TypePeoples\CreateDriverPeopleRequest;
@@ -20,6 +21,8 @@ class DriverPeopleController extends Controller
     {
         $driverPeoples = DriverPeople::all();
 
+        dd($driverPeoples[0]);
+
         return response()->json(array_success(DriverPeopleCollection::make($driverPeoples), 'Return all driver people.'), 200);
     }
 
@@ -36,11 +39,11 @@ class DriverPeopleController extends Controller
     ) {
 
         /**
-         * @var DriverPeopleVO
+         * @var CreateDriverPeopleDTO
          */
-        $driverPeopleVO = $request->createDriverPeopleVO();
+        $createDriverPeopleDTO = $request->createDriverPeopleDTO();
 
-        $model = $service->createDriverPeople($driverPeopleVO);
+        $model = $service->createDriverPeople($createDriverPeopleDTO);
 
         return $model ?
             response()->json(array_success(DriverPeopleResource::make($model), 'Create driver people.'), 201)

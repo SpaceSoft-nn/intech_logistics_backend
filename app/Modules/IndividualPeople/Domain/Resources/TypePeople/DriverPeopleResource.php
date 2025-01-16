@@ -2,6 +2,7 @@
 
 namespace App\Modules\IndividualPeople\Domain\Resources\TypePeople;
 
+use App\Modules\IndividualPeople\Domain\Resources\IndividualPeopleResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,7 +16,7 @@ class DriverPeopleResource extends JsonResource
             "id_driver_people" => $this->id,
 
             "personal_area_id" => $this->personal_area_id,
-            "individual_people_id" => $this->individual_people_id,
+            "individual_people_id" => $this->individual_people,
             "organization_id" => $this->organization_id,
 
             "series" => $this->series,

@@ -3,6 +3,7 @@
 namespace App\Modules\IndividualPeople\Domain\Requests\TypePeoples;
 
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\IndividualPeople\App\Data\DTO\CreateDriverPeopleDTO;
 use App\Modules\IndividualPeople\App\Data\ValueObject\DriverPeopleVO;
 
 class CreateDriverPeopleRequest extends ApiRequest
@@ -33,5 +34,17 @@ class CreateDriverPeopleRequest extends ApiRequest
     {
         return DriverPeopleVO::fromArrayToObject($this->validated());
     }
+
+    public function createDriverPeopleDTO() : CreateDriverPeopleDTO
+    {
+
+        $validated = $this->validated();
+
+        return CreateDriverPeopleDTO::make(
+            vo: DriverPeopleVO::fromArrayToObject($validated),
+            individual_people_id: $validated['individual_people_id'],
+        );
+    }
+
 
 }

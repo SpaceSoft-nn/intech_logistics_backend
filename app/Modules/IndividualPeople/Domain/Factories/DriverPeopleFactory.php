@@ -23,15 +23,8 @@ class DriverPeopleFactory extends Factory
         */
         $personal_area = PersonalArea::factory()->create();
 
-        /**
-         * @var
-         */
-        $individualPeople = IndividualPeople::factory()->create();
-
-
         $vo = DriverPeopleVO::make(
             personal_area_id: $personal_area->id,
-            individual_people_id: $individualPeople->id,
             organization_id: null,
             series: $this->faker->numerify('####'),
             number: $this->faker->numerify('######'),

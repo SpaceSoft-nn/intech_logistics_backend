@@ -3,6 +3,7 @@
 namespace App\Modules\IndividualPeople\Domain\Factories;
 
 use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
+use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 use App\Modules\IndividualPeople\Domain\Services\IndividualPeopleService;
 use App\Modules\User\Domain\Models\PersonalArea;
@@ -37,7 +38,6 @@ class IndividualPeopleFactory extends Factory
             personal_area_id: $personal_area->id,
 
         );
-
 
         return $VO->toArrayNotNull();
     }

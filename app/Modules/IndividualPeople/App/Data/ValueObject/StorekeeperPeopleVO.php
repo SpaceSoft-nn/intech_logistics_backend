@@ -15,7 +15,6 @@ final readonly class StorekeeperPeopleVO implements Arrayable
     public function __construct(
 
         public string $personal_area_id,
-        public string $individual_people_id,
         public ?string $organization_id,
 
     ) { }
@@ -23,7 +22,6 @@ final readonly class StorekeeperPeopleVO implements Arrayable
     public static function make(
 
         string $personal_area_id,
-        string $individual_people_id,
         ?string $organization_id = null,
 
     ) : self {
@@ -32,7 +30,6 @@ final readonly class StorekeeperPeopleVO implements Arrayable
         return new self(
 
             personal_area_id: $personal_area_id,
-            individual_people_id: $individual_people_id,
             organization_id: $organization_id,
 
         );
@@ -43,7 +40,6 @@ final readonly class StorekeeperPeopleVO implements Arrayable
     {
         return [
             'personal_area_id' => $this->personal_area_id,
-            'individual_people_id' =>  $this->individual_people_id,
             'organization_id' => $this->organization_id,
         ];
     }
@@ -52,7 +48,6 @@ final readonly class StorekeeperPeopleVO implements Arrayable
     {
         return static::make(
             personal_area_id: Arr::get($data, "personal_area_id"),
-            individual_people_id: Arr::get($data, "individual_people_id"),
             organization_id: Arr::get($data, "organization_id", null),
         );
     }

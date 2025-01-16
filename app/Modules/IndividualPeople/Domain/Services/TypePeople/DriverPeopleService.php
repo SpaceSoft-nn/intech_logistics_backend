@@ -2,9 +2,11 @@
 
 namespace App\Modules\IndividualPeople\Domain\Services\TypePeople;
 
-use App\Modules\IndividualPeople\App\Data\ValueObject\DriverPeopleVO;
+use App\Modules\IndividualPeople\App\Data\DTO\CreateDriverPeopleDTO;
 use App\Modules\IndividualPeople\App\Repositories\DriverPeopleRepository;
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
+use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
+use Illuminate\Support\Facades\DB;
 
 class DriverPeopleService
 {
@@ -14,12 +16,29 @@ class DriverPeopleService
 
     /**
      * Создание записи DriverPeople
-     * @param DriverPeopleVO $vo
+     * @param CreateDriverPeopleDTO $dto
      *
      * @return DriverPeople
      */
-    public function createDriverPeople(DriverPeopleVO $vo) : DriverPeople
+    public function createDriverPeople(CreateDriverPeopleDTO $dto) : DriverPeople
     {
-        return $this->rep->save($vo);
+        /** @var DriverPeople */
+        $model = DB::transaction(function ($pdo) use ($dto) {
+
+            /** @var DriverPeople */
+            $driverPeople = $this->rep->save($dto->vo);
+
+            /** @var IndividualPeople */
+            $individual_people = IndividualPeople::find($dto->individual_people_id);
+            #TODO Проверять нашли ли мы модель
+
+            //сохраняем полиморфную связь
+            $driverPeople->individual_people()->save($individual_people);
+
+            return $driverPeople;
+
+        });
+
+        return $model;
     }
 }

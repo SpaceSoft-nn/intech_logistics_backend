@@ -25,12 +25,10 @@ class StorekeeperPeopleFactory extends Factory
         /**
          * @var
          */
-        $individualPeople = IndividualPeople::factory()->create();
 
 
         $vo = StorekeeperPeopleVO::make(
             personal_area_id: $personal_area->id,
-            individual_people_id: $individualPeople->id,
             organization_id: null,
         );
 

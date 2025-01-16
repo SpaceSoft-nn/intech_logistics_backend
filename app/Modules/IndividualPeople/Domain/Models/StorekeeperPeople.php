@@ -22,7 +22,6 @@ class StorekeeperPeople extends Model
     protected $fillable = [
 
         'personal_area_id',
-        'individual_people_id',
         'organization_id',
 
     ];

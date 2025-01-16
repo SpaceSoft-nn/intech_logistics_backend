@@ -3,6 +3,7 @@
 namespace App\Modules\Transport\Domain\Factories;
 
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
+use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
 use App\Modules\Transport\App\Data\Enums\TransportBodyType;
@@ -19,7 +20,15 @@ class TransportFactory extends Factory
     public function definition(): array
     {
 
-        $driver = DriverPeople::factory()->create();
+        /** @var IndividualPeople */
+        $individualPeople = IndividualPeople::factory()
+        ->for(
+            DriverPeople::factory(), 'individualable'
+        )
+        ->create();
+
+        /** @var DriverPeople  */
+        $driver = $individualPeople->individualable;
 
         $type_loading = array_column(TransportLoadingType::cases(), 'name');
         $type_weight = array_column(TransportTypeWeight::cases(), 'name');

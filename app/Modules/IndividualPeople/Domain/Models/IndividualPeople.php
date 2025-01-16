@@ -93,6 +93,10 @@ class IndividualPeople extends Model
         'phone',
         'email',
 
+        //Morphs
+        "individualable_id",
+        "individualable_type",
+
         'remuved',
 
         'personal_area_id',
@@ -111,11 +115,6 @@ class IndividualPeople extends Model
         return [
             'remuved' => 'boolean',
         ];
-    }
-
-    public function driverPeople()
-    {
-        return $this->hasOne(DriverPeople::class, 'individual_people_id');
     }
 
     //полимофрное отношения к Роли: Водитель, Кладовщик и т.д

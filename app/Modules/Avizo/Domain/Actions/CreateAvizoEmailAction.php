@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\Tender\Domain\Actions\SpecificalDate;
+namespace App\Modules\Avizo\Domain\Actions;
 
-use App\Modules\Tender\App\Data\ValueObject\WeekPeriodVO;
-use App\Modules\Tender\Domain\Models\WeekPeriod;
+use App\Modules\Avizo\App\Data\ValueObject\AvizoEmailVO;
+use App\Modules\Avizo\Domain\Models\AvizoEmail;
 use Exception;
 
 use function App\Helpers\Mylog;
@@ -11,17 +11,19 @@ use function App\Helpers\Mylog;
 class CreateWeekPeriodAction
 {
 
-    public static function make(WeekPeriodVO $vo) : WeekPeriod
+    public static function make(AvizoEmailVO $vo) : AvizoEmail
     {
         return (new self())->run($vo);
     }
 
-    private function run(WeekPeriodVO $vo) : WeekPeriod
+    private function run(AvizoEmailVO $vo) : AvizoEmail
     {
+
+        $model = AvizoEmail::create($vo->toArrayNotNull());
 
         try {
 
-            $model = WeekPeriod::create($vo->toArrayNotNull());
+            // $model = WeekPeriod::create($vo->toArrayNotNull());
 
         } catch (\Throwable $th) {
 

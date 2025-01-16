@@ -252,13 +252,14 @@ Route::prefix('/avizos')->group(function () {
     Route::prefix('/emails')->group(function () {
 
         Route::post('/', [AvizoEmailController::class, 'store']);
-        Route::post('/{uuid}/confirm', [AvizoEmailController::class, 'store']);
+        Route::post('/{uuid}/confirm', [AvizoEmailController::class, 'confirm']);
 
     });
 
     Route::prefix('/phones')->group(function () {
 
-
+        Route::post('/', [AvizoEmailController::class, 'store']);
+        Route::post('/{uuid}/confirm', [AvizoEmailController::class, 'confirm']);
 
     });
 

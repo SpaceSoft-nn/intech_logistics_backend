@@ -21,8 +21,6 @@ class DriverPeopleController extends Controller
     {
         $driverPeoples = DriverPeople::all();
 
-        dd($driverPeoples[0]);
-
         return response()->json(array_success(DriverPeopleCollection::make($driverPeoples), 'Return all driver people.'), 200);
     }
 

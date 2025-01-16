@@ -26,12 +26,10 @@ class StorekeeperPeopleFactory extends Factory
          * @var
          */
 
-
         $vo = StorekeeperPeopleVO::make(
             personal_area_id: $personal_area->id,
             organization_id: null,
         );
-
 
         return $vo->toArrayNotNull();
     }

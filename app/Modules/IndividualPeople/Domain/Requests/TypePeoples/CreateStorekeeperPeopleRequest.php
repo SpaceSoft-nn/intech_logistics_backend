@@ -3,6 +3,7 @@
 namespace App\Modules\IndividualPeople\Domain\Requests\TypePeoples;
 
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\IndividualPeople\App\Data\DTO\CreateStorekeeperPeopleDTO;
 use App\Modules\IndividualPeople\App\Data\ValueObject\StorekeeperPeopleVO;
 
 class CreateStorekeeperPeopleRequest extends ApiRequest
@@ -25,9 +26,20 @@ class CreateStorekeeperPeopleRequest extends ApiRequest
         ];
     }
 
-    public function createStorekeeperPeopleVO() : StorekeeperPeopleVO
+    // public function createStorekeeperPeopleVO() : StorekeeperPeopleVO
+    // {
+    //     return StorekeeperPeopleVO::fromArrayToObject($this->validated());
+    // }
+
+    public function createStorekeeperPeopleDTO() : CreateStorekeeperPeopleDTO
     {
-        return StorekeeperPeopleVO::fromArrayToObject($this->validated());
+
+        $validated = $this->validated();
+
+        return CreateStorekeeperPeopleDTO::make(
+            vo: StorekeeperPeopleVO::fromArrayToObject($validated),
+            individual_people_id: $validated['individual_people_id'],
+        );
     }
 
 }

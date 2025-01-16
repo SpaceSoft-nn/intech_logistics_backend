@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\IndividualPeople\TypePeople;
 
 use App\Http\Controllers\Controller;
+use App\Modules\IndividualPeople\App\Data\DTO\CreateStorekeeperPeopleDTO;
 use App\Modules\IndividualPeople\App\Data\ValueObject\StorekeeperPeopleVO;
 
 use function App\Helpers\array_error;
@@ -38,11 +39,11 @@ class StorekeeperPeopleController extends Controller
     ) {
 
         /**
-         * @var StorekeeperPeopleVO
+         * @var CreateStorekeeperPeopleDTO
          */
-        $storekeeperPeopleVO = $request->createStorekeeperPeopleVO();
+        $createStorekeeperPeopleDTO = $request->createStorekeeperPeopleDTO();
 
-        $model = $service->createStorekeeperPeople($storekeeperPeopleVO);
+        $model = $service->createStorekeeperPeople($createStorekeeperPeopleDTO);
 
         return $model ?
             response()->json(array_success(StorekeeperPeopleResource::make($model), 'Create storekeeper people.'), 201)

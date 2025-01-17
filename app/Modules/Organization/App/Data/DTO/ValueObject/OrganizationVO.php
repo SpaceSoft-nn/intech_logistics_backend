@@ -5,6 +5,7 @@ namespace App\Modules\Organization\App\Data\DTO\ValueObject;
 use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\Organization\App\Data\DTO\Base\BaseDTO;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
+use DateTime;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 
@@ -79,8 +80,8 @@ final class OrganizationVO extends BaseDTO implements Arrayable
         ?string $registration_number = null,
     ) : self {
 
-        // Приводим дату к ISO-формату (YYYY-MM-DD)
-        $founded_date = \DateTime::createFromFormat('d.m.Y', $founded_date)->format('Y-m-d');
+        // // Приводим дату к ISO-формату (YYYY-MM-DD)
+        // $founded_date = DateTime::createFromFormat('d.m.Y', $founded_date)->format('Y-m-d');
 
         return new self(
             owner_id: $owner_id,

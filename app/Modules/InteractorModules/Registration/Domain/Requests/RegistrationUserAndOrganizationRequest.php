@@ -58,33 +58,34 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
             'agreement' => ['required', 'boolean'],
                 //user end
 
-                //Organization start
-            'name' => ['required' , 'string' , 'max:101' , 'min:2'],
-            'address' => ['required' , 'string' , 'max:255' , 'min:12'],
-            'type' =>  ['required', 'string' , Rule::in($typeOrganization)],
-            'phone_org' => ['nullable' , 'string'],
-            'email_org' => ['nullable', "string", "email:filter", "max:100"],
-            'website' => ['nullable', "string"],
-            'description' => ['nullable', 'string'],
-            'okved' => ['nullable', 'string'],
-            'founded_date' => ['nullable', 'date'],
-            'inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/'],
-            'type_cabinet' => ['required' , Rule::in($typeCabinet)],
-                //Organization end
+            //Organization start
+            'organization.name' => ['required' , 'string' , 'max:101' , 'min:2'],
+            'organization.address' => ['required' , 'string' , 'max:255' , 'min:12'],
+            'organization.type' =>  ['required', 'string' , Rule::in($typeOrganization)],
+            'organization.type_cabinet' => ['required' , Rule::in($typeCabinet)],
+            'organization.phone_org' => ['nullable' , 'string'],
+            'organization.email_org' => ['nullable', "string", "email:filter", "max:100"],
+            'organization.website' => ['nullable', "string"],
+            'organization.description' => ['nullable', 'string'],
+            'organization.okved' => ['nullable', 'string'],
+            'organization.founded_date' => ['nullable', 'date'],
+            'organization.inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/'],
+            //Organization end
 
 
         ];
 
+
         // Если тип ооо, добавляем к правилам валидации kpp и ogrn
-        if (OrganizationEnum::stringByCaseToObject(strtolower($this->input('type'))) == OrganizationEnum::legal) {
-            $rules['kpp'] = ['required', 'numeric' , 'regex:/^([0-9]{9})?$/'];
-            $rules['registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , (new OgrnRule)];
+        if (OrganizationEnum::stringByCaseToObject(strtolower($this->input('organization.type'))) == OrganizationEnum::legal) {
+            $rules['organization.kpp'] = ['required', 'numeric' , 'regex:/^([0-9]{9})?$/'];
+            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , (new OgrnRule)];
         }
 
         // если ИП, добавляем огрнип
-        if( OrganizationEnum::stringByCaseToObject($this->input('type')) == OrganizationEnum::individual )
+        if( OrganizationEnum::stringByCaseToObject($this->input('organization.type')) == OrganizationEnum::individual )
         {
-            $rules['registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule)];
+            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule)];
         }
 
         return $rules;
@@ -95,14 +96,12 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
     {
         $data = $this->validated();
 
-        dd(Arr::get($data, 'type_cabinet'));
-
         return CreateRegisterAllDTO::make(
             userCreateDTO: UserCreateDTO::make(
                 userVO: UserVO::fromArrayToObject($data)
             ),
-            organizationVO: OrganizationVO::fromArrayToObject($data),
-            type_cabinet: TypeCabinetEnum::stringByCaseToObject(Arr::get($data, 'type_cabinet')),
+            organizationVO: OrganizationVO::fromArrayToObject($data['organization']),
+            type_cabinet: TypeCabinetEnum::stringByCaseToObject(Arr::get($data, 'organization.type_cabinet')),
         );
     }
 

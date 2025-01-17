@@ -4010,6 +4010,215 @@
                 }
             }
         },
+        "/api/registration-copy": {
+            "post": {
+                "tags": [
+                    "Login\\Registration-COPY"
+                ],
+                "summary": "Регистрация пользователя и организации",
+                "operationId": "c7c542d84331f8493f6b5940d57da3df",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "Email пользователя",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "test@gmail.com"
+                                    },
+                                    "phone": {
+                                        "description": "Телефон пользователя",
+                                        "type": "string",
+                                        "pattern": "^\\+?[0-9]{1,3}[0-9]{9}$",
+                                        "example": "79200264425"
+                                    },
+                                    "password": {
+                                        "description": "Пароль пользователя",
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "Pas123!"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Подтверждение пароля",
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "Pas123!"
+                                    },
+                                    "first_name": {
+                                        "description": "Имя пользователя",
+                                        "type": "string",
+                                        "example": "Ваня"
+                                    },
+                                    "last_name": {
+                                        "description": "Фамилия пользователя",
+                                        "type": "string",
+                                        "example": "Овсянников"
+                                    },
+                                    "father_name": {
+                                        "description": "Отчество пользователя",
+                                        "type": "string",
+                                        "example": "Шрекович"
+                                    },
+                                    "role": {
+                                        "description": "Роль пользователя, может быть только 'admin'",
+                                        "type": "string",
+                                        "enum": [
+                                            "admin"
+                                        ],
+                                        "example": "admin"
+                                    },
+                                    "agreement": {
+                                        "description": "Согласие пользователя",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "name": {
+                                        "description": "Название организации",
+                                        "type": "string",
+                                        "example": "ООО Ромашка"
+                                    },
+                                    "address": {
+                                        "description": "Адрес организации",
+                                        "type": "string",
+                                        "example": "г. Москва, ул. Ленина, д. 1"
+                                    },
+                                    "phone_org": {
+                                        "description": "Телефон организации",
+                                        "type": "string",
+                                        "example": "79200264425"
+                                    },
+                                    "email_org": {
+                                        "description": "Email организации",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "org@gmail.com"
+                                    },
+                                    "website": {
+                                        "description": "Вебсайт организации",
+                                        "type": "string",
+                                        "example": "www.org.com"
+                                    },
+                                    "type": {
+                                        "description": "Тип организации",
+                                        "type": "string",
+                                        "example": "ООО"
+                                    },
+                                    "description": {
+                                        "description": "Описание организации",
+                                        "type": "string",
+                                        "example": "Описание организации"
+                                    },
+                                    "okved": {
+                                        "description": "ОКВЭД организации",
+                                        "type": "string",
+                                        "example": "62.01"
+                                    },
+                                    "founded_date": {
+                                        "description": "Дата основания организации",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-10-01"
+                                    },
+                                    "inn": {
+                                        "description": "ИНН организации",
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "type_cabinet": {
+                                        "description": "Тип кабинета",
+                                        "type": "string",
+                                        "example": "admin"
+                                    },
+                                    "kpp": {
+                                        "description": "КПП организации",
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "registration_number": {
+                                        "description": "Регистрационный номер организации",
+                                        "type": "string",
+                                        "example": "1234567890123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Регистрация успешна.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "token": {
+                                                    "description": "Токен",
+                                                    "type": "string"
+                                                },
+                                                "organization": {
+                                                    "$ref": "#/components/schemas/OrganizationResource"
+                                                },
+                                                "user": {
+                                                    "$ref": "#/components/schemas/UserResource"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully registration."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка получения токена.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error receiving token."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/individual-people/storekeepers": {
             "get": {
                 "tags": [
@@ -7526,6 +7735,10 @@
         {
             "name": "Region Economic",
             "description": "Region Economic"
+        },
+        {
+            "name": "Login\\Registration-COPY",
+            "description": "Login\\Registration-COPY"
         },
         {
             "name": "StorekeeperPeople",

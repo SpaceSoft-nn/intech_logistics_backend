@@ -15,6 +15,7 @@ use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
 use App\Modules\Organization\Domain\Services\OrganizationService;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
+use App\Modules\User\Domain\Models\PersonalArea;
 
 class ProdeSeed extends Seeder
 {
@@ -70,6 +71,7 @@ class ProdeSeed extends Seeder
     {
         {
 
+
             { // создаём данные email и phone
                 $email = EmailList::create([
                     // 'value' => 'test@gmail.com',
@@ -87,7 +89,15 @@ class ProdeSeed extends Seeder
                 $userValue['phone_id'] = $phone->id;
 
                 //создаём user и активируем его в factory
-                $user = User::factory()->create($userValue);
+                //Вызываем вместе со связью многие ко многим при установке личного кабинета
+                $user = User::factory()->hasAttached(
+                    PersonalArea::factory()
+                    ->state(function (array $attributes, User $user) {
+                        //вызываем callback т.к нам нужно указать самого user
+                        return ['owner_id' => $user->id];
+                    }),
+                    relationship: 'personal_areas',
+                )->create($userValue);
 
                 Arr::get($userValue, "email_id", $email->id);
                 Arr::get($userValue, "phone_id", $phone->id);

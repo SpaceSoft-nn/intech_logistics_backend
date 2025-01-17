@@ -24,7 +24,12 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'auth' => $this->auth,
 
-            'personal_area_id' => $this->personal_area_id,
+            'personal_areas' => $this->personal_areas,
+
+            'personal_areas_where_owner' => $this->personal_areas->map(function($object) {
+                return $object->owner_id == $this->id ? $object : null;
+            })->filter(),
+
             'email_id' => $this->email?->value ?? null,
             'phone_id' => $this->phone?->value ?? null ,
             'type_cabinet' => $this->organizations->map(function ($organization) {

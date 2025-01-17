@@ -31,7 +31,7 @@ class UserCreateInteractor
     private function createUserNotAdmin(UserCreateDTO $dto) : ?User
     {
 
-        #TODO Проверить (ЛОГИКА НЕ РАБОТАЕТ НУЖНО СМОТРЕТЬ И ПЕРЕДЕЛЫВАТЬ - ЕСЛИ БУДЕТ ОТНОСИТСЯ К АДМИНУ)
+        #TODO Проверить (ЛОГИКА НЕ РАБОТАЕТ НУЖНО СМОТРЕТЬ И ПЕРЕДЕЛЫВАТЬ - ЕСЛИ БУДЕТ НЕ ОТНОСИТСЯ К АДМИНУ)
         $userAuth = $dto->userAuth;
         $user = $this->createUser($dto);
 

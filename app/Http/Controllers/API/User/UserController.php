@@ -42,7 +42,7 @@ class UserController
         * @var User|array
         */
         $model = $registerService->registerUser(RegistrationDTO::make(
-            UserCreateDTO::make($userVO->setPersonalArea($model->id)),
+            UserCreateDTO::make($userVO),
             phone: $request->input('phone') ?? null,
             email: $request->input('email') ?? null,
         ));

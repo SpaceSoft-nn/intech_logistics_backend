@@ -21,17 +21,10 @@ class UserVO extends BaseDTO implements Arrayable
 
         public readonly UserRoleEnum $role,
 
-        public ?string $personal_area_id,
         public ?string $email_id,
         public ?string $phone_id,
     ) {}
 
-    public function setPersonalArea(string $id) : self
-    {
-        $this->personal_area_id = $id;
-
-        return $this;
-    }
 
     public function setEmailId(string $id)
     {
@@ -55,7 +48,6 @@ class UserVO extends BaseDTO implements Arrayable
         string $father_name,
         string $password,
         UserRoleEnum $role,
-        ?string $personal_area_id = null,
         ?string $email_id = null,
         ?string $phone_id = null,
 
@@ -67,7 +59,6 @@ class UserVO extends BaseDTO implements Arrayable
             father_name: $father_name,
             password: $password,
             role: $role,
-            personal_area_id: $personal_area_id,
             email_id: $email_id,
             phone_id: $phone_id,
         );
@@ -82,7 +73,6 @@ class UserVO extends BaseDTO implements Arrayable
             'father_name' =>  $this->father_name,
             'password' =>  $this->password,
             'role' =>  $this->role,
-            'personal_area_id' =>  $this->personal_area_id,
             'email_id' =>  $this->email_id,
             'phone_id' =>  $this->phone_id,
         ];
@@ -96,7 +86,6 @@ class UserVO extends BaseDTO implements Arrayable
         $father_name =  Arr::get($data, 'father_name');
         $password =  Arr::get($data, 'password');
         $role =  UserRoleEnum::returnObjectByString(Arr::get($data, 'role'));
-        $personal_area_id = Arr::get($data, 'personal_area_id', null);
         $email_id = Arr::get($data, 'email_id' , null);
         $phone_id = Arr::get($data, 'phone_id' , null);
 
@@ -110,7 +99,6 @@ class UserVO extends BaseDTO implements Arrayable
             father_name: $father_name,
             password: $password,
             role: $role,
-            personal_area_id: $personal_area_id,
             email_id: $email_id,
             phone_id: $phone_id,
         );

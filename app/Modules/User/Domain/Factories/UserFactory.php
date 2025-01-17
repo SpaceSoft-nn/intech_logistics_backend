@@ -32,7 +32,6 @@ class UserFactory extends Factory
             father_name: $this->faker->name,
             password: 'password',
             role: UserRoleEnum::admin,
-            personal_area_id: null,
             email_id: $email->id,
             phone_id: $phone->id,
         );

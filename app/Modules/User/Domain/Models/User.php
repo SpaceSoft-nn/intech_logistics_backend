@@ -76,7 +76,6 @@ class User extends Authenticatable
         'active',
         'auth',
 
-        'personal_area_id',
         'email_id',
         'phone_id',
 

@@ -14,10 +14,10 @@ class PersonalAreaFactory extends Factory
 {
     protected $model = PersonalArea::class;
 
-
     public function definition(): array
     {
         /**
+        * #TODO Возможно нужно убрать создание user
         * @var User
         */
         $user = User::factory()->create();
@@ -27,15 +27,15 @@ class PersonalAreaFactory extends Factory
         ];
     }
 
-    public function configure(): static
-    {
-        return $this->afterMaking(function (PersonalArea $personalArea) {
-            // ...
-        })->afterCreating(function (PersonalArea $personalArea) {
+    // public function configure(): static
+    // {
+    //     return $this->afterMaking(function (PersonalArea $personalArea) {
+    //         // ...
+    //     })->afterCreating(function (PersonalArea $personalArea) {
 
-            $user = User::find($personalArea->owner_id);
-            LinkUserToPersonalAreaAction::run($user, $personalArea);
+    //         $user = User::find($personalArea->owner_id);
+    //         LinkUserToPersonalAreaAction::run($user, $personalArea);
 
-        });
-    }
+    //     });
+    // }
 }

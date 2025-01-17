@@ -38,6 +38,9 @@ final class OrganizationVO extends BaseDTO implements Arrayable
 
     public function addOwner(string $uuid) : self
     {
+
+
+
         return self::make(
             owner_id: $uuid,
             name: $this->name,
@@ -75,6 +78,9 @@ final class OrganizationVO extends BaseDTO implements Arrayable
         ?string $kpp = null,
         ?string $registration_number = null,
     ) : self {
+
+        // Приводим дату к ISO-формату (YYYY-MM-DD)
+        $founded_date = \DateTime::createFromFormat('d.m.Y', $founded_date)->format('Y-m-d');
 
         return new self(
             owner_id: $owner_id,

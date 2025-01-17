@@ -4,7 +4,7 @@ namespace App\Modules\Auth\Presentation\Http\Controllers\Swagger\Jwt;
 use App\Modules\Auth\Presentation\Http\Controllers\Controller;
 
 /**
- * 
+ *
  * @OA\Post(
  *
  *      path="/api/auth/me",
@@ -168,7 +168,8 @@ use App\Modules\Auth\Presentation\Http\Controllers\Controller;
  *    @OA\Property(property="father_name", type="string"),
  *    @OA\Property(property="role", type="string", enum={"admin", "manager", "observer"} ),
  *    @OA\Property(property="auth", type="boolean"),
- *    @OA\Property(property="personal_area_id", type="string", format="uuid"),
+ *    @OA\Property(property="personal_areas", type="string", format="uuid"),
+ *    @OA\Property(property="personal_areas_where_owner", type="string", format="uuid"),
  *    @OA\Property(property="email_id", type="string", format="uuid"),
  *    @OA\Property(property="phone_id", type="string", format="uuid"),
  * ),

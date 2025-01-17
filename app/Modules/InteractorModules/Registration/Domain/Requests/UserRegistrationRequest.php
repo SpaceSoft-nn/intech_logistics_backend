@@ -35,6 +35,7 @@ class UserRegistrationRequest extends ApiRequest
     public function rules(): array
     {
         return [
+
             'email' => (new EmailRule)->toArray(),
             'phone' => (new PhoneRule)->toArray(),
             'password' => ['required', 'string', Password::defaults(), 'confirmed'],
@@ -45,6 +46,7 @@ class UserRegistrationRequest extends ApiRequest
             'role' => ['required', 'string', Rule::enum(UserRoleEnum::class)->only([UserRoleEnum::admin])],
 
             'agreement' => ['required', 'boolean'],
+            
         ];
     }
 

@@ -86,8 +86,8 @@ class UserVO extends BaseDTO implements Arrayable
         $father_name =  Arr::get($data, 'father_name');
         $password =  Arr::get($data, 'password');
         $role =  UserRoleEnum::returnObjectByString(Arr::get($data, 'role'));
-        $email_id = Arr::get($data, 'email_id' , null);
-        $phone_id = Arr::get($data, 'phone_id' , null);
+        $email_id = Arr::get($data, 'email_user' , null);
+        $phone_id = Arr::get($data, 'phone_user' , null);
 
         if ($first_name === '' || $last_name === '' || $father_name === '' || $password === '') {
             throw new \InvalidArgumentException('Обязательные параметры не могут быть пустыми.', 500);

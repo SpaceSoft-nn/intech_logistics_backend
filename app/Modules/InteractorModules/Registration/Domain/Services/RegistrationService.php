@@ -3,14 +3,17 @@
 namespace App\Modules\InteractorModules\Registration\Domain\Services;
 
 use App\Modules\InteractorModules\Registration\App\Data\DTO\Base\BaseDTO;
+use App\Modules\InteractorModules\Registration\App\Data\DTO\CreateRegisterAllDTO;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
 use App\Modules\InteractorModules\Registration\Domain\Interactor\RegistrationInteractor;
+use App\Modules\InteractorModules\Registration\Domain\Interactor\RegistrationUserAndOrganizationInteractor;
 use App\Modules\User\Domain\Models\User;
 
 class RegistrationService
 {
     public function __construct(
         private RegistrationInteractor $interatorRegister,
+        private RegistrationUserAndOrganizationInteractor $registrationUserAndOrganizationInteractor,
     ) { }
 
     /**
@@ -22,5 +25,16 @@ class RegistrationService
     public function registerUser(BaseDTO $dto) : array|User
     {
         return $this->interatorRegister->run($dto);
+    }
+
+    /**
+    * Регистрация в 1 endpoint - сразу организации и создание user
+    * @param CreateRegisterAllDTO $dto
+    *
+    * @return array
+    */
+    public function registerUserAll(CreateRegisterAllDTO $dto)
+    {
+        return $this->registrationUserAndOrganizationInteractor->run($dto);
     }
 }

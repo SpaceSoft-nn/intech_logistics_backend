@@ -25,7 +25,7 @@ use App\Http\Controllers\API\IndividualPeople\TypePeople\StorekeeperPeopleContro
 use App\Http\Controllers\API\Tender\ResponseTenderController\ResponseTenderController;
 
 
-Route::post('/registration', RegistrationController::class);
+Route::post('/registration', [RegistrationController::class, 'store']);
 Route::post('/login', LoginController::class);
 
 
@@ -39,7 +39,9 @@ Route::post('/organization', [OrganizationController::class, 'create']);
 
     //User
 Route::prefix('user')->controller(AuthController::class)->group(function () {
+
     Route::post('/', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
+
 
 });
 

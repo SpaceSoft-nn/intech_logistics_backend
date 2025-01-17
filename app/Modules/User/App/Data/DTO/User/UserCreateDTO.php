@@ -9,13 +9,10 @@ use App\Modules\User\Domain\Models\User;
 class UserCreateDTO extends BaseDTO
 {
 
-
     public function __construct(
         public readonly UserVO $userVO,
         public readonly ?User $userAuth,
     ) { }
-
-
 
     public static function make(UserVo $userVO, ?User $userAuth = null) : self
     {

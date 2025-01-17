@@ -46,11 +46,13 @@ class UserCreateInteractor
 
     private function createUserIsAdmin(UserCreateDTO $dto) : ?User
     {
+
         #TODO Здесь нужно добавить цепочку обязаностей
         /**
         * @var User
         */
         $user = $this->createUser($dto);
+
         $area = $this->createPersonalArea($user->id);
         LinkUserToPersonalAreaAction::run($user, $area);
 

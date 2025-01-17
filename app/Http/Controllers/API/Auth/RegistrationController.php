@@ -4,19 +4,23 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Modules\Auth\Domain\Services\AuthService;
 use App\Modules\Base\Error\BusinessException;
+use App\Modules\InteractorModules\Registration\App\Data\DTO\CreateRegisterAllDTO;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
+use App\Modules\InteractorModules\Registration\Domain\Requests\RegistrationUserAndOrganizationRequest;
 use App\Modules\InteractorModules\Registration\Domain\Requests\UserRegistrationRequest;
 use App\Modules\InteractorModules\Registration\Domain\Services\RegistrationService;
+use App\Modules\Organization\Domain\Resources\OrganizationResource;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\Domain\Models\User;
+use App\Modules\User\Domain\Resources\UserResource;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
 
 class RegistrationController
 {
-    public function __invoke(
+    public function store1(
         UserRegistrationRequest $request,
         RegistrationService $registerService,
         AuthService $auth,
@@ -79,5 +83,30 @@ class RegistrationController
             response()->json( array_success($token, 'Successfully registration.'), 201)
             :
             response()->json( array_error( null, 'Error receiving token.'), 401);
+    }
+
+    public function store(
+        RegistrationUserAndOrganizationRequest $request,
+        RegistrationService $registerService,
+        AuthService $auth,
+    ) {
+
+        /** @var CreateRegisterAllDTO */
+        $createRegisterAllDTO = $request->createRegisterAllDTO();
+
+        /** @var array */
+        $array = $registerService->registerUserAll($createRegisterAllDTO);
+
+        $token = $auth->loginUser($array['user']);
+
+        return $token && $array ?
+            response()->json( array_success([
+                'token' => $token,
+                'organization' => OrganizationResource::make($array['organization']),
+                'user' => UserResource::make($array['user']),
+            ], 'Successfully registration.'), 201)
+                :
+            response()->json( array_error( null, 'Error receiving token.'), 401);
+
     }
 }

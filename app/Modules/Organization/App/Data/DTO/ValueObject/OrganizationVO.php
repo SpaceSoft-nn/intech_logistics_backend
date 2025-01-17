@@ -16,29 +16,45 @@ final class OrganizationVO extends BaseDTO implements Arrayable
 
         public ?string $owner_id,
 
-        public readonly string $name,
-        public readonly string $address,
-        public readonly ?string $okved,
-        public readonly string $founded_date,
-        public readonly ?string $website,
-        public readonly ?string $description,
+        public  string $name,
+        public  string $address,
+        public  ?string $okved,
+        public  string $founded_date,
+        public  ?string $website,
+        public  ?string $description,
 
-        public readonly ?bool $remuved,
-        public readonly OrganizationEnum $type,
+        public  ?bool $remuved,
+        public  OrganizationEnum $type,
         // public readonly TypeCabinetEnum $type_cabinet, // Для VO она не нужна, но нужна в проежуточной таблице user_organization
 
-        public readonly ?string $phone,
-        public readonly ?string $email,
+        public  ?string $phone,
+        public  ?string $email,
 
-        public readonly string $inn,
-        public readonly ?string $kpp,
-        public readonly string $registration_number,
+        public  string $inn,
+        public  ?string $kpp,
+        public  string $registration_number,
 
     ) { }
 
-    public function addOwner(string $uuid)
+    public function addOwner(string $uuid) : self
     {
-        $this->owner_id = $uuid;
+        return self::make(
+            owner_id: $uuid,
+            name: $this->name,
+            address: $this->address,
+            website: $this->website,
+            description: $this->description,
+            okved: $this->okved,
+            founded_date: $this->founded_date,
+            // type_cabinet: TypeCabinetEnum::stringByCaseToObject($type_cabinet),
+            phone: $this->phone,
+            email: $this->email,
+            remuved: $this->remuved,
+            type: $this->type->name,
+            inn: $this->inn,
+            kpp: $this->kpp,
+            registration_number: $this->registration_number,
+        );
     }
 
     public static function make(
@@ -86,8 +102,8 @@ final class OrganizationVO extends BaseDTO implements Arrayable
             owner_id: Arr::get($data, 'owner_id', null),
             name: Arr::get($data, 'name' , null),
             address: Arr::get($data, 'address'),
-            phone: Arr::get($data, 'phone' , null),
-            email: Arr::get($data, 'email' , null),
+            phone: Arr::get($data, 'phone_org' , null),
+            email: Arr::get($data, 'email_org' , null),
             website: Arr::get($data, 'website' , null),
             type: (Arr::get($data, 'type', null)),
             description: Arr::get($data, 'description' , null),

@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('last_name')->comment('Фамилия');
             $table->string('father_name')->comment('Отчество');
 
-            $table->string('position');
+            $table->string('position')->nullable();
             $table->string('phone')->uniqid()->nullable(); #TODO - должен быть уканильный?
             $table->string('email')->uniqid()->nullable(); #TODO - должен быть уканильный?
-            $table->string('other_contact');
+            $table->string('other_contact')->nullable();
             $table->mediumText('comment')->nullable();
             $table->string('remuved')->default(false)->comment('Статус удаление');
 
@@ -30,8 +30,8 @@ return new class extends Migration
             $table->string('individualable_type')->nullable();
 
 
-            $table->uuid('personal_area_id')
-                ->constrained('personal_area', 'id')->noActionOnDelete();
+                $table->uuid('personal_area_id')
+                    ->constrained('personal_area', 'id')->noActionOnDelete();
 
         });
     }

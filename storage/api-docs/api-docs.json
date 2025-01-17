@@ -7437,7 +7437,11 @@
                     "auth": {
                         "type": "boolean"
                     },
-                    "personal_area_id": {
+                    "personal_areas": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "personal_areas_where_owner": {
                         "type": "string",
                         "format": "uuid"
                     },

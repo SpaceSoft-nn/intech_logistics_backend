@@ -14,6 +14,7 @@ class CreateOrganizationAction
 
     public function run(OrganizationVO $vo) : Model
     {
+
         $model = Model::query()
             ->createOrFirst($vo->toArrayNotNull());
 

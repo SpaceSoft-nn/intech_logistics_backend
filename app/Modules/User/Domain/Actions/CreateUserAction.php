@@ -36,7 +36,6 @@ class CreateUserAction
                     'active' => true,
                     'auth' => true,
 
-                    'personal_area_id' => $dto->personal_area_id,
                     'email_id' => $dto->email_id,
                     'phone_id' => $dto->phone_id,
                 ],

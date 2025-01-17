@@ -34,6 +34,7 @@ class LinkUserToOrganizationAction
             */
             $organization = $dto->organization;
 
+
             //Проверем существует ли запись с таким type_cabinet + user_id и organization_id
             $status = $dto->user->organizations()
                 ->wherePivot('organization_id', $organization->id)

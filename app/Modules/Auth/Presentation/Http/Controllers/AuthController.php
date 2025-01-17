@@ -46,6 +46,8 @@ class AuthController extends Controller
     {
         $user = $this->authService->getUserAuth();
 
+        dd($user);
+
         $this->abort_unless($user, 401);
 
         return response()->json(array_success( UserResource::make($user), 'Successfully return user'), 200);

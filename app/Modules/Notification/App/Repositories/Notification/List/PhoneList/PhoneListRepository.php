@@ -56,6 +56,7 @@ class PhoneListRepository extends CoreRepository //implements IRepository
      */
     public function getByPhoneStatusTrue(string $data) : ?Model
     {
+
         $model = $this->query()
             ->where('value' , $data)
             ->where('status' , true)

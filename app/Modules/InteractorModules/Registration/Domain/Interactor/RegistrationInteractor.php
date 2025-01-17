@@ -3,13 +3,12 @@
 namespace App\Modules\InteractorModules\Registration\Domain\Interactor;
 
 use App\Modules\InteractorModules\Registration\App\Data\DTO\Base\BaseDTO;
+use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
 use App\Modules\Notification\Domain\Services\Notification\NotificationService;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\Domain\Models\User;
 use App\Modules\User\Domain\Services\UserService;
 use Illuminate\Database\Eloquent\Model;
-use Exception;
-use RegistrationDTO;
 
 class RegistrationInteractor
 {

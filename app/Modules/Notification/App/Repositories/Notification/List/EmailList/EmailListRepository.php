@@ -57,6 +57,7 @@ class EmailListRepository extends CoreRepository //implements IRepository
      */
     public function getByEmailStatusTrue(string $data) : ?Model
     {
+
         $model = $this->query()
             ->where('value' , $data)
             ->where('status' , true)

@@ -4,6 +4,7 @@ namespace App\Modules\InteractorModules\Registration\Domain\Requests;
 
 use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\CreateRegisterAllDTO;
+use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
 use App\Modules\Notification\Domain\Rule\EmailRule;
 use App\Modules\Notification\Domain\Rule\PhoneRule;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
@@ -15,7 +16,6 @@ use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 use Arr;
 
 class RegistrationUserAndOrganizationRequest extends ApiRequest
@@ -97,8 +97,13 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
         $data = $this->validated();
 
         return CreateRegisterAllDTO::make(
-            userCreateDTO: UserCreateDTO::make(
-                userVO: UserVO::fromArrayToObject($data)
+            registrationDTO: RegistrationDTO::make(
+                userDTO: UserCreateDTO::make(
+                    userVO: UserVO::fromArrayToObject($data),
+                    userAuth: null,
+                ),
+                phone: Arr::get($data, 'phone', null),
+                email: Arr::get($data, 'email', null),
             ),
             organizationVO: OrganizationVO::fromArrayToObject($data['organization']),
             type_cabinet: TypeCabinetEnum::stringByCaseToObject(Arr::get($data, 'organization.type_cabinet')),

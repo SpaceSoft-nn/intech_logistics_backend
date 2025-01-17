@@ -10,21 +10,21 @@ class CreateRegisterAllDTO extends BaseDTO
 {
 
     public function __construct(
-        public UserCreateDTO $userCreateDTO,
+        public RegistrationDTO $registrationDTO,
         public OrganizationVO $organizationVO,
         public readonly TypeCabinetEnum $type_cabinet,
     ) { }
 
     public static function make(
 
-        UserCreateDTO $userCreateDTO,
+        registrationDTO $registrationDTO,
         OrganizationVO $organizationVO,
         TypeCabinetEnum $type_cabinet
 
     ) : self {
 
         return new self(
-            userCreateDTO: $userCreateDTO,
+            registrationDTO: $registrationDTO,
             organizationVO: $organizationVO,
             type_cabinet: $type_cabinet,
         );

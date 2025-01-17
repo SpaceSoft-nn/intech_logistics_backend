@@ -14,9 +14,9 @@ use App\Modules\Organization\Domain\Rules\OgrnRule;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
-use Arr;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
+use Arr;
 
 class RegistrationUserAndOrganizationRequest extends ApiRequest
 {
@@ -48,7 +48,7 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
                 //user strat
             'email' => (new EmailRule)->toArray(),
             'phone' => (new PhoneRule)->toArray(),
-            'password' => ['required', 'string', Password::defaults(), 'confirmed'],
+            'password' => ['required', 'string', 'confirmed'],
 
             'first_name' => ['required', 'string', "max:130", 'min:2', 'alpha'],
             'last_name' => ['required', 'string' , "max:130", 'min:2', 'alpha'],
@@ -61,8 +61,8 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
                 //Organization start
             'name' => ['required' , 'string' , 'max:101' , 'min:2'],
             'address' => ['required' , 'string' , 'max:255' , 'min:12'],
-            'phone_org' => ['required' , 'string'],
-            'email_org' => ['required', "string", "email:filter", "max:100"],
+            'phone_org' => ['sometimes' , 'string'],
+            'email_org' => ['sometimes', "string", "email:filter", "max:100"],
             'type' =>  ['required', 'string' , Rule::in($typeOrganization)],
             'website' => ['nullable', "string"],
             'description' => ['nullable', 'string'],
@@ -94,6 +94,8 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
     public function createRegisterAllDTO() : CreateRegisterAllDTO
     {
         $data = $this->validated();
+
+        dd(Arr::get($data, 'type_cabinet'));
 
         return CreateRegisterAllDTO::make(
             userCreateDTO: UserCreateDTO::make(

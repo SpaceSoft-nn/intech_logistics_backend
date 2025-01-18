@@ -24,7 +24,7 @@ class CreateIndividualPeopleRequest extends ApiRequest
             'father_name' => ['required', 'string', 'min:2', 'max:255'],
 
             'position' => ['required', 'string'], // иметь enum таблицу
-            'other_contact' => ['required', 'string'],
+
             'personal_area_id' => ['required', 'uuid', 'exists:personal_areas,id'], #TODO Будет добавляться в зависимости от роли у user
 
             'email' => ['string', 'email'],
@@ -33,7 +33,7 @@ class CreateIndividualPeopleRequest extends ApiRequest
             #TODO Проверить в чем проблема кастомных прави валидации: они не работают - добавить свою правила валидации
             // 'email' => (new EmailRule)->toArray(),
             // 'phone' => (new PhoneRule)->toArray(),
-
+            'other_contact' => ['nullable', 'string'],
             'comment' => ['nullable', 'string', 'max:1000'],
 
         ];

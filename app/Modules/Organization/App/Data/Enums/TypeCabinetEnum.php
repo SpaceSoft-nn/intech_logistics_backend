@@ -7,7 +7,7 @@ use InvalidArgumentException;
 
 enum TypeCabinetEnum : string
 {
-    
+
     case customer = "Заказчик"; //Проблема может бытьс case англ => ру буквы
     case store_space = "Склад"; //Проблема может бытьс case англ => ру буквы
     case сarrier = "Перевозчик"; //Проблема может бытьс case англ => ру буквы
@@ -43,7 +43,7 @@ enum TypeCabinetEnum : string
         return match ($value) {
             "customer" => TypeCabinetEnum::customer,
             "store_space" => TypeCabinetEnum::store_space,
-            "сarrier" => TypeCabinetEnum::сarrier,
+            "carrier" => TypeCabinetEnum::сarrier,
             default => throw new Exception('Ошибка приобрезование Enum TypeCabinetEnum', 500),
         };
     }

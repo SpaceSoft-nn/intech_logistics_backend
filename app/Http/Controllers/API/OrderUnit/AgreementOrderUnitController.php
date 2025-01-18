@@ -10,13 +10,13 @@ use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Requests\AgreementOrderRequest;
 use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderAcceptResource;
+use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderCollection;
 use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderResource;
 use App\Modules\OrderUnit\Domain\Services\AgreementOrderAcceptService;
 use App\Modules\OrderUnit\Domain\Services\AgreementOrderService;
 
 
 use App\Modules\User\Domain\Models\User;
-use Illuminate\Http\Request;
 
 use function App\Helpers\array_success;
 use function App\Helpers\isAuthorized;
@@ -102,6 +102,19 @@ class AgreementOrderUnitController extends Controller
         $agreementOrder = $agreementOrderAccept->agreement;
 
         return response()->json(array_success(AgreementOrderResource::make($agreementOrder), 'Запись успешна возвращена.'), 200);
+    }
+
+    /**
+    * Возвращаем AgreementOrder по OrderUnit - uuid (заказу)
+    */
+    public function getAgreementOrderByOrder(OrderUnit $orderUnit)
+    {
+
+        abort_unless($orderUnit, 404);
+
+        $model = AgreementOrder::where('order_unit_id',  $orderUnit->id)->get();
+
+        return response()->json(array_success(AgreementOrderCollection::make($model), 'Записи успешна возвращены.'), 200);
     }
 
 }

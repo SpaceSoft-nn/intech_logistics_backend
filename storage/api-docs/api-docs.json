@@ -3177,63 +3177,6 @@
             }
         },
         "api/orders/agreement/{OrderUnit::uuid}/agreement-order": {
-            "get": {
-                "tags": [
-                    "Order Unit"
-                ],
-                "summary": "Возвращаем AgreementOrder по uuid",
-                "description": "Вернуть agreementOrder по uuid",
-                "operationId": "3e8382dfb64131cd22a728fa7abb5ab0",
-                "parameters": [
-                    {
-                        "name": "OrderUnit::uuid",
-                        "in": "path",
-                        "description": "UUID заказа",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Заказчик успешно выбрал подрятчика, запись создана.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "order_unit_id": {
-                                            "$ref": "#/components/schemas/AgreementOrderResource"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Общая ошибка сервера.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message_error": {
-                                            "type": "string",
-                                            "example": "Error server"
-                                        },
-                                        "code": {
-                                            "type": "integer",
-                                            "example": "500"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "post": {
                 "tags": [
                     "Order Unit"
@@ -3289,6 +3232,72 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Заказчик успешно выбрал подрятчика, запись создана."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/orders/{OrderUnit::uuid}/agreement/agreement-order": {
+            "get": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
+                "description": "Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
+                "operationId": "6469afde9d1d12f7a2e88e523c5bda22",
+                "parameters": [
+                    {
+                        "name": "OrderUnit::uuid",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заказчик успешно выбрал подрятчика, запись создана.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AgreementOrderResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Записи успешна возвращены."
                                         }
                                     },
                                     "type": "object"

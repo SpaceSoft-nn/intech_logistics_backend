@@ -119,7 +119,6 @@ class OrderUnit extends Model
             ->withTimestamps();
     }
 
-
     /**
     * Связь с заказом многие ко многим
     * @return BelongsToMany

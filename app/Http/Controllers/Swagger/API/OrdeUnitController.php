@@ -538,7 +538,7 @@ use App\Http\Controllers\Controller;
 * ),
 *
 * @OA\Post(
-*     path="api/orders/agreement/{OrderUnit::uuid}/agreement-order",
+*     path="api/orders/{OrderUnit::uuid}/agreements/agreement-order",
 *     tags={"Order Unit"},
 *     summary="Выбор подрядчика (исполнителя), заказчиком",
 *     description="//Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи",
@@ -596,10 +596,10 @@ use App\Http\Controllers\Controller;
 * ),
 *
 * @OA\GET(
-*     path="api/orders/agreement/{OrderUnit::uuid}/agreement-order",
+*     path="api/orders/{OrderUnit::uuid}/agreements/agreement-order",
 *     tags={"Order Unit"},
-*     summary="Возвращаем AgreementOrder по uuid",
-*     description="Вернуть agreementOrder по uuid",
+*     summary="Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
+*     description="Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
 *     @OA\Parameter(
 *          name="OrderUnit::uuid",
 *          in="path",
@@ -615,7 +615,8 @@ use App\Http\Controllers\Controller;
 *          response=200,
 *          description="Заказчик успешно выбрал подрятчика, запись создана.",
 *          @OA\JsonContent(
-*                @OA\Property(property="order_unit_id", ref="#/components/schemas/AgreementOrderResource", description="Ресурс AgreementOrder"),
+*                @OA\Property( property="data", type="array", @OA\Items(ref="#/components/schemas/AgreementOrderResource") ),
+*                @OA\Property(property="message", type="string", example="Записи успешна возвращены."),
 *          ),
 *     ),
 *
@@ -633,7 +634,7 @@ use App\Http\Controllers\Controller;
 *
 * @OA\patch(
 *
-*     path="api/orders/agreement/{agreementOrderAccept::uuid}/agreement-accept",
+*     path="api/orders/agreements/{agreementOrderAccept::uuid}/agreement-accept",
 *     tags={"Order Unit"},
 *     summary="Утверждения Двух-стороннего договор, о принятии в работу Заказа, со стороны Заказчика/Подрядчика",
 *     description="Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer",

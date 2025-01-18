@@ -28,6 +28,10 @@ class OgrnRule implements ValidationRule
 
         $mod13Remainder = intval($mainPart) % 11;
 
+        if ($mod13Remainder === 10) {
+            $mod13Remainder = 0;
+        }
+
         return intval($controlDigit) === $mod13Remainder;
 
     }

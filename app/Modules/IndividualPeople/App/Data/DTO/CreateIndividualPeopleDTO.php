@@ -20,7 +20,7 @@ class CreateIndividualPeopleDTO extends BaseDTO implements Arrayable
 
         public readonly string $position,
 
-        public readonly string $other_contact,
+        public readonly ?string $other_contact,
         public readonly ?string $comment,
 
         public readonly ?string $phone,
@@ -37,9 +37,10 @@ class CreateIndividualPeopleDTO extends BaseDTO implements Arrayable
         string $last_name,
         string $father_name,
         string $position,
-        string $other_contact,
+
 
         string $personal_area_id,
+        ?string $other_contact = null,
         ?string $comment = null,
         ?string $phone = null,
         ?string $email = null,
@@ -96,10 +97,11 @@ class CreateIndividualPeopleDTO extends BaseDTO implements Arrayable
             last_name: Arr::get($data, "last_name"),
             father_name: Arr::get($data, "father_name"),
             position: Arr::get($data, "position"),
-            other_contact: Arr::get($data, "other_contact"),
+
             email: Arr::get($data, "email"),
             remuved: Arr::get($data, "remuved"),
             personal_area_id: Arr::get($data, "personal_area_id"),
+            other_contact: Arr::get($data, "other_contact", null),
             comment: Arr::get($data, "comment" , null),
             phone: Arr::get($data, "phone", null),
         );

@@ -11,7 +11,7 @@ enum TypeCabinetEnum : string
 
     case customer = "Заказчик"; //Проблема может бытьс case англ => ру буквы
     case store_space = "Склад"; //Проблема может бытьс case англ => ру буквы
-    case сarrier = "Перевозчик"; //Проблема может бытьс case англ => ру буквы
+    case carrier = "Перевозчик"; //Проблема может бытьс case англ => ру буквы
 
     public static function returnObjectByString(?string $value) : ?self
     {
@@ -23,7 +23,7 @@ enum TypeCabinetEnum : string
 
             'склад' => self::store_space,
 
-            'перевозчик' => self::сarrier,
+            'перевозчик' => self::carrier,
 
             null => null,
 
@@ -46,7 +46,7 @@ enum TypeCabinetEnum : string
         return match ($value) {
             "customer" => TypeCabinetEnum::customer,
             "store_space" => TypeCabinetEnum::store_space,
-            "сarrier" => TypeCabinetEnum::сarrier,
+            "carrier" => TypeCabinetEnum::carrier,
             default => throw new Exception('Ошибка приобрезование Enum TypeCabinetEnum', 500),
         };
     }
@@ -58,6 +58,6 @@ enum TypeCabinetEnum : string
 
     public static function isСarrier(TypeCabinetEnum $enum) : bool
     {
-        return self::сarrier === $enum;
+        return self::carrier === $enum;
     }
 }

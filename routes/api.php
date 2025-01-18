@@ -83,7 +83,7 @@ Route::prefix('/orders')->group(function () {
         Route::get('/{orderUnit}', [OrderUnitController::class, 'show'])->whereUuid('orderUnit');
 
         //Создать заказ
-        Route::post('/', [OrderUnitController::class, 'store'])->middleware('isCustomerOrganization');
+        Route::post('/', [OrderUnitController::class, 'store']);
 
             //Поиск цены от параметров Order
         Route::post('/select-offers', [OrderUnitController::class, 'selectPrice']);

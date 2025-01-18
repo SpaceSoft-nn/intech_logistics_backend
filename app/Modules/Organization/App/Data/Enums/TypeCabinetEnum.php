@@ -55,4 +55,9 @@ enum TypeCabinetEnum : string
     {
         return self::customer === $enum;
     }
+
+    public static function isСarrier(TypeCabinetEnum $enum) : bool
+    {
+        return self::сarrier === $enum;
+    }
 }

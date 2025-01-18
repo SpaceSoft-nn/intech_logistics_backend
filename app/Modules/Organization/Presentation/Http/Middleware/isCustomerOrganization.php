@@ -47,6 +47,7 @@ class isCustomerOrganization
         #TODD - вынести в отдельный middleware и создать группу middleware
         $organizationId = $request->header('organization_id');
 
+
         // Проверяем, есть ли organization_id в заголовках
         abort_unless( (bool) $organizationId, 422, 'Для доступа к этому endpoint в header должено быть значение :{organization_id}');
 
@@ -55,12 +56,13 @@ class isCustomerOrganization
         $organization = $user->organizations->firstWhere('id', $organizationId);
 
         // Проверяем, есть ли organization_id в заголовках
-        abort_unless( (bool) $organizationId, 401, 'Данный пользователь не относится к этой Organization');
+        abort_unless( (bool) $organization, 401, 'Данный пользователь не относится к этой Organization');
 
         /** @var TypeCabinetEnum */
         $typeCabinet = $this->repOrg->getTypeCabinet($user, $organization);
 
-        abort_unless(TypeCabinetEnum::isCustomer($typeCabinet)  , 422, 'Организация не является перевозчиком.' );
+        //выкидываем ошибку - если организация не перевозчитк
+        abort_unless( (bool) TypeCabinetEnum::isCustomer($typeCabinet)  , 422, 'Организация не является заказчиком.' );
 
         return $next($request);
     }

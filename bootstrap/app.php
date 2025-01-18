@@ -1,11 +1,11 @@
 <?php
 
+use App\Modules\Organization\Presentation\Http\Middleware\isCarrierOrganization;
 use App\Modules\Organization\Presentation\Http\Middleware\isCustomerOrganization;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
-use Symfony\Component\HttpFoundation\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,8 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
 
         $middleware->alias([
-            'isCustomerOrganization' => isCustomerOrganization::class //Проверяет связку организация + пользователь и организация типа Customer 'заказчик'
+            'isCustomerOrganization' => isCustomerOrganization::class, //Проверяет связку организация + пользователь и организация типа Customer 'заказчик'
+            'isCarrierOrganization' => isCarrierOrganization::class, //Проверяет связку организация + пользователь и организация типа Carrier 'перевозчик'
         ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
 

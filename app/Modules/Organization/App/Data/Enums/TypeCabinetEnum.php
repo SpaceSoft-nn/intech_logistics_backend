@@ -4,6 +4,7 @@ namespace App\Modules\Organization\App\Data\Enums;
 
 use Exception;
 use InvalidArgumentException;
+use Str;
 
 enum TypeCabinetEnum : string
 {
@@ -14,13 +15,15 @@ enum TypeCabinetEnum : string
 
     public static function returnObjectByString(?string $value) : ?self
     {
+        $value = Str::lower($value);
+
         return match ($value) {
 
-            'Заказчик' => self::customer,
+            'заказчик' => self::customer,
 
-            'Склад' => self::store_space,
+            'склад' => self::store_space,
 
-            'Перевозчик' => self::сarrier,
+            'перевозчик' => self::сarrier,
 
             null => null,
 
@@ -46,5 +49,10 @@ enum TypeCabinetEnum : string
             "сarrier" => TypeCabinetEnum::сarrier,
             default => throw new Exception('Ошибка приобрезование Enum TypeCabinetEnum', 500),
         };
+    }
+
+    public static function isCustomer(TypeCabinetEnum $enum) : bool
+    {
+        return self::customer === $enum;
     }
 }

@@ -3,11 +3,13 @@
 namespace App\Modules\Organization\App\Repositories;
 
 use App\Modules\Base\Repositories\CoreRepository;
-use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
+use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use App\Modules\Organization\Domain\Actions\CreateOrganizationAction;
 use App\Modules\Organization\Domain\Interface\Repositories\IRepository;
 use App\Modules\Organization\Domain\Models\Organization as Model;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\User\Domain\Models\User;
 
 class OrganizationRepository extends CoreRepository implements IRepository
 {
@@ -34,6 +36,22 @@ class OrganizationRepository extends CoreRepository implements IRepository
     public function getById(string $uuid) : ?Model
     {
         return $this->query()->find($uuid);
+    }
+
+    /**
+     * Возвращаем тип кабинета по User + Organization
+     * @param User $user
+     * @param Organization $organization
+     *
+     * @return TypeCabinetEnum|null
+     */
+    public function getTypeCabinet(User $user, Organization $organization) : ?TypeCabinetEnum
+    {
+        $userOrganization = $user->organizations->firstWhere('id', $organization->id);
+
+        $typeCabinet = TypeCabinetEnum::returnObjectByString($userOrganization->pivot->type_cabinet);
+
+        return $typeCabinet;
     }
 
 

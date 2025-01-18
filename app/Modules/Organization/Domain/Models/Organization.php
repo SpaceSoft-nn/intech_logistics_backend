@@ -78,9 +78,6 @@ class Organization extends Model
 
         'phone',
         'email',
-
-        'type_cabinet',
-
         'remuved',
         'type',
 
@@ -100,7 +97,6 @@ class Organization extends Model
     {
         return [
             'type' => OrganizationEnum::class,
-            'type_cabinet' => TypeCabinetEnum::class,
             'founded_date' => 'datetime',
         ];
     }
@@ -109,4 +105,6 @@ class Organization extends Model
     {
         return $this->belongsToMany(User::class, 'user_organization', 'organization_id', 'user_id')->withPivot('type_cabinet');
     }
+
+
 }

@@ -43,7 +43,7 @@ enum TypeCabinetEnum : string
         return match ($value) {
             "customer" => TypeCabinetEnum::customer,
             "store_space" => TypeCabinetEnum::store_space,
-            "carrier" => TypeCabinetEnum::сarrier,
+            "сarrier" => TypeCabinetEnum::сarrier,
             default => throw new Exception('Ошибка приобрезование Enum TypeCabinetEnum', 500),
         };
     }

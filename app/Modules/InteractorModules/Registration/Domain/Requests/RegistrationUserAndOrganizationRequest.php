@@ -96,6 +96,7 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
     {
         $data = $this->validated();
 
+
         return CreateRegisterAllDTO::make(
             registrationDTO: RegistrationDTO::make(
                 userDTO: UserCreateDTO::make(

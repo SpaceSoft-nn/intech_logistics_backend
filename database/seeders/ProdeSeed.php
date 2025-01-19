@@ -50,9 +50,9 @@ class ProdeSeed extends Seeder
         ];
 
         $this->createUser(
-            email: 'сarrier@gmail.com',
+            email: 'carrier@gmail.com',
             phone: '79200000001',
-            typeCabinet: TypeCabinetEnum::сarrier,
+            typeCabinet: TypeCabinetEnum::carrier,
             userValue: $user,
         );
 

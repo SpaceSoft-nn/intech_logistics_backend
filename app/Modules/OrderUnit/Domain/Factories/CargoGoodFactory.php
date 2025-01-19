@@ -122,7 +122,7 @@ class CargoGoodFactory extends Factory
                 product_type: $productType,
                 cargo_units_count: $this->faker->numberBetween(4, 12),
                 body_volume: $this->faker->randomFloat(2, 1, 80),
-                type_pallet: $this->faker->randomElement(['eur', 'fin', 'eco']),
+                type_pallet: $this->faker->randomElement(['eur', 'fin', 'ecom']),
                 mgx: null,
                 name_value: $this->faker->words(3, true),
                 description: $this->faker->text(100),

@@ -18,6 +18,7 @@ enum TypeSizePalletSpaceEnum : string
     */
     public static function stringByCaseToObject(string $value) : self
     {
+
         return match ($value) {
             "eur" => TypeSizePalletSpaceEnum::eur,
             "fin" => TypeSizePalletSpaceEnum::fin,

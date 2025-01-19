@@ -39,9 +39,9 @@ class OrderUnitResource extends JsonResource
             "order_total" => $this->order_total,
             "description" => $this->description,
 
-            'end_date_delivery' => $this->end_date_order,
+            'end_date_delivery' => $this->end_date_order, #TODO Сделана абстракция - если нужно потом доделать.
 
-            "type_transport_weight" => $this->type_load_truck,
+            "type_transport_weight" => $this->type_transport_weight,
             "cargo_unit_sum" => $this->cargo_unit_sum,
             "type_load_truck" => $this->type_load_truck,
 

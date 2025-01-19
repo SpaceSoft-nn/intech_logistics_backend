@@ -119,15 +119,14 @@ Route::prefix('/orders')->group(function () {
 
                 //Утверждения Двух сторонний договор, о принятии в работу Заказа,
                 //P.S Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer
-                Route::patch('/{agreementOrderAccept}/agreement-accept', [AgreementOrderUnitController::class, 'agreementAccept'])->whereUuid('agreementOrderAccept');
+                Route::patch('/{agreementOrderAccept}/agreement-order-accept', [AgreementOrderUnitController::class, 'agreementAccept'])->whereUuid('agreementOrderAccept');
 
                 //вернуть agreementOrderAccept по uuid
                 Route::get('/{agreementOrderAccept}/agreement-order-accept', [AgreementOrderUnitController::class, 'getAgreementOrderAccept'])->whereUuid('agreementOrderAccept');
+
                 //Вернуть agreementOrder по uuid
                 Route::get('/{agreementOrder}/agreement-order', [AgreementOrderUnitController::class, 'getAgreementOrder'])->whereUuid('agreementOrder');
 
-                // //Возвращаем AgreementOrder по OrderUnit - uuid (заказу)
-                // Route::get('/agreements/agreement-order', [AgreementOrderUnitController::class, 'getAgreementOrderByOrder'])->whereUuid('orderUnit');
             });
 
             //Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи

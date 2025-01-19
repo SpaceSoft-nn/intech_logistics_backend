@@ -634,7 +634,7 @@ use App\Http\Controllers\Controller;
 *
 * @OA\patch(
 *
-*     path="api/orders/agreements/{agreementOrderAccept::uuid}/agreement-accept",
+*     path="api/orders/agreements/{agreementOrderAccept::uuid}/agreement-order-accept",
 *     tags={"Order Unit"},
 *     summary="Утверждения Двух-стороннего договор, о принятии в работу Заказа, со стороны Заказчика/Подрядчика",
 *     description="Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer",

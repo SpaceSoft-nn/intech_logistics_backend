@@ -21,7 +21,7 @@ enum TypeSizePalletSpaceEnum : string
         return match ($value) {
             "eur" => TypeSizePalletSpaceEnum::eur,
             "fin" => TypeSizePalletSpaceEnum::fin,
-            "eco" => TypeSizePalletSpaceEnum::ecom,
+            "ecom" => TypeSizePalletSpaceEnum::ecom,
             default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
         };
     }

@@ -3176,14 +3176,78 @@
                 }
             }
         },
-        "api/orders/agreement/{OrderUnit::uuid}/agreement-order": {
+        "api/orders/{OrderUnit::uuid}/agreements/agreement-order": {
+            "get": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
+                "description": "Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
+                "operationId": "ee8bb6e75e4ec7e2cdbbc8909d917fa1",
+                "parameters": [
+                    {
+                        "name": "OrderUnit::uuid",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заказчик успешно выбрал подрятчика, запись создана.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AgreementOrderResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Записи успешна возвращены."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Order Unit"
                 ],
                 "summary": "Выбор подрядчика (исполнителя), заказчиком",
                 "description": "//Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи",
-                "operationId": "ef5492e691ea417518e29685543a7ae2",
+                "operationId": "c6f1e49c04cee8034ef083fae46fd0c1",
                 "parameters": [
                     {
                         "name": "OrderUnit::uuid",
@@ -3262,80 +3326,14 @@
                 }
             }
         },
-        "api/orders/{OrderUnit::uuid}/agreement/agreement-order": {
-            "get": {
-                "tags": [
-                    "Order Unit"
-                ],
-                "summary": "Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
-                "description": "Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
-                "operationId": "6469afde9d1d12f7a2e88e523c5bda22",
-                "parameters": [
-                    {
-                        "name": "OrderUnit::uuid",
-                        "in": "path",
-                        "description": "UUID заказа",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Заказчик успешно выбрал подрятчика, запись создана.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/AgreementOrderResource"
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Записи успешна возвращены."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Общая ошибка сервера.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message_error": {
-                                            "type": "string",
-                                            "example": "Error server"
-                                        },
-                                        "code": {
-                                            "type": "integer",
-                                            "example": "500"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "api/orders/agreement/{agreementOrderAccept::uuid}/agreement-accept": {
+        "api/orders/agreements/{agreementOrderAccept::uuid}/agreement-order-accept": {
             "patch": {
                 "tags": [
                     "Order Unit"
                 ],
                 "summary": "Утверждения Двух-стороннего договор, о принятии в работу Заказа, со стороны Заказчика/Подрядчика",
                 "description": "Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer",
-                "operationId": "f1e8f87e3a700682d4ee89b425ff94a3",
+                "operationId": "21228e9329daa94e88fc8e23795ff68c",
                 "parameters": [
                     {
                         "name": "agreementOrderAccept::uuid",

@@ -2,7 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Services;
 
-use App\Modules\OrderUnit\Domain\Interactor\Agreement\AgreementOrderInteractor;
+use App\Modules\OrderUnit\Domain\Interactor\Agreement\AgreementOrderAcceptInteractor;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use App\Modules\User\Domain\Models\User;
@@ -12,7 +12,7 @@ class AgreementOrderAcceptService
 
 
     public function __construct(
-        private AgreementOrderInteractor $agreementOrderInteractor,
+        private AgreementOrderAcceptInteractor $agreementOrderInteractor,
     ) { }
 
     /**

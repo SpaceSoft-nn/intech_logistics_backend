@@ -52,6 +52,7 @@ final class AgreementOrderInteractor
 
         if($this->checkStatusAgreementOrder($dto->order_unit_id)) {  throw new BusinessException('Заказчик уже выбрал подрядчика.', 422);  }
 
+        /** @var ?AgreementOrderAccept */
         $model = DB::transaction(function ($pdo)  use ($dto) {
 
             $agreementOrderCreate = $this->agreementOrderCreate($dto);

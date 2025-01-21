@@ -27,7 +27,7 @@ class MgxValidationService
 
         if(is_null($cargoGood->mgx)) {
             Mylog('Ошибка в MgxValidationService - кастомные данные (MGX) у груза не указаны, сделайте валидацию на сервесе выше!');
-            throw new NotFoundHttpException('Данных MGX - для данного груза не указаны.', null , 500);
+            throw new BusinessException('Данных MGX - для данного груза не указаны.', null , 422);
         }
 
         { //инициализируем PalletSize - что бы с ним работать
@@ -104,7 +104,7 @@ class MgxValidationService
 
         if(is_null($this->cargoGood->mgx)) {
             Mylog('Ошибка в CargoGoodService в методе isTrueCalculateBodyVolumeGeneral');
-            throw new Exception('У Груза нету кастомных указанных Характеристик', 500);
+            throw new BusinessException('У Груза нету кастомных указанных Характеристик', 422);
         }
 
         return $this->sizePallet->satisfoSizeModel($this->cargoGood->mgx);

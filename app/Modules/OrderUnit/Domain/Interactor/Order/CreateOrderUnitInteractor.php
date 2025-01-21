@@ -2,7 +2,6 @@
 
 namespace App\Modules\OrderUnit\Domain\Interactor\Order;
 
-use App\Modules\Base\Error\BusinessException;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
@@ -73,14 +72,14 @@ class CreateOrderUnitInteractor
             Mylog('Ошибка в CreateOrderUnitInteractor: при ModelNotFoundException ' . $th);
             throw new \Illuminate\Database\Eloquent\ModelNotFoundException($message, 404);
         }
-        catch (BusinessException $th) {
+        catch (\App\Modules\Base\Error\BusinessException $th) {
 
-            dd($th);
-
+            #TODO продумать что можно сделать, приходится отлавливать из нижнего сервеса что бы выдать правильную ошибку и сообщение
             $message = $th->getMessage();
 
             Mylog('Ошибка в CreateOrderUnitInteractor: при ModelNotFoundException ' . $th);
-            throw new \Illuminate\Database\Eloquent\ModelNotFoundException($message, 404);
+            throw $th;
+
         }
         catch (\Throwable $th) {
 

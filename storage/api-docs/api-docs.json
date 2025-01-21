@@ -3290,7 +3290,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/AgreementOrderAcceptResource"
+                                                "$ref": "#/components/schemas/AgreementOrderResource"
                                             }
                                         },
                                         "message": {
@@ -7004,6 +7004,9 @@
                     },
                     "organization_order_units_invoce_id": {
                         "$ref": "#/components/schemas/OrgOrderInvoiceResource"
+                    },
+                    "agreement_order_accept_id": {
+                        "$ref": "#/components/schemas/AgreementOrderAcceptResource"
                     }
                 },
                 "type": "object"

@@ -353,6 +353,7 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="order_unit_id", ref="#/components/schemas/OrderUnitResource", description="Ресурс Заказа"),
 *     @OA\Property(property="organization_contractor_id", ref="#/components/schemas/OrganizationResource", description="Организация откликнувшиеся на заказ"),
 *     @OA\Property(property="organization_order_units_invoce_id", ref="#/components/schemas/OrgOrderInvoiceResource", description="organization_order_units_invoce"),
+*     @OA\Property(property="agreement_order_accept_id", ref="#/components/schemas/AgreementOrderAcceptResource", description="Ссылка на Agreement Order Accept Resource"),
 *
 * ),
 *

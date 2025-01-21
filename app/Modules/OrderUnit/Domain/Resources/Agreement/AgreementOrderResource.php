@@ -14,7 +14,8 @@ class AgreementOrderResource extends JsonResource
             "id" => $this->id,
             "order_unit_id" => $this->order_unit_id,
             "organization_contractor_id" => $this->organization_contractor_id,
-            "organization_order_units_invoce_id" => $this->organization_order_units_invoce_id,
+            "organization_order_units_invoce_id" => $this->orgOrdertInvoices,
+            "agreement_order_accept_id" => $this->agreementOrderAccept,
         ];
     }
 }

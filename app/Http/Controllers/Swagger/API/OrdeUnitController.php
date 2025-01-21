@@ -576,7 +576,7 @@ use App\Http\Controllers\Controller;
 *                 property="data",
 *                 type="array",
 *                 @OA\Items(
-*                     ref="#/components/schemas/AgreementOrderAcceptResource"
+*                     ref="#/components/schemas/AgreementOrderResource"
 *                 )
 *              ),
 *              @OA\Property(property="message", type="string", example="Заказчик успешно выбрал подрятчика, запись создана."),

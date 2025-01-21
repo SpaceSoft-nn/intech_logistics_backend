@@ -25,11 +25,14 @@ use function App\Helpers\Mylog;
 final class AgreementOrderInteractor
 {
 
+    protected OrganizationOrderUnitInvoice $organizationOrderUnitInvoiceModel;
+
     public function __construct(
         private AgreementOrderRepository $agreementOrderRep,
         private OrderUnitRepository $orderUnitRep,
         private OrganizationOrderUnitInvoiceRepository $organizationOrderUnitInvoiceRep,
     ) { }
+
 
 
     /**
@@ -39,6 +42,13 @@ final class AgreementOrderInteractor
      */
     public function execute(AgreementOrderCreateDTO $dto) : ?AgreementOrderAccept
     {
+
+        //инициализируем свойства переменной моделью
+        $this->organizationOrderUnitInvoiceModel = $this->getOrganizationOrderUnitsInvoce($dto->organization_order_units_invoce_id);
+
+        //Обновляекм DTO указываем в значения organization_contractor_id
+        $dto = $dto->setOrgContractroId($this->organizationOrderUnitInvoiceModel->id);
+
         return $this->run($dto);
     }
 
@@ -52,23 +62,23 @@ final class AgreementOrderInteractor
 
         if($this->checkStatusAgreementOrder($dto->order_unit_id)) {  throw new BusinessException('Заказчик уже выбрал подрядчика.', 422);  }
 
-        /** @var ?AgreementOrderAccept */
-        $model = DB::transaction(function ($pdo)  use ($dto) {
+            /** @var ?AgreementOrderAccept */
+            $model = DB::transaction(function ($pdo)  use ($dto) {
 
-            $agreementOrderCreate = $this->agreementOrderCreate($dto);
+                $agreementOrderCreate = $this->agreementOrderCreate($dto);
 
-            $model = $this->agreementOrderAcceptCreate($agreementOrderCreate->id);
+                $model = $this->agreementOrderAcceptCreate($agreementOrderCreate->id);
 
-            //Устанавливаем OrderUnit - выбранного подрядичка в contractor_id
-            $this->addContractorOrder($dto->order_unit_id, $dto->organization_order_units_invoce_id);
+                //Устанавливаем OrderUnit - выбранного подрядичка в contractor_id
+                $this->addContractorOrder($dto->order_unit_id);
 
 
-            //Что бы получить bool значение из модели
-            $model->refresh();
+                //Что бы получить bool значение из модели
+                $model->refresh();
 
-            return $model;
+                return $model;
 
-        });
+            });
 
         return $model;
 
@@ -101,15 +111,16 @@ final class AgreementOrderInteractor
      * Добавляем contractor_id к Order (Заказчик выбрал подрядчика)
      * @return bool
     */
-    private function addContractorOrder(string $order_id, string $agreement_order_id) : bool
+    private function addContractorOrder(string $order_id) : bool
     {
 
         try {
 
             /**
+             * Получаем модель из свойства класса которое установлено при иницилизации
             * @var OrganizationOrderUnitInvoice
             */
-            $organizationOrderUnitInvoiceModel = $this->organizationOrderUnitInvoiceRep->get($agreement_order_id);
+            $organizationOrderUnitInvoiceModel = $this->organizationOrderUnitInvoiceModel;
 
             /**
             * @var InvoiceOrder
@@ -135,5 +146,10 @@ final class AgreementOrderInteractor
         }
 
         return $order->save() ? true : false;
+    }
+
+    private function getOrganizationOrderUnitsInvoce(string $organization_order_units_invoce_id) : OrganizationOrderUnitInvoice
+    {
+        return $this->organizationOrderUnitInvoiceRep->get($organization_order_units_invoce_id);
     }
 }

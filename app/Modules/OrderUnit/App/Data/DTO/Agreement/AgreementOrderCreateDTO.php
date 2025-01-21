@@ -5,14 +5,14 @@ namespace App\Modules\OrderUnit\App\Data\DTO\Agreement;
 use App\Modules\Base\Traits\FilterArrayTrait;
 use Illuminate\Contracts\Support\Arrayable;
 
-class AgreementOrderCreateDTO implements Arrayable
+final readonly class AgreementOrderCreateDTO implements Arrayable
 {
 
     use FilterArrayTrait;
 
     public function __construct(
-        public readonly string $order_unit_id,
-        public readonly string $organization_order_units_invoce_id,
+        public string $order_unit_id,
+        public string $organization_order_units_invoce_id,
         public ?string $organization_contractor_id,
     ) {}
 
@@ -29,6 +29,15 @@ class AgreementOrderCreateDTO implements Arrayable
             organization_contractor_id: $organization_contractor_id,
         );
 
+    }
+
+    public function setOrgContractroId(string $orgContractroId) : self
+    {
+        return new self(
+            order_unit_id: $this->order_unit_id,
+            organization_order_units_invoce_id: $this->organization_order_units_invoce_id,
+            organization_contractor_id: $orgContractroId,
+        );
     }
 
     public function toArray() : array

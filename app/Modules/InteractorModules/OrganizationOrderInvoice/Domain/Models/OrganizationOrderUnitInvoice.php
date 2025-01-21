@@ -29,7 +29,7 @@ class OrganizationOrderUnitInvoice extends Model
         "order_unit_id",
 
         "organization_id",
-        "user_id",
+        // "user_id", #TODO Надо организовывать таблицу связи org + user
 
         "invoice_order_id",
 

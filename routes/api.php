@@ -132,7 +132,7 @@ Route::prefix('/orders')->group(function () {
             //Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи
             Route::post('{orderUnit}/agreements/agreement-order', [AgreementOrderUnitController::class, 'agreementOrder'])->whereUuid('orderUnit');
 
-            // //Возвращаем AgreementOrder по OrderUnit - uuid (заказу)
+            //Возвращаем AgreementOrder по OrderUnit - uuid (заказу)
             Route::get('/{orderUnit}/agreements/agreement-order', [AgreementOrderUnitController::class, 'getAgreementOrderByOrder'])->whereUuid('orderUnit');
 
         }

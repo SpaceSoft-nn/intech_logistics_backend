@@ -19,8 +19,8 @@ return new class extends Migration
 
             {
                 #TODO Нарушение 3 нормальной формы, транзитивная зависимость, сюда надо добавлять промежуточную таблицу user_organization
-                $table->uuid('organization_id')
-                ->constrained('organizations')->noActionOnDelete();
+                $table->uuid('organization_id') //организация которая откликнулась на заказ
+                    ->constrained('organizations')->noActionOnDelete();
 
                 $table->uuid('user_id')
                     ->nullable()

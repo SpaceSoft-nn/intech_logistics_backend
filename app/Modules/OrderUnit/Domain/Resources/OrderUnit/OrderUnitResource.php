@@ -31,6 +31,7 @@ class OrderUnitResource extends JsonResource
         return [
 
             "id" => $this->id,
+            "number" => $this->number_order,
 
             "end_date_order" => $this->end_date_order ? $this->end_date_order->format('Y-m-d') : null,
             "exemplary_date_start" => $this->exemplary_date_start ? $this->exemplary_date_start->format('Y-m-d') : null,

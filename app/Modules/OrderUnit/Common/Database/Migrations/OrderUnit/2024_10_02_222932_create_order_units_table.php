@@ -12,6 +12,8 @@ return new class extends Migration
 
             $table->uuid('id')->primary();
 
+            $table->bigIncrements('number_order')->comment('Номер заказа для фронта')->index('number');
+
             $table->date('end_date_order')->nullable()->comment('До какой даты заказ будет активен');
             $table->date('exemplary_date_start')->nullable()->comment('Примерная дата начала заказ');
 

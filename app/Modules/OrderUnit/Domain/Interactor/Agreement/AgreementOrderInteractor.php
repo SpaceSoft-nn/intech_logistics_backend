@@ -7,13 +7,16 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Repositories\Orga
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitStatus\OrderUnitStatusVO;
 use App\Modules\OrderUnit\App\Repositories\AgreementOrderRepository;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Actions\Agreement\AgreementOrderAcceptCreateAction;
 use App\Modules\OrderUnit\Domain\Actions\Agreement\AgreementOrderCreateAction;
+use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitSatus\OrderUnitStatusCreateAction;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\OrderUnit\Domain\Models\OrderUnitStatus;
 use DB;
 use Exception;
 
@@ -26,6 +29,10 @@ final class AgreementOrderInteractor
 {
 
     protected OrganizationOrderUnitInvoice $organizationOrderUnitInvoiceModel;
+    protected OrderUnit $orderUnit;
+
+
+
 
     public function __construct(
         private AgreementOrderRepository $agreementOrderRep,
@@ -38,10 +45,12 @@ final class AgreementOrderInteractor
     /**
      * @param AgreementOrderCreateDTO $dto
      *
-     * @return ?AgreementOrderAccept
+     * @return ?AgreementOrder
      */
-    public function execute(AgreementOrderCreateDTO $dto) : ?AgreementOrderAccept
+    public function execute(AgreementOrderCreateDTO $dto) : ?AgreementOrder
     {
+        //устанавливаем orderUnit в свойство
+        $this->orderUnit = $this->orderUnitRep->get($dto->order_unit_id);
 
         //инициализируем свойства переменной моделью
         $this->organizationOrderUnitInvoiceModel = $this->getOrganizationOrderUnitsInvoce($dto->organization_order_units_invoce_id);
@@ -55,28 +64,37 @@ final class AgreementOrderInteractor
     /**
      * @param AgreementOrderCreateDTO $dto
      *
-     * @return ?AgreementOrderAccept
+     * @return ?AgreementOrder
      */
-    public function run(AgreementOrderCreateDTO $dto) : ?AgreementOrderAccept
+    public function run(AgreementOrderCreateDTO $dto) : ?AgreementOrder
     {
 
         if($this->checkStatusAgreementOrder($dto->order_unit_id)) {  throw new BusinessException('Заказчик уже выбрал подрядчика.', 422);  }
 
-            /** @var ?AgreementOrderAccept */
+            /** @var ?AgreementOrder */
             $model = DB::transaction(function ($pdo)  use ($dto) {
 
+                /** @var AgreementOrder */
                 $agreementOrderCreate = $this->agreementOrderCreate($dto);
 
+                /** @var AgreementOrderAccept */
                 $model = $this->agreementOrderAcceptCreate($agreementOrderCreate->id);
 
-                //Устанавливаем OrderUnit - выбранного подрядичка в contractor_id
-                $this->addContractorOrder($dto->order_unit_id);
 
+
+                //Устанавливаем OrderUnit - выбранного подрядичка в contractor_id
+                $this->addContractorOrder();
+
+                //пока что устанавливаем статус в работе - после принятие перевозчика на заказ.
+                $this->setStatusOrder(OrderUnitStatusVO::make(
+                    order_unit_id: $this->orderUnit->id,
+                    status: "in_work",
+                ));
 
                 //Что бы получить bool значение из модели
-                $model->refresh();
+                $agreementOrderCreate->refresh();
 
-                return $model;
+                return $agreementOrderCreate;
 
             });
 
@@ -111,7 +129,7 @@ final class AgreementOrderInteractor
      * Добавляем contractor_id к Order (Заказчик выбрал подрядчика)
      * @return bool
     */
-    private function addContractorOrder(string $order_id) : bool
+    private function addContractorOrder() : bool
     {
 
         try {
@@ -130,7 +148,7 @@ final class AgreementOrderInteractor
             /**
             * @var OrderUnit
             */
-            $order = $this->orderUnitRep->get($order_id);
+            $order = $this->orderUnit;
 
             //устанавливаем организацию перевозчика
             $order->contractor_id = $organizationOrderUnitInvoiceModel->organization_id;
@@ -152,4 +170,9 @@ final class AgreementOrderInteractor
     {
         return $this->organizationOrderUnitInvoiceRep->get($organization_order_units_invoce_id);
     }
+
+   private function setStatusOrder(OrderUnitStatusVO $vo) : OrderUnitStatus
+   {
+        return OrderUnitStatusCreateAction::make($vo);
+   }
 }

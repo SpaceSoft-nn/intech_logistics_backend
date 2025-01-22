@@ -22,7 +22,6 @@ class OrderUnitStatusCreateAction
      */
     private static function run(OrderUnitStatusVO $vo) : OrderUnitStatus
     {
-        #TODO Отлавливать ошибки
 
         try {
 

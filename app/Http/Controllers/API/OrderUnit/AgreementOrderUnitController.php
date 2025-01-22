@@ -36,7 +36,7 @@ class AgreementOrderUnitController extends Controller
         $validated = $request->validated();
 
         /**
-        * @var AgreementOrderAccept
+        * @var AgreementOrder
         */
         $model = $service->acceptCotractorToOrder(
             AgreementOrderCreateDTO::make(
@@ -47,7 +47,7 @@ class AgreementOrderUnitController extends Controller
         );
 
 
-        return response()->json(array_success(AgreementOrderResource::make($model->agreement), 'Заказчик успешно выбрал подрятчика, запись создана.'), 201);
+        return response()->json(array_success(AgreementOrderResource::make($model), 'Заказчик успешно выбрал подрятчика, запись создана.'), 201);
     }
 
     /**

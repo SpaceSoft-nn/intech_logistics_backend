@@ -35,7 +35,7 @@ class OrderUnitFactory extends Factory
             #TODO Удалить если не будет нужно
             // $deliveryStart = $this->faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d H:i:s'); // Генерируем дату начала в пределах последнего месяца
 
-            $type_load_truck = $this->faker->randomElement(['ltl', 'ftl', 'custom']);
+            $type_load_truck = $this->faker->randomElement(['ltl', 'ftl', 'business_lines', 'more_load']);
             $type_transport_weight = $this->faker->randomElement(['small', 'medium', 'large']);
 
             /**

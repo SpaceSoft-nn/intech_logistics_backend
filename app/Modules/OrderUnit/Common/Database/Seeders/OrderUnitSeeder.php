@@ -58,6 +58,8 @@ class OrderUnitSeeder extends Seeder
 
             ]);
 
+
+
             //делаем связки через промежуточные таблицы
             {
 
@@ -93,6 +95,7 @@ class OrderUnitSeeder extends Seeder
 
             ]);
 
+
             //делаем связки через промежуточные таблицы
             {
 
@@ -107,7 +110,6 @@ class OrderUnitSeeder extends Seeder
                 }
 
             }
-
 
 
         }

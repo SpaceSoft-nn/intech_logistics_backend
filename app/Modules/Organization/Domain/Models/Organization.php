@@ -7,6 +7,7 @@ use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
 use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use App\Modules\Organization\Domain\Factories\OrganizationFactory;
+use App\Modules\Transport\Domain\Models\Transport;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -117,7 +118,7 @@ class Organization extends Model
 
     public function transports() : HasMany
     {
-        return $this->hasMany(Transports::class, 'organization_id', 'id');
+        return $this->hasMany(Transport::class, 'organization_id', 'id');
     }
 
     public function drivers() : HasMany

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\Organization;
 
 use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Organization\Domain\Models\Organization;
@@ -11,6 +13,7 @@ use App\Modules\Organization\Domain\Resources\OrganizationCollection;
 use App\Modules\Organization\Domain\Resources\OrganizationResource;
 use App\Modules\Organization\Domain\Services\OrganizationService;
 use App\Modules\User\Domain\Models\User;
+use Request;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
@@ -22,6 +25,15 @@ class OrganizationController
         private OrganizationService $service,
         private AuthServiceInterface $auth,
     ) {}
+
+    //Вернуть все заказы связанные с Organization
+    public function orders(Organization $organization)
+    {
+        /** @var OrderUnit */
+        $model = $organization->order_units;
+
+        return response()->json(array_success(OrderUnitCollection::make($model), 'Return all orders by organization.'), 200);
+    }
 
     //TODO Временно возвращаем все организации (потом убрать (проверку через user сделать) )
     public function index()

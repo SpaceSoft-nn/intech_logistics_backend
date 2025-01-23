@@ -2,6 +2,7 @@
 
 namespace App\Modules\Organization\Domain\Models;
 
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
 use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use App\Modules\Organization\Domain\Factories\OrganizationFactory;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  *
@@ -104,6 +106,11 @@ class Organization extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_organization', 'organization_id', 'user_id')->withPivot('type_cabinet');
+    }
+
+    public function order_units() : HasMany
+    {
+        return $this->hasMany(OrderUnit::class, 'organization_id', 'id');
     }
 
 

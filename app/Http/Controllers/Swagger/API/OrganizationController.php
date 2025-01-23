@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Swagger\API;
 /**
  * @OA\post(
  *
- *      path="/api/organization",
+ *      path="/api/organizations",
  *      summary="Создать Organization по авторизированному пользователю",
  *      tags={"Organization"},
  *
@@ -75,7 +75,7 @@ namespace App\Http\Controllers\Swagger\API;
  *
  * @OA\GET(
  *
- *      path="/api/organization/{organization::uuid}",
+ *      path="/api/organizations/{organization::uuid}",
  *      summary="Вернуть запись organization по id",
  *      tags={"Organization"},
  *      @OA\Parameter(
@@ -120,7 +120,7 @@ namespace App\Http\Controllers\Swagger\API;
  *
  *  @OA\GET(
  *
- *      path="/api/organization",
+ *      path="/api/organizations",
  *      summary="Вернуть все записи organization",
  *      tags={"Organization"},
  *
@@ -143,7 +143,45 @@ namespace App\Http\Controllers\Swagger\API;
  *              @OA\Property(property="code", type="integer", example="500"),
  *          ),
  *      ),
+ * ),
+ *
+ * @OA\GET(
+ *
+ *     path="/api/organizations/{organization::uuid}/orders",
+ *      summary="Вернуть все заказы, которые принадлежат organization",
+ *      tags={"Organization"},
+ *      @OA\Parameter(
+ *              name="organization::uuid",
+ *              in="path",
+ *              required=true,
+ *              description="UUID Организации",
+ *              @OA\Schema(
+ *                  type="string",
+ *                  format="uuid"
+ *              )
+ *      ),
+ *
+ *
+ *      @OA\Response(
+ *          response=200,
+ *          description="Ok",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/OrderUnitResource") ),
+ *              @OA\Property(property="message", type="string", example="Return all orders by organization."),
+ *          ),
+ *      ),
+ *
+ *
+ *      @OA\Response(
+ *          response=500,
+ *          description="Общая ошибка сервера.",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message_error", type="string", example="Общая ошибка сервера."),
+ *              @OA\Property(property="code", type="integer", example="500"),
+ *          ),
+ *      ),
  * )
+ *
  */
 class OrganizationController
 {

@@ -33,9 +33,16 @@ Route::post('/notification/send', [NotificationController::class, 'sendNotificat
 Route::post('/notification/confirm', [NotificationController::class, 'confirmCode']);
 
     //Organization
-Route::get('/organization', [OrganizationController::class, 'index']);
-Route::get('/organization/{organization}', [OrganizationController:: class, 'show'])->whereUuid('organization');
-Route::post('/organization', [OrganizationController::class, 'create']);
+Route::prefix('organizations')->controller(AuthController::class)->group(function () {
+
+    Route::get('/', [OrganizationController::class, 'index']);
+    Route::post('/', [OrganizationController::class, 'create']);
+    Route::get('/{organization}', [OrganizationController:: class, 'show'])->whereUuid('organization');
+    Route::get('/{organization}/orders', [OrganizationController:: class, 'orders'])->whereUuid('organization');
+
+});
+
+
 
     //User
 Route::prefix('user')->controller(AuthController::class)->group(function () {

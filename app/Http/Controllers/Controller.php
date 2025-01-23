@@ -261,7 +261,21 @@ namespace App\Http\Controllers;
 *        @OA\Property(property="load_type", type="string", description="Значение метода LTL"),
 *        @OA\Property(property="price_km", type="string", description="Цена за 1 км"),
 *        @OA\Property(property="price", type="integer", description="Цена метода LTL")
-*    )
+*    ),
+*    @OA\Property(
+*        property="business_lines",
+*        type="object",
+*        @OA\Property(property="load_type", type="string", description="Значение метода business_lines"),
+*        @OA\Property(property="price_km", type="string", description="Цена за 1 км"),
+*        @OA\Property(property="price", type="integer", description="Цена метода business_lines")
+*    ),
+*    @OA\Property(
+*        property="more_load",
+*        type="object",
+*        @OA\Property(property="load_type", type="string", description="Значение метода more_load"),
+*        @OA\Property(property="price_km", type="string", description="Цена за 1 км"),
+*        @OA\Property(property="price", type="integer", description="Цена метода more_load")
+*    ),
 * ),
 *
 *

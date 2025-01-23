@@ -10,7 +10,9 @@ enum TypeLoadingTruckMethod : string
 
     case ltl = "Частичная загрузка грузовика"; //Less Than Truckload
 
-    case custom = "Своя Оплата"; //Less Than Truckload
+    case business_lines = "Бизнес линии";
+
+    case more_load = "Догрузы";
 
     /**
      * Получить значение case в string и прислать объект
@@ -23,7 +25,8 @@ enum TypeLoadingTruckMethod : string
         return match ($value) {
             "ftl" => TypeLoadingTruckMethod::ftl,
             "ltl" => TypeLoadingTruckMethod::ltl,
-            "custom" => TypeLoadingTruckMethod::custom,
+            "business_lines" => TypeLoadingTruckMethod::business_lines,
+            "more_load" => TypeLoadingTruckMethod::more_load,
             default => self::stringValueCaseToObject($value),
         };
     }
@@ -33,7 +36,8 @@ enum TypeLoadingTruckMethod : string
         return match ($value) {
             "Полная Загрузка Грузовика" => TypeLoadingTruckMethod::ftl,
             "Частичная загрузка грузовика" => TypeLoadingTruckMethod::ltl,
-            "Своя Оплата" => TypeLoadingTruckMethod::custom,
+            "Бизнес линии" => TypeLoadingTruckMethod::business_lines,
+            "Догрузы" => TypeLoadingTruckMethod::more_load,
             default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
         };
     }

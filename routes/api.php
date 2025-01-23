@@ -35,6 +35,7 @@ Route::post('/notification/confirm', [NotificationController::class, 'confirmCod
     //Organization
 Route::prefix('organizations')->controller(AuthController::class)->group(function () {
 
+
     Route::get('/', [OrganizationController::class, 'index']);
     Route::post('/', [OrganizationController::class, 'create']);
     Route::get('/{organization}', [OrganizationController:: class, 'show'])->whereUuid('organization');
@@ -81,6 +82,7 @@ Route::prefix('/orders')->group(function () {
 
     { //Установка статутса транспортировки события: в пути, на разгрузке...
         #TODO Возможно в будущем uuid заказа нужно будет отправлять в теле запроса.
+        #TODO Нужна ли проверка на заказчика?
         Route::post('/{orderUnit}/status-transportation', [OrderUnitController::class, 'setStatusTransportationEvent'])->whereUuid('orderUnit');
     }
 
@@ -88,37 +90,33 @@ Route::prefix('/orders')->group(function () {
         //Вернуть все записи
         Route::get('/', [OrderUnitController::class, 'index']);
 
-        //Вернуть 1 запись по uuid
-        Route::get('/{orderUnit}', [OrderUnitController::class, 'show'])->whereUuid('orderUnit');
+        Route::middleware(['isCustomerOrganization'])->group(function () {
 
-        //Создать заказ
-        Route::post('/', [OrderUnitController::class, 'store']);
+            //Вернуть 1 запись по uuid
+            Route::get('/{orderUnit}', [OrderUnitController::class, 'show'])->whereUuid('orderUnit');
+
+            //Создать заказ
+            Route::post('/', [OrderUnitController::class, 'store']);
 
             //Поиск цены от параметров Order
-        Route::post('/select-offers', [OrderUnitController::class, 'selectPrice']);
+            Route::post('/select-offers', [OrderUnitController::class, 'selectPrice']);
 
-        Route::patch('/{orderUnit}', [OrderUnitController::class, 'update'])->whereUuid('orderUnit');
-    }
+            Route::patch('/{orderUnit}', [OrderUnitController::class, 'update'])->whereUuid('orderUnit');
 
+            {   //contractors
 
-    //Алгоритм поиска доп заказов по главному заказу (вектора движение)
-    Route::get('/get-schem', [OrderUnitController::class, 'algorithm']);
+                //Возврат всех подрятчиков откликнувшиеся на заказ. (Временно возвращаем все записи из таблицы)
+                Route::get('/contractors', [OrderUnitController::class, 'getContractorsAll'])->whereUuid('orderUnit', 'organization');
 
+                //Возврат всех подрятчиков откликнувшиеся на заказ.
+                Route::get('/{orderUnit}/contractors', [OrderUnitController::class, 'getContractors'])->whereUuid('orderUnit', 'organization');
 
-    {
+                //Добавление исполнителей к заказу
+                Route::post('/{orderUnit}/contractors/{organization}', [OrderUnitController::class, 'addСontractor'])->whereUuid('orderUnit', 'organization');
 
-        {   //contractors
+            }
 
-            //Возврат всех подрятчиков откликнувшиеся на заказ. (Временно возвращаем все записи из таблицы)
-            Route::get('/contractors', [OrderUnitController::class, 'getContractorsAll'])->whereUuid('orderUnit', 'organization');
-
-            //Возврат всех подрятчиков откликнувшиеся на заказ.
-            Route::get('/{orderUnit}/contractors', [OrderUnitController::class, 'getContractors'])->whereUuid('orderUnit', 'organization');
-
-            //Добавление исполнителей к заказу
-            Route::post('/{orderUnit}/contractors/{organization}', [OrderUnitController::class, 'addСontractor'])->whereUuid('orderUnit', 'organization');
-
-        }
+        });
 
         {   //AgreementOrderUnit
 
@@ -139,7 +137,7 @@ Route::prefix('/orders')->group(function () {
             });
 
             //Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи
-            Route::post('{orderUnit}/agreements/agreement-order', [AgreementOrderUnitController::class, 'agreementOrder'])->whereUuid('orderUnit');
+            Route::post('{orderUnit}/agreements/agreement-order', [AgreementOrderUnitController::class, 'agreementOrder'])->whereUuid('orderUnit')->middleware('isCustomerOrganization');
 
             //Возвращаем AgreementOrder по OrderUnit - uuid (заказу)
             Route::get('/{orderUnit}/agreements/agreement-order', [AgreementOrderUnitController::class, 'getAgreementOrderByOrder'])->whereUuid('orderUnit');
@@ -147,6 +145,9 @@ Route::prefix('/orders')->group(function () {
         }
 
     }
+
+    //Алгоритм поиска доп заказов по главному заказу (вектора движение)
+    Route::get('/get-schem', [OrderUnitController::class, 'algorithm']);
 
 });
 

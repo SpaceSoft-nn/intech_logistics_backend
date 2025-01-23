@@ -30,17 +30,29 @@ class OrderPriceResource extends JsonResource
 
         return [
 
-            "FTL" => [
+            "ftl" => [
                 "load_type" => TypeLoadingTruckMethod::ftl->value,
                 "price_km" =>  $price1 / $this->distance,
                 "price" => $price1,
             ],
 
-            "LTL" => [
+            "ltl" => [
                 "load_type" => TypeLoadingTruckMethod::ltl->value,
                 "price_km" => $price2 / $this->distance,
                 "price" => $price2,
-            ]
+            ],
+
+            "LoadMore" => [
+                "load_type" => TypeLoadingTruckMethod::ltl->value,
+                "price_km" => $price2 / $this->distance,
+                "price" => $price2,
+            ],
+
+            "Business Lines" => [
+                "load_type" => TypeLoadingTruckMethod::ltl->value,
+                "price_km" => $price2 / $this->distance,
+                "price" => $price2,
+            ],
 
         ];
     }

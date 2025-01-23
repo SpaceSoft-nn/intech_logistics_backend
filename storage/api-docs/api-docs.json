@@ -7055,6 +7055,40 @@
                             }
                         },
                         "type": "object"
+                    },
+                    "business_lines": {
+                        "properties": {
+                            "load_type": {
+                                "description": "Значение метода business_lines",
+                                "type": "string"
+                            },
+                            "price_km": {
+                                "description": "Цена за 1 км",
+                                "type": "string"
+                            },
+                            "price": {
+                                "description": "Цена метода business_lines",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "more_load": {
+                        "properties": {
+                            "load_type": {
+                                "description": "Значение метода more_load",
+                                "type": "string"
+                            },
+                            "price_km": {
+                                "description": "Цена за 1 км",
+                                "type": "string"
+                            },
+                            "price": {
+                                "description": "Цена метода more_load",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"

@@ -246,6 +246,7 @@ Route::prefix('/individual-people')->group(function () {
 Route::prefix('/tenders')->group(function () {
 
     Route::middleware(['isCustomerOrganization'])->group(function () {
+
         Route::post('/', [LotTenderController::class, 'store']);
 
         {

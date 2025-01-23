@@ -10,6 +10,7 @@ use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\User\Domain\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Str;
 use Symfony\Component\HttpFoundation\Response;
 
 use function App\Helpers\isAuthorized;
@@ -42,7 +43,6 @@ class isCarrierOrganization
 
         /** @var User */
         $user = isAuthorized($this->auth);
-
 
         #TODD - вынести в отдельный middleware и создать группу middleware
         $organizationId = $request->header('organization_id');

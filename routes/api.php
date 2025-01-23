@@ -39,6 +39,8 @@ Route::prefix('organizations')->controller(AuthController::class)->group(functio
     Route::post('/', [OrganizationController::class, 'create']);
     Route::get('/{organization}', [OrganizationController:: class, 'show'])->whereUuid('organization');
     Route::get('/{organization}/orders', [OrganizationController:: class, 'orders'])->whereUuid('organization');
+    Route::get('/{organization}/drivers', [OrganizationController:: class, 'drivers'])->whereUuid('organization');
+    Route::get('/{organization}/transports', [OrganizationController:: class, 'transports'])->whereUuid('organization');
 
 });
 

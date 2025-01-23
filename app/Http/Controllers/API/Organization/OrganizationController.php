@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\Organization;
 
 use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
+use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
+use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleCollection;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
@@ -12,8 +14,10 @@ use App\Modules\Organization\Domain\Requests\CreateOrganizationRequest;
 use App\Modules\Organization\Domain\Resources\OrganizationCollection;
 use App\Modules\Organization\Domain\Resources\OrganizationResource;
 use App\Modules\Organization\Domain\Services\OrganizationService;
+use App\Modules\Transport\Domain\Resources\TransportCollection;
 use App\Modules\User\Domain\Models\User;
 use Request;
+use Symfony\Component\Mailer\Transport\Transports;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
@@ -25,6 +29,24 @@ class OrganizationController
         private OrganizationService $service,
         private AuthServiceInterface $auth,
     ) {}
+
+    //Вернуть все транспортные средства связанные с Organization
+    public function transports(Organization $organization)
+    {
+        /** @var Transports */
+        $model = $organization->transports;
+
+        return response()->json(array_success(TransportCollection::make($model), 'Return all transport by organization.'), 200);
+    }
+
+    //Вернуть всех водителей связанных с Organization
+    public function drivers(Organization $organization)
+    {
+        /** @var DriverPeople */
+        $model = $organization->drivers;
+
+        return response()->json(array_success(DriverPeopleCollection::make($model), 'Return all driver by organization.'), 200);
+    }
 
     //Вернуть все заказы связанные с Organization
     public function orders(Organization $organization)

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Organization\Domain\Models;
 
+use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
 use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Symfony\Component\Mailer\Transport\Transports;
 
 /**
  *
@@ -111,6 +113,16 @@ class Organization extends Model
     public function order_units() : HasMany
     {
         return $this->hasMany(OrderUnit::class, 'organization_id', 'id');
+    }
+
+    public function transports() : HasMany
+    {
+        return $this->hasMany(Transports::class, 'organization_id', 'id');
+    }
+
+    public function drivers() : HasMany
+    {
+        return $this->hasMany(DriverPeople::class, 'organization_id', 'id');
     }
 
 

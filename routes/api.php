@@ -112,7 +112,9 @@ Route::prefix('/orders')->group(function () {
                 Route::get('/{orderUnit}/contractors', [OrderUnitController::class, 'getContractors'])->whereUuid('orderUnit', 'organization');
 
                 //Добавление исполнителей к заказу
-                Route::post('/{orderUnit}/contractors/{organization}', [OrderUnitController::class, 'addСontractor'])->whereUuid('orderUnit', 'organization');
+                Route::post('/{orderUnit}/contractors/{organization}', [OrderUnitController::class, 'addСontractor'])->whereUuid('orderUnit', 'organization')
+                    ->withoutMiddleware('isCustomerOrganization')
+                    ->middleware('isCarrierOrganization');
 
             }
 
@@ -158,7 +160,7 @@ Route::prefix('/transfer')->group(function () {
 
     Route::get('', [TransferContoller:: class, 'index']);
     Route::get('/{transfer}', [TransferContoller:: class, 'show'])->whereUuid('transfer');
-    Route::post('', [TransferContoller:: class, 'store']);
+    Route::post('', [TransferContoller:: class, 'store'])->middleware('isCustomerOrganization');
 
 });
 
@@ -175,26 +177,33 @@ Route::prefix('/matrix-distance')->group(function () {
 Route::prefix('/offer-contractors')->group(function () {
 
     Route::get('/', [OfferContractorController::class, 'index']);
-    Route::post('/', [OfferContractorController::class, 'store']);
-
-    //Отклик Заказчика на предложения перевозчика
-    Route::post('/{offerContractor}/customer/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization');
-    //Получение всех предложений (по предложнию)
-    Route::get('/{offerContractor}/customer', [OfferContractorController::class, 'getAddCustomer'])->whereUuid('offerContractor');
 
 
-    //Вернуть подвтреждённую заявку (выбранная организация - заказчика на исполнения) по предложению (если имется)
+    Route::middleware(['isCarrierOrganization'])->group(function () {
+
+        Route::post('/', [OfferContractorController::class, 'store']);
+
+        //перевозчик выбирает (организацию - заказчика) на исполнение заявки предложения
+        Route::post('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'agreementOffer'])->whereUuid('offerContractor');
+
+        //Получение все предложения (от заказчиколв которые откликнулись) -> (по предложнию)
+        Route::get('/{offerContractor}/customer', [OfferContractorController::class, 'getAddCustomer'])->whereUuid('offerContractor');
+
+    });
+
+
+    //Вернуть подтверждённую заявку (выбранная организация - заказчика на исполнения) по предложению (если имется)
     Route::get('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'getAgreementOffer'])->whereUuid('offerContractor');
-
-    //перевозчик выбирает (организацию - заказчика) на исполнение заявки предложения
-    Route::post('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'agreementOffer'])->whereUuid('offerContractor');
 
     //Утверждения Двух сторонний договор, о принятии в работу Предложения и принятии заказа,
     //P.S Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer
     Route::patch('/{agreementOrderContractorAccept}/agreement-offer-accept', [OfferContractorController::class, 'agreementOfferAccept'])->whereUuid('agreementOrderContractorAccept');
 
+    //Отклик Заказчика на предложения перевозчика
+    Route::post('/{offerContractor}/customer/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization')->middleware('isCustomerOrganization');
+
     //Создание заказа после утверждения двух-стороннего договора на предложении от перевозчика
-    Route::post('/{agreementOrderContractorAccept}/agreement-offer-order', [OfferContractorController::class, 'agreementOfferOrder'])->whereUuid('agreementOrderContractorAccept');
+    Route::post('/{agreementOrderContractorAccept}/agreement-offer-order', [OfferContractorController::class, 'agreementOfferOrder'])->whereUuid('agreementOrderContractorAccept')->middleware('isCustomerOrganization');
 
 
 });
@@ -204,7 +213,7 @@ Route::prefix('/transports')->group(function () {
 
     Route::get('/', [TransportController::class, 'index']);
     Route::get('/{transport}', [TransportController::class, 'show'])->whereUuid('transport');
-    Route::post('/', [TransportController::class, 'store']);
+    Route::post('/', [TransportController::class, 'store'])->middleware('isCarrierOrganization');
 
 });
 
@@ -218,7 +227,7 @@ Route::prefix('/individual-people')->group(function () {
     Route::prefix('/drivers')->group(function () {
 
         Route::get('/', [DriverPeopleController::class, 'index']);
-        Route::get('/{driverPeople}', [DriverPeopleController::class, 'show'])->whereUuid('driverPeople');
+        Route::get('/{driverPeople}', [DriverPeopleController::class, 'show'])->whereUuid('driverPeople')->middleware('isCarrierOrganization');
         Route::post('/', [DriverPeopleController::class, 'store']);
 
     });
@@ -236,28 +245,35 @@ Route::prefix('/individual-people')->group(function () {
 
 Route::prefix('/tenders')->group(function () {
 
-    Route::post('/', [LotTenderController::class, 'store']);
+    Route::middleware(['isCustomerOrganization'])->group(function () {
+        Route::post('/', [LotTenderController::class, 'store']);
+
+        {
+            //Добавление исполнителей к заказу
+            Route::post('/{lotTender}/contractors/{organization}', [ResponseTenderController::class, 'addСontractorForTender'])->whereUuid('lotTender', 'organization');
+
+            //Вернуть всех исполнителей откликнувшиеся на Тендер
+            Route::get('/{lotTender}/contractors', [ResponseTenderController::class, 'getСontractorForTender'])->whereUuid('lotTender');
+
+            // Выбор "создателем тендера" - перевозчика на выполнение тендера
+            Route::post('/{lotTenderResponse}/agreement-tender', [ResponseTenderController::class, 'agreementTender'])->whereUuid('lotTenderResponse');
+
+            //Добавить к заказу дополнительную информацию
+            Route::patch('/{lotTender}/orders/{orderUnit}', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender', 'orderUnit');
+        }
+    });
+
+
     Route::get('/', [LotTenderController::class, 'index']);
     Route::get('/{lotTender}', [LotTenderController::class, 'show'])->whereUuid('lotTender');
 
     {
-        //Добавление исполнителей к заказу
-        Route::post('/{lotTender}/contractors/{organization}', [ResponseTenderController::class, 'addСontractorForTender'])->whereUuid('lotTender', 'organization');
-
-        //Вернуть всех исполнителей откликнувшиеся на Тендер
-        Route::get('/{lotTender}/contractors', [ResponseTenderController::class, 'getСontractorForTender'])->whereUuid('lotTender');
-
-        // Выбор "создателем тендера" - перевозчика на выполнение тендера
-        Route::post('/{lotTenderResponse}/agreement-tender', [ResponseTenderController::class, 'agreementTender'])->whereUuid('lotTenderResponse');
 
         //Подтверждения соглашения с двух сторон, о взятие тендера и работу со стороны перевозчика, и отдачи в работу со стороны создателя тендера, !создание заказов после утверждения!
         Route::post('/{agreementTenderAccept}/agreement-tender-accept', [ResponseTenderController::class, 'agreementTenderAccept'])->whereUuid('agreementTenderAccept');
 
         //Получить все заказы по тендеру
         Route::get('/{lotTender}/orders', [LotTenderController::class, 'getAllOrderFromTender'])->whereUuid('lotTender');
-
-        //Добавить к заказу дополнительную информацию
-        Route::patch('/{lotTender}/orders/{orderUnit}', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender', 'orderUnit');
 
     }
 

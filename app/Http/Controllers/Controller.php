@@ -249,14 +249,14 @@ namespace App\Http\Controllers;
 *    description="Json ресурс методов погрузки грузовика с ценами",
 *    title="Loading Truck Methods",
 *    @OA\Property(
-*        property="FTL",
+*        property="ftl",
 *        type="object",
 *        @OA\Property(property="load_type", type="string", description="Значение метода FTL"),
 *        @OA\Property(property="price_km", type="string", description="Цена за 1 км"),
 *        @OA\Property(property="price", type="integer", description="Цена метода FTL")
 *    ),
 *    @OA\Property(
-*        property="LTL",
+*        property="ltl",
 *        type="object",
 *        @OA\Property(property="load_type", type="string", description="Значение метода LTL"),
 *        @OA\Property(property="price_km", type="string", description="Цена за 1 км"),
@@ -637,6 +637,19 @@ namespace App\Http\Controllers;
 *         "Более 10 тонны"
 *     },
 *     example="до 3 тонны"
+* ),
+*
+* @OA\Schema(
+*     schema="TypeLoadingTruckMethodEnum",
+*     type="string",
+*     description="Весовая категория транспорта",
+*     enum={
+*         "ftl",
+*         "ltl",
+*         "business_lines",
+*         "more_load",
+*     },
+*     example="more_load"
 * ),
 *
 * @OA\Schema(

@@ -7022,7 +7022,7 @@
                 "title": "Loading Truck Methods",
                 "description": "Json ресурс методов погрузки грузовика с ценами",
                 "properties": {
-                    "FTL": {
+                    "ftl": {
                         "properties": {
                             "load_type": {
                                 "description": "Значение метода FTL",
@@ -7039,7 +7039,7 @@
                         },
                         "type": "object"
                     },
-                    "LTL": {
+                    "ltl": {
                         "properties": {
                             "load_type": {
                                 "description": "Значение метода LTL",
@@ -7704,6 +7704,17 @@
                     "Более 10 тонны"
                 ],
                 "example": "до 3 тонны"
+            },
+            "TypeLoadingTruckMethodEnum": {
+                "description": "Весовая категория транспорта",
+                "type": "string",
+                "enum": [
+                    "ftl",
+                    "ltl",
+                    "business_lines",
+                    "more_load"
+                ],
+                "example": "more_load"
             },
             "IndividualPeopleResource": {
                 "title": "IndividualPeopleResource",

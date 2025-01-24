@@ -27,7 +27,7 @@ class OrderPriceResource extends JsonResource
         $price1 = $faker->numberBetween(45000, 300000);
         $price2 = $faker->numberBetween(45000, 300000);
 
-
+        #TODO в load_type надо возвращать имя кейса
         return [
 
             "ftl" => [
@@ -42,14 +42,14 @@ class OrderPriceResource extends JsonResource
                 "price" => $price2,
             ],
 
-            TypeLoadingTruckMethod::ltl->more_load => [
-                "load_type" => TypeLoadingTruckMethod::ltl->more_load,
+            TypeLoadingTruckMethod::more_load->value => [
+                "load_type" => TypeLoadingTruckMethod::more_load->value,
                 "price_km" => $price2 / $this->distance,
                 "price" => $price2,
             ],
 
-            TypeLoadingTruckMethod::ltl->business_lines => [
-                "load_type" => TypeLoadingTruckMethod::ltl->business_lines,
+            TypeLoadingTruckMethod::business_lines->value => [
+                "load_type" => TypeLoadingTruckMethod::business_lines->value,
                 "price_km" => $price2 / $this->distance,
                 "price" => $price2,
             ],

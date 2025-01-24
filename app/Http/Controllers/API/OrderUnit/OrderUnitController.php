@@ -17,6 +17,7 @@ use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
+use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdateAction;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
@@ -117,6 +118,8 @@ class OrderUnitController extends Controller
 
         //TODO Нужна логика высчитывание цены в зависимости от заказа
         $test = "test";
+
+
 
         return response()->json(array_success(OrderPriceResource::make($test, $distance / 1000), 'Return Select Price.'), 200);
     }

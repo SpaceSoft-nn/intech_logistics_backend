@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Organization\Presentation\Http\Middleware\HasOrganizationHeader;
 use App\Modules\Organization\Presentation\Http\Middleware\isCarrierOrganization;
 use App\Modules\Organization\Presentation\Http\Middleware\isCustomerOrganization;
 use Illuminate\Foundation\Application;
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'isCustomerOrganization' => isCustomerOrganization::class, //Проверяет связку организация + пользователь и организация типа Customer 'заказчик'
             'isCarrierOrganization' => isCarrierOrganization::class, //Проверяет связку организация + пользователь и организация типа Carrier 'перевозчик'
+            'hasOrgHeader' => HasOrganizationHeader::class, //Проверяет связку организация + пользователь и организация типа Carrier 'перевозчик'
         ]);
 
     })

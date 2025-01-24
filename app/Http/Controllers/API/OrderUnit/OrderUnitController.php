@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\OrderUnit;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Address\Domain\Models\Address;
+use App\Modules\Auth\Domain\Services\AuthService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\DTO\OrgOrderInvoiceCreateDTO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
@@ -27,11 +28,15 @@ use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderPriceResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
 use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
+use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
+use App\Modules\Organization\App\Repositories\OrganizationRepository;
 use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Http\Request;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use function App\Helpers\isAuthorized;
 
 class OrderUnitController extends Controller
 {
@@ -39,14 +44,34 @@ class OrderUnitController extends Controller
     /**
      * Вернуть все заказы
      */
-    public function index(Request $request)
-    {
-        /**
-        * @var OrderUnit[]
-        */
-        $orders = OrderUnit::all();
+    public function index(
+        Request $request,
+        OrganizationRepository $repOrg,
+        AuthService $auth,
+    ) {
 
-        return response()->json(array_success(OrderUnitCollection::make($orders), 'Return Orders.'), 200);
+        /** @var User */
+        $user = isAuthorized($auth);
+
+        //ЭТОТ КОСТЫЛЬ МЕНЯ ЗАСТАВИЛ ДЕЛАТЬ ФРОТЕНДЕР! ВОТ ЕГО ГИТ https://github.com/Zeltharion
+        $organization_id = $request->header('organization_id');
+
+        $organization = Organization::find($organization_id);
+
+        abort_unless($organization, 'Организации не существует', 404);
+
+        /** @var TypeCabinetEnum */
+        $typeCabinet = $repOrg->getTypeCabinet($user, $organization);
+
+        /** @var bool */
+        $status = TypeCabinetEnum::isCustomer($typeCabinet);
+
+
+        //если заказчик, возвращаем только его заказы, если перевозчик - возвращаем все заказы
+        return $status ?
+        response()->json(array_success(OrderUnitCollection::make($organization->order_units), 'Return all orders by organization Customer .'), 200)
+            : response()->json(array_success(OrderUnitCollection::make(OrderUnit::all()), 'Return all orders.'), 200);
+
     }
 
     /**

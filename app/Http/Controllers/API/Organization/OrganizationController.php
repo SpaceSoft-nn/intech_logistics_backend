@@ -97,13 +97,5 @@ class OrganizationController
             response()->json(array_error(OrganizationResource::make($organization), 'Faild create organization.'), 400);
     }
 
-    /**
-     * Связываем user с organization
-     * @return [type]
-     */
-    public function linkUserToOrg()
-    {
-
-    }
 
 }

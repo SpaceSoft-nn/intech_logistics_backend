@@ -87,8 +87,8 @@ Route::prefix('/orders')->group(function () {
     }
 
     {
-        //Вернуть все записи
-        Route::get('/', [OrderUnitController::class, 'index']);
+        //Вернуть все записи если заказчик - только заказы которые принадлежат ему, если перевозчик - то все
+        Route::get('/', [OrderUnitController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
 
         Route::middleware(['isCustomerOrganization'])->group(function () {
 

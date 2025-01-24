@@ -10,6 +10,9 @@ use App\Modules\Organization\Domain\Interface\Repositories\IRepository;
 use App\Modules\Organization\Domain\Models\Organization as Model;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\User\Domain\Models\User;
+use Exception;
+
+use function App\Helpers\Mylog;
 
 class OrganizationRepository extends CoreRepository implements IRepository
 {
@@ -48,6 +51,11 @@ class OrganizationRepository extends CoreRepository implements IRepository
     public function getTypeCabinet(User $user, Organization $organization) : ?TypeCabinetEnum
     {
         $userOrganization = $user->organizations->firstWhere('id', $organization->id);
+
+        if(is_null($userOrganization)) {
+            Mylog('Организация из header не принадлежит к user, который получил по токену, в классе OrganizationRepository');
+            throw new Exception('Ошибка в OrganizationRepository', 500);
+        }
 
         $typeCabinet = TypeCabinetEnum::returnObjectByString($userOrganization->pivot->type_cabinet);
 

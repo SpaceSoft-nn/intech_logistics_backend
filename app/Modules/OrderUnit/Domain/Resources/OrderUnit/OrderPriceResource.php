@@ -42,14 +42,14 @@ class OrderPriceResource extends JsonResource
                 "price" => $price2,
             ],
 
-            "LoadMore" => [
-                "load_type" => TypeLoadingTruckMethod::ltl->value,
+            TypeLoadingTruckMethod::ltl->more_load => [
+                "load_type" => TypeLoadingTruckMethod::ltl->more_load,
                 "price_km" => $price2 / $this->distance,
                 "price" => $price2,
             ],
 
-            "Business Lines" => [
-                "load_type" => TypeLoadingTruckMethod::ltl->value,
+            TypeLoadingTruckMethod::ltl->business_lines => [
+                "load_type" => TypeLoadingTruckMethod::ltl->business_lines,
                 "price_km" => $price2 / $this->distance,
                 "price" => $price2,
             ],

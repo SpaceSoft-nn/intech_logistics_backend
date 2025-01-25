@@ -36,7 +36,7 @@ enum TypeLoadingTruckMethod : string
         return match ($value) {
             "Полная Загрузка Грузовика" => TypeLoadingTruckMethod::ftl,
             "Частичная загрузка грузовика" => TypeLoadingTruckMethod::ltl,
-            "Бизнес линии" => TypeLoadingTruckMethod::business_lines,
+            "Деловые линии" => TypeLoadingTruckMethod::business_lines,
             "Догрузы" => TypeLoadingTruckMethod::more_load,
             default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
         };

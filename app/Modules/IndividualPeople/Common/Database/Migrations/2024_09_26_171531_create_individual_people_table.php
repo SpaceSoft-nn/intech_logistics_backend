@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('individual_peoples', function (Blueprint $table) {
+
             $table->uuid('id')->primary();
             $table->timestamps();
 
@@ -30,8 +31,8 @@ return new class extends Migration
             $table->string('individualable_type')->nullable();
 
 
-                $table->uuid('personal_area_id')
-                    ->constrained('personal_area', 'id')->noActionOnDelete();
+                $table->foreignUuid('personal_area_id')
+                    ->constrained('personal_areas', 'id')->noActionOnDelete();
 
         });
     }

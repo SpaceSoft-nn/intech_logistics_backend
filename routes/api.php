@@ -262,7 +262,7 @@ Route::prefix('/tenders')->group(function () {
             //Добавить к заказу дополнительную информацию
             Route::patch('/{lotTender}/orders/{orderUnit}', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender', 'orderUnit');
         }
-    });
+    }); 
 
 
     Route::get('/', [LotTenderController::class, 'index']);

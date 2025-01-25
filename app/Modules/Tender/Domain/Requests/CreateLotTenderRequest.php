@@ -8,6 +8,7 @@ use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\Tender\App\Data\Enums\TypeTenderEnum;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rule;
@@ -18,7 +19,7 @@ class CreateLotTenderRequest extends ApiRequest
     public function __construct(
         private ?array $validated = null,
     ) {
-        parent::__construct();
+        // parent::__construct();
     }
 
 

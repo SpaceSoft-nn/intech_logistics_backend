@@ -72,6 +72,8 @@ class LotTenderController extends Controller
             arrayWeekPeriod:  $arrayWeekPeriod,
         );
 
+        // dd($createLotTenderServiceDTO);
+
 
         /**
          * @var LotTender

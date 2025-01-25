@@ -26,7 +26,7 @@ class TransportResoruce extends JsonResource
             "type_status" => $this->type_status,
 
             "organization_id" => $this->organization_id,
-            "driver_id" => $this->driver_id,
+            "driver_id" => $this->driver,
             "description" => $this->description,
 
         ];

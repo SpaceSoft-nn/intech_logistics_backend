@@ -2,6 +2,7 @@
 
 namespace App\Modules\Transport\Domain\Models;
 
+use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Transport\App\Data\Enums\TransportBodyType;
@@ -13,6 +14,7 @@ use App\Modules\Transport\Domain\Factories\TransportFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Transport extends Model
@@ -71,5 +73,10 @@ class Transport extends Model
     public function order_units(): HasMany
     {
         return $this->hasMany(OrderUnit::class, 'transport_id');
+    }
+
+    public function driver() : BelongsTo
+    {
+        return $this->belongsTo(DriverPeople::class, 'driver_id', 'id');
     }
 }

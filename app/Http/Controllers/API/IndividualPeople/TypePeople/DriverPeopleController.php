@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\IndividualPeople\TypePeople;
 
 use App\Http\Controllers\Controller;
 use App\Modules\IndividualPeople\App\Data\DTO\CreateDriverPeopleDTO;
-use App\Modules\IndividualPeople\App\Data\ValueObject\DriverPeopleVO;
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Requests\TypePeoples\CreateDriverPeopleRequest;
 use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleCollection;

@@ -75,7 +75,7 @@ readonly class  OrderUnitVO implements Arrayable
             //date
             end_date_order: $end_date_order,
             exemplary_date_start: $exemplary_date_start,
-
+            //
             type_load_truck: TypeLoadingTruckMethod::stringByCaseToObject($type_load_truck),
             type_transport_weight: TypeTransportWeight::stringByCaseToObject($type_transport_weight),
             order_status: StatusOrderUnitEnum::stringByCaseToObject($order_status),

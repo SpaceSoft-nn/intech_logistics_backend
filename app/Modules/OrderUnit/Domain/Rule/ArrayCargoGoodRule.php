@@ -42,7 +42,8 @@ class ArrayCargoGoodRule implements ValidationRule
             'body_volume' => [
                 'required' => "Поле :attribute обязательно для заполнения.",
                 'numeric' => ":attribute должен быть числом.",
-                'min' => ":attribute должен быть не менее 0." // возможно, 0 допустимо
+                'min' => ":attribute должен быть не менее 0.", // возможно, 0 допустимо
+                'max' => ":attribute должен быть не более 270.",
             ],
             'name_value' => [
                 'string' => ":attribute должно быть строкой.",
@@ -72,7 +73,7 @@ class ArrayCargoGoodRule implements ValidationRule
                     'product_type' => ['required' ,'string'],
                     'type_pallet' => ['required', 'string', Rule::in($typePallet)],
                     'cargo_units_count' => ['required', 'integer', 'min:1'],
-                    'body_volume' => ['required','numeric', 'min:0'],
+                    'body_volume' => ['required','numeric', 'min:0', 'max:270'],
                     'name_value' => ['nullable', 'string', 'max:100'],
                     'description' => ['nullable', 'string' , 'max:500'],
                     'mgx' => ['nullable', new ArrayCargoMgxRule()],

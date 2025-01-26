@@ -30,6 +30,7 @@ class CreateCargoGoodAndMgxAction
     */
     private function run(CargoGoodVO $vo) : CargoGood
     {
+        $сargoGood = CargoGood::create($vo->toArrayNotNull());
 
         try {
 

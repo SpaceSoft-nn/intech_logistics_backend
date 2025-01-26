@@ -29,6 +29,29 @@ class CreateOrderUnitInteractor
 
     private function run(OrderUnitCreateDTO $dto) : ?OrderUnit
     {
+          /**
+                * Получаем созданный заказ
+                * @var OrderUnit
+                */
+                $order = $this->createOrderUnit($dto->orderUnitVO);
+
+
+                { //Линковка заказа и Адрессов
+                    /**
+                    * @var OrderUnitAddressDTO
+                    */
+                    $orderUnitAddressDTO = $dto->orderUnitAddressDTO;
+                    $this->orderToAddressInteractor->execute($order, $orderUnitAddressDTO);
+                }
+
+
+                //Нужно получать актуальное состояние что бы с ним работать корректно во стальных сервесах
+                $order = $order->refresh();
+
+
+                { //Создание CargoGoods[] и линковака с OrderUnit + Линковка с CargoUnit + валидация MGX и создание записей CargoUnit + уточнее слоёв Factory
+                    $this->orderToCargoGoodInteractor->execute($order, $dto->cargoGoodVO);
+                }
 
 
         try {

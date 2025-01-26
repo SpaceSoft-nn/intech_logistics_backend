@@ -21,7 +21,7 @@ return new class extends Migration
 
             //unsignedSmallInteger - когда-нибудь может быть проблема с этим типам
             $table->unsignedSmallInteger('cargo_units_count')->comment('Количество паллетов');
-            $table->decimal('body_volume', 4 , 2)->comment('Общий объём паллетов');
+            $table->decimal('body_volume', 5 , 2)->comment('Общий объём паллетов');
 
             $table->text('description')->nullable();
 

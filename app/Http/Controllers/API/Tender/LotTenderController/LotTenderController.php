@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\API\Tender\LotTenderController;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Auth\Domain\Services\AuthService;
+use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use App\Modules\Base\Enums\WeekEnum;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
+
+use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\App\Data\DTO\AddInfoOrderByTenderDTO;
 use App\Modules\Tender\App\Data\DTO\CreateLotTenderServiceDTO;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
@@ -15,7 +19,6 @@ use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
 use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Requests\AddInfoOrderByTenderRequest;
 use App\Modules\Tender\Domain\Requests\CreateLotTenderRequest;
-use App\Modules\Tender\Domain\Requests\CreateOrderByRequest;
 use App\Modules\Tender\Domain\Resources\LotTenderCollection;
 use App\Modules\Tender\Domain\Resources\LotTenderResource;
 use App\Modules\Tender\Domain\Services\TenderService;
@@ -28,11 +31,17 @@ use function App\Helpers\array_success;
 class LotTenderController extends Controller
 {
 
-    public function index() {
+    public function index(GetTypeCabinetByOrganization $action) {
 
-        $lotTenders = LotTender::all();
+        /** @var array */
+        $array = $action->isCustomer();
 
-        return response()->json(array_success(LotTenderCollection::make($lotTenders), 'Return all lot tender.'), 200);
+        /** @var Organization */
+        $organization = $array['organization'];
+
+        return $array['status'] ?
+        response()->json(array_success(LotTenderCollection::make($organization->tenders), 'Return all tenders by organization Customer .'), 200)
+            : response()->json(array_success(LotTenderCollection::make(LotTender::all()), 'Return all orders.'), 200);
     }
 
     public function show(

@@ -245,11 +245,15 @@ Route::prefix('/individual-peoples')->group(function () {
 
 Route::prefix('/tenders')->group(function () {
 
+
+    Route::get('/', [LotTenderController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
+
     Route::middleware(['isCustomerOrganization'])->group(function () {
 
-        Route::post('/', [LotTenderController::class, 'store']);
-
         {
+            //Создание Тендера
+            Route::post('/', [LotTenderController::class, 'store']);
+
             //Добавление исполнителей к заказу
             Route::post('/{lotTender}/contractors/{organization}', [ResponseTenderController::class, 'addСontractorForTender'])->whereUuid('lotTender', 'organization');
 
@@ -265,7 +269,6 @@ Route::prefix('/tenders')->group(function () {
     });
 
 
-    Route::get('/', [LotTenderController::class, 'index']);
     Route::get('/{lotTender}', [LotTenderController::class, 'show'])->whereUuid('lotTender');
 
     {

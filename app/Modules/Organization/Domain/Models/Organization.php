@@ -7,6 +7,7 @@ use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
 use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use App\Modules\Organization\Domain\Factories\OrganizationFactory;
+use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Transport\Domain\Models\Transport;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -124,6 +125,11 @@ class Organization extends Model
     public function drivers() : HasMany
     {
         return $this->hasMany(DriverPeople::class, 'organization_id', 'id');
+    }
+
+    public function tenders() : HasMany
+    {
+        return $this->hasMany(LotTender::class, 'organization_id', 'id');
     }
 
 

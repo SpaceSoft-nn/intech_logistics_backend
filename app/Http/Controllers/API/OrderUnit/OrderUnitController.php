@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\OrderUnit;
 use App\Http\Controllers\Controller;
 use App\Modules\Address\Domain\Models\Address;
 use App\Modules\Auth\Domain\Services\AuthService;
+use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\DTO\OrgOrderInvoiceCreateDTO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
@@ -44,35 +45,17 @@ class OrderUnitController extends Controller
     /**
      * Вернуть все заказы
      */
-    public function index(
-        Request $request,
-        OrganizationRepository $repOrg,
-        AuthService $auth,
-    ) {
+    public function index(GetTypeCabinetByOrganization $action) {
 
+        /** @var array */
+        $array = $action->isCustomer();
 
-        /** @var User */
-        $user = isAuthorized($auth);
-
-
-        //ЭТОТ КОСТЫЛЬ МЕНЯ ЗАСТАВИЛ ДЕЛАТЬ ФРОТЕНДЕР! ВОТ ЕГО ГИТ https://github.com/Zeltharion
-        $organization_id = $request->header('organization_id');
-
-        $organization = Organization::find($organization_id);
-
-        abort_unless( $organization, 404, 'Организации не существует');
-
-        /** @var TypeCabinetEnum */
-        $typeCabinet = $repOrg->getTypeCabinet($user, $organization);
-
-
-        /** @var bool */
-        $status = TypeCabinetEnum::isCustomer($typeCabinet);
-
+        /** @var Organization */
+        $organization = $array['organization'];
 
 
         //если заказчик, возвращаем только его заказы, если перевозчик - возвращаем все заказы
-        return $status ?
+        return $array['status'] ?
         response()->json(array_success(OrderUnitCollection::make($organization->order_units), 'Return all orders by organization Customer .'), 200)
             : response()->json(array_success(OrderUnitCollection::make(OrderUnit::all()), 'Return all orders.'), 200);
 

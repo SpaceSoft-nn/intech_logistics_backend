@@ -424,14 +424,13 @@ use App\Http\Controllers\Controller;
 *      description="Фильтрация заказов на которые откликнулся перевозчик",
 *      tags={"Order Unit"},
 *      @OA\Parameter(
-*          name="OrderUnit::uuid",
-*          in="path",
-*          required=true,
-*          description="UUID заказа",
-*          @OA\Schema(
-*              type="string",
-*              format="uuid"
-*          )
+*         name="organization_id",
+*         in="header",
+*         required=true,
+*         @OA\Schema(
+*             type="string"
+*         ),
+*         description="Идентификатор организации, который должен быть передан в заголовке"
 *      ),
 *
 *

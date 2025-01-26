@@ -3021,13 +3021,12 @@
                 "operationId": "8cbba051e2f3a402257782629583c6d3",
                 "parameters": [
                     {
-                        "name": "OrderUnit::uuid",
-                        "in": "path",
-                        "description": "UUID заказа",
+                        "name": "organization_id",
+                        "in": "header",
+                        "description": "Идентификатор организации, который должен быть передан в заголовке",
                         "required": true,
                         "schema": {
-                            "type": "string",
-                            "format": "uuid"
+                            "type": "string"
                         }
                     }
                 ],

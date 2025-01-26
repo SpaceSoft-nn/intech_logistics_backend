@@ -24,7 +24,7 @@ class TransportController
         $organization = $array['organization'];
 
         return $array['status'] ?
-        response()->json(array_success(TransportCollection::make($organization->transports), 'Return all transports by organization Customer .'), 200)
+        response()->json(array_success(TransportCollection::make($organization->transports), 'Return all transports by organization Customer.'), 200)
             : response()->json(array_success(TransportCollection::make(Transport::all()), 'Return all transports.'), 200);
     }
 

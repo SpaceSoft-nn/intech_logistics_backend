@@ -7,14 +7,14 @@ namespace App\Http\Controllers\Swagger\API;
 *
 * @OA\Get(
 *      path="/api/transports",
-*      summary="Получить все доступные transports из таблицы.",
+*      summary="Получить все транспортные средства в зависимости от роли организации",
 *      tags={"Transports"},
 *       @OA\Response(
 *           response=200,
 *           description="Успешный возврат всех транспортов.",
 *           @OA\JsonContent(
 *               @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/TransportResource")),
-*               @OA\Property(property="message", type="string", example="Return transports all."),
+*               @OA\Property(property="message", type="string", example="Return all transports by organization Customer."),
 *           ),
 *       ),
 *       @OA\Response(

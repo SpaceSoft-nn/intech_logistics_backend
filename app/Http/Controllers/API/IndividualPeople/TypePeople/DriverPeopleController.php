@@ -28,7 +28,7 @@ class DriverPeopleController extends Controller
         $organization = $array['organization'];
 
         return $array['status'] ?
-        response()->json(array_success(DriverPeopleCollection::make($organization->drivers), 'Return all drevirs by organization Customer .'), 200)
+        response()->json(array_success(DriverPeopleCollection::make($organization->drivers), 'Return all drevirs by organization Customer.'), 200)
             : response()->json(array_success(DriverPeopleCollection::make(DriverPeople::all()), 'Return all drevirs.'), 200);
     }
 

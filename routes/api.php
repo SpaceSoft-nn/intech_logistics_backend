@@ -208,7 +208,7 @@ Route::prefix('/offer-contractors')->group(function () {
     //Endpoint transports
 Route::prefix('/transports')->group(function () {
 
-    Route::get('/', [TransportController::class, 'index']);
+    Route::get('/', [TransportController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
     Route::get('/{transport}', [TransportController::class, 'show'])->whereUuid('transport');
     Route::post('/', [TransportController::class, 'store'])->middleware('isCarrierOrganization');
 
@@ -223,7 +223,7 @@ Route::prefix('/individual-peoples')->group(function () {
 
     Route::prefix('/drivers')->group(function () {
 
-        Route::get('/', [DriverPeopleController::class, 'index']);
+        Route::get('/', [DriverPeopleController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
         Route::get('/{driverPeople}', [DriverPeopleController::class, 'show'])->whereUuid('driverPeople')->middleware('isCarrierOrganization');
         Route::post('/', [DriverPeopleController::class, 'store']);
 

@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 * @OA\Get(
 *
 *      path="/api/orders",
-*      summary="Получить все готовы заказы.",
+*      summary="Получить все готовы заказы в зависимости от роли организации.",
 *      tags={"Order Unit"},
 *
 *       @OA\Response(

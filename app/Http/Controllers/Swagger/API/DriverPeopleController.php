@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Swagger\API;
 
 /**
 * @OA\Get(
-*      path="/api/individual-people/drivers",
-*      summary="Получить список водителей",
+*      path="/api/individual-peoples/drivers",
+*      summary="Получить список водителей в зависимости от роли организации",
 *      tags={"DriverPeople"},
 *      @OA\Response(
 *          response=200,
 *          description="Список водителей",
 *          @OA\JsonContent(
 *              @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/DriverPeopleResource")),
-*              @OA\Property(property="message", type="string", example="Return all driver people."),
+*              @OA\Property(property="message", type="string", example="Return all drevirs by organization Customer."),
 *          ),
 *      ),
 *      @OA\Response(
@@ -26,7 +26,7 @@ namespace App\Http\Controllers\Swagger\API;
 * ),
 *
 * @OA\Get(
-*      path="/api/individual-people/drivers/{driverPeople}",
+*      path="/api/individual-peoples/drivers/{driverPeople}",
 *      summary="Получить информацию о конкретном водителе",
 *      tags={"DriverPeople"},
 *      @OA\Parameter(
@@ -65,7 +65,7 @@ namespace App\Http\Controllers\Swagger\API;
 * ),
 *
 * @OA\Post(
-*      path="/api/individual-people/drivers",
+*      path="/api/individual-peoples/drivers",
 *      summary="Создать нового водителя",
 *      tags={"DriverPeople"},
 *      @OA\RequestBody(

@@ -209,7 +209,7 @@
                 "tags": [
                     "DriverPeople"
                 ],
-                "summary": "Получить список водителей",
+                "summary": "Получить список водителей в зависимости от роли организации",
                 "operationId": "27ab6ecaad4bb59312b7bae9845e3cdc",
                 "responses": {
                     "200": {
@@ -226,7 +226,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Return all driver people."
+                                            "example": "Return all drevirs by organization Customer."
                                         }
                                     },
                                     "type": "object"
@@ -2206,7 +2206,7 @@
                 "tags": [
                     "Order Unit"
                 ],
-                "summary": "Получить все готовы заказы.",
+                "summary": "Получить все готовы заказы в зависимости от роли организации.",
                 "operationId": "d645bbc867291a216b3d69f03e3ce98c",
                 "responses": {
                     "200": {
@@ -3803,201 +3803,6 @@
                                         "message_error": {
                                             "type": "string",
                                             "example": "Такой организации не существует."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Общая ошибка сервера.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message_error": {
-                                            "type": "string",
-                                            "example": "Общая ошибка сервера."
-                                        },
-                                        "code": {
-                                            "type": "integer",
-                                            "example": "500"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/organizations/{organization::uuid}/orders": {
-            "get": {
-                "tags": [
-                    "Organization"
-                ],
-                "summary": "Вернуть все заказы, которые принадлежат organization",
-                "operationId": "1cf71db13542c83acfee9064dfb0c3f1",
-                "parameters": [
-                    {
-                        "name": "organization::uuid",
-                        "in": "path",
-                        "description": "UUID Организации",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/OrderUnitResource"
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Return all orders by organization."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Общая ошибка сервера.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message_error": {
-                                            "type": "string",
-                                            "example": "Общая ошибка сервера."
-                                        },
-                                        "code": {
-                                            "type": "integer",
-                                            "example": "500"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/organizations/{organization::uuid}/transports": {
-            "get": {
-                "tags": [
-                    "Organization"
-                ],
-                "summary": "Вернуть все транспортные средства, которые принадлежат organization",
-                "operationId": "b21eb7fc4f25067e37f4f6a9f20efacf",
-                "parameters": [
-                    {
-                        "name": "organization::uuid",
-                        "in": "path",
-                        "description": "UUID Организации",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/TransportResource"
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Return all transport by organization."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Общая ошибка сервера.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message_error": {
-                                            "type": "string",
-                                            "example": "Общая ошибка сервера."
-                                        },
-                                        "code": {
-                                            "type": "integer",
-                                            "example": "500"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/organizations/{organization::uuid}/drivers": {
-            "get": {
-                "tags": [
-                    "Organization"
-                ],
-                "summary": "Вернуть всех водителей, которые принадлежат organization",
-                "operationId": "4c9ce2d941d8f00f4fb77b8764f62578",
-                "parameters": [
-                    {
-                        "name": "organization::uuid",
-                        "in": "path",
-                        "description": "UUID Организации",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/DriverPeopleResource"
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Return all transport by organization."
                                         }
                                     },
                                     "type": "object"
@@ -5863,7 +5668,7 @@
                 "tags": [
                     "Transports"
                 ],
-                "summary": "Получить все доступные transports из таблицы.",
+                "summary": "Получить все транспортные средства в зависимости от роли организации",
                 "operationId": "00a80df164b4ac58011de8305c3854f0",
                 "responses": {
                     "200": {
@@ -5880,7 +5685,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Return transports all."
+                                            "example": "Return all transports by organization Customer."
                                         }
                                     },
                                     "type": "object"

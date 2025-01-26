@@ -217,7 +217,7 @@ Route::prefix('/transports')->group(function () {
 
 });
 
-Route::prefix('/individual-people')->group(function () {
+Route::prefix('/individual-peoples')->group(function () {
 
 
     Route::get('/', [IndividualPeopleController::class, 'index']);
@@ -262,7 +262,7 @@ Route::prefix('/tenders')->group(function () {
             //Добавить к заказу дополнительную информацию
             Route::patch('/{lotTender}/orders/{orderUnit}', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender', 'orderUnit');
         }
-    }); 
+    });
 
 
     Route::get('/', [LotTenderController::class, 'index']);

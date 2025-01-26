@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Swagger\API;
 
 /**
  * @OA\Get(
- *      path="/api/individual-people",
+ *      path="/api/individual-peoples",
  *      summary="Получить список физических лиц",
  *      tags={"IndividualPeople"},
  *      @OA\Response(
@@ -27,7 +27,7 @@ namespace App\Http\Controllers\Swagger\API;
  *
  *
  * @OA\Get(
- *      path="/api/individual-people/{individualPeople}",
+ *      path="/api/individual-peoples/{individualPeople}",
  *      summary="Получить информацию о конкретном физическом лице",
  *      tags={"IndividualPeople"},
  *      @OA\Parameter(
@@ -68,7 +68,7 @@ namespace App\Http\Controllers\Swagger\API;
  *
  *
  * @OA\Post(
- *      path="/api/individual-people",
+ *      path="/api/individual-peoples",
  *      summary="Создать новое физическо лицо",
  *      tags={"IndividualPeople"},
  *      @OA\RequestBody(

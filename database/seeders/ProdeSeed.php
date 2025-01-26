@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use Arr;
 use Illuminate\Database\Seeder;
 use App\Modules\User\Domain\Models\User;
@@ -15,6 +16,7 @@ use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
 use App\Modules\Organization\Domain\Services\OrganizationService;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
+use App\Modules\Transport\Domain\Models\Transport;
 use App\Modules\User\Domain\Models\PersonalArea;
 
 class ProdeSeed extends Seeder
@@ -40,21 +42,34 @@ class ProdeSeed extends Seeder
 
             //создаём OrderUnit для user
             $this->createOrderUnit($user);
+
+            //создаём водителей + транспортное средство для организации пользователя
+            $this->createTransportAndDriver($user, 4);
+
         }
 
-        $user = [
-            "first_name" => 'Георгий',
-            "last_name" => 'Паншин',
-            "father_name" => 'Павлович',
-            "password" => "password",
-        ];
+        {
 
-        $this->createUser(
-            email: 'carrier@gmail.com',
-            phone: '79200000001',
-            typeCabinet: TypeCabinetEnum::carrier,
-            userValue: $user,
-        );
+            $user = [
+                "first_name" => 'Георгий',
+                "last_name" => 'Паншин',
+                "father_name" => 'Павлович',
+                "password" => "password",
+            ];
+
+            $user = $this->createUser(
+                email: 'carrier@gmail.com',
+                phone: '79200000001',
+                typeCabinet: TypeCabinetEnum::carrier,
+                userValue: $user,
+            );
+
+            //создаём водителей + транспортное средство для организации пользователя
+            $this->createTransportAndDriver($user, 4);
+
+        }
+
+
 
     }
 
@@ -187,5 +202,38 @@ class ProdeSeed extends Seeder
         }
 
 
+    }
+
+    public function createDriverPeoples(User $user) : DriverPeople
+    {
+
+        $organization = $user->organizations->first();
+
+        return DriverPeople::factory()->for($organization)->create();
+    }
+
+    public function createTransports(User $user, DriverPeople $driver) : Transport
+    {
+
+        $organization = $user->organizations->first();
+
+        return Transport::factory()
+            ->for($organization)
+            ->create(['driver_id' => $driver->id]);
+
+    }
+
+    public function createTransportAndDriver(User $user, int $counts = 1)
+    {
+
+        for ($i=0; $i < $counts; $i++) {
+
+            $driver = $this->createDriverPeoples($user);
+
+            $this->createTransports($user, $driver);
+
+        }
+
+        return true;
     }
 }

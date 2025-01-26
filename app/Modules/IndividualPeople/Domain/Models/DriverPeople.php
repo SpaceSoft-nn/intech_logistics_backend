@@ -3,10 +3,12 @@
 namespace App\Modules\IndividualPeople\Domain\Models;
 
 use App\Modules\IndividualPeople\Domain\Factories\DriverPeopleFactory;
+use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transport\Domain\Models\Transport;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
@@ -53,5 +55,10 @@ class DriverPeople extends Model
     public function individual_people(): MorphOne
     {
         return $this->morphOne(IndividualPeople::class, 'individualable');
+    }
+
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_id', 'id');
     }
 }

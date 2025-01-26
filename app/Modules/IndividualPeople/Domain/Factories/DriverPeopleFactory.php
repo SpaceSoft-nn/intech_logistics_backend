@@ -4,7 +4,6 @@ namespace App\Modules\IndividualPeople\Domain\Factories;
 
 use App\Modules\IndividualPeople\App\Data\ValueObject\DriverPeopleVO;
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
-use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 use App\Modules\User\Domain\Models\PersonalArea;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

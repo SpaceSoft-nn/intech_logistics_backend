@@ -18,18 +18,19 @@ use function App\Helpers\array_success;
 class DriverPeopleController extends Controller
 {
 
-    public function index(GetTypeCabinetByOrganization $action)
+    public function index()
     {
 
-        /** @var array */
-        $array = $action->isCustomer();
+        #TODO вынести в middleware
+        $organization_id = request()->header('organization_id');
 
-        /** @var Organization */
-        $organization = $array['organization'];
+        $organization = Organization::find($organization_id);
 
-        return $array['status'] ?
+        abort_unless( $organization, 404, 'Организации не существует');
+
+        return $organization->drivers ?
         response()->json(array_success(DriverPeopleCollection::make($organization->drivers), 'Return all drevirs by organization Customer.'), 200)
-            : response()->json(array_success(DriverPeopleCollection::make(DriverPeople::all()), 'Return all drevirs.'), 200);
+            :   response()->json(array_error(null, 'Faild return drivers people.'), 404);
     }
 
 

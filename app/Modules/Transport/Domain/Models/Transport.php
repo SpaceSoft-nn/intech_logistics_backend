@@ -5,10 +5,10 @@ namespace App\Modules\Transport\Domain\Models;
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transport\App\Data\Enums\TransportBodyType;
 use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
 use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
-use App\Modules\Transport\App\Data\Enums\TransportTypeEnum;
 use App\Modules\Transport\App\Data\Enums\TransportTypeWeight;
 use App\Modules\Transport\Domain\Factories\TransportFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -78,5 +78,11 @@ class Transport extends Model
     public function driver() : BelongsTo
     {
         return $this->belongsTo(DriverPeople::class, 'driver_id', 'id');
+    }
+
+
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_id', 'id');
     }
 }

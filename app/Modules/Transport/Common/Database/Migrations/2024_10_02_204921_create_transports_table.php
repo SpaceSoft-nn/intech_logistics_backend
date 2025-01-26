@@ -30,12 +30,12 @@ return new class extends Migration
 
             $table->text('description')->nullable()->comment('Описание/Заметка');
 
-            $table->uuid('organization_id')
+            $table->foreignUuid('organization_id')
                 ->constrained('organizations', 'id')->noActionOnDelete();
 
-            $table->uuid('driver_id') //1 ко многим у одной машины может быть несколько водителей.
+            $table->foreignUuid('driver_id') //1 ко многим у одной машины может быть несколько водителей.
                 ->nullable()
-                ->constrained('drivers', 'id')->noActionOnDelete();
+                ->constrained('driver_peoples', 'id')->noActionOnDelete();
 
             $table->timestamps();
 

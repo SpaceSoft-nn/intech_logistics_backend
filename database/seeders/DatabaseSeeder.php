@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
             \App\Modules\OfferContractor\Common\Database\Seeders\OfferContractorSeeder::class,
 
                 //Сидлы для кладовщиков
-            \App\Modules\IndividualPeople\Common\Database\Seeders\StorekeeperPeopleSeed::class,
+            // \App\Modules\IndividualPeople\Common\Database\Seeders\StorekeeperPeopleSeed::class,
 
 
             //Сиды для прода (Презентации)

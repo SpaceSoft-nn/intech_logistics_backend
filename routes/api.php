@@ -103,7 +103,7 @@ Route::prefix('/orders')->group(function () {
             {   //contractors
 
                 //Возврат всех подрятчиков откликнувшиеся на заказ. (Временно возвращаем все записи из таблицы)
-                Route::get('/contractors', [OrderUnitController::class, 'getContractorsAll'])->whereUuid('orderUnit', 'organization');
+                Route::get('/contractors', [OrderUnitController::class, 'getContractorsAll']);
 
                 //Возврат всех подрятчиков откликнувшиеся на заказ.
                 Route::get('/{orderUnit}/contractors', [OrderUnitController::class, 'getContractors'])->whereUuid('orderUnit', 'organization');

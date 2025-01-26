@@ -13,6 +13,15 @@ use App\Http\Controllers\Controller;
 *      path="/api/orders",
 *      summary="Получить все готовы заказы в зависимости от роли организации.",
 *      tags={"Order Unit"},
+*      @OA\Parameter(
+*         name="organization_id",
+*         in="header",
+*         required=true,
+*         @OA\Schema(
+*             type="string"
+*         ),
+*         description="Идентификатор организации, который должен быть передан в заголовке"
+*      ),
 *
 *       @OA\Response(
 *           response=200,

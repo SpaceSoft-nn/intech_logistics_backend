@@ -9,7 +9,16 @@ namespace App\Http\Controllers\Swagger\API;
 *      path="/api/transports",
 *      summary="Получить все транспортные средства в зависимости от роли организации",
 *      tags={"Transports"},
-*       @OA\Response(
+*      @OA\Parameter(
+*         name="organization_id",
+*         in="header",
+*         required=true,
+*         @OA\Schema(
+*             type="string"
+*         ),
+*         description="Идентификатор организации, который должен быть передан в заголовке"
+*      ),
+*      @OA\Response(
 *           response=200,
 *           description="Успешный возврат всех транспортов.",
 *           @OA\JsonContent(

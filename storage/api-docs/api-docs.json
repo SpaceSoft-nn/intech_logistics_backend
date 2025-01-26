@@ -204,13 +204,13 @@
                 }
             }
         },
-        "/api/individual-people/drivers": {
+        "/api/individual-peoples/drivers": {
             "get": {
                 "tags": [
                     "DriverPeople"
                 ],
                 "summary": "Получить список водителей в зависимости от роли организации",
-                "operationId": "27ab6ecaad4bb59312b7bae9845e3cdc",
+                "operationId": "0161a570eaa3cc58a156fe48202269dc",
                 "responses": {
                     "200": {
                         "description": "Список водителей",
@@ -261,7 +261,7 @@
                     "DriverPeople"
                 ],
                 "summary": "Создать нового водителя",
-                "operationId": "09fd1f8198946f17f32fdad3ae9a664f",
+                "operationId": "34ded742027d2a05819e3904b61a2f28",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -364,13 +364,13 @@
                 }
             }
         },
-        "/api/individual-people/drivers/{driverPeople}": {
+        "/api/individual-peoples/drivers/{driverPeople}": {
             "get": {
                 "tags": [
                     "DriverPeople"
                 ],
                 "summary": "Получить информацию о конкретном водителе",
-                "operationId": "1209eb535815ca1da7e3d2f9949cac9b",
+                "operationId": "636c0c6d7f03ab368f6eb6e3b94633e8",
                 "parameters": [
                     {
                         "name": "driverPeople",
@@ -2208,6 +2208,17 @@
                 ],
                 "summary": "Получить все готовы заказы в зависимости от роли организации.",
                 "operationId": "d645bbc867291a216b3d69f03e3ce98c",
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "header",
+                        "description": "Идентификатор организации, который должен быть передан в заголовке",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Успешный возврат Заказов.",

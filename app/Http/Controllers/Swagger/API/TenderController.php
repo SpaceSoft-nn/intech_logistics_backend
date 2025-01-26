@@ -7,6 +7,15 @@ namespace App\Http\Controllers\Swagger\API;
 *     path="/api/tenders",
 *     summary="Создать Lot Tender",
 *     tags={"Tender"},
+*     @OA\Parameter(
+*         name="organization_id",
+*         in="header",
+*         required=true,
+*         @OA\Schema(
+*             type="string"
+*         ),
+*         description="Идентификатор организации, который должен быть передан в заголовке"
+*     ),
 *     @OA\RequestBody(
 *         required=true,
 *         @OA\JsonContent(

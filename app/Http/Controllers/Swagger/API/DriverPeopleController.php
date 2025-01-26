@@ -7,6 +7,15 @@ namespace App\Http\Controllers\Swagger\API;
 *      path="/api/individual-peoples/drivers",
 *      summary="Получить список водителей в зависимости от роли организации",
 *      tags={"DriverPeople"},
+*      @OA\Parameter(
+*         name="organization_id",
+*         in="header",
+*         required=true,
+*         @OA\Schema(
+*             type="string"
+*         ),
+*         description="Идентификатор организации, который должен быть передан в заголовке"
+*      ),
 *      @OA\Response(
 *          response=200,
 *          description="Список водителей",

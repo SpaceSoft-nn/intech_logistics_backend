@@ -87,10 +87,10 @@ Route::prefix('/orders')->group(function () {
         //Вернуть все записи если заказчик - только заказы которые принадлежат ему, если перевозчик - то все
         Route::get('/', [OrderUnitController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
 
-        Route::middleware(['isCustomerOrganization'])->group(function () {
+        //Вернуть 1 запись по uuid
+        Route::get('/{orderUnit}', [OrderUnitController::class, 'show'])->whereUuid('orderUnit');
 
-            //Вернуть 1 запись по uuid
-            Route::get('/{orderUnit}', [OrderUnitController::class, 'show'])->whereUuid('orderUnit');
+        Route::middleware(['isCustomerOrganization'])->group(function () {
 
             //Создать заказ
             Route::post('/', [OrderUnitController::class, 'store']);

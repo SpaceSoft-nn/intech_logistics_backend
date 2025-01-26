@@ -211,6 +211,17 @@
                 ],
                 "summary": "Получить список водителей в зависимости от роли организации",
                 "operationId": "0161a570eaa3cc58a156fe48202269dc",
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "header",
+                        "description": "Идентификатор организации, который должен быть передан в заголовке",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Список водителей",
@@ -3000,6 +3011,81 @@
                 }
             }
         },
+        "/api/orders/contractors/compare": {
+            "get": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Получить все заказы и указать на какие заказы откликнулся перевозчик в bool переменной",
+                "description": "Фильтрация заказов на которые откликнулся перевозчик",
+                "operationId": "8cbba051e2f3a402257782629583c6d3",
+                "parameters": [
+                    {
+                        "name": "OrderUnit::uuid",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Получение всех подрядчиков успешно.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "order": {
+                                                        "$ref": "#/components/schemas/OrderUnitResource"
+                                                    },
+                                                    "isResponseContractor": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Возвращены все подрядчики откликнувшиеся на заказ."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/orders/contractors": {
             "get": {
                 "tags": [
@@ -4518,6 +4604,17 @@
                 ],
                 "summary": "Создать Lot Tender",
                 "operationId": "6af75442898911272fce394c81f3e9c3",
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "header",
+                        "description": "Идентификатор организации, который должен быть передан в заголовке",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5681,6 +5778,17 @@
                 ],
                 "summary": "Получить все транспортные средства в зависимости от роли организации",
                 "operationId": "00a80df164b4ac58011de8305c3854f0",
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "header",
+                        "description": "Идентификатор организации, который должен быть передан в заголовке",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Успешный возврат всех транспортов.",

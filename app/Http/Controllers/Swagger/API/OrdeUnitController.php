@@ -416,6 +416,63 @@ use App\Http\Controllers\Controller;
 *
 * ),
 *
+*
+* * @OA\Get(
+*
+*      path="/api/orders/contractors/compare",
+*      summary="Получить все заказы и указать на какие заказы откликнулся перевозчик в bool переменной",
+*      description="Фильтрация заказов на которые откликнулся перевозчик",
+*      tags={"Order Unit"},
+*      @OA\Parameter(
+*          name="OrderUnit::uuid",
+*          in="path",
+*          required=true,
+*          description="UUID заказа",
+*          @OA\Schema(
+*              type="string",
+*              format="uuid"
+*          )
+*      ),
+*
+*
+*       @OA\Response(
+*         response=200,
+*         description="Получение всех подрядчиков успешно.",
+*         @OA\JsonContent(
+*             @OA\Property(
+*                 property="data",
+*                 type="array",
+*                 @OA\Items(
+*                     @OA\Property(
+*                         property="order",
+*                         ref="#/components/schemas/OrderUnitResource"
+*                     ),
+*                     @OA\Property(
+*                         property="isResponseContractor",
+*                         type="boolean",
+*                         example=true
+*                     ),
+*                 ),
+*             ),
+*             @OA\Property(
+*                 property="message",
+*                 type="string",
+*                 example="Возвращены все подрядчики откликнувшиеся на заказ."
+*             )
+*         )
+*      ),
+*
+*      @OA\Response(
+*           response=500,
+*           description="Общая ошибка сервера.",
+*           @OA\JsonContent(
+*               @OA\Property(property="message_error", type="string", example="Error server"),
+*               @OA\Property(property="code", type="integer", example="500"),
+*           ),
+*      ),
+*
+* ),
+*
 * @OA\Get(
 *
 *      path="/api/orders/contractors",

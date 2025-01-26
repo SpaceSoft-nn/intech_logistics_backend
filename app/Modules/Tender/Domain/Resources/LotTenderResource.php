@@ -12,9 +12,14 @@ class LotTenderResource extends JsonResource
     public function toArray(Request $request): array
     {
 
+        //Делается для того что бы получить актуальное значение number_tender
+        $this->refresh();
+
+
         return [
 
             'id_lot_tender' => $this->id,
+            'number_tender' => $this->number_tender,
             'general_count_transport' => $this->general_count_transport,
             'price_for_km' => $this->price_for_km,
             'body_volume_for_order' => $this->body_volume_for_order,

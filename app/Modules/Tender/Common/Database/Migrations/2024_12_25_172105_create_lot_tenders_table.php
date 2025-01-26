@@ -13,6 +13,8 @@ return new class extends Migration
 
             $table->uuid('id')->primary();
 
+            $table->bigIncrements('number_tender')->comment('Номер тендера для фронта')->index('number_tender');
+
             $table->unsignedSmallInteger('general_count_transport')->comment('количество транспорта');
 
             $table->double('price_for_km')->comment('количество транспорта');

@@ -31,6 +31,7 @@ class LotTender extends Model
     protected $fillable = [
 
         "general_count_transport",
+        "number_tender",
         "price_for_km",
         "body_volume_for_order",
 

@@ -442,13 +442,13 @@
                 }
             }
         },
-        "/api/individual-people": {
+        "/api/individual-peoples": {
             "get": {
                 "tags": [
                     "IndividualPeople"
                 ],
                 "summary": "Получить список физических лиц",
-                "operationId": "1bd92311b7de7f59fbcaf052b6f6d71c",
+                "operationId": "0f363127c7923869fd4da7ca39b6ba6a",
                 "responses": {
                     "200": {
                         "description": "Список Физических лиц",
@@ -499,7 +499,7 @@
                     "IndividualPeople"
                 ],
                 "summary": "Создать новое физическо лицо",
-                "operationId": "b5ab9648836c46d2d65a281813bba8d8",
+                "operationId": "27458c57387154154c893e45d816e3b3",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -610,13 +610,13 @@
                 }
             }
         },
-        "/api/individual-people/{individualPeople}": {
+        "/api/individual-peoples/{individualPeople}": {
             "get": {
                 "tags": [
                     "IndividualPeople"
                 ],
                 "summary": "Получить информацию о конкретном физическом лице",
-                "operationId": "666301e95f4842fe739e4024848a078b",
+                "operationId": "a4d308287f2540cf4213c36108bec404",
                 "parameters": [
                     {
                         "name": "individualPeople",

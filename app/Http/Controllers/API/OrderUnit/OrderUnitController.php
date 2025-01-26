@@ -61,7 +61,7 @@ class OrderUnitController extends Controller
         $organization = Organization::find($organization_id);
 
 
-        abort_unless( (bool) $organization, 404, 'Организации не существует', );
+        abort_unless( $organization, 404, 'Организации не существует', );
 
 
 

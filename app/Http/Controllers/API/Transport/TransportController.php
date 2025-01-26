@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API\Transport;
 
+use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
+use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
 use App\Modules\Transport\Domain\Actions\Transport\CreateTransportAction;
 use App\Modules\Transport\Domain\Models\Transport;
@@ -13,11 +15,17 @@ use function App\Helpers\array_success;
 
 class TransportController
 {
-    public function index()
+    public function index(GetTypeCabinetByOrganization $action)
     {
-        $transports = Transport::get();
+        /** @var array */
+        $array = $action->isCustomer();
 
-        return response()->json(array_success(TransportCollection::make($transports), 'Return all transports'), 200);
+        /** @var Organization */
+        $organization = $array['organization'];
+
+        return $array['status'] ?
+        response()->json(array_success(TransportCollection::make($organization->transports), 'Return all transports by organization Customer .'), 200)
+            : response()->json(array_success(TransportCollection::make(Transport::all()), 'Return all transports.'), 200);
     }
 
     public function show(Transport $transport)

@@ -30,23 +30,6 @@ class OrganizationController
         private AuthServiceInterface $auth,
     ) {}
 
-    //Вернуть все транспортные средства связанные с Organization
-    public function transports(Organization $organization)
-    {
-        /** @var Transports */
-        $model = $organization->transports;
-
-        return response()->json(array_success(TransportCollection::make($model), 'Return all transport by organization.'), 200);
-    }
-
-    //Вернуть всех водителей связанных с Organization
-    public function drivers(Organization $organization)
-    {
-        /** @var DriverPeople */
-        $model = $organization->drivers;
-
-        return response()->json(array_success(DriverPeopleCollection::make($model), 'Return all driver by organization.'), 200);
-    }
 
     //Вернуть все заказы связанные с Organization
     public function orders(Organization $organization)

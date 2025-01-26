@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\Transport;
 
-use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
 use App\Modules\Transport\Domain\Actions\Transport\CreateTransportAction;
@@ -10,18 +9,17 @@ use App\Modules\Transport\Domain\Models\Transport;
 use App\Modules\Transport\Domain\Requests\TransportCreateRequest;
 use App\Modules\Transport\Domain\Resources\TransportCollection;
 use App\Modules\Transport\Domain\Resources\TransportResoruce;
+use Illuminate\Http\Request;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
 
 class TransportController
 {
-    public function index(GetTypeCabinetByOrganization $action)
+    public function index(Request $request)
     {
-        #TODO вынести в middleware
-        $organization_id = request()->header('organization_id');
-
-        $organization = Organization::find($organization_id);
+        /** @var Organization */ //p.s устанавливаем значение в middleware
+        $organization = $request->attributes->get('organization');
 
         abort_unless( $organization, 404, 'Организации не существует');
 

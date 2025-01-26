@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\IndividualPeople\TypePeople;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use App\Modules\IndividualPeople\App\Data\DTO\CreateDriverPeopleDTO;
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Requests\TypePeoples\CreateDriverPeopleRequest;
@@ -11,6 +10,7 @@ use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleCollect
 use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleResource;
 use App\Modules\IndividualPeople\Domain\Services\TypePeople\DriverPeopleService;
 use App\Modules\Organization\Domain\Models\Organization;
+use Illuminate\Http\Request;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
@@ -18,19 +18,16 @@ use function App\Helpers\array_success;
 class DriverPeopleController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-
-        #TODO вынести в middleware
-        $organization_id = request()->header('organization_id');
-
-        $organization = Organization::find($organization_id);
+        /** @var Organization */ //p.s устанавливаем значение в middleware
+        $organization = $request->attributes->get('organization');
 
         abort_unless( $organization, 404, 'Организации не существует');
 
         return $organization->drivers ?
-        response()->json(array_success(DriverPeopleCollection::make($organization->drivers), 'Return all drevirs by organization Customer.'), 200)
-            :   response()->json(array_error(null, 'Faild return drivers people.'), 404);
+            response()->json(array_success(DriverPeopleCollection::make($organization->drivers), 'Return all drevirs by organization Customer.'), 200)
+                :   response()->json(array_error(null, 'Faild return drivers people.'), 404);
     }
 
 

@@ -25,6 +25,8 @@ use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitSelectPriceRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitUpdateRequest;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorsCompareCollection;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorsCompareResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderPriceResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
@@ -228,16 +230,55 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OrgOrderInvoiceCollection::make($arrays), 'Возвращены все подрядчики откликнувшиеся на заказ.'), 200);
     }
 
-     /**
+    /**
      * Возврат всех подрятчиков откликнувшиеся на заказ.
      * @param OrderUnit $orderUnit
      *
-     */
+    */
     public function getContractorsAll()
     {
         $arrays = OrganizationOrderUnitInvoice::all();
 
         return response()->json(array_success(OrgOrderInvoiceCollection::make($arrays), 'Возвращены все подрядчики откликнувшиеся на заказ.'), 200);
+    }
+
+    public function compare()
+    {
+        #TODO вынести в middleware
+        $organization_id = request()->header('organization_id');
+
+        $organization = Organization::find($organization_id);
+
+        abort_unless( $organization, 404, 'Организации не существует');
+
+        $orders = OrderUnit::all();
+
+        $invoices = OrganizationOrderUnitInvoice::where('organization_id', $organization->id)->get();
+
+
+        $orders = $orders->map(function ($item) use ($invoices) {
+
+            foreach ($invoices as $invoice) {
+
+                if($invoice->order_unit_id == $item->id)
+                {
+                    return [
+                        'order' => $item,
+                        'isResponseContractor' => true,
+                    ];
+                }
+
+            }
+
+
+            return [
+                'order' => $item,
+                'isResponseContractor' => false,
+            ];
+
+        });
+
+        return response()->json(array_success(ContractorsCompareCollection::make($orders), 'Возвращены все подрядчики откликнувшиеся на заказ.'), 200);
     }
 
 

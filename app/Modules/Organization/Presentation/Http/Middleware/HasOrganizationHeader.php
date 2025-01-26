@@ -2,7 +2,7 @@
 
 namespace App\Modules\Organization\Presentation\Http\Middleware;
 
-
+use App\Modules\Organization\Domain\Models\Organization;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,11 +23,19 @@ class HasOrganizationHeader
     ): Response {
 
         #TODD - вынести в отдельный middleware и создать группу middleware
-        $organizationId = $request->header('organization_id');
+        $organization_id = $request->header('organization_id');
 
         // Проверяем, есть ли organization_id в заголовках
-        abort_unless( (bool) $organizationId, 422, 'Для доступа к этому endpoint в header должено быть значение :{organization_id}');
+        abort_unless( (bool) $organization_id, 422, 'Для доступа к этому endpoint в header должено быть значение :{organization_id}');
+
+        $organization = Organization::find($organization_id);
+
+        abort_unless( $organization, 404, 'Организации не существует');
+
+        //записываем организацию в атрибут, что бы не делать повторный запрос
+        $request->attributes->set('organization', $organization);
 
         return $next($request);
+
     }
 }

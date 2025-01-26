@@ -3,43 +3,37 @@
 namespace App\Http\Controllers\API\OrderUnit;
 
 use App\Http\Controllers\Controller;
+use function App\Helpers\array_error;
+use function App\Helpers\array_success;
 use App\Modules\Address\Domain\Models\Address;
-use App\Modules\Auth\Domain\Services\AuthService;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\DTO\OrgOrderInvoiceCreateDTO;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Requests\AddContractorRequest;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceResource;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
-use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
+use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
+use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderPriceResource;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdateAction;
-use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
-use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
-use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitSelectPriceRequest;
-use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitUpdateRequest;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorsCompareCollection;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorsCompareResource;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderPriceResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
-use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
-use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
-use App\Modules\Organization\App\Repositories\OrganizationRepository;
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\User\Domain\Models\User;
-use Illuminate\Http\Request;
+use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
+use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitUpdateRequest;
+use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
+use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitSelectPriceRequest;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorsCompareCollection;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Requests\AddContractorRequest;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\DTO\OrgOrderInvoiceCreateDTO;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceResource;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
 
-use function App\Helpers\array_error;
-use function App\Helpers\array_success;
-use function App\Helpers\isAuthorized;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
+use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderAndContractors\OrderAndContractorsFilterAction;
 
 class OrderUnitController extends Controller
 {
@@ -55,11 +49,19 @@ class OrderUnitController extends Controller
         /** @var Organization */
         $organization = $array['organization'];
 
+        if($array['status']) {
 
-        //если заказчик, возвращаем только его заказы, если перевозчик - возвращаем все заказы
-        return $array['status'] ?
-        response()->json(array_success(OrderUnitCollection::make($organization->order_units), 'Return all orders by organization Customer .'), 200)
-            : response()->json(array_success(OrderUnitCollection::make(OrderUnit::all()), 'Return all orders.'), 200);
+            //Возвращаем все созданные заказы, ЗАКАЗЧИКА
+
+            return response()->json(array_success(OrderUnitCollection::make($organization->order_units), 'Return all orders by organization Customer .'), 200);
+
+        } else {
+
+            //получаем все ордеры, и указываем на какие откликнулся перевозчик
+            $orders = OrderAndContractorsFilterAction::make($organization->id);
+
+            return response()->json(array_success(ContractorsCompareCollection::make($orders), 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);
+        }
 
     }
 
@@ -251,34 +253,8 @@ class OrderUnitController extends Controller
 
         abort_unless( $organization, 404, 'Организации не существует');
 
-        $orders = OrderUnit::all();
-
-        $invoices = OrganizationOrderUnitInvoice::where('organization_id', $organization->id)->get();
 
 
-        $orders = $orders->map(function ($item) use ($invoices) {
-
-            foreach ($invoices as $invoice) {
-
-                if($invoice->order_unit_id == $item->id)
-                {
-                    return [
-                        'order' => $item,
-                        'isResponseContractor' => true,
-                    ];
-                }
-
-            }
-
-
-            return [
-                'order' => $item,
-                'isResponseContractor' => false,
-            ];
-
-        });
-
-        return response()->json(array_success(ContractorsCompareCollection::make($orders), 'Возвращены все подрядчики откликнувшиеся на заказ.'), 200);
     }
 
 

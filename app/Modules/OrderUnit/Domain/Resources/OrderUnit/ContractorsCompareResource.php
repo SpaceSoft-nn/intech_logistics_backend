@@ -12,9 +12,6 @@ class ContractorsCompareResource extends JsonResource
 
     public function toArray(Request $request): array
     {
-
-
-        #TODO в load_type надо возвращать имя кейса
         return [
 
             'order' => OrderUnitResource::make($this['order']),

@@ -17,7 +17,6 @@ use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitUpdateAction;
 use App\Modules\OrderUnit\Domain\Interactor\CoordinateCheckerInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
@@ -51,21 +50,28 @@ class OrderUnitController extends Controller
         AuthService $auth,
     ) {
 
+
         /** @var User */
         $user = isAuthorized($auth);
+
 
         //ЭТОТ КОСТЫЛЬ МЕНЯ ЗАСТАВИЛ ДЕЛАТЬ ФРОТЕНДЕР! ВОТ ЕГО ГИТ https://github.com/Zeltharion
         $organization_id = $request->header('organization_id');
 
         $organization = Organization::find($organization_id);
 
-        abort_unless($organization, 'Организации не существует', 404);
+
+        abort_unless( (bool) $organization, 404, 'Организации не существует', );
+
+
 
         /** @var TypeCabinetEnum */
         $typeCabinet = $repOrg->getTypeCabinet($user, $organization);
 
+
         /** @var bool */
         $status = TypeCabinetEnum::isCustomer($typeCabinet);
+
 
 
         //если заказчик, возвращаем только его заказы, если перевозчик - возвращаем все заказы

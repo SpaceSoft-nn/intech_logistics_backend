@@ -24,7 +24,6 @@ use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitUpdateRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitSelectPriceRequest;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorsCompareCollection;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Requests\AddContractorRequest;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\DTO\OrgOrderInvoiceCreateDTO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceResource;
@@ -34,6 +33,7 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgO
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderAndContractors\OrderAndContractorsFilterAction;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorComporeOrderUnitCollection;
 
 class OrderUnitController extends Controller
 {
@@ -58,9 +58,10 @@ class OrderUnitController extends Controller
         } else {
 
             //получаем все ордеры, и указываем на какие откликнулся перевозчик
-            $orders = OrderAndContractorsFilterAction::make($organization->id);
+            $orders = (object) OrderAndContractorsFilterAction::make($organization->id);
 
-            return response()->json(array_success(ContractorsCompareCollection::make($orders), 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);
+            #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
+            return response()->json(array_success(ContractorComporeOrderUnitCollection::make($orders), 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);
         }
 
     }

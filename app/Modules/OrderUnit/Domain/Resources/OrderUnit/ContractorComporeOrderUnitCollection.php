@@ -5,10 +5,10 @@ namespace App\Modules\OrderUnit\Domain\Resources\OrderUnit;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ContractorsCompareCollection extends ResourceCollection
+class ContractorComporeOrderUnitCollection extends ResourceCollection
 {
 
-    public $collects = ContractorsCompareResource::class;
+    public $collects = ContractorComporeOrderUnitResource::class;
 
     public function toArray(Request $request): array
     {

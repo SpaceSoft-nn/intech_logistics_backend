@@ -60,8 +60,11 @@ class OrderUnitController extends Controller
             //получаем все ордеры, и указываем на какие откликнулся перевозчик
             $orders = OrderAndContractorsFilterAction::make($organization->id);
 
+            // dd($orders);
+
             #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
-            return response()->json(array_success($orders, 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);
+            return response()->json(array_success(ContractorComporeOrderUnitCollection::make($orders), 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);
+            // return response()->json(array_success($orders, 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);
         }
 
     }

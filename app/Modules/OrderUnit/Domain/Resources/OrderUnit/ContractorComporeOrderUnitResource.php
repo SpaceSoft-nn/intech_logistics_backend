@@ -2,7 +2,9 @@
 
 namespace App\Modules\OrderUnit\Domain\Resources\OrderUnit;
 
+use App\Modules\Address\Domain\Models\Address;
 use App\Modules\Address\Domain\Resources\AddressCollection;
+use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Domain\Resources\CargoGood\CargoGoodCollection;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Organization\Domain\Resources\OrganizationResource;
@@ -10,7 +12,7 @@ use App\Modules\User\Domain\Models\User;
 use App\Modules\User\Domain\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Illuminate\Support\Collection;
 
 class ContractorComporeOrderUnitResource extends JsonResource
 {
@@ -18,6 +20,18 @@ class ContractorComporeOrderUnitResource extends JsonResource
 
     public function toArray(Request $request): array
     {
+        $arrayCollect = collect($this['cargo_goods'])->map(function ($item){
+            return $item['id'];
+        });
+
+        $cargos = CargoGood::find($arrayCollect);
+
+        $arrayAdress = collect($this['addresses'])->map(function ($item){
+            return $item['id'];
+        });
+
+        $addresses = Address::find($arrayAdress);
+
 
         return [
 
@@ -37,9 +51,9 @@ class ContractorComporeOrderUnitResource extends JsonResource
             "cargo_unit_sum" => $this['cargo_unit_sum'],
             "type_load_truck" => $this['type_load_truck'],
 
-            'cargo_goods' => isset($this['cargo_goods']) ? CargoGoodCollection::make( $this['cargo_goods'] ) : null,
+            'cargo_goods' => $cargos ? $cargos : null,
 
-            // 'address_array' => isset($this['addresses']) ? AddressCollection::make(resource: $this['addresses'], idOrderUnit: $this['id']) : null,
+            'address_array' => $addresses ? AddressCollection::make(resource: $addresses, idOrderUnit: $this['id']) : null,
 
             //bool
                 "add_load_space" => $this['add_load_space'],

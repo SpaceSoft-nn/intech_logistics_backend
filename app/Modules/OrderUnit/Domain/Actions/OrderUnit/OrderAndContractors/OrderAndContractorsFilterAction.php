@@ -19,7 +19,7 @@ class OrderAndContractorsFilterAction
         //Возвращаем все заказы + отфильтровано выбранные перевозчиком
         $invoices = OrganizationOrderUnitInvoice::where('organization_id', $organization_id)->get();
 
-        $orders = OrderUnit::with('addresses', 'cargo_goods', 'organization', 'user', 'mgx', 'lot_tender', 'contractor')->get();
+        $orders = OrderUnit::with('organization', 'user', 'mgx', 'lot_tender', 'contractor')->get();
 
         $array = $orders->map(function (OrderUnit $item) use ($invoices) {
 
@@ -30,7 +30,16 @@ class OrderAndContractorsFilterAction
                 if($invoice->order_unit_id === $item->id)
                 {
 
+                    $cargoArray = $item->cargo_goods->map(function ($item) {
+                        return $item->id;
+                    });
+
+                    $addressArray = $item->addresses->map(function ($item) {
+                        return $item->id;
+                    });
+
                     $actual_status = $item->actual_status->status->value;
+
 
                     $array = array_merge($item->toArray(), ['isResponseContractor' => true]);
 
@@ -40,6 +49,14 @@ class OrderAndContractorsFilterAction
                 }
 
             }
+
+            $item->cargo_goods = $item->cargo_goods->map(function ($item) {
+                return $item->id;
+            });
+
+            $item->addresses = $item->addresses->map(function ($item) {
+                return $item->id;
+            });
 
             $actual_status = $item->actual_status->status->value;
 

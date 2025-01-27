@@ -11,6 +11,7 @@ use App\Modules\User\Domain\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+
 class ContractorComporeOrderUnitResource extends JsonResource
 {
 
@@ -38,7 +39,7 @@ class ContractorComporeOrderUnitResource extends JsonResource
 
             'cargo_goods' => isset($this['cargo_goods']) ? CargoGoodCollection::make( $this['cargo_goods'] ) : null,
 
-            'address_array' => isset($this['addresses']) ? AddressCollection::make(resource: $this['addresses'], idOrderUnit: $this['id']) : null,
+            // 'address_array' => isset($this['addresses']) ? AddressCollection::make(resource: $this['addresses'], idOrderUnit: $this['id']) : null,
 
             //bool
                 "add_load_space" => $this['add_load_space'],
@@ -60,6 +61,9 @@ class ContractorComporeOrderUnitResource extends JsonResource
             'isResponseContractor' => $this['isResponseContractor'],
 
         ];
+
+
+
     }
 }
 

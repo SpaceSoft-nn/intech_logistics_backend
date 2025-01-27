@@ -41,7 +41,7 @@ class OrderAndContractorsFilterAction
                     $actual_status = $item->actual_status->status->value;
 
 
-                    $array = array_merge($item->toArray(), ['isResponseContractor' => false]);
+                    $array = array_merge($item->toArray(), ['isResponseContractor' => true]);
 
                     $array = array_merge($array, ['actual_status' => $actual_status]);
 
@@ -60,7 +60,7 @@ class OrderAndContractorsFilterAction
 
             $actual_status = $item->actual_status->status->value;
 
-            $array = array_merge($item->toArray(), ['isResponseContractor' => true]);
+            $array = array_merge($item->toArray(), ['isResponseContractor' => false]);
 
             $array = array_merge($array, ['actual_status' => $actual_status]);
 

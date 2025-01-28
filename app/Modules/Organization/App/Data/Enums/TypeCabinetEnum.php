@@ -56,7 +56,7 @@ enum TypeCabinetEnum : string
         return self::customer === $enum;
     }
 
-    public static function isСarrier(TypeCabinetEnum $enum) : bool
+    public static function iscarrier(TypeCabinetEnum $enum) : bool
     {
         return self::carrier === $enum;
     }

@@ -19,7 +19,7 @@
     password: password
 
     //Пользователь с организацией (Перевозчик)
-    mail: сarrier@gmail.com
+    mail: carrier@gmail.com
     phone: 79200000000
     password: password
     

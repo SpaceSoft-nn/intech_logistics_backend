@@ -62,7 +62,7 @@ class isCarrierOrganization
         $typeCabinet = $this->repOrg->getTypeCabinet($user, $organization);
 
         //выкидываем ошибку - если организация не перевозчитк
-        abort_unless( (bool) TypeCabinetEnum::isСarrier($typeCabinet)  , 422, 'Организация не является перевозчиком.' );
+        abort_unless( (bool) TypeCabinetEnum::iscarrier($typeCabinet)  , 422, 'Организация не является перевозчиком.' );
 
         return $next($request);
     }

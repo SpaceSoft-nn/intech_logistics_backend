@@ -23801,7 +23801,7 @@
 											"top": 105,
 											"width": 199,
 											"height": 13,
-											"text": "сarrier",
+											"text": "carrier",
 											"horizontalAlignment": 0
 										}
 									],
@@ -39172,7 +39172,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGTrKVlt4GMUOY="
 							},
-							"name": "сarrier"
+							"name": "carrier"
 						}
 					]
 				},

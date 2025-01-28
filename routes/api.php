@@ -23,7 +23,7 @@ use App\Http\Controllers\API\Tender\LotTenderController\LotTenderController;
 use App\Http\Controllers\API\IndividualPeople\TypePeople\DriverPeopleController;
 use App\Http\Controllers\API\IndividualPeople\TypePeople\StorekeeperPeopleController;
 use App\Http\Controllers\API\Tender\ResponseTenderController\ResponseTenderController;
-
+use App\Modules\Organization\Presentation\Http\Middleware\isCarrierOrganization;
 
 Route::post('/registration', [RegistrationController::class, 'store']);
 Route::post('/login', LoginController::class);
@@ -248,14 +248,20 @@ Route::prefix('/tenders')->group(function () {
 
     Route::get('/', [LotTenderController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
 
+
+
+    Route::middleware(['isCarrierOrganization'])->group(function () {
+
+        //Добавление исполнителей к заказу
+        Route::post('/{lotTender}/contractors/{organization}', [ResponseTenderController::class, 'addСontractorForTender'])->whereUuid('lotTender', 'organization');
+        
+    });
+
     Route::middleware(['isCustomerOrganization'])->group(function () {
 
         {
             //Создание Тендера
             Route::post('/', [LotTenderController::class, 'store']);
-
-            //Добавление исполнителей к заказу
-            Route::post('/{lotTender}/contractors/{organization}', [ResponseTenderController::class, 'addСontractorForTender'])->whereUuid('lotTender', 'organization');
 
             //Вернуть всех исполнителей откликнувшиеся на Тендер
             Route::get('/{lotTender}/contractors', [ResponseTenderController::class, 'getСontractorForTender'])->whereUuid('lotTender');

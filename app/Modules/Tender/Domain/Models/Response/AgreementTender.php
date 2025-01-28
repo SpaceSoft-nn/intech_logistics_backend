@@ -51,4 +51,9 @@ class AgreementTender extends Model
         return $this->belongsTo(LotTender::class, 'lot_tender_id', 'id');
     }
 
+    protected function lot_tender_response(): BelongsTo
+    {
+        return $this->belongsTo(LotTenderResponse::class, 'lot_tender_response_id', 'id');
+    }
+
 }

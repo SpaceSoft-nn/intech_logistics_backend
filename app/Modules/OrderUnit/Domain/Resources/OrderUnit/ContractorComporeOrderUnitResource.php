@@ -2,84 +2,25 @@
 
 namespace App\Modules\OrderUnit\Domain\Resources\OrderUnit;
 
-use App\Modules\Address\Domain\Models\Address;
-use App\Modules\Address\Domain\Resources\AddressCollection;
-use App\Modules\OrderUnit\Domain\Models\CargoGood;
-use App\Modules\OrderUnit\Domain\Resources\CargoGood\CargoGoodCollection;
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Organization\Domain\Resources\OrganizationResource;
-use App\Modules\User\Domain\Models\User;
-use App\Modules\User\Domain\Resources\UserResource;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Collection;
 
-class ContractorComporeOrderUnitResource extends JsonResource
+
+class ContractorComporeOrderUnitResource extends OrderUnitResource
 {
-
 
     public function toArray(Request $request): array
     {
-        $arrayCollect = collect($this['cargo_goods'])->map(function ($item){
-            return $item['id'];
-        });
 
-        $cargos = CargoGood::find($arrayCollect);
+        //записываем значение в переменную
+        $isResponseContractor = $this->isResponseContractor;
 
-        $arrayAdress = collect($this['addresses'])->map(function ($item){
-            return $item['id'];
-        });
+        //наследуем основной шаблон json resource order
+        $data = parent::toArray($request);
 
-        $addresses = Address::find($arrayAdress);
+        $data = array_merge($data, ['isResponseContractor' => $isResponseContractor]);
 
-
-        return [
-
-            "id" => $this['id'],
-            "number" => $this['number_order'],
-
-            "end_date_order" => $this['end_date_order'] ? $this['end_date_order'] : null,
-            "exemplary_date_start" => $this['exemplary_date_start'] ? $this['exemplary_date_start'] : null,
-
-            "body_volume" => $this['body_volume'],
-            "order_total" => $this['order_total'],
-            "description" => $this['description'],
-
-            'end_date_delivery' => $this['end_date_order'], #TODO Сделано абстракция - если нужно потом доделать.
-
-            "type_transport_weight" => $this['type_transport_weight'],
-            "cargo_unit_sum" => $this['cargo_unit_sum'],
-            "type_load_truck" => $this['type_load_truck'],
-
-            'cargo_goods' => $cargos ? $cargos : null,
-
-            'address_array' => $addresses ? AddressCollection::make(resource: $addresses, idOrderUnit: $this['id']) : null,
-
-            //bool
-                "add_load_space" => $this['add_load_space'],
-                "change_price" => $this['change_price'],
-                "change_time" => $this['change_time'],
-                "address_is_array" => $this['address_is_array'],
-                "goods_is_array" => $this['goods_is_array'],
-            //
-
-            "order_status" => $this['actual_status'],
-
-            "user_id" => UserResource::make(User::find($this['user_id'])),
-            "organization_id" => OrganizationResource::make(Organization::find($this['organization_id'])),
-
-            //Tender
-            "lot_tender_id" => $this['lot_tender_id'],
-            //
-
-            'isResponseContractor' => $this['isResponseContractor'],
-
-        ];
-
-
+        return $data;
 
     }
 }
 
-// 'order' => OrderUnitResource::make($this['order']),
-// 'isResponseContractor' => $this['isResponseContractor'],

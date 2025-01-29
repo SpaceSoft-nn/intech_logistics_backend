@@ -2,19 +2,20 @@
 
 namespace App\Modules\OrderUnit\App\Repositories;
 
+use function App\Helpers\Mylog;
+use Illuminate\Database\Eloquent\Collection;
 use App\Modules\Address\Domain\Models\Address;
 use App\Modules\Base\Repositories\CoreRepository;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitStatus\OrderUnitStatusVO;
+use Illuminate\Support\Collection as SupportCollection;
+use App\Modules\OrderUnit\Domain\Models\OrderUnitStatus;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit as Model;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderUnitSatus\OrderUnitStatusCreateAction;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit as Model;
-use App\Modules\OrderUnit\Domain\Models\OrderUnitStatus;
-use App\Modules\OrderUnit\Domain\Models\Status\ChainTransportationStatus;
-use Exception;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Collection as SupportCollection;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitStatus\OrderUnitStatusVO;
+use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderAndContractors\OrderAndContractorFilterAction;
 
-use function App\Helpers\Mylog;
+use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderAndContractors\OrdersAndContractorFilterAction;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 
 class OrderUnitRepository extends CoreRepository
 {
@@ -174,5 +175,28 @@ class OrderUnitRepository extends CoreRepository
             ->whereHas('actual_status', function ($query) {
                 $query->where('status', StatusOrderUnitEnum::in_work);
             })->first();
+    }
+
+
+    /**
+     * Вернуть все заказы и указать по дополнительному полю в атрибутах model - откликался ли перевозчик "contractor" на этот заказ.
+     * @param string $organization
+     *
+     * @return Collection
+     */
+    public function getOrdersFilterByContractor(string $organization_id) : Collection
+    {
+        return OrdersAndContractorFilterAction::execute($organization_id);
+    }
+
+    /**
+     * Вернуть один заказ по uuid и указать по дополнительному полю в атрибутах model - откликался ли перевозчик "contractor" на этот заказ.
+     * @param string $organization
+     *
+     * @return ?Model
+    */
+    public function getOrderFilterByContractor(string $organization_id, string $order_id) : ?Model
+    {
+        return OrderAndContractorFilterAction::execute($organization_id, $order_id);
     }
 }

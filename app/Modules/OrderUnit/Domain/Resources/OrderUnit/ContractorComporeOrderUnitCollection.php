@@ -14,4 +14,5 @@ class ContractorComporeOrderUnitCollection extends ResourceCollection
     {
         return $this->collection->toArray();
     }
+
 }

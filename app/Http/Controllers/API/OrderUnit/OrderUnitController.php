@@ -32,8 +32,10 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgO
 
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
-use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderAndContractors\OrderAndContractorsFilterAction;
+use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
+use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderAndContractors\OrdersAndContractorFilterAction;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorComporeOrderUnitCollection;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorComporeOrderUnitResource;
 
 class OrderUnitController extends Controller
 {
@@ -41,7 +43,10 @@ class OrderUnitController extends Controller
     /**
      * Вернуть все заказы
      */
-    public function index(GetTypeCabinetByOrganization $action) {
+    public function index(
+        GetTypeCabinetByOrganization $action,
+        OrderUnitRepository $rep,
+    ) {
 
         /** @var array */
         $array = $action->isCustomer();
@@ -58,13 +63,10 @@ class OrderUnitController extends Controller
         } else {
 
             //получаем все ордеры, и указываем на какие откликнулся перевозчик
-            $orders = OrderAndContractorsFilterAction::make($organization->id);
-
-            // dd($orders);
+            $orders = $rep->getOrdersFilterByContractor($organization->id);
 
             #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
             return response()->json(array_success(ContractorComporeOrderUnitCollection::make($orders), 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);
-            // return response()->json(array_success($orders, 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);
         }
 
     }
@@ -72,9 +74,33 @@ class OrderUnitController extends Controller
     /**
     * Вернуть 1 заказ
     */
-    public function show(OrderUnit $orderUnit)
-    {
-        return response()->json(array_success(OrderUnitResource::make($orderUnit), 'Return Order.'), 200);
+    public function show(
+        OrderUnit $orderUnit,
+        GetTypeCabinetByOrganization $action,
+        OrderUnitRepository $rep,
+    ) {
+
+       /** @var array */
+       $array = $action->isCustomer();
+
+       /** @var Organization */
+       $organization = $array['organization'];
+
+       if($array['status']) {
+
+           //Возвращаем все созданные заказы, ЗАКАЗЧИКА
+
+           return response()->json(array_success(OrderUnit::make($orderUnit), 'Return order by organization Customer .'), 200);
+
+       } else {
+
+           //получаем все ордеры, и указываем на какие откликнулся перевозчик
+           $order = $rep->getOrderFilterByContractor($organization->id, $orderUnit->id);
+
+           #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
+           return response()->json(array_success(ContractorComporeOrderUnitResource::make($order), 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);
+       }
+
     }
 
     /**

@@ -18,9 +18,6 @@ return new class extends Migration
             $table->uuid('personal_area_id')
                 ->constrained('personal_area', 'id')->noActionOnDelete();
 
-            // $table->uuid('individual_people_id')
-            //     ->constrained('individual_peoples', 'id')->noActionOnDelete();
-
             $table->uuid('organization_id')->nullable()
                 ->constrained('organizations', 'id')->noActionOnDelete();
 

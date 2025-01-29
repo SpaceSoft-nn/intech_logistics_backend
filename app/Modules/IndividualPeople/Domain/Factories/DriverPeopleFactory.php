@@ -28,6 +28,7 @@ class DriverPeopleFactory extends Factory
             series: $this->faker->numerify('####'),
             number: $this->faker->numerify('######'),
             date_get: $this->faker->date('Y-m-d'),
+            
         );
 
 

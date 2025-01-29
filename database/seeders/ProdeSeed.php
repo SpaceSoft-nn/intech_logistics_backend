@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
+use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 use Arr;
 use Illuminate\Database\Seeder;
 use App\Modules\User\Domain\Models\User;
@@ -18,6 +19,7 @@ use App\Modules\Organization\Domain\Services\OrganizationService;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Transport\Domain\Models\Transport;
 use App\Modules\User\Domain\Models\PersonalArea;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProdeSeed extends Seeder
 {
@@ -40,11 +42,12 @@ class ProdeSeed extends Seeder
                 userValue: $user,
             );
 
+
             //создаём OrderUnit для user
             $this->createOrderUnit($user);
 
             //создаём водителей + транспортное средство для организации пользователя
-            $this->createTransportAndDriver($user, 4);
+            $this->createTransportAndDriverAndIndividualPeople($user, 4, 1);
 
         }
 
@@ -65,7 +68,7 @@ class ProdeSeed extends Seeder
             );
 
             //создаём водителей + транспортное средство для организации пользователя
-            $this->createTransportAndDriver($user, 4);
+            $this->createTransportAndDriverAndIndividualPeople($user, 4, 1);
 
         }
 
@@ -204,35 +207,82 @@ class ProdeSeed extends Seeder
 
     }
 
-    public function createDriverPeoples(User $user) : DriverPeople
+    public function individualPeople(DriverPeople|Collection $drivers) : IndividualPeople
     {
 
-        $organization = $user->organizations->first();
+        if($drivers instanceof Collection){
 
-        return DriverPeople::factory()->for($organization)->create();
-    }
+            foreach ($drivers as $driver) {
+                $individualPeople = IndividualPeople::factory()->create([
+                    'personal_area_id' => $driver->personal_area_id,
+                    'individualable_id' => $driver->id,
+                    'individualable_type' => DriverPeople::class,
+                ]);
+            }
 
-    public function createTransports(User $user, DriverPeople $driver) : Transport
-    {
+        } else {
 
-        $organization = $user->organizations->first();
-
-        return Transport::factory()
-            ->for($organization)
-            ->create(['driver_id' => $driver->id]);
-
-    }
-
-    public function createTransportAndDriver(User $user, int $counts = 1)
-    {
-
-        for ($i=0; $i < $counts; $i++) {
-
-            $driver = $this->createDriverPeoples($user);
-
-            $this->createTransports($user, $driver);
+            $individualPeople = IndividualPeople::factory()->create([
+                'personal_area_id' => $drivers->personal_area_id,
+                'individualable_id' => $drivers->id,
+                'individualable_type' => DriverPeople::class,
+            ]);
 
         }
+
+        return $individualPeople;
+    }
+
+    public function createDriverPeoples(User $user, int $count) : DriverPeople|Collection
+    {
+        $organization = $user->organizations->first();
+        $personal_area = $user->personal_areas->first();
+
+        $drivers = DriverPeople::factory()->count($count)->create([
+            'organization_id' => $organization->id,
+            'personal_area_id' => $personal_area->id,
+        ]);
+
+        return $drivers;
+    }
+
+    public function createTransports(DriverPeople|Collection $drivers, int $transport_count) : Transport|Collection
+    {
+
+        if($drivers instanceof Collection){
+
+            foreach ($drivers as $driver) {
+
+                $transport = Transport::factory()
+                ->count($transport_count)
+                ->for($driver->organization)
+                ->create(['driver_id' => $driver->id]);
+
+            }
+
+        } else {
+
+            $transport = Transport::factory()
+            ->count($transport_count)
+            ->for($drivers->organization)
+            ->create(['driver_id' => $drivers->id]);
+
+        }
+
+        return $transport;
+    }
+
+    public function createTransportAndDriverAndIndividualPeople(User $user, int $driver_count = 1, int $transport_count = 1)
+    {
+
+        /** @var DriverPeople */
+        $drivers = $this->createDriverPeoples($user, $driver_count);
+
+        /** @var IndividualPeople */
+        $individualPeople = $this->individualPeople($drivers);
+
+        /** @var Transport */
+        $transport = $this->createTransports($drivers, $transport_count);
 
         return true;
     }

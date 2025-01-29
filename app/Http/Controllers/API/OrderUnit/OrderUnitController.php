@@ -88,9 +88,7 @@ class OrderUnitController extends Controller
 
        if($array['status']) {
 
-           //Возвращаем все созданные заказы, ЗАКАЗЧИКА
-
-           return response()->json(array_success(OrderUnit::make($orderUnit), 'Return order by organization Customer .'), 200);
+           return response()->json(array_success(OrderUnitResource::make($orderUnit), 'Return order by organization Customer .'), 200);
 
        } else {
 

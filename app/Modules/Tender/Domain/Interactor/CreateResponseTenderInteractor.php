@@ -57,12 +57,12 @@ final class CreateResponseTenderInteractor
         );
     }
 
-    private function createInvoiceLotTender(CreateResponseTenderDTO $dto, string $lot_tender_respons_id) : InvoiceLotTender
+    private function createInvoiceLotTender(CreateResponseTenderDTO $dto, string $lot_tender_response_id) : InvoiceLotTender
     {
         return CreateInvoiceLotTenderAction::make(
             InvoiceLotTenderVO::make(
                 transport_id: $dto->transport_id,
-                lot_tender_respons_id: $lot_tender_respons_id,
+                lot_tender_response_id: $lot_tender_response_id,
                 price_for_km: $dto->price_for_km,
                 comment: $dto->comment,
             )

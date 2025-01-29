@@ -40,7 +40,7 @@ class LotTenderResponse extends Model
 
     public function invoice_lot_tender() : HasOne
     {
-        return $this->hasOne(InvoiceLotTender::class, 'lot_tender_respons_id');
+        return $this->hasOne(InvoiceLotTender::class, 'lot_tender_response_id');
     }
 
 }

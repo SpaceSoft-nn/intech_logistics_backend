@@ -21,7 +21,7 @@ class InvoiceLotTender extends Model
     protected $fillable = [
 
         "transport_id",
-        "lot_tender_respons_id",
+        "lot_tender_response_id",
         "price_for_km",
         "comment",
 

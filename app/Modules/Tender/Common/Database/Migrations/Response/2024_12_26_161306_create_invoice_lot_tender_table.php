@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignUuid('transport_id')
                 ->constrained('transports')->noActionOnDelete();
 
-            $table->foreignUuid('lot_tender_respons_id')->unique()
+            $table->foreignUuid('lot_tender_response_id')->unique()
                 ->constrained('lot_tender_responses')->noActionOnDelete();
 
             $table->double('price_for_km')->comment('количество транспорта');

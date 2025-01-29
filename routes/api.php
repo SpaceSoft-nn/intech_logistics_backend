@@ -249,12 +249,11 @@ Route::prefix('/tenders')->group(function () {
     Route::get('/', [LotTenderController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
 
 
-
     Route::middleware(['isCarrierOrganization'])->group(function () {
 
-        //Добавление исполнителей к заказу
+        //Добавление исполнителей к заказу *(отклик)
         Route::post('/{lotTender}/contractors/{organization}', [ResponseTenderController::class, 'addСontractorForTender'])->whereUuid('lotTender', 'organization');
-        
+
     });
 
     Route::middleware(['isCustomerOrganization'])->group(function () {

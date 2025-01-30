@@ -2,19 +2,18 @@
 
 namespace App\Modules\Tender\Domain\Actions\LotTender;
 
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
 
 //Находим 1 тендер и указываем откликнулся ли перевозчикн на заказ через атрибут модели.
 class TenderAndContractorFilterAction
 {
-    public static function execute(string $organization_id, string $tender_uuid) : ?OrderUnit
+    public static function execute(string $organization_id, string $tender_uuid) : ?LotTender
     {
         return self::run($organization_id, $tender_uuid);
     }
 
-    private static function run(string $organization_id, string $tender_uuid) : ?OrderUnit
+    private static function run(string $organization_id, string $tender_uuid) : ?LotTender
     {
         //Возвращаем все заказы + отфильтрованные выбранным перевозчиком
         $responses = LotTenderResponse::where('organization_contractor_id', $organization_id)->get();

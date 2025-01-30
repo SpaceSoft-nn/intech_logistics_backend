@@ -22,6 +22,7 @@ use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Requests\AddInfoOrderByTenderRequest;
 use App\Modules\Tender\Domain\Requests\CreateLotTenderRequest;
 use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderCollection;
+use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderResource;
 use App\Modules\Tender\Domain\Resources\LotTenderCollection;
 use App\Modules\Tender\Domain\Resources\LotTenderResource;
 use App\Modules\Tender\Domain\Services\TenderService;
@@ -57,16 +58,35 @@ class LotTenderController extends Controller
             $tenders = $rep->getTendersFilterByContractor($organization->id);
 
             #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
-            return response()->json(array_success(ContractorComporeLotTenderCollection::make($tenders), 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);
+            return response()->json(array_success(ContractorComporeLotTenderCollection::make($tenders), 'Возращены все тендеры, с фильтрацией при выборе перевозчикам тендера.'), 200);
         }
 
     }
 
     public function show(
         LotTender $lotTender,
+        GetTypeCabinetByOrganization $action,
+        TenderRepositories $rep,
     ) {
 
-        return response()->json(array_success(LotTenderResource::make($lotTender), 'Return lot tender.'), 200);
+         /** @var array */
+       $array = $action->isCustomer();
+
+       /** @var Organization */
+       $organization = $array['organization'];
+
+       if($array['status']) {
+
+           return response()->json(array_success(LotTenderResource::make($lotTender), 'Return Tender by organization Customer .'), 200);
+
+       } else {
+
+           //получаем все ордеры, и указываем на какие откликнулся перевозчик
+           $order = $rep->getTenderFilterByContractor($organization->id, $lotTender->id);
+
+           #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
+           return response()->json(array_success(ContractorComporeLotTenderResource::make($order), 'Возращены все тендеры, с фильтрацией при выборе перевозчикам тендера.'), 200);
+       }
     }
 
     public function store(

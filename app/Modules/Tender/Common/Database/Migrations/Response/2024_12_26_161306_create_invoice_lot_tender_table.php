@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->double('price_for_km')->comment('количество транспорта');
 
-            $table->mediumText('comment')->comment('количество транспорта');
+            $table->mediumText('comment')->nullable()->comment('количество транспорта');
 
             $table->timestamps();
 

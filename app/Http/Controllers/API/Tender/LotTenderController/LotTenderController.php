@@ -8,6 +8,7 @@ use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use App\Modules\Base\Enums\WeekEnum;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorComporeOrderUnitCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
 
@@ -15,10 +16,12 @@ use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\App\Data\DTO\AddInfoOrderByTenderDTO;
 use App\Modules\Tender\App\Data\DTO\CreateLotTenderServiceDTO;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
+use App\Modules\Tender\App\Repositories\TenderRepositories;
 use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
 use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Requests\AddInfoOrderByTenderRequest;
 use App\Modules\Tender\Domain\Requests\CreateLotTenderRequest;
+use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderCollection;
 use App\Modules\Tender\Domain\Resources\LotTenderCollection;
 use App\Modules\Tender\Domain\Resources\LotTenderResource;
 use App\Modules\Tender\Domain\Services\TenderService;
@@ -31,7 +34,10 @@ use function App\Helpers\array_success;
 class LotTenderController extends Controller
 {
 
-    public function index(GetTypeCabinetByOrganization $action) {
+    public function index(
+        GetTypeCabinetByOrganization $action,
+        TenderRepositories $rep
+    ) {
 
         /** @var array */
         $array = $action->isCustomer();
@@ -39,9 +45,21 @@ class LotTenderController extends Controller
         /** @var Organization */
         $organization = $array['organization'];
 
-        return $array['status'] ?
-        response()->json(array_success(LotTenderCollection::make($organization->tenders), 'Return all tenders by organization Customer .'), 200)
-            : response()->json(array_success(LotTenderCollection::make(LotTender::all()), 'Return all orders.'), 200);
+        if($array['status']) {
+
+            //Возвращаем все созданные заказы, ЗАКАЗЧИКА
+
+            response()->json(array_success(LotTenderCollection::make($organization->tenders), 'Return all tenders by organization Customer .'), 200);
+
+        } else {
+
+            //получаем все ордеры, и указываем на какие откликнулся перевозчик
+            $tenders = $rep->getTendersFilterByContractor($organization->id);
+
+            #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
+            return response()->json(array_success(ContractorComporeLotTenderCollection::make($tenders), 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);
+        }
+
     }
 
     public function show(

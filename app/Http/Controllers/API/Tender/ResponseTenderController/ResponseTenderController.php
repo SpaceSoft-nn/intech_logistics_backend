@@ -35,7 +35,7 @@ class ResponseTenderController extends Controller
             ->setOrganizationId($organization->id)->setLotTenderId($lotTender->id);
 
         /** @var LotTenderResponse */
-        $model =  $service->respondToTender($createResponseTenderDTO);
+        $model = $service->respondToTender($createResponseTenderDTO);
 
         return $model ?
             response()->json(array_success(LotTenderResponseResource::make($model), 'Create lot tender response.'), 201)

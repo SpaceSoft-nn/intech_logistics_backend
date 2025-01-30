@@ -39,6 +39,10 @@ final class CreateResponseTenderInteractor
             /** @var InvoiceLotTender  */
             $invoiceLotTender = $this->createInvoiceLotTender($dto, $lotTenderResponse->id);
 
+            #TODO Может быть баг с first
+            $lotTenderResponse = $lotTenderResponse->with('invoice_lot_tender', 'organization_contractor', 'tender')->first();
+
+
             return $lotTenderResponse;
 
         });

@@ -49,6 +49,36 @@ enum StatusOrderUnitEnum : string
         };
     }
 
+    /**
+    * Получить значение case в string и прислать массив объектов
+    * @param string $value
+    *
+    * @return ?self
+    */
+    public static function stringByCaseToObjectArray(array $arrays) : array
+    {
+        $arrNew[] = null;
+
+        foreach ($arrays as $arr => $value) {
+
+                $arrNew[] = match ($value) {
+
+                "draft" => StatusOrderUnitEnum::draft,
+                "published" => StatusOrderUnitEnum::published,
+                "private" => StatusOrderUnitEnum::private,
+                "accepted" => StatusOrderUnitEnum::accepted,
+                "in_work" => StatusOrderUnitEnum::in_work,
+                "pre_order" => StatusOrderUnitEnum::pre_order,
+                "completed_and_wait_payment" => StatusOrderUnitEnum::completed_and_wait_payment,
+                "cancelled" => StatusOrderUnitEnum::cancelled,
+                default => null,
+                null => null,
+            };
+        }
+
+        return $arrNew;
+    }
+
     public function getNameCase() : string
     {
         return match ($this)
@@ -82,4 +112,6 @@ enum StatusOrderUnitEnum : string
             default => throw new Exception('Ошибка преобразование Enum StatusOrderUnitEnum', 500),
         };
     }
+
+
 }

@@ -35,6 +35,7 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorComporeOrderUnitCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorComporeOrderUnitResource;
+use Illuminate\Http\Request;
 
 class OrderUnitController extends Controller
 {
@@ -43,6 +44,7 @@ class OrderUnitController extends Controller
      * Вернуть все заказы
      */
     public function index(
+        Request $request,
         GetTypeCabinetByOrganization $action,
         OrderUnitRepository $rep,
     ) {
@@ -53,6 +55,8 @@ class OrderUnitController extends Controller
         /** @var Organization */
         $organization = $array['organization'];
 
+        $statuses = explode(',', $request->query('status'));
+
         if($array['status']) {
 
             //Возвращаем все созданные заказы, ЗАКАЗЧИКА
@@ -62,7 +66,7 @@ class OrderUnitController extends Controller
         } else {
 
             //получаем все ордеры, и указываем на какие откликнулся перевозчик
-            $orders = $rep->getOrdersFilterByContractor($organization->id);
+            $orders = $rep->getOrdersFilterByContractor($organization->id, $statuses);
 
             #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
             return response()->json(array_success(ContractorComporeOrderUnitCollection::make($orders), 'Возращены все заказы, с фильтрацией при выборе перевозчикам заказа.'), 200);

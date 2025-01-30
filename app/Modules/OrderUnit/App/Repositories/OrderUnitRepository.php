@@ -181,12 +181,13 @@ class OrderUnitRepository extends CoreRepository
     /**
      * Вернуть все заказы и указать по дополнительному полю в атрибутах model - откликался ли перевозчик "contractor" на этот заказ.
      * @param string $organization
+     * @param array $status
      *
      * @return Collection
      */
-    public function getOrdersFilterByContractor(string $organization_id) : Collection
+    public function getOrdersFilterByContractor(string $organization_id, array $status) : Collection
     {
-        return OrdersAndContractorFilterAction::execute($organization_id);
+        return OrdersAndContractorFilterAction::execute($organization_id, $status);
     }
 
     /**

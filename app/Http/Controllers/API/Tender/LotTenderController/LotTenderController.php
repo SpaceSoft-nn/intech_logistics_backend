@@ -2,35 +2,33 @@
 
 namespace App\Http\Controllers\API\Tender\LotTenderController;
 
-use App\Http\Controllers\Controller;
-use App\Modules\Auth\Domain\Services\AuthService;
-use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
-use App\Modules\Base\Enums\WeekEnum;
-use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorComporeOrderUnitCollection;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
-
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Tender\App\Data\DTO\AddInfoOrderByTenderDTO;
-use App\Modules\Tender\App\Data\DTO\CreateLotTenderServiceDTO;
-use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
-use App\Modules\Tender\App\Repositories\TenderRepositories;
-use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
-use App\Modules\Tender\Domain\Models\LotTender;
-use App\Modules\Tender\Domain\Requests\AddInfoOrderByTenderRequest;
-use App\Modules\Tender\Domain\Requests\CreateLotTenderRequest;
-use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderCollection;
-use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderResource;
-use App\Modules\Tender\Domain\Resources\LotTenderCollection;
-use App\Modules\Tender\Domain\Resources\LotTenderResource;
-use App\Modules\Tender\Domain\Services\TenderService;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-
+use App\Http\Controllers\Controller;
+use App\Modules\Base\Enums\WeekEnum;
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use Illuminate\Support\Facades\Storage;
+use App\Modules\Tender\Domain\Models\LotTender;
+
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\Tender\Domain\Services\TenderService;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
+use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
+use App\Modules\Tender\Domain\Resources\LotTenderResource;
+use App\Modules\Tender\App\Repositories\TenderRepositories;
+use App\Modules\Tender\App\Data\DTO\AddInfoOrderByTenderDTO;
+use App\Modules\Tender\Domain\Resources\LotTenderCollection;
+use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
+use App\Modules\Tender\App\Data\DTO\CreateLotTenderServiceDTO;
+use App\Modules\Tender\Domain\Requests\CreateLotTenderRequest;
+use App\Modules\Tender\Domain\Requests\AddInfoOrderByTenderRequest;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
+
+use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderResource;
+use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderCollection;
 
 class LotTenderController extends Controller
 {
@@ -46,11 +44,10 @@ class LotTenderController extends Controller
         /** @var Organization */
         $organization = $array['organization'];
 
+
         if($array['status']) {
 
-            //Возвращаем все созданные заказы, ЗАКАЗЧИКА
-
-            response()->json(array_success(LotTenderCollection::make($organization->tenders), 'Return all tenders by organization Customer .'), 200);
+            return response()->json(array_success(LotTenderCollection::make($organization->tenders), 'Return all tenders by organization Customer .'), 200);
 
         } else {
 

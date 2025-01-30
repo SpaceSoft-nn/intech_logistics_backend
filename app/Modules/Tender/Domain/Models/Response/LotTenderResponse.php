@@ -2,9 +2,12 @@
 
 namespace App\Modules\Tender\Domain\Models\Response;
 
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Tender\Domain\Models\LotTender;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class LotTenderResponse extends Model
@@ -41,6 +44,16 @@ class LotTenderResponse extends Model
     public function invoice_lot_tender() : HasOne
     {
         return $this->hasOne(InvoiceLotTender::class, 'lot_tender_response_id');
+    }
+
+    public function organization_contractor() : BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_contractor_id', 'id');
+    }
+
+    public function tender() : BelongsTo
+    {
+        return $this->belongsTo(LotTender::class, 'lot_tender_id', 'id');
     }
 
 }

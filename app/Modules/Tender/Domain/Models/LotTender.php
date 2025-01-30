@@ -15,7 +15,9 @@ use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
 use App\Modules\Tender\Domain\Models\ApplicationDocumentTender;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Tender\Domain\Factories\TenderFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LotTender extends Model
 {
@@ -23,10 +25,10 @@ class LotTender extends Model
 
     protected $table = 'lot_tenders';
 
-    // protected static function newFactory()
-    // {
-    //     return OrganizationFactory::new();
-    // }
+    protected static function newFactory()
+    {
+        return TenderFactory::new();
+    }
 
     protected $fillable = [
 
@@ -67,6 +69,11 @@ class LotTender extends Model
 
             // "date_start" => 'datetime',
         ];
+    }
+
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_id', 'id');
     }
 
     public function agreement_document_tender(): HasOne

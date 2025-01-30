@@ -2,6 +2,7 @@
 
 namespace App\Modules\Tender\Domain\Models;
 
+use App\Modules\Tender\Domain\Factories\AgreementDocumentTenderFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,10 +14,10 @@ class AgreementDocumentTender extends Model
 
     protected $table = 'agreement_document_tenders';
 
-    // protected static function newFactory()
-    // {
-    //     return OrganizationFactory::new();
-    // }
+    protected static function newFactory()
+    {
+        return AgreementDocumentTenderFactory::new();
+    }
 
     protected $fillable = [
 

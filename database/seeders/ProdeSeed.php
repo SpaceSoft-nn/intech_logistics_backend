@@ -17,6 +17,8 @@ use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
 use App\Modules\Organization\Domain\Services\OrganizationService;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
+use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
+use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Transport\Domain\Models\Transport;
 use App\Modules\User\Domain\Models\PersonalArea;
 use Illuminate\Database\Eloquent\Collection;
@@ -41,6 +43,11 @@ class ProdeSeed extends Seeder
                 typeCabinet: TypeCabinetEnum::customer,
                 userValue: $user,
             );
+
+            //создаём 3 тендера для user - заказчика
+            for ($i=0; $i < 3 ; $i++) {
+                $this->createLotTender($user);
+            }
 
 
             //создаём OrderUnit для user
@@ -285,5 +292,21 @@ class ProdeSeed extends Seeder
         $transport = $this->createTransports($drivers, $transport_count);
 
         return true;
+    }
+
+    public function createLotTender(User $user) : LotTender
+    {
+        /** @var LotTender */
+        $lotTender = LotTender::factory()->for($user->organizations()->first())->create();
+
+        $agree = AgreementDocumentTender::factory()
+            ->for(
+                $lotTender,
+                'lot_tender'
+            )
+            ->create();
+
+        return $lotTender;
+
     }
 }

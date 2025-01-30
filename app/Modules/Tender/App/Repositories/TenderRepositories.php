@@ -7,7 +7,7 @@ use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
 use App\Modules\Tender\Domain\Models\LotTender as Model;
 use App\Modules\Tender\Domain\Actions\LotTender\CreateLotTenderAction;
 use App\Modules\Tender\Domain\Actions\LotTender\TenderAndContractorFilterAction;
-use App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderAndContractors\TendersAndContractorFilterAction;
+use App\Modules\Tender\Domain\Actions\LotTender\TendersAndContractorFilterAction;
 use Illuminate\Database\Eloquent\Collection;
 
 class TenderRepositories extends CoreRepository

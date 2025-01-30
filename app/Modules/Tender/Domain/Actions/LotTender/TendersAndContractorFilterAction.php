@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Modules\OrderUnit\Domain\Actions\OrderUnit\OrderAndContractors;
+namespace App\Modules\Tender\Domain\Actions\LotTender;
 
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
@@ -28,7 +27,7 @@ class TendersAndContractorFilterAction
             "week_period",
         )->get();
 
-        $array = $tenders->map(function (OrderUnit $item) use ($responses) {
+        $array = $tenders->map(function (LotTender $item) use ($responses) {
 
             foreach ($responses as $response) {
 
@@ -50,6 +49,7 @@ class TendersAndContractorFilterAction
             return $item;
 
         });
+
 
         return $array;
     }

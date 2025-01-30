@@ -2,7 +2,6 @@
 
 namespace App\Modules\Tender\Domain\Actions\LotTender;
 
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;

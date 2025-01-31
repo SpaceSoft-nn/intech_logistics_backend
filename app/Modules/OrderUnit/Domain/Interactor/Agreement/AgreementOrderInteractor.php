@@ -81,7 +81,6 @@ final class AgreementOrderInteractor
                 $model = $this->agreementOrderAcceptCreate($agreementOrderCreate->id);
 
 
-
                 //Устанавливаем OrderUnit - выбранного подрядичка в contractor_id
                 $this->addContractorOrder();
 

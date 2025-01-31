@@ -23,6 +23,15 @@ class OrdersAndContractorFilterAction
             return $value !== null;
         });
 
+        if(is_null($status_enum))
+        {
+            $status_enum = [
+                StatusOrderUnitEnum::published,
+                StatusOrderUnitEnum::in_work,
+                StatusOrderUnitEnum::pre_order,
+            ];
+        }
+
 
         //Возвращаем все заказы + отфильтрованные выбранным перевозчиком
         $invoices = OrganizationOrderUnitInvoice::where('organization_id', $organization_id)->get();
@@ -56,6 +65,15 @@ class OrdersAndContractorFilterAction
             $item->setAttribute('isResponseContractor', false);
 
             return $item;
+        })->filter(function (OrderUnit $item) {
+
+            //проверяем что при статусе in_work, отклик на заказ принадлежит перевозчику
+            if( ($item->actual_status->status === StatusOrderUnitEnum::in_work) &&
+            ($item->getAttribute('isResponseContractor') === false) )
+            {   return false;  }
+
+            return true;
+
         });
 
         return $array;

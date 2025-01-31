@@ -47,7 +47,7 @@ class UserVO extends BaseDTO implements Arrayable
         string $last_name,
         string $father_name,
         string $password,
-        UserRoleEnum $role,
+        UserRoleEnum $role = UserRoleEnum::admin,
         ?string $email_id = null,
         ?string $phone_id = null,
 
@@ -81,11 +81,12 @@ class UserVO extends BaseDTO implements Arrayable
     public static function fromArrayToObject(array $data): self
     {
 
+
         $first_name = Arr::get($data, 'first_name');
         $last_name =  Arr::get($data, 'last_name');
         $father_name =  Arr::get($data, 'father_name');
         $password =  Arr::get($data, 'password');
-        $role =  UserRoleEnum::returnObjectByString(Arr::get($data, 'role'));
+        $role =  UserRoleEnum::returnObjectByString(Arr::get($data, 'role', 'admin'));
         $email_id = Arr::get($data, 'email_user' , null);
         $phone_id = Arr::get($data, 'phone_user' , null);
 

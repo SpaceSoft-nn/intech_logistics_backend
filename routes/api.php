@@ -24,6 +24,7 @@ use App\Http\Controllers\API\IndividualPeople\TypePeople\DriverPeopleController;
 use App\Http\Controllers\API\IndividualPeople\TypePeople\StorekeeperPeopleController;
 use App\Http\Controllers\API\Tender\ResponseTenderController\ResponseTenderController;
 
+//сделано создание user + organization вместе store
 Route::post('/registration', [RegistrationController::class, 'store']);
 Route::post('/login', LoginController::class);
 

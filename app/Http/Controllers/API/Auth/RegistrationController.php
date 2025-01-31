@@ -20,6 +20,7 @@ use function App\Helpers\array_success;
 
 class RegistrationController
 {
+    //старая реализация где создаётся только Пользователь User
     public function store1(
         UserRegistrationRequest $request,
         RegistrationService $registerService,

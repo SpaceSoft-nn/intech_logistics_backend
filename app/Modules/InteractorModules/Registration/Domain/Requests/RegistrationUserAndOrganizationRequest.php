@@ -14,9 +14,9 @@ use App\Modules\Organization\Domain\Rules\OgrnepRule;
 use App\Modules\Organization\Domain\Rules\OgrnRule;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
-use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use Illuminate\Validation\Rule;
 use Arr;
+use Illuminate\Validation\ValidationException;
 
 class RegistrationUserAndOrganizationRequest extends ApiRequest
 {
@@ -57,7 +57,7 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
             'first_name' => ['required', 'string', "max:130", 'min:2', 'alpha'],
             'last_name' => ['required', 'string' , "max:130", 'min:2', 'alpha'],
             'father_name' => ['required', 'string', "max:130", 'min:2', 'alpha'],
-            'role' => ['required', 'string', Rule::enum(UserRoleEnum::class)->only([UserRoleEnum::admin])],
+            // 'role' => ['required', 'string', Rule::enum(UserRoleEnum::class)->only([UserRoleEnum::admin])],
 
             'agreement' => ['required', 'boolean'],
                 //user end
@@ -79,6 +79,10 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
 
         ];
 
+        if(is_null($this->input('organization.type'))){
+            $this->fail('organization.type', 'Не указан тип для организации.');
+        }
+
 
         // Если тип ооо, добавляем к правилам валидации kpp и ogrn
         if (OrganizationEnum::stringByCaseToObject(strtolower($this->input('organization.type'))) == OrganizationEnum::legal) {
@@ -93,6 +97,17 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
         }
 
         return $rules;
+    }
+
+
+
+    // Метод для принудительного выбрасывания ошибки валидации
+    protected function fail($field, $message)
+    {
+    $validator = validator($this->all(), []);
+    $validator->getMessageBag()->add($field, $message);
+
+    throw new ValidationException($validator);
     }
 
 

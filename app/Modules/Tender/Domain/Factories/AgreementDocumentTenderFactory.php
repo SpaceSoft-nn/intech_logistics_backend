@@ -25,8 +25,9 @@ class AgreementDocumentTenderFactory extends Factory
         // Сохраняем текстовый файл на кастомном диске
         Storage::disk('tender_documents')->put($filePath, $tempText);
 
+        //lot_tender_id: uniqid() - указываем случайны uuid - надо привязывать тендер напрямую при создании agreement
         $document = AgreementDocumentTenderVO::make(
-            lot_tender_id: LotTender::factory()->create()->id,
+            lot_tender_id: uniqid(),
             path: $filePath,
             description: 'Test Description',
         );

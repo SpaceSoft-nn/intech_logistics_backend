@@ -3,6 +3,7 @@
 namespace App\Modules\Tender\Domain\Interactor;
 use App\Modules\Base\Error\BusinessException;
 use App\Modules\Tender\App\Data\DTO\CreateLotTenderServiceDTO;
+use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
 use App\Modules\Tender\App\Data\ValueObject\AgreementDocumentTenderVO;
 use App\Modules\Tender\App\Data\ValueObject\ApplicationDocumentTenderVO;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
@@ -51,10 +52,15 @@ final class CreateLotTenderInteractor
         /** @var LotTender */
         $model = DB::transaction(function () use ($dto) {
 
+            /** Временно устанавливаем статус published при создании тендера, по стандарту он должен при создании добавлять в статус черновика
+            * @var LotTenderVO
+            */
+            $lotTenderVO = $dto->lotTenderVO->setStatusTender(StatusTenderEnum::published);
+
             /**
-             * @var LotTender
-             */
-            $lotTender = $this->createLotTender($dto->lotTenderVO);
+            * @var LotTender
+            */
+            $lotTender = $this->createLotTender($lotTenderVO);
 
             //создаём запись AgreementDocumentTender и сохраняем файл в storage
             $this->createAndSaveAgreementDocumentTender($dto->agreementDocumentTenderFile, $lotTender->id);

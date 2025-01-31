@@ -17,6 +17,15 @@ class TendersAndContractorFilterAction
 
     private static function run(string $organization_id) : Collection
     {
+
+        //указываем фильтрацию по статусам для перевозчика
+        $status_enum = [
+            StatusTenderEnum::published,
+            StatusTenderEnum::in_work,
+            // StatusTenderEnum::draft,
+            // StatusTenderEnum::accepted,
+        ];
+
         //Возвращаем все заказы + отфильтрованные выбранным перевозчиком
         $responses = LotTenderResponse::where('organization_contractor_id', $organization_id)->get();
 
@@ -25,8 +34,10 @@ class TendersAndContractorFilterAction
                 "specifica_date_period",
                 "order_unit",
                 "week_period",
-        )->where('status_tender', StatusTenderEnum::published)
+        )
+        ->whereIn('status_tender', $status_enum)
         ->get();
+
 
         $array = $tenders->map(function (LotTender $item) use ($responses) {
 
@@ -47,6 +58,15 @@ class TendersAndContractorFilterAction
             $item->setAttribute('isResponseContractor', false);
 
             return $item;
+
+        })->filter(function (LotTender $item) {
+
+            //проверяем что при статусе in_work, отклик на тендер принадлежит перевозчику
+            if( ($item->status_tender === StatusTenderEnum::in_work) &&
+            ($item->getAttribute('isResponseContractor') === false) )
+            {   return false;  }
+
+            return true;
 
         });
 

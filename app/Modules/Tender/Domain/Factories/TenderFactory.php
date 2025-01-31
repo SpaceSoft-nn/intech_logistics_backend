@@ -8,6 +8,7 @@ use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
+use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
 use App\Modules\Tender\Domain\Models\LotTender;
 
 class TenderFactory extends Factory
@@ -36,6 +37,7 @@ class TenderFactory extends Factory
             date_start: now(),
             period: 5,
             organization_id: Organization::factory()->create()->id,
+            status_tender: StatusTenderEnum::published,
         );
 
         $tender = $tender->toArrayNotNull();

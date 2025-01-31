@@ -47,13 +47,14 @@ class LotTenderResource extends JsonResource
     private function createFileLinkDownload($agreement_document) : ?string
     {
         return Storage::disk($agreement_document->disk)->exists($agreement_document->path)
-        ? Storage::disk($agreement_document->disk)->url($agreement_document->path)
-        : null ;
+        ? Storage::disk($agreement_document->disk)->url($agreement_document->path) : null;
     }
 
     private function createFileLinkDownloadArray($application_document_tender) : array|string|null
     {
-        if($application_document_tender){
+
+        if(collect($application_document_tender)->isNotEmpty()){
+
 
             $array = [];
 

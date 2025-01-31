@@ -38,13 +38,26 @@ enum TypeTransportWeight : string
     public static function stringByCaseToObject(?string $value) : self
     {
         return match ($value) {
-            "extraSmall" => TypeTransportWeight::small,
+            "extraSmall" => TypeTransportWeight::extraSmall,
             "small" => TypeTransportWeight::small,
             "medium" => TypeTransportWeight::medium,
             "large" => TypeTransportWeight::large,
             "extraLarge" => TypeTransportWeight::extraLarge,
             "superSize" => TypeTransportWeight::superSize,
             default => self::stringValueCaseToObject($value),
+        };
+    }
+
+    /** Получаем значение имени кейса в string */
+    public static function objectValueToStringCaseName(self $value) : string
+    {
+        return match ($value) {
+            TypeTransportWeight::extraSmall => 'extraSmall' ,
+            TypeTransportWeight::medium => 'medium',
+            TypeTransportWeight::large => 'large',
+            TypeTransportWeight::extraLarge => 'extraLarge',
+            TypeTransportWeight::superSize => 'superSize',
+            default => throw new Exception('Ошибка приобрезование Enum TypeTransportWeight', 500),
         };
     }
 

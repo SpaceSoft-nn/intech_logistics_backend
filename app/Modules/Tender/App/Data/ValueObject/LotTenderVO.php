@@ -31,6 +31,25 @@ final readonly class LotTenderVO implements Arrayable
     ) {}
 
 
+
+    //устанавливаем статус тендер, получаем новый объект VO
+    public function setStatusTender(StatusTenderEnum $status_tender): self
+    {
+        return $this->make(
+            general_count_transport: $this->general_count_transport,
+            price_for_km: $this->price_for_km,
+            body_volume_for_order: $this->body_volume_for_order,
+            type_transport_weight: TypeTransportWeight::objectValueToStringCaseName($this->type_transport_weight),
+            type_load_truck: TypeLoadingTruckMethod::objectValueToStringCaseName($this->type_load_truck),
+            date_start: $this->date_start,
+            period: $this->period,
+            organization_id: $this->organization_id,
+            type_tender: TypeTenderEnum::objectValueToStringCaseName($this->type_tender),
+            status_tender: $status_tender,
+        );
+    }
+
+
     public static function make(
 
         string $general_count_transport,

@@ -2,6 +2,8 @@
 
 namespace App\Modules\Tender\App\Data\Enums;
 
+use Exception;
+
 enum TypeTenderEnum : string
 { //Тип тендера выполнения
 
@@ -21,6 +23,16 @@ enum TypeTenderEnum : string
         return match ($value) {
             "periodic" => TypeTenderEnum::periodic,
             "single" => TypeTenderEnum::single,
+        };
+    }
+
+    /** Получаем значение имени кейса в string */
+    public static function objectValueToStringCaseName(self $value) : string
+    {
+        return match ($value) {
+            TypeTenderEnum::periodic => 'periodic' ,
+            TypeTenderEnum::single => 'single',
+            default => throw new Exception('Ошибка приобрезование Enum TypeTenderEnum', 500),
         };
     }
 

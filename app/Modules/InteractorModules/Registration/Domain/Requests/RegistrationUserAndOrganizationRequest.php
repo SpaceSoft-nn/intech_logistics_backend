@@ -40,14 +40,18 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
     public function rules(): array
     {
 
+        // dd((new EmailRule)->addRule('exists:email_list,value')->toArray());
+
         $typeCabinet = array_column(TypeCabinetEnum::cases(), 'name');
         $typeOrganization = array_column(OrganizationEnum::cases(), 'name');
+
+        // dd((new EmailRule)->addRule('unique:email_list,value')->toArray());
 
         $rules = [
 
                 //user strat
-            'email' => (new EmailRule)->toArray(),
-            'phone' => (new PhoneRule)->toArray(),
+            'email' => (new EmailRule)->addRule('unique:email_list,value')->toArray(),
+            'phone' => (new PhoneRule)->addRule('unique:phone_list,value')->toArray(),
             'password' => ['required', 'string', 'confirmed'],
 
             'first_name' => ['required', 'string', "max:130", 'min:2', 'alpha'],
@@ -59,19 +63,19 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
                 //user end
 
             //Organization start
-            'organization.name' => ['required' , 'string' , 'max:101' , 'min:2'],
-            'organization.address' => ['required' , 'string' , 'max:255' , 'min:12'],
-            'organization.type' =>  ['required', 'string' , Rule::in($typeOrganization)],
-            'organization.type_cabinet' => ['required' , Rule::in($typeCabinet)],
-            'organization.phone' => ['nullable' , 'string'],
-            'organization.email' => ['nullable', "string", "email:filter", "max:100"],
-            'organization.website' => ['nullable', "string"],
-            'organization.description' => ['nullable', 'string'],
-            'organization.okved' => ['nullable', 'string'],
-            'organization.founded_date' => ['nullable', 'date'],
-            'organization.inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/'],
+                'organization' => ['required' , 'array'],
+                'organization.name' => ['required' , 'string' , 'max:101' , 'min:2'],
+                'organization.address' => ['required' , 'string' , 'max:255' , 'min:12'],
+                'organization.type' =>  ['required', 'string' , Rule::in($typeOrganization)],
+                'organization.type_cabinet' => ['required' , Rule::in($typeCabinet)],
+                'organization.phone' => ['nullable' , 'string'],
+                'organization.email' => ['nullable', "string", "email:filter", "max:100"],
+                'organization.website' => ['nullable', "string"],
+                'organization.description' => ['nullable', 'string'],
+                'organization.okved' => ['nullable', 'string'],
+                'organization.founded_date' => ['nullable', 'date'],
+                'organization.inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/', 'unique:organizations,inn'],
             //Organization end
-
 
         ];
 
@@ -79,13 +83,13 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
         // Если тип ооо, добавляем к правилам валидации kpp и ogrn
         if (OrganizationEnum::stringByCaseToObject(strtolower($this->input('organization.type'))) == OrganizationEnum::legal) {
             $rules['organization.kpp'] = ['required', 'numeric' , 'regex:/^([0-9]{9})?$/'];
-            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , (new OgrnRule)];
+            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , (new OgrnRule), 'unique:organizations,registration_number'];
         }
 
         // если ИП, добавляем огрнип
         if( OrganizationEnum::stringByCaseToObject($this->input('organization.type')) == OrganizationEnum::individual )
         {
-            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule)];
+            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule), 'unique:organizations,registration_number'];
         }
 
         return $rules;

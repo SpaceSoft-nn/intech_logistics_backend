@@ -91,6 +91,8 @@ class RegistrationController
         AuthService $auth,
     ) {
 
+        //Регистрация пользователя + создание организации
+
         /** @var CreateRegisterAllDTO */
         $createRegisterAllDTO = $request->createRegisterAllDTO();
 

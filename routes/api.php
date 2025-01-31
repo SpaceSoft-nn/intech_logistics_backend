@@ -23,7 +23,6 @@ use App\Http\Controllers\API\Tender\LotTenderController\LotTenderController;
 use App\Http\Controllers\API\IndividualPeople\TypePeople\DriverPeopleController;
 use App\Http\Controllers\API\IndividualPeople\TypePeople\StorekeeperPeopleController;
 use App\Http\Controllers\API\Tender\ResponseTenderController\ResponseTenderController;
-use App\Modules\Organization\Presentation\Http\Middleware\isCarrierOrganization;
 
 Route::post('/registration', [RegistrationController::class, 'store']);
 Route::post('/login', LoginController::class);

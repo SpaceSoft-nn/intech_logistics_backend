@@ -85,7 +85,10 @@ Route::prefix('/orders')->group(function () {
 
     {
         //Вернуть все записи если заказчик - только заказы которые принадлежат ему, если перевозчик - то все
-        Route::get('/{status?}', [OrderUnitController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
+        Route::get('/', [OrderUnitController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
+
+        #TODO Возможно в будущем нужна фильтрация
+        // Route::get('/{status?}', [OrderUnitController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
 
         //Вернуть 1 запись по uuid
         Route::get('/{orderUnit}', [OrderUnitController::class, 'show'])->whereUuid('orderUnit');

@@ -61,7 +61,7 @@ class OrderUnitController extends Controller
 
             //Возвращаем все созданные заказы, ЗАКАЗЧИКА
 
-            return response()->json(array_success(OrderUnitCollection::make($organization->order_units), 'Return all orders by organization Customer .'), 200);
+            return response()->json(array_success(OrderUnitCollection::make($organization->order_units), 'Return all orders by organization Customer.'), 200);
 
         } else {
 
@@ -88,6 +88,7 @@ class OrderUnitController extends Controller
 
        /** @var Organization */
        $organization = $array['organization'];
+
 
        if($array['status']) {
 

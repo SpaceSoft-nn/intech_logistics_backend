@@ -5,7 +5,9 @@ namespace App\Modules\User\Domain\Interactor;
 use App\Modules\User\App\Data\DTO\User\UserManagerCreateDTO;
 use App\Modules\User\App\Repositories\UserRepository;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
+use App\Modules\User\Domain\Actions\LinkUserToPersonalAreaAction;
 use App\Modules\User\Domain\Models\User;
+use DB;
 
 // Бизнес логика для создание заказа, когда заказ создатёся от Тендера
 class UserManagerCreateInteractor
@@ -26,11 +28,21 @@ class UserManagerCreateInteractor
     }
 
 
-    private function run(UserManagerCreateDTO $dto)
+    private function run(UserManagerCreateDTO $dto) : User
     {
+        /** @var User */
+        $user = DB::transaction(function () use ($dto) {
+            #TODO Здесь нужно добавить цепочку обязаностей
+            /**
+            * @var User
+            */
+            $user = $this->createUser($dto->userVO);
+            LinkUserToPersonalAreaAction::run($user, $dto->personalArea);
 
-        dd(1);
+            return $user;
+        });
 
+        return $user;
     }
 
 }

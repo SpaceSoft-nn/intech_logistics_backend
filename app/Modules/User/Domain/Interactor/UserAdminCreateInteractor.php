@@ -9,6 +9,7 @@ use App\Modules\User\App\Repositories\UserRepository;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\Domain\Actions\LinkUserToPersonalAreaAction;
 use App\Modules\User\Domain\Actions\PersonalArea\PersonalAreaCreateAction;
+use DB;
 
 class UserAdminCreateInteractor
 {
@@ -31,14 +32,20 @@ class UserAdminCreateInteractor
     private function createUserIsAdmin(UserVO $vo) : ?User
     {
 
-        #TODO Здесь нужно добавить цепочку обязаностей
-        /**
-        * @var User
-        */
-        $user = $this->createUser($vo);
+        /** @var User */
+        $user = DB::transaction(function () use ($vo) {
 
-        $area = $this->createPersonalArea($user->id);
-        LinkUserToPersonalAreaAction::run($user, $area);
+           #TODO Здесь нужно добавить цепочку обязаностей
+            /**
+            * @var User
+            */
+            $user = $this->createUser($vo);
+
+            $area = $this->createPersonalArea($user->id);
+            LinkUserToPersonalAreaAction::run($user, $area);
+
+            return $user;
+        });
 
         return $user;
     }

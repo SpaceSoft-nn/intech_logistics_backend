@@ -32,7 +32,7 @@ class RegistrationUserManagerInteractor
     }
 
 
-    private function run(RegistratiorUserManagerDTO $dto)
+    private function run(RegistratiorUserManagerDTO $dto) : User
     {
         /** @var Organization */
         $organization = $dto->organization;
@@ -51,12 +51,14 @@ class RegistrationUserManagerInteractor
         /** @var UserVO */
         $userVO = $dto->userVO->setRole(UserRoleEnum::manager);
 
-        $this->userService->createUserManager(
+        $user = $this->userService->createUserManager(
             UserManagerCreateDTO::make(
                 userVO: $userVO,
                 personalArea: $personal_area,
             )
         );
+
+        return $user;
 
     }
 

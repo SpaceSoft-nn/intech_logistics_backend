@@ -269,11 +269,22 @@ class OrderUnitController extends Controller
      * @param OrderUnit $orderUnit
      *
     */
-    public function getContractorsAll()
+    public function getContractorsAll(
+        GetTypeCabinetByOrganization $action,
+    )
     {
-        $arrays = OrganizationOrderUnitInvoice::all();
+        /** @var array */
+        $array = $action->isCustomer();
 
-        return response()->json(array_success(OrgOrderInvoiceCollection::make($arrays), 'Возвращены все подрядчики откликнувшиеся на заказ.'), 200);
+        /** @var Organization */
+        $organization = $array['organization'];
+
+        /** @var OrderUnit */
+        $order_units = $organization->order_units()->pluck('id');
+
+        $invoices = OrganizationOrderUnitInvoice::whereIn('order_unit_id', $order_units)->get();
+
+        return response()->json(array_success(OrgOrderInvoiceCollection::make($invoices), 'Возвращены все подрядчики откликнувшиеся на заказ для организации заказчика.'), 200);
     }
 
 

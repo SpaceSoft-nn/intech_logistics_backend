@@ -21,6 +21,8 @@ class OfferContractorResource extends JsonResource
             "user_id" => $this->user_id,
             "organization_id" => $this->organization_id,
 
+            "status" => $this->status,
+
             "add_load_space" => $this->add_load_space,
             "road_back" => $this->road_back,
             "directly_road" => $this->directly_road,

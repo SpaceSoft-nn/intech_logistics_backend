@@ -6,8 +6,10 @@ use App\Modules\Organization\App\Data\DTO\User\LinkUserToOrganizationDTO;
 use App\Modules\Organization\Domain\Actions\LinkUserToOrganizationAction;
 use App\Modules\User\App\Data\DTO\Base\BaseDTO;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
+use App\Modules\User\App\Data\DTO\User\UserManagerCreateDTO;
 use App\Modules\User\App\Repositories\UserRepository;
 use App\Modules\User\Domain\Interactor\UserCreateInteractor;
+use App\Modules\User\Domain\Interactor\UserManagerCreateInteractor;
 use App\Modules\User\Domain\Interface\Service\IUserService;
 use App\Modules\User\Domain\Models\User;
 
@@ -16,6 +18,7 @@ class UserService implements IUserService
     public function __construct(
         public UserRepository $rep,
         public UserCreateInteractor $interactor,
+        private UserManagerCreateInteractor $userManagerCreateInteractor,
     ) {}
 
     /**
@@ -42,5 +45,10 @@ class UserService implements IUserService
     public function linkUserToOrganization(LinkUserToOrganizationDTO $dto) : bool
     {
         return LinkUserToOrganizationAction::run($dto);
+    }
+
+    public function createUserManager(UserManagerCreateDTO $dto)
+    {
+        return $this->userManagerCreateInteractor->execute($dto, $this);
     }
 }

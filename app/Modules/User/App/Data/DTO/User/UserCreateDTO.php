@@ -14,7 +14,7 @@ class UserCreateDTO extends BaseDTO
         public readonly ?User $userAuth,
     ) { }
 
-    public static function make(UserVo $userVO, ?User $userAuth = null) : self
+    public static function make(UserVO $userVO, ?User $userAuth = null) : self
     {
         return new self(
             userVO: $userVO,

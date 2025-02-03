@@ -5,8 +5,10 @@ namespace App\Modules\InteractorModules\Registration\Domain\Services;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\Base\BaseDTO;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\CreateRegisterAllDTO;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
+use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistratiorUserManagerDTO;
 use App\Modules\InteractorModules\Registration\Domain\Interactor\RegistrationInteractor;
 use App\Modules\InteractorModules\Registration\Domain\Interactor\RegistrationUserAndOrganizationInteractor;
+use App\Modules\InteractorModules\Registration\Domain\Interactor\RegistrationUserManagerInteractor;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\User\App\Data\DTO\User\UserManagerCreateDTO;
 use App\Modules\User\Domain\Interactor\UserManagerCreateInteractor;
@@ -17,7 +19,7 @@ class RegistrationService
     public function __construct(
         private RegistrationInteractor $interatorRegister,
         private RegistrationUserAndOrganizationInteractor $registrationUserAndOrganizationInteractor,
-        private UserManagerCreateInteractor $userManagerCreateInteractor,
+        private RegistrationUserManagerInteractor $registrationUserManagerInteractor,
     ) { }
 
     /**
@@ -50,14 +52,14 @@ class RegistrationService
 
         } else {
 
-            /** @var UserManagerCreateDTO */
-            $dto = UserManagerCreateDTO::make(
+            /** @var RegistratiorUserManagerDTO */
+            $dto = RegistratiorUserManagerDTO::make(
                 organization: $org,
                 userVO: $dto->registrationDTO->userDTO->userVO,
             );
 
             //Регистрация manager, в организации
-            $result = $this->userManagerCreateInteractor->execute($dto);
+            $result = $this->registrationUserManagerInteractor->execute($dto);
 
             return $result;
 

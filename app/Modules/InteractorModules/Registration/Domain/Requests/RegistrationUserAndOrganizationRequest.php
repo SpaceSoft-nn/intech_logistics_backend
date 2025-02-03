@@ -71,7 +71,7 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
                 'organization.okved' => ['nullable', 'string'],
                 'organization.founded_date' => ['nullable', 'date'],
                 // 'organization.inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/', 'unique:organizations,inn'],
-                'organization.inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/', 'unique:organizations,inn'],
+                'organization.inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/'],
             //Organization end
 
         ];
@@ -84,13 +84,15 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
         // Если тип ооо, добавляем к правилам валидации kpp и ogrn
         if (OrganizationEnum::stringByCaseToObject(strtolower($this->input('organization.type'))) == OrganizationEnum::legal) {
             $rules['organization.kpp'] = ['required', 'numeric' , 'regex:/^([0-9]{9})?$/'];
-            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , (new OgrnRule), 'unique:organizations,registration_number'];
+            // $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , (new OgrnRule), 'unique:organizations,registration_number'];
+            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , (new OgrnRule)];
         }
 
         // если ИП, добавляем огрнип
         if( OrganizationEnum::stringByCaseToObject($this->input('organization.type')) == OrganizationEnum::individual )
         {
-            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule), 'unique:organizations,registration_number'];
+            // $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule), 'unique:organizations,registration_number'];
+            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule)];
         }
 
         return $rules;

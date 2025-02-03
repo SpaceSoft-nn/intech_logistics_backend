@@ -26,18 +26,43 @@ class UserVO extends BaseDTO implements Arrayable
     ) {}
 
 
-    public function setEmailId(string $id)
+    public function setEmailId(string $id) : self
     {
-        $this->email_id = $id;
-
-        return $this;
+        return $this->make(
+            first_name: $this->first_name,
+            last_name: $this->last_name,
+            father_name: $this->father_name,
+            password: $this->password,
+            role: $this->role,
+            email_id: $id,
+            phone_id: $this->phone_id,
+        );
     }
 
-    public function setPhoneId(string $id)
+    public function setPhoneId(string $id) : self
     {
-        $this->phone_id = $id;
+        return $this->make(
+            first_name: $this->first_name,
+            last_name: $this->last_name,
+            father_name: $this->father_name,
+            password: $this->password,
+            role: $this->role,
+            email_id: $this->email_id,
+            phone_id: $id,
+        );
+    }
 
-        return $this;
+    public function setRole(UserRoleEnum $role)
+    {
+        return $this->make(
+            first_name: $this->first_name,
+            last_name: $this->last_name,
+            father_name: $this->father_name,
+            password: $this->password,
+            role: $role,
+            email_id: $this->email_id,
+            phone_id: $this->phone_id,
+        );
     }
 
 

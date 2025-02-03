@@ -2,30 +2,24 @@
 
 namespace App\Modules\User\App\Data\DTO\User;
 
-use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
+use App\Modules\User\Domain\Models\PersonalArea;
 
 readonly class UserManagerCreateDTO
 {
 
     public function __construct(
 
-        public Organization $organization,
         public UserVO $userVO,
+        public PersonalArea $personalArea //кабинет
 
     ) { }
 
-    public static function make(
-
-        Organization $organization,
-        UserVO $userVO,
-
-    ) : self {
-
+    public static function make(UserVO $userVO, PersonalArea $personalArea) : self
+    {
         return new self(
-            organization: $organization,
             userVO: $userVO,
+            personalArea: $personalArea,
         );
-
     }
 }

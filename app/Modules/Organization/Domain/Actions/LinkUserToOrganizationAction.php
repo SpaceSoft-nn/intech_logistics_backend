@@ -21,7 +21,6 @@ class LinkUserToOrganizationAction
     public static function run(LinkUserToOrganizationDTO $dto) : bool
     {
 
-
         try {
 
             /**

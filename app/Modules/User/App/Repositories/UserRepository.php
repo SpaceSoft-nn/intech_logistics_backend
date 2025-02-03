@@ -8,6 +8,7 @@ use App\Modules\User\Domain\Actions\CreateUserAction;
 use App\Modules\User\Domain\Interface\Repositories\IRepository;
 use App\Modules\User\Domain\Models\PersonalArea;
 use App\Modules\User\Domain\Models\User as Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserRepository extends CoreRepository implements IRepository
 {
@@ -39,28 +40,13 @@ class UserRepository extends CoreRepository implements IRepository
 
 
     #TODO Проверить/ изменить
-    public function isOwnerPersonalArea(Model $model, ?string $uuid = null) : ?PersonalArea
+    public function isOwnerPersonalArea(Model $model) : ?PersonalArea
     {
-        if($uuid) {
-            $model = $this->query()->find($uuid);
-            $area = $model->personal_areas->where('owner_id', $model->id);
-            return $area;
-        }
-        // ??
-        return $this->query()
-            ->with(['personal_areas' => function($query) use ($model) {
-                $query->where('owner_id', $model->id);
-            }])
-            ->find($uuid)
-            ->personal_areas;
 
-            //РАБОТАЕМ
-        $model = $user->query()
-        ->with(['personal_areas' => function($query) use ($user) {
-            $query->where('owner_id', $user->id);
-        }])
-        ->find($user->id)
-        ->personal_areas->first();
+        $user = $this->query()->whereRelation('personal_areas', 'owner_id', '=', $model->id)->first();
+
+        return $user->personal_areas->first();
+
     }
 
 }

@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Modules\Auth\Domain\Services\AuthService;
-use App\Modules\Base\Error\BusinessException;
-use App\Modules\InteractorModules\Registration\App\Data\DTO\CreateRegisterAllDTO;
-use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
-use App\Modules\InteractorModules\Registration\Domain\Requests\RegistrationUserAndOrganizationRequest;
-use App\Modules\InteractorModules\Registration\Domain\Requests\UserRegistrationRequest;
-use App\Modules\InteractorModules\Registration\Domain\Services\RegistrationService;
-use App\Modules\Organization\Domain\Resources\OrganizationResource;
-use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
-use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
-use App\Modules\User\Domain\Models\User;
-use App\Modules\User\Domain\Resources\UserResource;
-
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\Base\Error\BusinessException;
+use App\Modules\Auth\Domain\Services\AuthService;
+use App\Modules\User\Domain\Resources\UserResource;
+use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
+use App\Modules\Organization\Domain\Resources\OrganizationResource;
+use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
+use App\Modules\InteractorModules\Registration\App\Data\DTO\CreateRegisterAllDTO;
+use App\Modules\InteractorModules\Registration\Domain\Services\RegistrationService;
+
+use App\Modules\InteractorModules\Registration\Domain\Requests\UserRegistrationRequest;
+use App\Modules\InteractorModules\Registration\Domain\Requests\RegistrationUserAndOrganizationRequest;
 
 class RegistrationController
 {

@@ -10,7 +10,6 @@ use Illuminate\Support\Arr;
 
 class UserVO extends BaseDTO implements Arrayable
 {
-
     use FilterArrayTrait;
 
     public function __construct(
@@ -23,6 +22,7 @@ class UserVO extends BaseDTO implements Arrayable
 
         public ?string $email_id,
         public ?string $phone_id,
+        public ?bool $active,
     ) {}
 
 
@@ -36,6 +36,7 @@ class UserVO extends BaseDTO implements Arrayable
             role: $this->role,
             email_id: $id,
             phone_id: $this->phone_id,
+            active: $this->active,
         );
     }
 
@@ -49,6 +50,7 @@ class UserVO extends BaseDTO implements Arrayable
             role: $this->role,
             email_id: $this->email_id,
             phone_id: $id,
+            active: $this->active,
         );
     }
 
@@ -62,6 +64,21 @@ class UserVO extends BaseDTO implements Arrayable
             role: $role,
             email_id: $this->email_id,
             phone_id: $this->phone_id,
+            active: $this->active,
+        );
+    }
+
+    public function setActiveUser(bool $active)
+    {
+        return $this->make(
+            first_name: $this->first_name,
+            last_name: $this->last_name,
+            father_name: $this->father_name,
+            password: $this->password,
+            role: $this->role,
+            email_id: $this->email_id,
+            phone_id: $this->phone_id,
+            active: $active,
         );
     }
 
@@ -75,6 +92,7 @@ class UserVO extends BaseDTO implements Arrayable
         UserRoleEnum $role = UserRoleEnum::admin,
         ?string $email_id = null,
         ?string $phone_id = null,
+        ?bool $active = null,
 
     ) : self {
 
@@ -86,6 +104,7 @@ class UserVO extends BaseDTO implements Arrayable
             role: $role,
             email_id: $email_id,
             phone_id: $phone_id,
+            active: $active,
         );
 
     }
@@ -100,6 +119,7 @@ class UserVO extends BaseDTO implements Arrayable
             'role' =>  $this->role,
             'email_id' =>  $this->email_id,
             'phone_id' =>  $this->phone_id,
+            'active' => $this->active,
         ];
     }
 
@@ -114,6 +134,7 @@ class UserVO extends BaseDTO implements Arrayable
         $role =  UserRoleEnum::returnObjectByString(Arr::get($data, 'role', 'admin'));
         $email_id = Arr::get($data, 'email_user' , null);
         $phone_id = Arr::get($data, 'phone_user' , null);
+        $active = null;
 
         if ($first_name === '' || $last_name === '' || $father_name === '' || $password === '') {
             throw new \InvalidArgumentException('Обязательные параметры не могут быть пустыми.', 500);
@@ -127,6 +148,7 @@ class UserVO extends BaseDTO implements Arrayable
             role: $role,
             email_id: $email_id,
             phone_id: $phone_id,
+            active: $active,
         );
     }
 }

@@ -48,8 +48,9 @@ class RegistrationUserManagerInteractor
             throw new Exception(code: 500);
         }
 
+        //устанавливаем роль менеджера и что он будет не активен
         /** @var UserVO */
-        $userVO = $dto->userVO->setRole(UserRoleEnum::manager);
+        $userVO = $dto->userVO->setRole(UserRoleEnum::manager)->setActiveUser(false);
 
         $user = $this->userService->createUserManager(
             UserManagerCreateDTO::make(

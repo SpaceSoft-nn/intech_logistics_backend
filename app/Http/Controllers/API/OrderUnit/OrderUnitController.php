@@ -276,19 +276,6 @@ class OrderUnitController extends Controller
         return response()->json(array_success(OrgOrderInvoiceCollection::make($arrays), 'Возвращены все подрядчики откликнувшиеся на заказ.'), 200);
     }
 
-    public function compare()
-    {
-        #TODO вынести в middleware
-        $organization_id = request()->header('organization_id');
-
-        $organization = Organization::find($organization_id);
-
-        abort_unless( $organization, 404, 'Организации не существует');
-
-
-
-    }
-
 
     /**
      * Поиск входящих векторов относительно главного вектора (заказа)

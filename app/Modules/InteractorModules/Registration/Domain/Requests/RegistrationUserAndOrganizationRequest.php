@@ -65,9 +65,9 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
             //Organization start
                 'organization' => ['required' , 'array'],
                 'organization.name' => ['required' , 'string' , 'max:101' , 'min:2'],
-                'organization.address' => ['required' , 'string' , 'max:255' , 'min:12'],
                 'organization.type' =>  ['required', 'string' , Rule::in($typeOrganization)],
                 'organization.type_cabinet' => ['required' , Rule::in($typeCabinet)],
+                'organization.address' => ['nullable' , 'string' , 'max:255' , 'min:2'],
                 'organization.phone' => ['nullable' , 'string'],
                 'organization.email' => ['nullable', "string", "email:filter", "max:100"],
                 'organization.website' => ['nullable', "string"],

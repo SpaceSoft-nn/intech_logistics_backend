@@ -108,9 +108,6 @@ Route::prefix('/orders')->group(function () {
                 //Возврат всех подрятчиков откликнувшиеся на заказ. (Временно возвращаем все записи из таблицы)
                 Route::get('/contractors', [OrderUnitController::class, 'getContractorsAll']);
 
-                //Возвратить всех заказы и указать на какие заказы откликнулся перевозчик (присылать organization_id - перевозчика)
-                Route::get('/contractors/compare', [OrderUnitController::class, 'compare'])->withoutMiddleware('isCustomerOrganization')->middleware('isCarrierOrganization');
-
                 //Возврат всех подрятчиков откликнувшиеся на заказ.
                 Route::get('/{orderUnit}/contractors', [OrderUnitController::class, 'getContractors'])->whereUuid('orderUnit', 'organization');
 

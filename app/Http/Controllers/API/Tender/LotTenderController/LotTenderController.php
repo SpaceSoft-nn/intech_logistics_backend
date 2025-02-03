@@ -54,8 +54,6 @@ class LotTenderController extends Controller
             //получаем все ордеры, и указываем на какие откликнулся перевозчик
             $tenders = $rep->getTendersFilterByContractor($organization->id);
 
-            dd($tenders);
-
             #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
             return response()->json(array_success(ContractorComporeLotTenderCollection::make($tenders), 'Возращены все тендеры, с фильтрацией при выборе перевозчикам тендера.'), 200);
         }

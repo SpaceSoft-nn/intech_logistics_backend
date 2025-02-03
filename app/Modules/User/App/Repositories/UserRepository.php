@@ -3,8 +3,7 @@
 namespace App\Modules\User\App\Repositories;
 
 use App\Modules\Base\Repositories\CoreRepository;
-use App\Modules\User\App\Data\DTO\Base\BaseDTO;
-use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\Domain\Actions\CreateUserAction;
 use App\Modules\User\Domain\Interface\Repositories\IRepository;
 use App\Modules\User\Domain\Models\PersonalArea;
@@ -22,15 +21,11 @@ class UserRepository extends CoreRepository implements IRepository
         return $this->startConditions()->query();
     }
 
-    /**
-     * @param UserCreateDTO $dto
-     *
-     * @return Model|null
-     */
-    public function save(BaseDTO $dto) : Model
+    public function save(UserVO $vo) : Model
     {
-        return CreateUserAction::make($dto->userVO);
+        return CreateUserAction::make($vo);
     }
+
 
     /**
      * @param string $uuid
@@ -44,7 +39,7 @@ class UserRepository extends CoreRepository implements IRepository
 
 
     #TODO Проверить/ изменить
-    public function isOwnerPersonalArea(Model $model, ?string $uuid ) : ?PersonalArea
+    public function isOwnerPersonalArea(Model $model, ?string $uuid = null) : ?PersonalArea
     {
         if($uuid) {
             $model = $this->query()->find($uuid);

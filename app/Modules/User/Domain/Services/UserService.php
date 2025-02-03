@@ -4,9 +4,8 @@ namespace App\Modules\User\Domain\Services;
 
 use App\Modules\Organization\App\Data\DTO\User\LinkUserToOrganizationDTO;
 use App\Modules\Organization\Domain\Actions\LinkUserToOrganizationAction;
-use App\Modules\User\App\Data\DTO\Base\BaseDTO;
-use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 use App\Modules\User\App\Data\DTO\User\UserManagerCreateDTO;
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Repositories\UserRepository;
 use App\Modules\User\Domain\Interactor\UserCreateInteractor;
 use App\Modules\User\Domain\Interactor\UserManagerCreateInteractor;
@@ -18,17 +17,17 @@ class UserService implements IUserService
     public function __construct(
         public UserRepository $rep,
         public UserCreateInteractor $interactor,
-        private UserManagerCreateInteractor $userManagerCreateInteractor,
+
     ) {}
 
     /**
-     * @param UserCreateDTO $dto
+     * @param UserVO $vo
      *
      * @return User
      */
-    public function createUser(BaseDTO $dto) : User
+    public function createUser(UserVO $vo) : User
     {
-        return $this->interactor->run($dto);
+        return $this->interactor->run($vo);
     }
 
     public function getUser(string $uuid) : ?User
@@ -47,8 +46,4 @@ class UserService implements IUserService
         return LinkUserToOrganizationAction::run($dto);
     }
 
-    public function createUserManager(UserManagerCreateDTO $dto)
-    {
-        return $this->userManagerCreateInteractor->execute($dto, $this);
-    }
 }

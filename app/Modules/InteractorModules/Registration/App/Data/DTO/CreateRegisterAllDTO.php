@@ -4,7 +4,6 @@ namespace App\Modules\InteractorModules\Registration\App\Data\DTO;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\Base\BaseDTO;
 use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
-use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
 
 class CreateRegisterAllDTO extends BaseDTO
 {
@@ -13,13 +12,15 @@ class CreateRegisterAllDTO extends BaseDTO
         public RegistrationDTO $registrationDTO,
         public OrganizationVO $organizationVO,
         public readonly TypeCabinetEnum $type_cabinet,
+        public readonly string $inn,
     ) { }
 
     public static function make(
 
         registrationDTO $registrationDTO,
         OrganizationVO $organizationVO,
-        TypeCabinetEnum $type_cabinet
+        TypeCabinetEnum $type_cabinet,
+        string $inn,
 
     ) : self {
 
@@ -27,6 +28,7 @@ class CreateRegisterAllDTO extends BaseDTO
             registrationDTO: $registrationDTO,
             organizationVO: $organizationVO,
             type_cabinet: $type_cabinet,
+            inn: $inn,
         );
 
     }

@@ -40,12 +40,8 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
     public function rules(): array
     {
 
-        // dd((new EmailRule)->addRule('exists:email_list,value')->toArray());
-
         $typeCabinet = array_column(TypeCabinetEnum::cases(), 'name');
         $typeOrganization = array_column(OrganizationEnum::cases(), 'name');
-
-        // dd((new EmailRule)->addRule('unique:email_list,value')->toArray());
 
         $rules = [
 
@@ -74,6 +70,7 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
                 'organization.description' => ['nullable', 'string'],
                 'organization.okved' => ['nullable', 'string'],
                 'organization.founded_date' => ['nullable', 'date'],
+                // 'organization.inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/', 'unique:organizations,inn'],
                 'organization.inn' => ['required' , 'numeric', 'regex:/^(([0-9]{12})|([0-9]{10}))?$/', 'unique:organizations,inn'],
             //Organization end
 
@@ -104,10 +101,10 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
     // Метод для принудительного выбрасывания ошибки валидации
     protected function fail($field, $message)
     {
-    $validator = validator($this->all(), []);
-    $validator->getMessageBag()->add($field, $message);
+        $validator = validator($this->all(), []);
+        $validator->getMessageBag()->add($field, $message);
 
-    throw new ValidationException($validator);
+        throw new ValidationException($validator);
     }
 
 
@@ -127,6 +124,7 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
             ),
             organizationVO: OrganizationVO::fromArrayToObject($data['organization']),
             type_cabinet: TypeCabinetEnum::stringByCaseToObject(Arr::get($data, 'organization.type_cabinet')),
+            inn: Arr::get($data, 'organization.inn'),
         );
     }
 

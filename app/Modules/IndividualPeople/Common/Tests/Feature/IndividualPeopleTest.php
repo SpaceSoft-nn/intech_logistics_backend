@@ -2,16 +2,15 @@
 
 namespace App\Modules\IndividualPeople\Common\Tests\Feature;
 
-use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
+use Tests\TestCase;
+use Faker\Factory as Faker;
+use App\Modules\User\App\Data\Enums\UserRoleEnum;
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
+use App\Modules\User\Domain\Interactor\UserCreateInteractor;
 use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
+use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
 use App\Modules\IndividualPeople\Domain\Services\IndividualPeopleService;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO as UserUserCreateDTO;
-use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
-use App\Modules\User\App\Data\Enums\UserRoleEnum;
-use App\Modules\User\Domain\Interactor\UserCreateInteractor;
-use Faker\Factory as Faker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
 class IndividualPeopleTest extends TestCase
 {
@@ -30,20 +29,18 @@ class IndividualPeopleTest extends TestCase
         $interactor = app(UserCreateInteractor::class);
         $rep = app(IndividualPeopleService::class);
 
-        $user = $interactor->run(
-            UserUserCreateDTO::make(
-                UserVO::make(
-                    first_name: $this->faker->name,
-                    last_name: $this->faker->name,
-                    father_name: $this->faker->name,
-                    password: bcrypt('password'),
-                    role: UserRoleEnum::admin,
-                    personal_area_id: null,
-                    email_id: null,
-                    phone_id: null,
-                )
-            )
+        /** @var UserVO */
+        $userVO = UserVO::make(
+            first_name: $this->faker->name,
+            last_name: $this->faker->name,
+            father_name: $this->faker->name,
+            password: bcrypt('password'),
+            role: UserRoleEnum::admin,
+            email_id: null,
+            phone_id: null,
         );
+
+        $user = $interactor->run($userVO);
 
         $invPeople = $rep->createIndividualPeople(
             CreateIndividualPeopleDTO::make(

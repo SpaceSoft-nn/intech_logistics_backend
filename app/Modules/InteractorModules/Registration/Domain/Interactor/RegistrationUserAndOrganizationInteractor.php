@@ -12,6 +12,7 @@ use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Organization\Domain\Services\OrganizationService;
 use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\App\Repositories\UserRepository;
 use App\Modules\User\Domain\Models\User;
 use App\Modules\User\Domain\Services\UserService;
@@ -43,17 +44,18 @@ class RegistrationUserAndOrganizationInteractor
                 registrationDTO: $this->setEmailOrPhone($dto->registrationDTO),
                 organizationVO: $dto->organizationVO,
                 type_cabinet: $dto->type_cabinet,
+                inn: $dto->inn,
             );
 
             /**
-            * @var UserCreateDTO
+            * @var UserVO
             */
-            $userDTO = $dto->registrationDTO->userDTO;
+            $userVO = $dto->registrationDTO->userDTO->userVO;
 
-
+            #TODO изменил создание user но не убрал лишнии DTO (UserCreateDTO - надо убрать и принимать только UserVO)
             //вызываем сервес для создание user
             /** @var User */
-            $user = $this->userService->createUser($userDTO);
+            $user = $this->userService->createUser($userVO);
 
 
             /** @var OrganizationVO */

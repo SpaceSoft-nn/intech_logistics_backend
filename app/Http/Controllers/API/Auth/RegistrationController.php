@@ -92,13 +92,13 @@ class RegistrationController
         AuthService $auth,
     ) {
 
-        //Регистрация пользователя + создание организации
+        //Регистрация пользователя + создание организации + создание manager/observ
 
         /** @var CreateRegisterAllDTO */
         $createRegisterAllDTO = $request->createRegisterAllDTO();
 
         /** @var array */
-        $array = $registerService->registerUserAll($createRegisterAllDTO);
+        $array = $registerService->registrationUser($createRegisterAllDTO);
 
         $token = $auth->loginUser($array['user']);
 

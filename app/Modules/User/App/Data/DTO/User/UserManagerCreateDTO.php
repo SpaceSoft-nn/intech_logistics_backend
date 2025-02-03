@@ -10,20 +10,20 @@ readonly class UserManagerCreateDTO
 
     public function __construct(
 
-        public string $organization_id,
+        public Organization $organization,
         public UserVO $userVO,
 
     ) { }
 
     public static function make(
 
-        Organization $organization_id,
+        Organization $organization,
         UserVO $userVO,
 
     ) : self {
 
         return new self(
-            organization_id: $organization_id,
+            organization: $organization,
             userVO: $userVO,
         );
 

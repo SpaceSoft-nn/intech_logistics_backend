@@ -5,7 +5,7 @@ namespace App\Modules\InteractorModules\Registration\Domain\Interactor;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\Base\BaseDTO;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
 use App\Modules\Notification\Domain\Services\Notification\NotificationService;
-use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\Domain\Models\User;
 use App\Modules\User\Domain\Services\UserService;
 use Illuminate\Database\Eloquent\Model;
@@ -73,9 +73,9 @@ class RegistrationInteractor
     public function run(BaseDTO $dto) : array|User
     {
         /**
-        * @var UserCreateDTO
+        * @var UserVO
         */
-        $userDTO = $dto->userDTO;
+        $userVO = $dto->userDTO->userVO;
 
         // { #TODO - Это логика при подтверждении сотового или email (мы её убираем на время)
 
@@ -114,7 +114,7 @@ class RegistrationInteractor
 
 
         //вызываем сервес для создание user
-        $user = $this->userService->createUser($userDTO);
+        $user = $this->userService->createUser($userVO);
 
         return $user;
     }

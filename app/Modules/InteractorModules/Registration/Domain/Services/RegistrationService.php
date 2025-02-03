@@ -7,6 +7,9 @@ use App\Modules\InteractorModules\Registration\App\Data\DTO\CreateRegisterAllDTO
 use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
 use App\Modules\InteractorModules\Registration\Domain\Interactor\RegistrationInteractor;
 use App\Modules\InteractorModules\Registration\Domain\Interactor\RegistrationUserAndOrganizationInteractor;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\User\App\Data\DTO\User\UserManagerCreateDTO;
+use App\Modules\User\Domain\Interactor\UserManagerCreateInteractor;
 use App\Modules\User\Domain\Models\User;
 
 class RegistrationService
@@ -14,6 +17,7 @@ class RegistrationService
     public function __construct(
         private RegistrationInteractor $interatorRegister,
         private RegistrationUserAndOrganizationInteractor $registrationUserAndOrganizationInteractor,
+        private UserManagerCreateInteractor $userManagerCreateInteractor,
     ) { }
 
     /**
@@ -28,13 +32,37 @@ class RegistrationService
     }
 
     /**
-    * Регистрация в 1 endpoint - сразу организации и создание user
+    * Логика регистрации User
     * @param CreateRegisterAllDTO $dto
     *
-    * @return array
     */
-    public function registerUserAll(CreateRegisterAllDTO $dto)
+    public function registrationUser(CreateRegisterAllDTO $dto)
     {
-        return $this->registrationUserAndOrganizationInteractor->run($dto);
+        $org = Organization::where('inn', $dto->inn)->first();
+
+        //если $org - не найден по inn, создаём user и организацию, иначе создаём менеджера
+        if(is_null($org))
+        {
+            //Регистрация в 1 endpoint - сразу организации и создание user
+            $result = $this->registrationUserAndOrganizationInteractor->run($dto);
+
+            return $result;
+
+        } else {
+
+            /** @var UserManagerCreateDTO */
+            $dto = UserManagerCreateDTO::make(
+                organization: $org,
+                userVO: $dto->registrationDTO->userDTO->userVO,
+            );
+
+            //Регистрация manager, в организации
+            $result = $this->userManagerCreateInteractor->execute($dto);
+
+            return $result;
+
+        }
     }
+
+
 }

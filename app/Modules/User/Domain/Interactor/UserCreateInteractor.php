@@ -2,14 +2,14 @@
 
 namespace App\Modules\User\Domain\Interactor;
 
-use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
+use Exception;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\User\Domain\Models\PersonalArea;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\App\Repositories\UserRepository;
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
 use App\Modules\User\Domain\Actions\LinkUserToPersonalAreaAction;
 use App\Modules\User\Domain\Actions\PersonalArea\PersonalAreaCreateAction;
-use App\Modules\User\Domain\Models\PersonalArea;
-use App\Modules\User\Domain\Models\User;
-use Exception;
 
 class UserCreateInteractor
 {
@@ -18,9 +18,9 @@ class UserCreateInteractor
         private UserRepository $repUser,
     ) { }
 
-    private function createUser(UserCreateDTO $dto) : User
+    private function createUser(UserVO $vo) : User
     {
-        return $this->repUser->save($dto);
+        return $this->repUser->save($vo);
     }
 
     private function createPersonalArea(string $uuid_owner) : PersonalArea
@@ -28,30 +28,32 @@ class UserCreateInteractor
         return PersonalAreaCreateAction::make($uuid_owner);
     }
 
-    private function createUserNotAdmin(UserCreateDTO $dto) : ?User
+    private function createUserNotAdmin(UserVO $vo) : ?User
     {
-
+        dd(1);
         #TODO Проверить (ЛОГИКА НЕ РАБОТАЕТ НУЖНО СМОТРЕТЬ И ПЕРЕДЕЛЫВАТЬ - ЕСЛИ БУДЕТ НЕ ОТНОСИТСЯ К АДМИНУ)
-        $userAuth = $dto->userAuth;
-        $user = $this->createUser($dto);
+        // $userAuth = $dto->userAuth;
+        // $user = $this->createUser($dto);
 
-        //устанавливаем к какому кабинету относится user
-        $user->personal_area_id = $userAuth->personal_areas()->first(); #TODO с first могут быть проблемы
+        // //устанавливаем к какому кабинету относится user
+        // $user->personal_area_id = $userAuth->personal_areas()->first(); #TODO с first могут быть проблемы
 
-        //Сохраняем данные в бд.
-        $user->save();
+        // //Сохраняем данные в бд.
+        // $user->save();
 
         return $user;
     }
 
-    private function createUserIsAdmin(UserCreateDTO $dto) : ?User
+    private function createUserIsAdmin(UserVO $vo) : ?User
     {
 
         #TODO Здесь нужно добавить цепочку обязаностей
         /**
         * @var User
         */
-        $user = $this->createUser($dto);
+        $user = $this->createUser($vo);
+
+        dd($user);
 
         $area = $this->createPersonalArea($user->id);
         LinkUserToPersonalAreaAction::run($user, $area);
@@ -59,25 +61,26 @@ class UserCreateInteractor
         return $user;
     }
 
-    public function run(UserCreateDTO $dto) : ?User
+    public function run(UserVO $vo) : ?User
     {
-        switch ($dto->userVO->role) {
+
+        switch ($vo->role) {
 
             case UserRoleEnum::admin:
             {
-                return $this->createUserIsAdmin($dto);
+                return $this->createUserIsAdmin($vo);
                 break;
             }
 
             case UserRoleEnum::manager:
             {
-                return $this->createUserNotAdmin($dto);
+                return $this->createUserNotAdmin($vo);
                 break;
             }
 
             case UserRoleEnum::observed:
             {
-                return $this->createUserNotAdmin($dto);
+                return $this->createUserNotAdmin($vo);
                 break;
             }
 

@@ -8,38 +8,15 @@ use App\Modules\User\Domain\Models\User as Model;
 
 class CreateUserAction
 {
-    public static function make(UserVO $dto) : Model
+    public static function make(UserVO $vo) : Model
     {
-       return (new self())->run($dto);
+       return (new self())->run($vo);
     }
 
-    public function run(UserVO $dto) : Model
+    public function run(UserVO $vo) : Model
     {
 
-        $model = Model::query()
-            ->createOrFirst(
-
-                [
-                    'email_id' => $dto->email_id,
-                    'phone_id' => $dto->phone_id,
-                ],
-
-                [
-                    'first_name' => $dto->first_name,
-                    'last_name' => $dto->last_name,
-                    'father_name' => $dto->father_name,
-                    'password' => $dto->password,
-
-                    'role' => $dto->role,
-                    'permission' => app(PermissionService::class)->permissionByRole($dto->role),
-
-                    'active' => true,
-                    'auth' => true,
-
-                    'email_id' => $dto->email_id,
-                    'phone_id' => $dto->phone_id,
-                ],
-            );
+        $model = Model::query()->create($vo->toArrayNotNull());
 
         return $model;
     }

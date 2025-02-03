@@ -32,6 +32,7 @@ use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOfferReq
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOrderRequest;
 use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorAcceptResource;
 
+use App\Modules\OfferContractor\Domain\Resources\Filter\CustomerComporeOfferContractorResource;
 use App\Modules\OfferContractor\Domain\Resources\Filter\CustomerComporeOfferContractorCollection;
 
 class OfferContractorController extends Controller
@@ -48,22 +49,50 @@ class OfferContractorController extends Controller
         /** @var Organization */
         $organization = $array['organization'];
 
+        if($array['status']) {
+
+            //Возвращаем предложения перевозчика которыесвязаны только с ним
+
+            //получаем все ордеры, и указываем на какие предложения откликнулся заказчик
+            $offers = $rep->getOfferContractorsFilterByContractor($organization->id);
+
+            #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
+            return response()->json(array_success(CustomerComporeOfferContractorCollection::make($offers), 'Возращены все офферы "предложения" перевозчика, с фильтрацией при указани отклика заказчика на оффер.'), 200);
+
+        } else {
+
+            return response()->json(array_success(OfferContractorCollection::make($organization->offer_contractors), 'Return offer сontractor by organization carrier.'), 200);
+        }
+
+    }
+
+    public function show(
+        OfferContractor $offerContractor,
+        GetTypeCabinetByOrganization $action,
+        OfferCotractorRepository $rep,
+    ) {
+
+        /** @var array */
+        $array = $action->isCustomer();
+
+        /** @var Organization */
+        $organization = $array['organization'];
 
         if($array['status']) {
 
             //Возвращаем предложения перевозчика которыесвязаны только с ним
 
-            return response()->json(array_success(OfferContractorCollection::make($organization->offer_contractors), 'Return offer сontractor by organization Customer.'), 200);
+            //получаем все ордеры, и указываем на какие предложения откликнулся заказчик
+            /** @var OfferContractor */
+            $offers = $rep->getOfferContractorFilterByContractor($organization->id, $offerContractor->id);
+
+            #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
+            return response()->json(array_success(CustomerComporeOfferContractorResource::make($offers), 'Возвращен оффер предложение с фильтрацией по отклику от заказчика'), 200);
 
         } else {
 
-            //получаем все ордеры, и указываем на какие откликнулся перевозчик
-            $offers = $rep->getOfferContractorsFilterByContractor($organization->id);
-
-            #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
-            return response()->json(array_success(CustomerComporeOfferContractorCollection::make($offers), 'Возращены все офферы предложения перевозчика, с фильтрацией при выборе перевозчикам заказа.'), 200);
+            return response()->json(array_success(OfferContractorResource::make($offerContractor), 'Return offer сontractor by organization carrier.'), 200);
         }
-
     }
 
     public function store(

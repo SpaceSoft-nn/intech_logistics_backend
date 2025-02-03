@@ -178,6 +178,8 @@ Route::prefix('/offer-contractors')->group(function () {
 
     Route::get('/', [OfferContractorController::class, 'index']);
 
+    Route::get('/{offerContractor}', [OfferContractorController::class, 'show']);
+
 
     Route::middleware(['isCarrierOrganization'])->group(function () {
 

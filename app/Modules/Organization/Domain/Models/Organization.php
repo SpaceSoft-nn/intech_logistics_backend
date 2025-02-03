@@ -3,6 +3,7 @@
 namespace App\Modules\Organization\Domain\Models;
 
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
+use App\Modules\OfferContractor\Domain\Models\OfferContractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\App\Data\Enums\OrganizationEnum;
 use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
@@ -131,6 +132,13 @@ class Organization extends Model
     {
         return $this->hasMany(LotTender::class, 'organization_id', 'id');
     }
+
+    public function offer_contractors() : HasMany
+    {
+        return $this->hasMany(OfferContractor::class, 'organization_id', 'id');
+    }
+
+
 
 
 }

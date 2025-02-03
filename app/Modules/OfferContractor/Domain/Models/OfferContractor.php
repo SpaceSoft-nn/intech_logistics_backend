@@ -2,6 +2,7 @@
 
 namespace App\Modules\OfferContractor\Domain\Models;
 
+use App\Modules\OfferContractor\App\Data\Enums\OfferContractorStatusEnum;
 use App\Modules\OfferContractor\Domain\Factories\OfferContractorFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,6 +32,7 @@ class OfferContractor extends Model
 
         'price_for_distance',
         'description',
+        'status',
 
         'transport_id',
         'user_id',
@@ -57,7 +59,7 @@ class OfferContractor extends Model
     protected function casts(): array
     {
         return [
-
+            'status' => OfferContractorStatusEnum::class,
         ];
     }
 
@@ -67,7 +69,7 @@ class OfferContractor extends Model
     */
     public function offer_contractor_customer() : HasMany
     {
-        return $this->hasMany(OfferContractorCustomer::class, 'offer_contractor_invoice_order_customers', 'offer_contractor_id', 'id');
+        return $this->hasMany(OfferContractorCustomer::class, 'offer_contractor_id', 'id');
     }
 
     /**

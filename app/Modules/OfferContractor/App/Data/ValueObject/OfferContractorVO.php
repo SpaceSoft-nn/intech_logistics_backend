@@ -3,6 +3,7 @@
 namespace App\Modules\OfferContractor\App\Data\ValueObject;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
+use App\Modules\OfferContractor\App\Data\Enums\OfferContractorStatusEnum;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 
@@ -21,11 +22,12 @@ readonly class OfferContractorVO implements Arrayable
         public string $organization_id,
 
 
+
         public bool $add_load_space, //Возможен ли догруз
         public bool $road_back, //Обратная дорога
         public bool $directly_road, //Прямая дорога
 
-
+        public ?OfferContractorStatusEnum $status,
         public ?string $order_unit_id, #TODO Подумать нужно ли это указывать?
         public ?string $description,
     ) {}
@@ -45,6 +47,7 @@ readonly class OfferContractorVO implements Arrayable
         bool $road_back = false,
         bool $directly_road = false,
 
+        ?string $status = null,
         ?string $description = null,
         ?string $order_unit_id = null,
     ) : self {
@@ -60,6 +63,8 @@ readonly class OfferContractorVO implements Arrayable
             add_load_space: $add_load_space,
             road_back: $road_back,
             directly_road: $directly_road,
+
+            status: OfferContractorStatusEnum::stringByCaseToObject($status),
             description: $description,
             order_unit_id: $order_unit_id,
         );
@@ -78,6 +83,8 @@ readonly class OfferContractorVO implements Arrayable
             "add_load_space" => $this->add_load_space,
             "road_back" => $this->road_back,
             "directly_road" => $this->directly_road,
+
+            "status" => $this->status,
             "description" => $this->description,
             "order_unit_id" => $this->order_unit_id,
         ];
@@ -95,6 +102,8 @@ readonly class OfferContractorVO implements Arrayable
             add_load_space: Arr::get($data, 'add_load_space', false),
             road_back: Arr::get($data, 'road_back', false),
             directly_road: Arr::get($data, 'directly_road', false),
+
+            status: Arr::get($data, 'status', 'published'),
             description: Arr::get($data, 'description', null),
             order_unit_id: Arr::get($data, 'order_unit_id', null),
         );

@@ -3,45 +3,67 @@
 namespace App\Http\Controllers\API\OfferContractor;
 
 use App\Http\Controllers\Controller;
-use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOfferDTO;
-use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOrderDTO;
-use App\Modules\OfferContractor\App\Data\DTO\OfferCotractorAddCustomerDTO;
-use App\Modules\OfferContractor\App\Data\ValueObject\InvoiceOrderCustomerVO;
+use function App\Helpers\array_success;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
+use App\Modules\OfferContractor\Domain\Models\OfferContractor;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
+use App\Modules\OfferContractor\Domain\Models\OfferContractorCustomer;
 use App\Modules\OfferContractor\App\Data\ValueObject\OfferContractorVO;
 use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractor;
-use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractorAccept;
-use App\Modules\OfferContractor\Domain\Models\OfferContractor;
-use App\Modules\OfferContractor\Domain\Models\OfferContractorCustomer;
-use App\Modules\OfferContractor\Domain\Requests\OfferContractorAddCustomerRequest;
-use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOfferRequest;
-use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOrderRequest;
-use App\Modules\OfferContractor\Domain\Requests\OfferContractorCreateRequest;
-use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorAcceptResource;
-use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorResource;
-use App\Modules\OfferContractor\Domain\Resources\OfferContractorCollection;
-use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerCollection;
-use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerResource;
-use App\Modules\OfferContractor\Domain\Resources\OfferContractorResource;
 use App\Modules\OfferContractor\Domain\Services\OfferContractorService;
-use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
-use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
+use App\Modules\OfferContractor\Domain\Resources\OfferContractorResource;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
-use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\OfferContractor\App\Data\DTO\OfferCotractorAddCustomerDTO;
+use App\Modules\OfferContractor\App\Repositories\OfferCotractorRepository;
+use App\Modules\OfferContractor\Domain\Resources\OfferContractorCollection;
+use App\Modules\OfferContractor\App\Data\ValueObject\InvoiceOrderCustomerVO;
+use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractorAccept;
+use App\Modules\OfferContractor\Domain\Requests\OfferContractorCreateRequest;
+use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOfferDTO;
+use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOrderDTO;
+use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerResource;
+use App\Modules\OfferContractor\Domain\Requests\OfferContractorAddCustomerRequest;
+use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorResource;
+use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerCollection;
+use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOfferRequest;
+use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOrderRequest;
+use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorAcceptResource;
 
-use function App\Helpers\array_success;
+use App\Modules\OfferContractor\Domain\Resources\Filter\CustomerComporeOfferContractorCollection;
 
 class OfferContractorController extends Controller
 {
 
-    public function index()
-    {
-        /**
-        * @var OfferContractor[]
-        */
-        $offerContractors = OfferContractor::get();
+    public function index(
+        GetTypeCabinetByOrganization $action,
+        OfferCotractorRepository $rep,
+    ) {
 
-        return response()->json(array_success(OfferContractorCollection::make($offerContractors), 'Return create offer contractors.'), 200);
+        /** @var array */
+        $array = $action->isCustomer();
+
+        /** @var Organization */
+        $organization = $array['organization'];
+
+
+        if($array['status']) {
+
+            //Возвращаем предложения перевозчика которыесвязаны только с ним
+
+            return response()->json(array_success(OfferContractorCollection::make($organization->offer_contractors), 'Return offer сontractor by organization Customer.'), 200);
+
+        } else {
+
+            //получаем все ордеры, и указываем на какие откликнулся перевозчик
+            $offers = $rep->getOfferContractorsFilterByContractor($organization->id);
+
+            #TODO Костыль который попросил сделать фротенд - здесь нужно пересмотреть, очень много запросов будет в бд.
+            return response()->json(array_success(CustomerComporeOfferContractorCollection::make($offers), 'Возращены все офферы предложения перевозчика, с фильтрацией при выборе перевозчикам заказа.'), 200);
+        }
+
     }
 
     public function store(

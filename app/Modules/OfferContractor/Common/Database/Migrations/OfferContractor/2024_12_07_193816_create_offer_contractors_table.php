@@ -21,6 +21,8 @@ return new class extends Migration
 
             $table->string('description')->comment('Дистанция за 1 км')->nullable();
 
+            $table->string('status')->default('draft');
+
             $table->uuid('transport_id')->constrained('transports');
             $table->uuid('user_id')->constrained('users')->nullable();
             $table->uuid('organization_id')->constrained('organizations');

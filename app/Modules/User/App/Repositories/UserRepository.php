@@ -9,7 +9,6 @@ use App\Modules\User\Domain\Actions\CreateUserAction;
 use App\Modules\User\Domain\Interface\Repositories\IRepository;
 use App\Modules\User\Domain\Models\PersonalArea;
 use App\Modules\User\Domain\Models\User as Model;
-use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository extends CoreRepository implements IRepository
 {

@@ -49,7 +49,11 @@ Route::prefix('users')->middleware(['auth:sanctum', 'hasOrgHeader'])->controller
 
     // Route::post('/', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
 
-    Route::get('/', [UserController:: class, 'index'])->middleware(['auth:sanctum']);
+    //получить всех пользователей по организации
+    Route::get('/', [UserController:: class, 'index']);
+
+    //активировать пользователя от админа организации
+    Route::patch('/{user}/active', [UserController:: class, 'active']);
 
 
 });

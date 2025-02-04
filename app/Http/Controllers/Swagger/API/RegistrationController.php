@@ -59,6 +59,15 @@ use App\Http\Controllers\Controller;
  *           ),
  *       ),
  *
+ *       @OA\Response(
+ *           response=409,
+ *           description="Создание пользователя 'manager' , по существующему ИНН организации",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="status", type="boolean", example="false"),
+*                @OA\Property(property="info", type="string", example="Данная организация с таким инн уже существует, была отправлена заявка администратору организации на создание пользователя."),
+ *           ),
+ *       ),
+ *
  * )
 */
 class RegistrationController extends Controller

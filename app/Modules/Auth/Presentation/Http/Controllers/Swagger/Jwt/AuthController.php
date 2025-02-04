@@ -172,6 +172,7 @@ use App\Modules\Auth\Presentation\Http\Controllers\Controller;
  *    @OA\Property(property="personal_areas_where_owner", type="string", format="uuid"),
  *    @OA\Property(property="email_id", type="string", format="uuid"),
  *    @OA\Property(property="phone_id", type="string", format="uuid"),
+ *    @OA\Property(property="active", type="boolean"),
  * ),
  *
  *

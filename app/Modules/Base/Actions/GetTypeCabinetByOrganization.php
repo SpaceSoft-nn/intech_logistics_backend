@@ -40,4 +40,17 @@ class GetTypeCabinetByOrganization
             'organization' => $organization,
         ];
     }
+
+    public function getOrganizaion() : Organization
+    {
+
+        //ЭТОТ КОСТЫЛЬ МЕНЯ ЗАСТАВИЛ ДЕЛАТЬ ФРОТЕНДЕР! ВОТ ЕГО ГИТ https://github.com/Zeltharion
+        $organization_id = request()->header('organization_id');
+
+        $organization = Organization::find($organization_id);
+
+        abort_unless( $organization, 404, 'Организации не существует');
+
+        return $organization;
+    }
 }

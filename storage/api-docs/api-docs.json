@@ -4109,6 +4109,26 @@
                                 }
                             }
                         }
+                    },
+                    "409": {
+                        "description": "Создание пользователя 'manager' , по существующему ИНН организации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "info": {
+                                            "type": "string",
+                                            "example": "Данная организация с таким инн уже существует, была отправлена заявка администратору организации на создание пользователя."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -6035,6 +6055,133 @@
                 }
             }
         },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Получить всех user - которые принадлежат организации",
+                "operationId": "069da29ac9a1b6f755647ec0504d33db",
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "header",
+                        "description": "Идентификатор организации, который должен быть передан в заголовке",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат Заказов.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/UserResource"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return all user by organization."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{user::uuid}/active": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Активировать пользовател в организации, по заявке от администратора этой организации.",
+                "operationId": "3c67eb034afeab33b0896c24ff8a6185",
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "header",
+                        "description": "Идентификатор организации, который должен быть передан в заголовке",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user::uuid",
+                        "in": "path",
+                        "description": "UUID пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат Заказов.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/UserResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Данный user - был активирован в организации."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Данный user - уже был активирован.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Данный user - уже был активирован."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Данный пользователь: uuid не принадлежит к организации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Данный пользователь: uuid не принадлежит к организации"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/auth/me": {
             "post": {
                 "tags": [
@@ -7017,7 +7164,7 @@
                 "type": "object"
             },
             "InvoiceOrderResource": {
-                "title": "Your Resource",
+                "title": "InvoiceOrderResource",
                 "description": "JSON ресурс с информацией о ресурсе",
                 "properties": {
                     "id": {
@@ -7839,6 +7986,9 @@
                     "phone_id": {
                         "type": "string",
                         "format": "uuid"
+                    },
+                    "active": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -7933,6 +8083,10 @@
         {
             "name": "Transports",
             "description": "Transports"
+        },
+        {
+            "name": "Users",
+            "description": "Users"
         },
         {
             "name": "Auth JWT",

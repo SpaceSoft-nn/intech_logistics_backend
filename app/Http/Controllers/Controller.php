@@ -282,7 +282,7 @@ namespace App\Http\Controllers;
 * @OA\Schema(
 *     schema="InvoiceOrderResource",
 *     description="JSON ресурс с информацией о ресурсе",
-*     title="Your Resource",
+*     title="InvoiceOrderResource",
 *     @OA\Property(property="id", type="string", format="uuid", description="Уникальный идентификатор ресурса", example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"),
 *     @OA\Property(property="transport_id", type="string", format="uuid", description="Значение транспорта организации"),
 *     @OA\Property(property="price", type="number", format="float", description="Цена ресурса", example=100000),

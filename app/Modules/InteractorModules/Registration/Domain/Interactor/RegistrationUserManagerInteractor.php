@@ -19,6 +19,7 @@ use App\Modules\User\App\Data\DTO\User\UserManagerCreateDTO;
 use App\Modules\Organization\App\Repositories\OrganizationRepository;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistratiorUserManagerDTO;
+use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 
 // Бизнес логика для создание заказа, когда заказ создатёся от Тендера
 class RegistrationUserManagerInteractor
@@ -64,11 +65,16 @@ class RegistrationUserManagerInteractor
             email_id: $dto->email_id,
         );
 
+        /** @var TypeCabinetEnum */
+        $typeCabinet = $this->orgRep->getTypeCabinet($owner, $organization); //получаем тип кабинета по owner + org
+
 
         $user = $this->userService->createUserManager(
             UserManagerCreateDTO::make(
                 userVO: $userVO,
                 personalArea: $personal_area,
+                organization: $dto->organization,
+                type_cabinet: $typeCabinet,
             )
         );
 

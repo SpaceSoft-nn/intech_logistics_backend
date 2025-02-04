@@ -2,6 +2,8 @@
 
 namespace App\Modules\User\Domain\Interactor;
 
+use App\Modules\Organization\App\Data\DTO\User\LinkUserToOrganizationDTO;
+use App\Modules\Organization\Domain\Actions\LinkUserToOrganizationAction;
 use App\Modules\User\App\Data\DTO\User\UserManagerCreateDTO;
 use App\Modules\User\App\Repositories\UserRepository;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
@@ -40,8 +42,14 @@ class UserManagerCreateInteractor
             */
             $user = $this->createUser($dto->userVO);
             LinkUserToPersonalAreaAction::run($user, $dto->personalArea);
+            LinkUserToOrganizationAction::run(LinkUserToOrganizationDTO::make(
+                user: $user,
+                organization: $dto->organization,
+                type_cabinet: $dto->type_cabinet,
+            ));
 
             return $user;
+            
         });
 
         return $user;

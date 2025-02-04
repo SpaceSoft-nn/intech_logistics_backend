@@ -42,6 +42,7 @@ class UserVO extends BaseDTO implements Arrayable
 
     public function setPhoneId(string $id) : self
     {
+
         return $this->make(
             first_name: $this->first_name,
             last_name: $this->last_name,
@@ -89,7 +90,7 @@ class UserVO extends BaseDTO implements Arrayable
         string $last_name,
         string $father_name,
         string $password,
-        UserRoleEnum $role = UserRoleEnum::admin,
+        UserRoleEnum $role,
         ?string $email_id = null,
         ?string $phone_id = null,
         ?bool $active = null,

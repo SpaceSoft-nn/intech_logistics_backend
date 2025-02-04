@@ -2,23 +2,23 @@
 
 namespace App\Modules\InteractorModules\Registration\Domain\Interactor;
 
-use App\Modules\InteractorModules\Registration\App\Data\DTO\CreateRegisterAllDTO;
-use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
-use App\Modules\Notification\Domain\Models\EmailList;
-use App\Modules\Notification\Domain\Models\PhoneList;
-use App\Modules\Notification\Domain\Services\Notification\NotificationService;
-use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
-use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Organization\Domain\Services\OrganizationService;
-use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
-use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
-use App\Modules\User\App\Repositories\UserRepository;
-use App\Modules\User\Domain\Models\User;
-use App\Modules\User\Domain\Services\UserService;
 use DB;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\User\Domain\Services\UserService;
+use App\Modules\Notification\Domain\Models\EmailList;
+use App\Modules\Notification\Domain\Models\PhoneList;
+use App\Modules\User\App\Data\DTO\User\UserCreateDTO;
+use App\Modules\User\App\Repositories\UserRepository;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
+use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
+use App\Modules\Organization\Domain\Services\OrganizationService;
+use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
+use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
+use App\Modules\Notification\Domain\Services\Notification\NotificationService;
+use App\Modules\InteractorModules\Registration\App\Data\DTO\CreateRegisterAllDTO;
 
 #TODO Костыльная и быстрая логика которую нужно будет переделать!!!
 class RegistrationUserAndOrganizationInteractor
@@ -27,7 +27,6 @@ class RegistrationUserAndOrganizationInteractor
         public UserService $userService,
         private UserRepository $repUser,
         private NotificationService $NotificationService,
-        // public NotificationService $NotificationService,
         public OrganizationService $orgService,
     ) {}
 
@@ -55,7 +54,7 @@ class RegistrationUserAndOrganizationInteractor
             #TODO изменил создание user но не убрал лишнии DTO (UserCreateDTO - надо убрать и принимать только UserVO)
             //вызываем сервес для создание user
             /** @var User */
-            $user = $this->userService->createUser($userVO);
+            $user = $this->userService->createUserAdmin($userVO);
 
 
             /** @var OrganizationVO */
@@ -104,13 +103,13 @@ class RegistrationUserAndOrganizationInteractor
         switch ($model_confirm['type']) {
             case 'phone':
             {
-                $userDTO->userVO->setPhoneId($notifyId);
+                $userDTO = $userDTO->setUserVO($userDTO->userVO->setPhoneId($notifyId));
                 break;
             }
 
             case 'email':
             {
-                $userDTO->userVO->setEmailId($notifyId);
+                $userDTO = $userDTO->setUserVO($userDTO->userVO->setEmailId($notifyId));
                 break;
             }
 
@@ -120,7 +119,6 @@ class RegistrationUserAndOrganizationInteractor
                 break;
             }
         }
-
 
         return RegistrationDTO::make(
             userDTO: $userDTO,

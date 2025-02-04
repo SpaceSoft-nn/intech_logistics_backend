@@ -2,6 +2,7 @@
 
 namespace App\Modules\InteractorModules\Registration\Domain\Services;
 
+use App\Modules\Base\Error\BusinessException;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\Base\BaseDTO;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\CreateRegisterAllDTO;
 use App\Modules\InteractorModules\Registration\App\Data\DTO\RegistrationDTO;
@@ -10,8 +11,6 @@ use App\Modules\InteractorModules\Registration\Domain\Interactor\RegistrationInt
 use App\Modules\InteractorModules\Registration\Domain\Interactor\RegistrationUserAndOrganizationInteractor;
 use App\Modules\InteractorModules\Registration\Domain\Interactor\RegistrationUserManagerInteractor;
 use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\User\App\Data\DTO\User\UserManagerCreateDTO;
-use App\Modules\User\Domain\Interactor\UserManagerCreateInteractor;
 use App\Modules\User\Domain\Models\User;
 
 class RegistrationService
@@ -56,13 +55,19 @@ class RegistrationService
             $dto = RegistratiorUserManagerDTO::make(
                 organization: $org,
                 userVO: $dto->registrationDTO->userDTO->userVO,
+                phone_id : $dto->registrationDTO->phone,
+                email_id: $dto->registrationDTO->email,
             );
 
             //Регистрация manager, в организации
             $result = $this->registrationUserManagerInteractor->execute($dto);
 
-            return $result;
+            if($result) {
+                //Из-за того что фронт попросил так сделать, приходится сделать так кринжово, тут надо присылать 200 ответ, что организация не создалась, но user добавился в базу
+                throw new BusinessException('Данная организация с таким инн уже существует, была отправлена заявка администратору организации на создание пользователя.', 409);
+            }
 
+            return $result;
         }
     }
 

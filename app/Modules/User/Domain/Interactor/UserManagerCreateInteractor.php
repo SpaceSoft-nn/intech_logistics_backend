@@ -32,6 +32,8 @@ class UserManagerCreateInteractor
     {
         /** @var User */
         $user = DB::transaction(function () use ($dto) {
+
+
             #TODO Здесь нужно добавить цепочку обязаностей
             /**
             * @var User

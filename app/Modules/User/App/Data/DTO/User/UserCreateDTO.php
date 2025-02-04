@@ -21,4 +21,12 @@ class UserCreateDTO extends BaseDTO
             userAuth: $userAuth,
         );
     }
+
+    public function setUserVO($userVO)
+    {
+        return self::make(
+            userVO: $userVO,
+            userAuth: $this->userAuth
+        );
+    }
 }

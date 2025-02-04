@@ -11,15 +11,23 @@ readonly class UserManagerCreateDTO
     public function __construct(
 
         public UserVO $userVO,
-        public PersonalArea $personalArea //кабинет
+        public PersonalArea $personalArea, //кабинет
+
 
     ) { }
 
-    public static function make(UserVO $userVO, PersonalArea $personalArea) : self
-    {
+    public static function make(
+
+        UserVO $userVO,
+        PersonalArea $personalArea,
+
+
+    ) : self {
+
         return new self(
             userVO: $userVO,
             personalArea: $personalArea,
         );
+
     }
 }

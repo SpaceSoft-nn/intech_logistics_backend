@@ -12,6 +12,8 @@ readonly class RegistratiorUserManagerDTO
 
         public Organization $organization,
         public UserVO $userVO,
+        public ?string $phone_id, //phone для проверки подтвреждения и установки юзеру
+        public readonly ?string $email_id, //email для проверки подтвреждения и установки юзеру
 
     ) { }
 
@@ -19,12 +21,16 @@ readonly class RegistratiorUserManagerDTO
 
         Organization $organization,
         UserVO $userVO,
+        ?string $phone_id = null,
+        ?string $email_id = null,
 
     ) : self {
 
         return new self(
             organization: $organization,
             userVO: $userVO,
+            phone_id: $phone_id,
+            email_id: $email_id,
         );
 
     }

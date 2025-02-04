@@ -45,9 +45,11 @@ Route::prefix('organizations')->controller(AuthController::class)->group(functio
 
 
     //User
-Route::prefix('user')->controller(AuthController::class)->group(function () {
+Route::prefix('users')->middleware(['auth:sanctum', 'hasOrgHeader'])->controller(AuthController::class)->group(function () {
 
-    Route::post('/', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
+    // Route::post('/', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
+
+    Route::get('/', [UserController:: class, 'index'])->middleware(['auth:sanctum']);
 
 
 });

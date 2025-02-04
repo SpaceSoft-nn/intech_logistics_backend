@@ -21,6 +21,8 @@ return new class extends Migration
             #TODO Нужно указать явно что создавать - а не nullable
             $table->string('type_cabinet')->nullable()->comment('Тип кабинета: заказчик, склад (РЦ), перевозчик');
 
+            $table->timestamps();
+
         });
     }
 

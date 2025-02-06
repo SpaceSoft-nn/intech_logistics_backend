@@ -27,7 +27,6 @@ class OrderAndContractorFilterAction
 
             foreach ($invoices as $invoice) {
 
-                // dd($item->cargo_goods);
 
                 if($invoice->order_unit_id === $item->id)
                 {

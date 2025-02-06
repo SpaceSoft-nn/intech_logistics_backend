@@ -56,7 +56,6 @@ final class LinkOrderUnitToCargoGoodInteractor
             //Высчитываем общий объём всех паллетов у грузов.
             $cargo_unit_sum = 0;
 
-            // dd($cargoGoodsVO);
 
             { //Создание CargoGood и привязка к OrderUnit (тут уже будет работа с массивом CargoGood[])
 

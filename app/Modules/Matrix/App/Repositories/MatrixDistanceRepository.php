@@ -29,7 +29,6 @@ class MatrixDistanceRepository extends CoreRepository
     public function show(MatrixDistanceShowDTO $dto) : ?Model
     {
 
-        // dd($this->query()->where($dto->toArrayNotNull())->dd());
 
         return $this->query()->where($dto->toArrayNotNull())->first();
     }

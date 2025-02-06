@@ -60,7 +60,6 @@ class UserRepository extends CoreRepository implements IRepository
 
         $userOrganization = UserOrganization::where('organization_id', $organization->id)->with('user')->get();
 
-        // dd($userOrganization->pluck('user'));
 
         $users = $userOrganization->filter(function ($userOrganization) use ($organization) {
 

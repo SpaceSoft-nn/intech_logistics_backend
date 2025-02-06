@@ -23,7 +23,6 @@ class TestController extends Controller
             // Выбор папки "Входящие"
             $folder = $client->getFolder('INBOX');
 
-            // dd($folder);
 
             // Получение непрочитанных писем
             $messages = $folder->query()->unseen()->get();

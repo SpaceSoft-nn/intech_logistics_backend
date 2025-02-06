@@ -306,7 +306,6 @@ class ProdeSeed extends Seeder
             )
             ->create();
 
-        // dd($lotTender->agreement_document_tender);
 
         return $lotTender;
 

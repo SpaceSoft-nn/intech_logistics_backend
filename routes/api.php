@@ -33,12 +33,26 @@ Route::post('/notification/send', [NotificationController::class, 'sendNotificat
 Route::post('/notification/confirm', [NotificationController::class, 'confirmCode']);
 
     //Organization
-Route::prefix('organizations')->controller(AuthController::class)->group(function () {
+Route::prefix('organizations')->group(function () {
 
 
     Route::get('/', [OrganizationController::class, 'index']);
     Route::post('/', [OrganizationController::class, 'create']);
     Route::get('/{organization}', [OrganizationController:: class, 'show'])->whereUuid('organization');
+
+    { //Работа с User
+
+        Route::prefix('users')->middleware(['auth:sanctum', 'hasOrgHeader'])->group(function (){
+
+            //получить всех пользователей по организации
+            Route::get('/', [OrganizationController:: class, 'indexUsers']);
+
+            //активировать пользователя от админа организации
+            Route::patch('/{user}/active', [OrganizationController:: class, 'activeUsers'])->whereUuid('user');
+
+        });
+
+    }
 
 });
 
@@ -48,12 +62,6 @@ Route::prefix('organizations')->controller(AuthController::class)->group(functio
 Route::prefix('users')->middleware(['auth:sanctum', 'hasOrgHeader'])->controller(AuthController::class)->group(function () {
 
     // Route::post('/', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
-
-    //получить всех пользователей по организации
-    Route::get('/', [UserController:: class, 'index']);
-
-    //активировать пользователя от админа организации
-    Route::patch('/{user}/active', [UserController:: class, 'active']);
 
 
 });

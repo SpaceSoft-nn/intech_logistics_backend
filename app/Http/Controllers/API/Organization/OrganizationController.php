@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\API\Organization;
 
 use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
+use App\Modules\Auth\Domain\Services\AuthService;
+use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleCollection;
+use App\Modules\InteractorModules\Registration\Domain\Model\UserOrganization;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
@@ -15,7 +18,10 @@ use App\Modules\Organization\Domain\Resources\OrganizationCollection;
 use App\Modules\Organization\Domain\Resources\OrganizationResource;
 use App\Modules\Organization\Domain\Services\OrganizationService;
 use App\Modules\Transport\Domain\Resources\TransportCollection;
+use App\Modules\User\App\Repositories\UserRepository;
 use App\Modules\User\Domain\Models\User;
+use App\Modules\User\Domain\Resources\UserHasOrganizationCollection;
+use App\Modules\User\Domain\Resources\UserHasOrganizationResource;
 use Request;
 use Symfony\Component\Mailer\Transport\Transports;
 
@@ -78,6 +84,53 @@ class OrganizationController
             response()->json(array_success(OrganizationResource::make($organization), 'Create organization.'), 201)
         :
             response()->json(array_error(OrganizationResource::make($organization), 'Faild create organization.'), 400);
+    }
+
+    //вернуть всех user - которые принадлежат организации
+    public function indexUsers(
+        GetTypeCabinetByOrganization $action,
+        UserRepository $rep,
+
+    ) {
+
+        /** @var Organization */
+        $organization = $action->getOrganizaion();
+
+        /** @var Collection */
+        $users = $rep->getUsersByOrganization($organization);
+
+        return response()->json(array_success(UserHasOrganizationCollection::make($users), 'Return all user by organization.'), 200);
+    }
+
+    //активировать user в организации
+    public function activeUsers(
+        User $user,
+        GetTypeCabinetByOrganization $action,
+        AuthService $auth,
+    ) {
+        /** @var Organization */
+        $organization = $action->getOrganizaion();
+
+        /** @var User */
+        $userAuth = isAuthorized($auth);
+
+        {
+            #TODO Временно даём только администратору изменить права активации user
+            //проверяем что только админ может имзенить права
+            abort_unless($organization->owner_id === $userAuth->id, 403, 'Недостаточно прав для выполнения этого действия.');
+
+            $model = UserOrganization::where('user_id', $user->id)->where('organization_id', $organization->id)->first();
+
+            abort_unless($model, 403, "Данный пользователь: {$user->id} не принадлежит к организации");
+
+            abort_if($user->active, 404, 'Данный user - уже был активирован.');
+        }
+
+        //активируем user
+        $user->active = true;
+        $user->save();
+
+        return response()->json(array_success(UserHasOrganizationResource::make($user), 'Данный user - был активирован в организации.'), 200);
     }
 
 

@@ -35,7 +35,7 @@ Route::post('/notification/confirm', [NotificationController::class, 'confirmCod
     //Organization
 Route::prefix('organizations')->group(function () {
 
-
+    
     Route::get('/', [OrganizationController::class, 'index']);
     Route::post('/', [OrganizationController::class, 'create']);
     Route::get('/{organization}', [OrganizationController:: class, 'show'])->whereUuid('organization');

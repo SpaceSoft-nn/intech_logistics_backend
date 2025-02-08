@@ -108,6 +108,7 @@ class OrganizationController
         GetTypeCabinetByOrganization $action,
         AuthService $auth,
     ) {
+
         /** @var Organization */
         $organization = $action->getOrganizaion();
 

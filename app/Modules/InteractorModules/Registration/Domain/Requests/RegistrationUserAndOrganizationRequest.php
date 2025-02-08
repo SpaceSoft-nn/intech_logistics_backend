@@ -85,14 +85,16 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
         if (OrganizationEnum::stringByCaseToObject(strtolower($this->input('organization.type'))) == OrganizationEnum::legal) {
             $rules['organization.kpp'] = ['required', 'numeric' , 'regex:/^([0-9]{9})?$/'];
             // $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , (new OgrnRule), 'unique:organizations,registration_number'];
-            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , 'unique:organizations,registration_number'];
+            // $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/' , 'unique:organizations,registration_number'];
+            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^([0-9]{13})?$/'];
         }
 
         // если ИП, добавляем огрнип
         if( OrganizationEnum::stringByCaseToObject($this->input('organization.type')) == OrganizationEnum::individual )
         {
             // $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', (new OgrnepRule), 'unique:organizations,registration_number'];
-            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', 'unique:organizations,registration_number'];
+            // $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/', 'unique:organizations,registration_number'];
+            $rules['organization.registration_number'] = ['required' , 'numeric' , 'regex:/^\d{15}$/'];
         }
 
         return $rules;

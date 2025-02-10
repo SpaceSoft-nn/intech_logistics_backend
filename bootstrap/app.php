@@ -3,6 +3,7 @@
 use App\Modules\Organization\Presentation\Http\Middleware\HasOrganizationHeader;
 use App\Modules\Organization\Presentation\Http\Middleware\isCarrierOrganization;
 use App\Modules\Organization\Presentation\Http\Middleware\isCustomerOrganization;
+use App\Modules\User\Presentation\HTTP\Middleware\isActiveUser;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -20,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->use([
             \Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks::class,
             // \Illuminate\Http\Middleware\TrustHosts::class,
-            \Illuminate\Http\Middleware\TrustProxies::class,    
+            \Illuminate\Http\Middleware\TrustProxies::class,
             \Illuminate\Http\Middleware\HandleCors::class,
             \Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance::class,
             \Illuminate\Http\Middleware\ValidatePostSize::class,
@@ -32,6 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'isCustomerOrganization' => isCustomerOrganization::class, //Проверяет связку организация + пользователь и организация типа Customer 'заказчик'
             'isCarrierOrganization' => isCarrierOrganization::class, //Проверяет связку организация + пользователь и организация типа Carrier 'перевозчик'
             'hasOrgHeader' => HasOrganizationHeader::class, //Проверяет связку организация + пользователь и организация типа Carrier 'перевозчик'
+            'isActiveUser' => isActiveUser::class, //Активирован ли user user->active
         ]);
 
     })

@@ -35,14 +35,14 @@ Route::post('/notification/confirm', [NotificationController::class, 'confirmCod
     //Organization
 Route::prefix('organizations')->group(function () {
 
-    
+
     Route::get('/', [OrganizationController::class, 'index']);
     Route::post('/', [OrganizationController::class, 'create']);
     Route::get('/{organization}', [OrganizationController:: class, 'show'])->whereUuid('organization');
 
     { //Работа с User
 
-        Route::prefix('users')->middleware(['auth:sanctum', 'hasOrgHeader'])->group(function (){
+        Route::prefix('users')->middleware(['auth:sanctum', 'isActiveUser' ,'hasOrgHeader'])->group(function (){
 
             //получить всех пользователей по организации
             Route::get('/', [OrganizationController:: class, 'indexUsers']);
@@ -59,7 +59,7 @@ Route::prefix('organizations')->group(function () {
 
 
     //User
-Route::prefix('users')->middleware(['auth:sanctum', 'hasOrgHeader'])->controller(AuthController::class)->group(function () {
+Route::prefix('users')->middleware(['auth:sanctum', 'isActiveUser','hasOrgHeader'])->controller(AuthController::class)->group(function () {
 
     // Route::post('/', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
 
@@ -73,7 +73,7 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
     //Он не нужен в нем нету валидации
     //Route::post('/login', 'login');
 
-    Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware(['auth:sanctum', 'isActiveUser', 'isActiveUser'])->group(function () {
 
         Route::get('/me', 'user');
         Route::post('/logout', 'logout');
@@ -99,7 +99,7 @@ Route::prefix('/orders')->group(function () {
 
     {
         //Вернуть все записи если заказчик - только заказы которые принадлежат ему, если перевозчик - то все
-        Route::get('/', [OrderUnitController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
+        Route::get('/', [OrderUnitController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum', 'isActiveUser']);
 
         #TODO Возможно в будущем нужна фильтрация
         // Route::get('/{status?}', [OrderUnitController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
@@ -187,6 +187,7 @@ Route::prefix('/matrix-distance')->group(function () {
 
 });
 
+
     //Предложения перевозчика
 Route::prefix('/offer-contractors')->group(function () {
 
@@ -227,7 +228,7 @@ Route::prefix('/offer-contractors')->group(function () {
     //Endpoint transports
 Route::prefix('/transports')->group(function () {
 
-    Route::get('/', [TransportController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
+    Route::get('/', [TransportController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum', 'isActiveUser']);
     Route::get('/{transport}', [TransportController::class, 'show'])->whereUuid('transport');
     Route::post('/', [TransportController::class, 'store'])->middleware('isCarrierOrganization');
 
@@ -242,7 +243,7 @@ Route::prefix('/individual-peoples')->group(function () {
 
     Route::prefix('/drivers')->group(function () {
 
-        Route::get('/', [DriverPeopleController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
+        Route::get('/', [DriverPeopleController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum', 'isActiveUser']);
         Route::get('/{driverPeople}', [DriverPeopleController::class, 'show'])->whereUuid('driverPeople')->middleware('isCarrierOrganization');
         Route::post('/', [DriverPeopleController::class, 'store']);
 
@@ -262,7 +263,7 @@ Route::prefix('/individual-peoples')->group(function () {
 Route::prefix('/tenders')->group(function () {
 
 
-    Route::get('/', [LotTenderController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
+    Route::get('/', [LotTenderController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum', 'isActiveUser']);
 
 
     Route::middleware(['isCarrierOrganization'])->group(function () {

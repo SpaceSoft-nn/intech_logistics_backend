@@ -3,15 +3,41 @@
 namespace App\Modules\User\Domain\Requests;
 
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\Notification\Domain\Models\EmailList;
+use App\Modules\Notification\Domain\Models\PhoneList;
 use App\Modules\Notification\Domain\Rule\EmailRule;
 use App\Modules\Notification\Domain\Rule\PhoneRule;
-use Illuminate\Validation\Rules\Password;
+use App\Modules\User\Domain\Models\User;
 
 class UserLoginRequest extends ApiRequest
 {
 
     public function authorize(): bool
     {
+        if($this->input('email'))
+        {
+            $email = EmailList::where('value', $this->input('email'))->first();
+
+            /** @var User */
+            $user = $email->user;
+
+            abort_unless( (bool) $user->active, 403, 'Пользователь не активирован.');
+
+            return true;
+        }
+
+        if($this->input('phone'))
+        {
+            $phone = PhoneList::where('value', $this->input('phone'))->first();
+
+            /** @var User */
+            $user = $phone->user;
+
+            abort_unless( (bool) $user->active, 403, 'Пользователь не активирован.');
+
+            return true;
+        }
+
         return true;
     }
 

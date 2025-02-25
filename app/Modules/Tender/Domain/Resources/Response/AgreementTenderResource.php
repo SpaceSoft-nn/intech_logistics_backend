@@ -16,7 +16,7 @@ class AgreementTenderResource extends JsonResource
 
         return [
 
-            "id_areement_tender" => $this->id,
+            "id_agreement_tender" => $this->id,
             "lot_tender_response_id" => LotTenderResponseResource::make($this->lot_tender_response),
             "organization_tender_create_id" => OrganizationResource::make(Organization::find($this->organization_tender_create_id)),
             "lot_tender_id" => LotTenderResource::make($this->lot_tender),

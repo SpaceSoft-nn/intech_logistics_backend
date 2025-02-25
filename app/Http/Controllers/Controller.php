@@ -445,7 +445,7 @@ namespace App\Http\Controllers;
 * @OA\Schema(
 *     schema="AgreementTenderResource",
 *     type="object",
-*     @OA\Property(property="id_areement_tender", type="string", format="uuid", description="ID соглашения тендера"),
+*     @OA\Property(property="id_agreement_tender", type="string", format="uuid", description="ID соглашения тендера"),
 *     @OA\Property(property="lot_tender_response_id", type="string", format="uuid", description="uuid lot_tender_respons"),
 *     @OA\Property(property="organization_tender_create_id", type="string", format="uuid", description="ID организации создателя тендера"),
 *     @OA\Property(property="lot_tender_id", type="string", format="uuid", description="ID лота тендера"),

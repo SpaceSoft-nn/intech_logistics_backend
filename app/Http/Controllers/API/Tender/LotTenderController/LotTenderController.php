@@ -117,7 +117,7 @@ class LotTenderController extends Controller
         );
 
         /**
-         * @var LotTender
+        * @var LotTender
         */
         $model = $service->createLotTender($createLotTenderServiceDTO);
 

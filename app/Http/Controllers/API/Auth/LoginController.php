@@ -15,7 +15,6 @@ class LoginController
         UserLoginRequest $request,
         AuthService $auth,
     ) {
-
         $validated = $request->validated();
 
         $json_token = $auth->attemptUserAuth(

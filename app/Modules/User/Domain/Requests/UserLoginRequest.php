@@ -14,14 +14,15 @@ class UserLoginRequest extends ApiRequest
 
     public function authorize(): bool
     {
+        #TODO Надо проверять что пользователь по email иди phone вообще существует
         if($this->input('email'))
         {
             $email = EmailList::where('value', $this->input('email'))->first();
 
-            /** @var User */
-            $user = $email->user;
+            /** @var EmailList */
+            $user = $email?->user;
 
-            abort_unless( (bool) $user->active, 403, 'Пользователь не активирован.');
+            abort_unless( (bool) $user?->active, 403, 'Пользователь не активирован.');
 
             return true;
         }
@@ -30,10 +31,10 @@ class UserLoginRequest extends ApiRequest
         {
             $phone = PhoneList::where('value', $this->input('phone'))->first();
 
-            /** @var User */
-            $user = $phone->user;
+            /** @var PhoneList */
+            $user = $phone?->user;
 
-            abort_unless( (bool) $user->active, 403, 'Пользователь не активирован.');
+            abort_unless( (bool) $user?->active, 403, 'Пользователь не активирован.');
 
             return true;
         }

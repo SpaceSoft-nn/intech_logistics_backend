@@ -53,6 +53,7 @@ enum TypeTransportWeight : string
     {
         return match ($value) {
             TypeTransportWeight::extraSmall => 'extraSmall' ,
+            TypeTransportWeight::small => 'small' ,
             TypeTransportWeight::medium => 'medium',
             TypeTransportWeight::large => 'large',
             TypeTransportWeight::extraLarge => 'extraLarge',

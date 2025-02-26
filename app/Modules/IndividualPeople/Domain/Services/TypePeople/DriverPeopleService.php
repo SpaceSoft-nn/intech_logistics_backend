@@ -2,11 +2,12 @@
 
 namespace App\Modules\IndividualPeople\Domain\Services\TypePeople;
 
-use App\Modules\IndividualPeople\App\Data\DTO\CreateDriverPeopleDTO;
-use App\Modules\IndividualPeople\App\Repositories\DriverPeopleRepository;
+use App\Modules\Base\Error\BusinessException;
+use Illuminate\Support\Facades\DB;
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
-use Illuminate\Support\Facades\DB;
+use App\Modules\IndividualPeople\App\Data\DTO\CreateDriverPeopleDTO;
+use App\Modules\IndividualPeople\App\Repositories\DriverPeopleRepository;
 
 class DriverPeopleService
 {
@@ -30,7 +31,11 @@ class DriverPeopleService
 
             /** @var IndividualPeople */
             $individual_people = IndividualPeople::find($dto->individual_people_id);
-            #TODO Проверять нашли ли мы модель
+
+            if(is_null($individual_people))
+            {
+                throw new BusinessException('Individual people - не найден.' , 404);
+            }
 
             //сохраняем полиморфную связь
             $driverPeople->individual_people()->save($individual_people);

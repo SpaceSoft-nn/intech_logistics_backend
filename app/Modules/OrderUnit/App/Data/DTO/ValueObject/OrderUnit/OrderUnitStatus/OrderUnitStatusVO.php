@@ -19,7 +19,7 @@ final readonly class OrderUnitStatusVO implements Arrayable
     public static function make(
 
         string $order_unit_id,
-        string $status = "draft",
+        string $status = "published",
 
     ) : self {
 

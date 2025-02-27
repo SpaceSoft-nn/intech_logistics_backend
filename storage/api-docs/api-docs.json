@@ -2978,6 +2978,11 @@
                                                 "$ref": "#/components/schemas/OrgOrderInvoiceResource"
                                             }
                                         },
+                                        "total": {
+                                            "description": "Общее количество элементов в коллекции",
+                                            "type": "integer",
+                                            "example": 3
+                                        },
                                         "message": {
                                             "type": "string",
                                             "example": "Возвращены все подрядчики откликнувшиеся на заказ."

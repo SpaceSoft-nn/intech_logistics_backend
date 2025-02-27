@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API\OrderUnit;
 
+use Faker\Factory as Faker;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
@@ -10,6 +12,7 @@ use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
+use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitUpdateDTO;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
@@ -24,18 +27,16 @@ use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitCreateRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitUpdateRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitAlgorithmRequest;
 use App\Modules\OrderUnit\Domain\Requests\OrderUnit\OrderUnitSelectPriceRequest;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorComporeOrderUnitResource;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorComporeOrderUnitCollection;
+
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Requests\AddContractorRequest;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\DTO\OrgOrderInvoiceCreateDTO;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceResource;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
-
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
-use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorComporeOrderUnitCollection;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\ContractorComporeOrderUnitResource;
-use Illuminate\Http\Request;
 
 class OrderUnitController extends Controller
 {
@@ -118,32 +119,40 @@ class OrderUnitController extends Controller
     ) {
         $validated = $request->validated();
 
-        /**
-         * @var Address
-        */
-        $star_address = Address::find($validated['start_address_id']);
+        try { //временно по задачи добавляем такое условие, что цены всегда приходит даже при ошибке
+            /**
+             * @var Address
+            */
+            $star_address = Address::find($validated['start_address_id']);
 
-        /**
-         * @var Address
-        */
-        $end_address = Address::find($validated['end_address_id']);
-
-
-
-        //Получаем расстояние между адрессами, что бы найти цену за 1км
-        $distance = $interactor->calculateVectorLength($star_address->latitude, $star_address->longitude, $end_address->latitude, $end_address->longitude);
-
-        // $order = OrderUnit::factory()->create([
-        //     "Address_start_id" => $validated['start_Address_id'],
-        //     "Address_end_id" => $validated['end_Address_id'],
-        // ]);
-
-        //TODO Нужна логика высчитывание цены в зависимости от заказа
-        $test = "test";
+            /**
+             * @var Address
+            */
+            $end_address = Address::find($validated['end_address_id']);
 
 
+            //Получаем расстояние между адрессами, что бы найти цену за 1км
+            $distance = $interactor->calculateVectorLength($star_address->latitude, $star_address->longitude, $end_address->latitude, $end_address->longitude);
 
-        return response()->json(array_success(OrderPriceResource::make($test, $distance / 1000), 'Return Select Price.'), 200);
+
+            //TODO Нужна логика высчитывание цены в зависимости от заказа
+            $test = "test";
+
+
+            return response()->json(array_success(OrderPriceResource::make($test, $distance / 1000), 'Return Select Price.'), 200);
+
+        } catch (\Throwable $th) {
+
+            $faker =  Faker::create();
+            $distance = $faker->numberBetween(15, 6000);
+
+            $test = "test";
+
+            return response()->json(array_success(OrderPriceResource::make($test, $distance), 'Return Select Price.'), 200);
+
+        }
+
+
     }
 
     /**

@@ -2,15 +2,15 @@
 
 namespace App\Modules\IndividualPeople\Domain\Models;
 
-use App\Modules\IndividualPeople\Domain\Factories\DriverPeopleFactory;
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Transport\Domain\Models\Transport;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Modules\Transport\Domain\Models\Transport;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\IndividualPeople\Domain\Factories\DriverPeopleFactory;
 
 class DriverPeople extends Model
 {
@@ -43,7 +43,7 @@ class DriverPeople extends Model
     protected function casts(): array
     {
         return [
-
+           "date_get" => \App\Casts\RuDateTimeCast::class
         ];
     }
 

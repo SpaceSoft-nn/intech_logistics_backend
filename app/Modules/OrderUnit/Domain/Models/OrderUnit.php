@@ -4,6 +4,7 @@ namespace App\Modules\OrderUnit\Domain\Models;
 
 use App\Modules\Address\Domain\Models\Address;
 use App\Modules\InteractorModules\AddressOrder\Domain\Models\OrderUnitAddress;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
@@ -154,6 +155,15 @@ class OrderUnit extends Model
     public function lot_tender(): BelongsTo
     {
         return $this->belongsTo(LotTender::class, 'lot_tender_id', 'id');
+    }
+
+    /**
+     * Вернуть все отклики от перевозчиков на заказ
+     * @return HasMany
+     */
+    public function organization_order_unit_invoices(): HasMany
+    {
+        return $this->hasMany(OrganizationOrderUnitInvoice::class, 'order_unit_id', 'id');
     }
 
 }

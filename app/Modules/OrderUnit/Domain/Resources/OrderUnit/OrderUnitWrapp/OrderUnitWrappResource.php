@@ -13,13 +13,10 @@ class OrderUnitWrappResource extends OrderUnitResource
     {
 
         //записываем значение в переменную
-        $isResponseContractor = $this->isResponseContractor;
         $countResponse = $this->organization_order_unit_invoices->empty() ? 0 : $this->organization_order_unit_invoices->count();
 
         //наследуем основной шаблон json resource order
         $data = parent::toArray($request);
-
-        $data = array_merge($data, ['isResponseContractor' => $isResponseContractor]);
 
         //количество записей отклика на заказ, от перевозчиков
         $data = array_merge($data, ['count_response' => $countResponse]);

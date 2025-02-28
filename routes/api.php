@@ -69,7 +69,6 @@ Route::prefix('users')->middleware(['auth:sanctum', 'isActiveUser','hasOrgHeader
 
     // Route::post('/', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
 
-
 });
 
 

@@ -142,6 +142,56 @@ namespace App\Http\Controllers;
 *     }
 * ),
 *
+*
+*
+* @OA\Schema(
+*     schema="OrganizationLoginResource",
+*     type="object",
+*     title="Organization Login Resource",
+*     properties={
+*         @OA\Property(property="name", type="string", description="Название организации", maxLength=101, minLength=2),
+*         @OA\Property(property="address", type="string", description="Адрес организации", maxLength=255, minLength=12),
+*         @OA\Property(property="phone", type="string", description="Телефон организации"),
+*         @OA\Property(property="email", type="string", format="email", description="Email организации", maxLength=100),
+*         @OA\Property(property="website", type="string", description="Вебсайт организации"),
+*         @OA\Property(
+*           property="type",
+*           type="string",
+*           description="Тип организации",
+*           enum={"legal", "individual"}
+*         ),
+*         @OA\Property(property="user_role_for_organization", type="string", enum={"admin", "manager", "observer"}, description="Роль организации у этого user по phone"),
+*         @OA\Property(property="description", type="string", nullable=true, description="Описание организации"),
+*         @OA\Property(property="okved", type="string", nullable=true, description="Индустрия организации"),
+*         @OA\Property(property="founded_date", type="string", format="date", nullable=true, description="Дата основания организации"),
+*         @OA\Property(property="inn", type="string", description="ИНН организации", pattern="^(([0-9]{12})|([0-9]{10}))?$"),
+*         @OA\Property(
+*           property="type_cabinet",
+*           type="string",
+*           description="Тип кабинета",
+*           enum={"Заказчик", "Склад", "Перевозчик"}
+*         ),
+*         @OA\Property(
+*           property="kpp",
+*           type="string",
+*           description="КПП (для ООО)",
+*           pattern="^([0-9]{9})?$",
+*           nullable=true
+*         ),
+*         @OA\Property(
+*           property="registration_number",
+*           type="string",
+*           description="ОГРН (для ООО)",
+*           pattern="^([0-9]{13})?$",
+*           nullable=true
+*         ),
+*     },
+* ),
+*
+*
+*
+*
+*
 * //Схема при получении OrderUnitResource
 * @OA\Schema(
 *     schema="AddressList",

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Modules\Auth\Domain\Request\Phone\HasPhoneRequest;
-use App\Modules\Auth\Domain\Resources\Phone\OrganizationLoginCollection;
-use App\Modules\Notification\Domain\Models\PhoneList;
-use App\Modules\User\Domain\Models\User;
-
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\Notification\Domain\Models\PhoneList;
+
+use App\Modules\Auth\Domain\Request\Phone\HasPhoneRequest;
+use App\Modules\Auth\Domain\Resources\Phone\OrganizationLoginCollection;
 
 class PhoneLoginController
 {

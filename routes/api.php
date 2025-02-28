@@ -2,13 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Test\TestController;
-use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Address\AddressController;
-use App\Http\Controllers\API\Transfer\TransferContoller;
-use App\Http\Controllers\API\Auth\RegistrationController;
+use App\Http\Controllers\API\Auth\PhoneLoginController;
 use App\Http\Controllers\API\Avizo\AvizoEmailController;
 use App\Http\Controllers\API\Avizo\AvizoPhoneController;
+use App\Http\Controllers\API\Transfer\TransferContoller;
+use App\Http\Controllers\API\Auth\RegistrationController;
 use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Transport\TransportController;
 use App\Http\Controllers\API\Matrix\MatrixDistanceController;
@@ -26,8 +26,14 @@ use App\Http\Controllers\API\Tender\ResponseTenderController\ResponseTenderContr
 
 //сделано создание user + organization вместе store
 Route::post('/registration', [RegistrationController::class, 'store']);
-Route::post('/login', LoginController::class);
+// Route::post('/login', LoginController::class);
 
+Route::prefix('login')->group(function () {
+
+    Route::post('/phones', PhoneLoginController::class);
+    Route::post('/', LoginController::class);
+
+});
 
 Route::post('/notification/send', [NotificationController::class, 'sendNotification']);
 Route::post('/notification/confirm', [NotificationController::class, 'confirmCode']);
@@ -319,6 +325,10 @@ Route::prefix('/avizos')->group(function () {
     });
 
 });
+
+
+
+
 
 Route::get('/test', [TestController::class, 'index']);
 

@@ -7,7 +7,6 @@ use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
 use App\Modules\Notification\Domain\Rule\EmailRule;
 use App\Modules\Notification\Domain\Rule\PhoneRule;
-use App\Modules\User\Domain\Models\User;
 
 class UserLoginRequest extends ApiRequest
 {

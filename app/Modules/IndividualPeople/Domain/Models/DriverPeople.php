@@ -43,7 +43,7 @@ class DriverPeople extends Model
     protected function casts(): array
     {
         return [
-           "date_get" => \App\Casts\RuDateTimeCast::class
+           "date_get" => \App\Modules\Base\Casts\RuDateTimeCast::class
         ];
     }
 

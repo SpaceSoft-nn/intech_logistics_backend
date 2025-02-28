@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Casts;
+namespace App\Modules\Base\Casts;
 
 use Carbon\Carbon;
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 //При установки времени - мы устанавливаем для бд в формате 'Y-m-d', при получении мы в возвращаем в ру формате 'd.m.Y'
 class RuDateTimeCast implements CastsAttributes

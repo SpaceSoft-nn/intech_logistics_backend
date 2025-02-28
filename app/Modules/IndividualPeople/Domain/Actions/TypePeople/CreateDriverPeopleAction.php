@@ -20,11 +20,9 @@ class CreateDriverPeopleAction
     private static function run(DriverPeopleVO $vo) : DriverPeople
     {
 
-        $transporationStatus = DriverPeople::create($vo->toArray());
-
         try {
 
-            // $transporationStatus = DriverPeople::create($vo->toArray());
+            $transporationStatus = DriverPeople::create($vo->toArray());
 
         } catch (\Throwable $th) {
 

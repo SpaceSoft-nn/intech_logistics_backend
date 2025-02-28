@@ -127,7 +127,7 @@ namespace App\Modules\IndividualPeople\Domain\Models{
  * @property string|null $organization_id
  * @property string $series Серия Водительского Удостоверения
  * @property string $number Номер Водительского Удостоверения
- * @property string $date_get Дата получения Водительского Удостоверения
+ * @property mixed $date_get Дата получения Водительского Удостоверения
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Modules\IndividualPeople\Domain\Models\IndividualPeople|null $individual_people

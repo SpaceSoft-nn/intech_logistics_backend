@@ -100,6 +100,7 @@ class OrderUnitController extends Controller
 
        } else {
 
+
            //получаем все ордеры, и указываем на какие откликнулся перевозчик
            $order = $rep->getOrderFilterByContractor($organization->id, $orderUnit->id);
 

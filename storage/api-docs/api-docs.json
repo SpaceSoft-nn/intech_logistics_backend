@@ -4059,7 +4059,7 @@
         "/api/login/phones": {
             "get": {
                 "tags": [
-                    "Region Economic"
+                    "Login\\Registration"
                 ],
                 "summary": "Вернуть все организации которые принадлежат к phone + роль у этого user в орагнизации, если коллекция пуста, значит phone не привязан к организациям",
                 "operationId": "4c45db91dc0893de97d990815c5d7802",

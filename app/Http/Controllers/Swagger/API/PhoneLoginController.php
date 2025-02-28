@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
  *
  *      path="/api/login/phones",
  *      summary="Вернуть все организации которые принадлежат к phone + роль у этого user в орагнизации, если коллекция пуста, значит phone не привязан к организациям",
- *      tags={"Region Economic"},
+ *      tags={"Login\Registration"},
  *
  *
  *      @OA\Response(

@@ -37,6 +37,8 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\Organiz
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitWrapp\OrderUnitWrapp;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitWrapp\OrderUnitWrappCollection;
 
 class OrderUnitController extends Controller
 {
@@ -60,11 +62,13 @@ class OrderUnitController extends Controller
 
         if($array['status']) {
 
+
             //Возвращаем все созданные заказы, ЗАКАЗЧИКА
 
-            return response()->json(array_success(OrderUnitCollection::make($organization->order_units), 'Return all orders by organization Customer.'), 200);
+            return response()->json(array_success(OrderUnitWrappCollection::make($organization->order_units), 'Return all orders by organization Customer.'), 200);
 
         } else {
+
 
             //получаем все ордеры, и указываем на какие откликнулся перевозчик
             $orders = $rep->getOrdersFilterByContractor($organization->id, $statuses);

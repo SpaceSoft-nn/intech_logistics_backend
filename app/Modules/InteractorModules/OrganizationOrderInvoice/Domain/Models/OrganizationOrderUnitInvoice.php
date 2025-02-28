@@ -2,15 +2,15 @@
 
 namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models;
 
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Factories\OrganizationOrderInvoiceFactory;
-use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use App\Modules\Organization\Domain\Models\Organization;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Factories\OrganizationOrderInvoiceFactory;
 
 class OrganizationOrderUnitInvoice extends Model
 {

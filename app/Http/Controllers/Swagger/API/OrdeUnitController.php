@@ -398,12 +398,6 @@ use App\Http\Controllers\Controller;
 *               )
 *           ),
 *           @OA\Property(
-*               property="total",
-*               type="integer",
-*               example=3,
-*               description="Общее количество элементов в коллекции"
-*           ),
-*           @OA\Property(
 *               property="message",
 *               type="string",
 *               example="Возвращены все подрядчики откликнувшиеся на заказ."

@@ -20,7 +20,7 @@ class ContractorComporeOrderUnitResource extends OrderUnitResource
         $data = array_merge($data, ['isResponseContractor' => $isResponseContractor]);
 
         //количество записей отклика на заказ, от перевозчиков
-        $data = array_merge($data, ['count_response' => $countResponse]);
+        $data = array_merge($data, ['count_response' => $countResponse ?? 0]);
 
         return $data;
     }

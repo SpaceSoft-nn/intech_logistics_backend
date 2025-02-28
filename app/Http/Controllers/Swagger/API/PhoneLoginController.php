@@ -16,7 +16,7 @@ use App\Http\Controllers\Controller;
  *           response=200,
  *           description="Успешный возврат всех данных об экономическом статусе регионов.",
  *           @OA\JsonContent(
- *               @OA\Property(property="data", ref="#/components/schemas/RegionEconomicFactorResource"),
+ *               @OA\Property(property="data", ref="#/components/schemas/OrganizationLoginResource"),
  *               @OA\Property(property="message", type="string", example="Return Orders."),
  *           ),
  *       ),

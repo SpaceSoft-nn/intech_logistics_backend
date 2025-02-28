@@ -4071,7 +4071,7 @@
                                 "schema": {
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/components/schemas/RegionEconomicFactorResource"
+                                            "$ref": "#/components/schemas/OrganizationLoginResource"
                                         },
                                         "message": {
                                             "type": "string",

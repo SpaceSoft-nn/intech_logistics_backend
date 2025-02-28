@@ -20,6 +20,7 @@ class TransportFactory extends Factory
     public function definition(): array
     {
 
+
         /** @var IndividualPeople */
         $individualPeople = IndividualPeople::factory()
         ->for(
@@ -36,7 +37,6 @@ class TransportFactory extends Factory
         $type_status = array_column(TransportStatusEnum::cases(), 'name');
 
         $organization = Organization::factory()->create();
-
 
         /**
         * @var TransportVO

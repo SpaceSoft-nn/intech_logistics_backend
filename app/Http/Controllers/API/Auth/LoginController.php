@@ -32,4 +32,6 @@ class LoginController
             response()->json(array_error(null, 'Faild login.'), 401);
 
     }
+
+
 }

@@ -54,6 +54,7 @@ namespace App\Http\Controllers;
 *    @OA\Property(property="transportation_status", type="string", description="Статус заказа при транспортировки: В пути, На разгрузке..."),
 *    @OA\Property(property="user_id", ref="#/components/schemas/UserResource", description="Ресурс пользователя"),
 *    @OA\Property(property="organization_id", ref="#/components/schemas/OrganizationResource", description="Ресурс организации"),
+*    @OA\Property(property="count_response", type="number", description="возвращает количество откликнувшиеся на заказ перевозчкиов, только на endpoint: где возвращает все заказы", ),
 * ),
 *
 *

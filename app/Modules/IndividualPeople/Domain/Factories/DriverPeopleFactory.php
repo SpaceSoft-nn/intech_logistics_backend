@@ -27,10 +27,8 @@ class DriverPeopleFactory extends Factory
             organization_id: null,
             series: $this->faker->numerify('####'),
             number: $this->faker->numerify('######'),
-            date_get: $this->faker->date('Y-m-d'),
-            
+            date_get: $this->faker->date('d.m.Y'),
         );
-
 
         return $vo->toArrayNotNull();
     }

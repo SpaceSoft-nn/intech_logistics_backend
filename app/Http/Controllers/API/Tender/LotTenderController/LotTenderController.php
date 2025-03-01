@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Modules\Base\Enums\WeekEnum;
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use function App\Helpers\Mylog;
+
 use Illuminate\Support\Facades\Storage;
 use App\Modules\Tender\Domain\Models\LotTender;
 
@@ -90,6 +92,8 @@ class LotTenderController extends Controller
         CreateLotTenderRequest $request,
         TenderService $service,
     ) {
+
+        Mylog('Зашли в запрос');
 
         /** @var LotTenderVO value object лота тендера*/
         $lorTenderVO = $request->createLotTenderVO();

@@ -47,7 +47,7 @@ class CreateLotTenderRequest extends ApiRequest
 
             'type_tender' => ['required' , Rule::in($typeTender)],
 
-            'date_start' => ['required' , 'date'],
+            'date_start' => ['required' , 'date', 'date_format:d.m.Y'],
             'organization_id' => ['required' , 'uuid', 'exists:organizations,id'],
 
             'period' => ['required' , 'integer'],
@@ -62,7 +62,7 @@ class CreateLotTenderRequest extends ApiRequest
             'application_document*' => ['required', File::types(['pdf', 'doc', 'docx', 'rtf', 'odt'])->max(16384)],
 
             'specific_date_periods' => ['required_if:type_tender,single', 'array', 'prohibited_if:type_tender,periodic'],
-            'specific_date_periods.*.date' => ['required', 'date'],
+            'specific_date_periods.*.date' => ['required',  'date', 'date_format:d.m.Y'],
             'specific_date_periods.*.count_transport' => ['required', 'integer'],
 
         ];

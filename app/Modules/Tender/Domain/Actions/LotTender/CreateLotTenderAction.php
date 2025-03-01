@@ -18,6 +18,7 @@ class CreateLotTenderAction
 
     private function run(LotTenderVO $vo) : LotTender
     {
+
         try {
 
             $model = LotTender::create($vo->toArrayNotNull());

@@ -3,6 +3,7 @@
 namespace App\Modules\Tender\Domain\Requests;
 
 use App\Modules\Base\Enums\WeekEnum;
+use App\Modules\Base\Error\BusinessException;
 use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
@@ -47,7 +48,7 @@ class CreateLotTenderRequest extends ApiRequest
 
             'type_tender' => ['required' , Rule::in($typeTender)],
 
-            'date_start' => ['required' , 'date'],
+            'date_start' => ['required' , Rule::date()->format('d-m-Y'),],
             'organization_id' => ['required' , 'uuid', 'exists:organizations,id'],
 
             'period' => ['required' , 'integer'],
@@ -84,9 +85,7 @@ class CreateLotTenderRequest extends ApiRequest
         //вызываем 1 раз $this->validate(), что бюы его запомнить в переменную и не вызывать в других функциях по новой
         $data = $this->validated ?? $this->validated();
 
-        return isset($data['agreement_document']) && !is_null(isset($data['agreement_document'])) ? $data['agreement_document'] : null;
-
-        return null;
+        return isset($data['agreement_document']) && !is_null(isset($data['agreement_document'])) ? $data['agreement_document'] : throw new BusinessException('а', 422);
     }
 
     /**

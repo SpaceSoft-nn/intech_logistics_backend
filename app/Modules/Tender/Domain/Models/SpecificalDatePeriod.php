@@ -35,7 +35,7 @@ class SpecificalDatePeriod extends Model
     protected function casts(): array
     {
         return [
-
+            "date" => \App\Modules\Base\Casts\RuDateTimeCast::class,
         ];
     }
 

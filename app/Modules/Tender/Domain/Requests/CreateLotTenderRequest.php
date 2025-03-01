@@ -9,10 +9,9 @@ use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\Tender\App\Data\Enums\TypeTenderEnum;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rules\File;
-use Illuminate\Validation\Rule;
 
 class CreateLotTenderRequest extends ApiRequest
 {
@@ -48,7 +47,7 @@ class CreateLotTenderRequest extends ApiRequest
 
             'type_tender' => ['required' , Rule::in($typeTender)],
 
-            'date_start' => ['required' , Rule::date()->format('d-m-Y'),],
+            'date_start' => ['required' , 'date'],
             'organization_id' => ['required' , 'uuid', 'exists:organizations,id'],
 
             'period' => ['required' , 'integer'],

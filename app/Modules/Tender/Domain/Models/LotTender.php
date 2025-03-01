@@ -67,7 +67,7 @@ class LotTender extends Model
             "status_tender" => StatusTenderEnum::class,
             "type_tender" => TypeTenderEnum::class,
 
-            // "date_start" => 'datetime',
+            "date_start" => \App\Modules\Base\Casts\RuDateTimeCast::class,
         ];
     }
 

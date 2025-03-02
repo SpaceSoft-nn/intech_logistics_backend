@@ -2,11 +2,14 @@
 
 namespace App\Modules\Tender\Domain\Interactor;
 
+use App\Modules\Base\Error\BusinessException;
 use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
+use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
 use App\Modules\Tender\App\Data\ValueObject\Response\InvoiceLotTenderVO;
 use App\Modules\Tender\App\Data\ValueObject\Response\LotTenderResponseVO;
 use App\Modules\Tender\Domain\Actions\Response\CreateInvoiceLotTenderAction;
 use App\Modules\Tender\Domain\Actions\Response\CreateLotTenderResponseAction;
+use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Models\Response\InvoiceLotTender;
 use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
 use DB;
@@ -42,6 +45,17 @@ final class CreateResponseTenderInteractor
             #TODO Может быть баг с first
             $lotTenderResponse = $lotTenderResponse->with('invoice_lot_tender', 'organization_contractor', 'tender')->first();
 
+            { //устанавливаем статус для тендера в работе
+
+                /** @var LotTender */
+                $LotTender = $this->findLotTender($dto->lot_tender_id);
+
+                $LotTender->status_tender = StatusTenderEnum::in_work;
+
+                $LotTender->save();
+
+
+            }
 
             return $lotTenderResponse;
 
@@ -71,6 +85,18 @@ final class CreateResponseTenderInteractor
                 comment: $dto->comment,
             )
         );
+    }
+
+    private function findLotTender(string $id) : LotTender
+    {
+        /** @var LotTender */
+        $LotTender = LotTender::find($id);
+
+        if(!$LotTender){
+           throw new BusinessException('Lot Tender не найден.' ,404);
+        }
+
+        return $LotTender;
     }
 
 

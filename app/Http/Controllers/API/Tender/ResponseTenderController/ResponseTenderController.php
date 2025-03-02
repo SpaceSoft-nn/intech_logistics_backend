@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\API\Tender\ResponseTenderController;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
-use App\Modules\Tender\App\Data\ValueObject\Response\AgreementTenderVO;
-use App\Modules\Tender\Domain\Models\LotTender;
-use App\Modules\Tender\Domain\Models\Response\AgreementTender;
-use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
-use App\Modules\Tender\Domain\Requests\CreateAgreementTenderRequest;
-use App\Modules\Tender\Domain\Requests\CreateResponseTenderRequest;
-use App\Modules\Tender\Domain\Resources\Response\AgreementTenderResource;
-use App\Modules\Tender\Domain\Resources\Response\LotTenderResponseResource;
-use App\Modules\Tender\Domain\Services\AgreementTenderService;
-use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
-use App\Modules\Tender\Domain\Resources\Response\AgreementTenderAcceptResource;
-use App\Modules\Tender\Domain\Resources\Response\LotTenderResponseCollection;
-
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use App\Modules\Tender\Domain\Models\LotTender;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
+use App\Modules\Tender\Domain\Models\Response\AgreementTender;
+use App\Modules\Tender\Domain\Services\AgreementTenderService;
+use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
+use App\Modules\Tender\Domain\Requests\CreateResponseTenderRequest;
+use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
+use App\Modules\Tender\Domain\Requests\CreateAgreementTenderRequest;
+use App\Modules\Tender\App\Data\ValueObject\Response\AgreementTenderVO;
+use App\Modules\Tender\Domain\Resources\Response\AgreementTenderResource;
+use App\Modules\Tender\Domain\Resources\Response\LotTenderResponseResource;
+
+use App\Modules\Tender\Domain\Resources\Response\LotTenderResponseCollection;
+use App\Modules\Tender\Domain\Resources\Response\AgreementTenderAcceptResource;
 
 class ResponseTenderController extends Controller
 {

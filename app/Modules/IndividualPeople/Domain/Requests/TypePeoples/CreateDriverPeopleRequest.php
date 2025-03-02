@@ -25,7 +25,7 @@ class CreateDriverPeopleRequest extends ApiRequest
 
             'series' => ['required', 'regex:/^\d{4}$/'],
             'number' => ['required', 'regex:/^\d{6}$/'],
-            'date_get' => ['required', 'date'],
+            'date_get' => ['required', 'date', 'date_format:d.m.Y'],
 
         ];
     }

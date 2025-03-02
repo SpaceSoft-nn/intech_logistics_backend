@@ -33,6 +33,7 @@ class OrderUnit extends Model
 
     protected $fillable = [
 
+        //date
         "end_date_order",
         "exemplary_date_start",
 
@@ -40,10 +41,12 @@ class OrderUnit extends Model
         "order_total",
         "description",
 
-        "type_transport_weight",
-        "cargo_unit_sum",
 
+        "cargo_unit_sum",
         "product_type",
+
+        //enum
+        "type_transport_weight",
         "type_load_truck",
 
         "user_id",

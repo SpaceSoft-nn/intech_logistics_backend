@@ -7792,6 +7792,10 @@
                         "items": {
                             "$ref": "#/components/schemas/SpecificaDatePeriodResource"
                         }
+                    },
+                    "count_response": {
+                        "description": "возвращает количество откликнувшиеся на тендер перевозчкиов, только на endpoint: где возвращает все заказы",
+                        "type": "number"
                     }
                 },
                 "type": "object"

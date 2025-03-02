@@ -537,7 +537,8 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="organization_id", type="string", format="uuid", description="ID организации"),
 *     @OA\Property(property="agreement_document_tender_link", type="string", format="url", description="Ссылка на документ соглашения тендера - договор - будет обязательный и только один"),
 *     @OA\Property(property="array_application_document_tender_link", type="array", @OA\Items(type="string", format="url"), description="Ссылки на документы приложения для тендера"),
-*     @OA\Property(property="array_specifica_date_period", type="array", @OA\Items(ref="#/components/schemas/SpecificaDatePeriodResource"), description="Массив специфических дат периода, здесь указываются конкретные даты тендера + количество транспорта")
+*     @OA\Property(property="array_specifica_date_period", type="array", @OA\Items(ref="#/components/schemas/SpecificaDatePeriodResource"), description="Массив специфических дат периода, здесь указываются конкретные даты тендера + количество транспорта"),
+*     @OA\Property(property="count_response", type="number", description="возвращает количество откликнувшиеся на тендер перевозчкиов, только на endpoint: где возвращает все заказы", ),
 * ),
 *
 *

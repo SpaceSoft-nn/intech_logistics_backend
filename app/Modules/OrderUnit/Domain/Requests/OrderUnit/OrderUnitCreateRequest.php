@@ -39,8 +39,8 @@ class OrderUnitCreateRequest extends ApiRequest
             "start_address_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс начало.
             "end_address_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс окончания.
 
-            "start_date_delivery" => ['required', 'date'], // Дата начала заказа
-            "end_date_delivery" => ['required', 'date'], // Дата окончания заказа
+            "start_date_delivery" => ['required', 'date', 'date_format:d.m.Y'], // Дата начала заказа
+            "end_date_delivery" => ['required', 'date', 'date_format:d.m.Y'], // Дата окончания заказа
 
 
             //массивы
@@ -52,7 +52,7 @@ class OrderUnitCreateRequest extends ApiRequest
             "organization_id" => ['required', 'uuid', "exists:organizations,id"], //организация к которой принадлежит заказ
             // "organization_id" => ['required', 'uuid'], //организация к которой принадлежит заказ
 
-            "end_date_order" => ['required', 'date'], //Дата окончание order
+            "end_date_order" => ['required', 'date', 'date_format:d.m.Y'], //Дата окончание order
 
             "type_load_truck" => ['required', Rule::in($typeLoadingTruckMethod)], //типа загрузки ftl, ltl, custom
 

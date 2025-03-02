@@ -88,6 +88,7 @@ class OrderUnit extends Model
             'change_time' => "boolean",
             'address_is_array' => "boolean",
             'goods_is_array' => "boolean",
+            'end_date_order' => \App\Modules\Base\Casts\RuDateTimeCast::class,
         ];
     }
 

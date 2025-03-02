@@ -54,7 +54,6 @@ final class CreateResponseTenderInteractor
 
                 $LotTender->save();
 
-
             }
 
             return $lotTenderResponse;

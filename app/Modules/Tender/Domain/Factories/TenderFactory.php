@@ -10,6 +10,9 @@ use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
 use App\Modules\Tender\Domain\Models\LotTender;
+use Illuminate\Support\Carbon;
+
+use function App\Helpers\add_time_random;
 
 class TenderFactory extends Factory
 {
@@ -26,6 +29,10 @@ class TenderFactory extends Factory
         $typeTenderEnum = TypeTenderEnum::cases();
         $typeTenderEnum = $this->faker->randomElement($typeTenderEnum);
 
+        // Получим текущую дату и время в ru формате
+        $date = Carbon::now()->format('d.m.Y');
+        $ru_date_format = add_time_random($date, 4);
+
 
         $tender = LotTenderVO::make(
             general_count_transport: $this->faker->numberBetween(1, 15),
@@ -34,7 +41,7 @@ class TenderFactory extends Factory
             type_transport_weight: $typeTransportWeight->name,
             type_load_truck: $typeLoadingTruckMethod->name,
             type_tender: $typeTenderEnum->name,
-            date_start: now(),
+            date_start: $ru_date_format,
             period: 5,
             organization_id: Organization::factory()->create()->id,
             status_tender: StatusTenderEnum::published,

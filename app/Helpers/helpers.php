@@ -88,7 +88,7 @@ if (!function_exists('add_time_random'))
         // Вычислите конечную дату, добавив количество дней к начальному дню
         // Вы также можете заменить $daysToAdd на конкретное количество дней или сделать их рандомным значением
         if(is_null($daysToAdd)) { $daysToAdd = random_int(1, 30); }
-        $deliveryEnd = $data_time->modify("+$daysToAdd days")->format('Y-m-d H:i:s');
+        $deliveryEnd = $data_time->modify("+$daysToAdd days")->format('d.m.Y');
 
         return $deliveryEnd;
     }

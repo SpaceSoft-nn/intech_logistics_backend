@@ -139,7 +139,7 @@ class CargoGoodFactory extends Factory
      *
      * @return [type]
      */
-    public function withMgx(array $mgx = null)
+    public function withMgx(?array $mgx = null)
     {
         return $this->afterCreating(function (CargoGood $cargoGood) use ($mgx) {
 

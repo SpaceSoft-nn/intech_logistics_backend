@@ -56,6 +56,7 @@ class ProdeSeed extends Seeder
             //создаём водителей + транспортное средство для организации пользователя
             $this->createTransportAndDriverAndIndividualPeople($user, 4, 1);
 
+
         }
 
         {
@@ -172,7 +173,6 @@ class ProdeSeed extends Seeder
             ];
 
             $order = OrderUnit::factory()->withCargoGood($arrayCargoGood)->create([
-                "end_date_order" => now()->addDays(5),
                 "order_total" => "180000",
                 "description" => 'Нужно доставить заказ по данными адресам',
                 "body_volume" => '8.5',
@@ -200,7 +200,6 @@ class ProdeSeed extends Seeder
             ];
 
             $order = OrderUnit::factory()->withCargoGood($arrayCargoGood, $mgx)->create([
-                "end_date_order" => now()->addDays(5),
                 "order_total" => "275000",
                 "description" => 'Нужно доставить заказ по заданным Адрессам.',
                 "body_volume" => '18.75',

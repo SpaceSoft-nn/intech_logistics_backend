@@ -12,7 +12,7 @@ class RuDateTimeCast implements CastsAttributes
 
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        $date = Carbon::createFromFormat('Y.m.d', $value);
+        $date = Carbon::createFromFormat('Y-m-d', $value);
 
         return $date->format('d.m.Y');
     }
@@ -21,6 +21,7 @@ class RuDateTimeCast implements CastsAttributes
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         $date = Carbon::createFromFormat('d.m.Y', $value);
-        return $date->format('Y.m.d');
+
+        return $date->format('Y-m-d');
     }
 }

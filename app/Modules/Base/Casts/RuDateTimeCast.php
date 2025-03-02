@@ -13,13 +13,14 @@ class RuDateTimeCast implements CastsAttributes
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         $date = Carbon::parse($value);
+
         return $date->format('d.m.Y');
     }
 
 
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        $date = Carbon::createFromFormat('d.m.Y', $value);
-        return $date->format('d.m.Y');
+        $date = Carbon::createFromFormat('Y.m.d', $value);
+        return $date->format('Y.m.d');
     }
 }

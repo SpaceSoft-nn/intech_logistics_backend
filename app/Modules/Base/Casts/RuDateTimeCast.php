@@ -22,6 +22,7 @@ class RuDateTimeCast implements CastsAttributes
     {
         $date = Carbon::createFromFormat('d.m.Y', $value);
 
+
         return $date->format('Y-m-d');
     }
 }

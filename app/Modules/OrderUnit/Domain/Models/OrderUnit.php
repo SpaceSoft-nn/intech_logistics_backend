@@ -83,7 +83,6 @@ class OrderUnit extends Model
 
             "type_load_truck" => TypeLoadingTruckMethod::class,
             "type_transport_weight" => TypeTransportWeight::class,
-            'end_date_order' => "datetime",
             'exemplary_date_start' => "datetime",
 
             'add_load_space' => "boolean",
@@ -91,6 +90,7 @@ class OrderUnit extends Model
             'change_time' => "boolean",
             'address_is_array' => "boolean",
             'goods_is_array' => "boolean",
+
             'end_date_order' => \App\Modules\Base\Casts\RuDateTimeCast::class,
         ];
     }

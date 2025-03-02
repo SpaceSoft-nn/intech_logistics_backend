@@ -248,7 +248,7 @@ namespace App\Modules\InteractorModules\AddressOrder\Domain\Models{
  * @property int $id
  * @property string $order_unit_id
  * @property string $address_id
- * @property string $data_time
+ * @property mixed $data_time
  * @property \App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum $type
  * @property int $priority Приоритетность - с помощью этого поля поймём вектор движение между адрессами
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -941,7 +941,7 @@ namespace App\Modules\OrderUnit\Domain\Models{
  *
  * @property string $id
  * @property int $number_order Номер заказа для фронта
- * @property \Illuminate\Support\Carbon|null $end_date_order До какой даты заказ будет активен
+ * @property mixed|null $end_date_order До какой даты заказ будет активен
  * @property \Illuminate\Support\Carbon|null $exemplary_date_start Примерная дата начала заказ
  * @property string|null $body_volume Общий объём заказа
  * @property string $order_total Цена/Выплата за заказ
@@ -1256,7 +1256,7 @@ namespace App\Modules\Tender\Domain\Models{
  * @property \App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod $type_load_truck Тип транспортного средства: small - 1.5-3тонны, medium 5-10тонны
  * @property \App\Modules\Tender\App\Data\Enums\StatusTenderEnum $status_tender Статус Тендера: в работе, черновик..
  * @property \App\Modules\Tender\App\Data\Enums\TypeTenderEnum $type_tender Разовый/Переодический
- * @property string $date_start Дата начало тендера
+ * @property mixed $date_start Дата начало тендера
  * @property int $period Количество дней, например в течении 60 дней
  * @property string $organization_id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -1264,6 +1264,8 @@ namespace App\Modules\Tender\Domain\Models{
  * @property-read \App\Modules\Tender\Domain\Models\AgreementDocumentTender|null $agreement_document_tender
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Tender\Domain\Models\ApplicationDocumentTender> $application_document_tender
  * @property-read int|null $application_document_tender_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Tender\Domain\Models\Response\LotTenderResponse> $lot_tender_response
+ * @property-read int|null $lot_tender_response_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\OrderUnit\Domain\Models\OrderUnit> $order_unit
  * @property-read int|null $order_unit_count
  * @property-read \App\Modules\Organization\Domain\Models\Organization $organization
@@ -1394,7 +1396,7 @@ namespace App\Modules\Tender\Domain\Models{
  *
  * @property string $id
  * @property string $lot_tender_id Выбранный подрядчик на заказ.
- * @property string $date Дата выполнения
+ * @property mixed $date Дата выполнения
  * @property int $count_transport Количество транспорта
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

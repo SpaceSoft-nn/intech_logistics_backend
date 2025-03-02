@@ -31,6 +31,7 @@ use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
 
 use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderResource;
 use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderCollection;
+use App\Modules\Tender\Domain\Resources\Response\Wrapp\WrappLotTenderCollection;
 
 class LotTenderController extends Controller
 {
@@ -49,7 +50,8 @@ class LotTenderController extends Controller
 
         if($array['status']) {
 
-            return response()->json(array_success(LotTenderCollection::make($organization->tenders), 'Return all tenders by organization Customer .'), 200);
+
+            return response()->json(array_success(WrappLotTenderCollection::make($organization->tenders), 'Return all tenders by organization Customer .'), 200);
 
         } else {
 

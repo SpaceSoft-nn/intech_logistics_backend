@@ -17,6 +17,7 @@ use App\Modules\Tender\Domain\Models\ApplicationDocumentTender;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\Domain\Factories\TenderFactory;
+use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LotTender extends Model
@@ -99,5 +100,10 @@ class LotTender extends Model
     public function week_period() : HasMany
     {
         return $this->hasMany(WeekPeriod::class, 'lot_tender_id');
+    }
+
+    public function lot_tender_response() : HasMany
+    {
+        return $this->hasMany(LotTenderResponse::class, 'lot_tender_id', 'id');
     }
 }

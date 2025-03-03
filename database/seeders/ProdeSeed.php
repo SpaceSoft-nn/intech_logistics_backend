@@ -219,6 +219,7 @@ class ProdeSeed extends Seeder
         if($drivers instanceof Collection){
 
             foreach ($drivers as $driver) {
+                /** @var IndividualPeople */
                 $individualPeople = IndividualPeople::factory()->create([
                     'personal_area_id' => $driver->personal_area_id,
                     'individualable_id' => $driver->id,
@@ -228,6 +229,7 @@ class ProdeSeed extends Seeder
 
         } else {
 
+            /** @var IndividualPeople */
             $individualPeople = IndividualPeople::factory()->create([
                 'personal_area_id' => $drivers->personal_area_id,
                 'individualable_id' => $drivers->id,

@@ -723,7 +723,7 @@
                                                 "description": "User's phone number",
                                                 "type": "string",
                                                 "pattern": "^\\+?[0-9]{1,3}[0-9]{9}$",
-                                                "example": "+79200264425"
+                                                "example": "+79200000000"
                                             },
                                             "password": {
                                                 "description": "User's password",
@@ -4057,12 +4057,30 @@
             }
         },
         "/api/login/phones": {
-            "get": {
+            "post": {
                 "tags": [
                     "Login\\Registration"
                 ],
                 "summary": "Вернуть все организации которые принадлежат к phone + роль у этого user в орагнизации, если коллекция пуста, значит phone не привязан к организациям",
-                "operationId": "4c45db91dc0893de97d990815c5d7802",
+                "operationId": "25e06fe426bed5b02397354146f407aa",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "phone": {
+                                        "description": "User's phone number",
+                                        "type": "string",
+                                        "pattern": "^\\+?[0-9]{1,3}[0-9]{9}$",
+                                        "example": "+79200000000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Успешный возврат всех данных об экономическом статусе регионов.",

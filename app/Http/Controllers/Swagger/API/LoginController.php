@@ -16,7 +16,7 @@ use App\Http\Controllers\Controller;
  *              allOf={
  *                 @OA\Schema(
  *                     @OA\Property(property="email", type="string", format="email", description="User's email address", example="test@gmail.com"),
- *                     @OA\Property(property="phone", type="string", description="User's phone number", pattern="^\+?[0-9]{1,3}[0-9]{9}$", example="+79200264425"),
+ *                     @OA\Property(property="phone", type="string", description="User's phone number", pattern="^\+?[0-9]{1,3}[0-9]{9}$", example="+79200000000"),
  *                     @OA\Property(property="password", type="string", format="password", description="User's password", example="Pass123!"),
  *                 )
  *              },

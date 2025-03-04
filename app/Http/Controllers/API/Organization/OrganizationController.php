@@ -2,32 +2,27 @@
 
 namespace App\Http\Controllers\API\Organization;
 
-use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
-use App\Modules\Auth\Domain\Services\AuthService;
-use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
-use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
-use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleCollection;
-use App\Modules\InteractorModules\Registration\Domain\Model\UserOrganization;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
-use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
-use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Organization\Domain\Requests\CreateOrganizationRequest;
-use App\Modules\Organization\Domain\Resources\OrganizationCollection;
-use App\Modules\Organization\Domain\Resources\OrganizationResource;
-use App\Modules\Organization\Domain\Services\OrganizationService;
-use App\Modules\Transport\Domain\Resources\TransportCollection;
-use App\Modules\User\App\Repositories\UserRepository;
-use App\Modules\User\Domain\Models\User;
-use App\Modules\User\Domain\Resources\UserHasOrganizationCollection;
-use App\Modules\User\Domain\Resources\UserHasOrganizationResource;
-use Request;
-use Symfony\Component\Mailer\Transport\Transports;
-
 use function App\Helpers\array_error;
-use function App\Helpers\array_success;
 use function App\Helpers\isAuthorized;
+use function App\Helpers\array_success;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\Auth\Domain\Services\AuthService;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\User\App\Repositories\UserRepository;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
+use App\Modules\Auth\Domain\Interface\AuthServiceInterface;
+use App\Modules\Organization\App\Data\DTO\OrganizationCreateDTO;
+use App\Modules\Organization\Domain\Services\OrganizationService;
+use App\Modules\User\Domain\Resources\UserHasOrganizationResource;
+use App\Modules\Organization\Domain\Resources\OrganizationResource;
+use App\Modules\User\Domain\Resources\UserHasOrganizationCollection;
+use App\Modules\Organization\App\Data\DTO\ValueObject\OrganizationVO;
+use App\Modules\Organization\Domain\Resources\OrganizationCollection;
+use App\Modules\Organization\Domain\Requests\CreateOrganizationRequest;
+
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
+use App\Modules\InteractorModules\Registration\Domain\Model\UserOrganization;
 
 class OrganizationController
 {
@@ -47,9 +42,14 @@ class OrganizationController
     }
 
     //TODO Временно возвращаем все организации (потом убрать (проверку через user сделать) )
-    public function index()
-    {
-        return response()->json(array_success(OrganizationCollection::make(Organization::all()), 'Return organization select.'), 200);
+    public function index(
+        AuthService $auth,
+    ) {
+
+        /** @var User */
+        $user = isAuthorized($auth);
+
+        return response()->json(array_success(OrganizationCollection::make($user->organizations), 'Return organization select.'), 200);
     }
 
     public function show(Organization $organization)

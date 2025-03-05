@@ -53,9 +53,6 @@ class ProdeSeed extends Seeder
             //создаём OrderUnit для user
             $this->createOrderUnit($user);
 
-            //создаём водителей + транспортное средство для организации пользователя
-            $this->createTransportAndDriverAndIndividualPeople($user, 4, 1);
-
 
         }
 

@@ -17,7 +17,8 @@ class HasPhoneRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'phone' => (new PhoneRule)->addRule('exists:phone_list,value')->toArray(),
+            // 'phone' => (new PhoneRule)->addRule('exists:phone_list,value')->toArray(),
+            'phone' => 'exists:phone_list,value',
         ];
     }
 

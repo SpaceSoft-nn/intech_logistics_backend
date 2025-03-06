@@ -20,16 +20,15 @@ class TransportFactory extends Factory
     public function definition(): array
     {
 
+        // /** @var IndividualPeople */
+        // $individualPeople = IndividualPeople::factory()
+        // ->for(
+        //     DriverPeople::factory(), 'individualable'
+        // )
+        // ->create();
 
-        /** @var IndividualPeople */
-        $individualPeople = IndividualPeople::factory()
-        ->for(
-            DriverPeople::factory(), 'individualable'
-        )
-        ->create();
-
-        /** @var DriverPeople  */
-        $driver = $individualPeople->individualable;
+        // /** @var DriverPeople  */
+        // $driver = $individualPeople->individualable;
 
         $type_loading = array_column(TransportLoadingType::cases(), 'name');
         $type_weight = array_column(TransportTypeWeight::cases(), 'name');
@@ -54,7 +53,7 @@ class TransportFactory extends Factory
             type_status : $this->faker->randomElement($type_status),
 
             organization_id : $organization->id,
-            driver_id : $driver->id,
+            driver_id : null,
             description : $this->faker->text(),
         );
 

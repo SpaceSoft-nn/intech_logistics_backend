@@ -24,7 +24,7 @@ class InvoiceOrderVO implements Arrayable
 
         string $transport_id,
         ?string $price,
-        ?string $date ,
+        ?string $date,
         ?string $comment = null,
 
     ) : self {
@@ -33,7 +33,7 @@ class InvoiceOrderVO implements Arrayable
 
             transport_id: $transport_id,
             price: $price,
-            date: Carbon::parse($date)->format('Y-m-d'),
+            date: $date,
             comment: $comment,
 
         );

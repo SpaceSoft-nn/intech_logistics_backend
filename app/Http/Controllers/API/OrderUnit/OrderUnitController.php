@@ -241,12 +241,14 @@ class OrderUnitController extends Controller
         OrganizationOrderInvoiceService $service,
     ) {
 
+
         #TODO Проверять что организация принадлежит к user от которого идёт запрос
 
         /**
         * @var InvoiceOrderVO
         */
         $invoceOrder = $request->getValueObject();
+
 
         /**
         * @var OrganizationOrderUnitInvoice
@@ -258,6 +260,7 @@ class OrderUnitController extends Controller
                 invoiceOrderVO: $invoceOrder,
             )
         );
+
 
         return ($model)
         ? response()->json(array_success(OrgOrderInvoiceResource::make($model), 'Successfully added a contractor to the order.'), 201)

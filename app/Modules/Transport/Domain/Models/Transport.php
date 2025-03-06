@@ -80,7 +80,6 @@ class Transport extends Model
         return $this->belongsTo(DriverPeople::class, 'driver_id', 'id');
     }
 
-
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'organization_id', 'id');

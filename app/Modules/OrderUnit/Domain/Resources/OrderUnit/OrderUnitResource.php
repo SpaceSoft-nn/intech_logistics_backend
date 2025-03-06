@@ -28,6 +28,7 @@ class OrderUnitResource extends JsonResource
             'addresses',
         ]);
 
+
         return [
 
             "id" => $this->id,

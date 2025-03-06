@@ -6,9 +6,12 @@ use App\Modules\Address\Domain\Models\Address;
 use App\Modules\InteractorModules\AddressOrder\App\Data\DTO\OrderToAddressDTO;
 use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
 use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
+use App\Modules\Notification\Domain\Models\PhoneList;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\OrderUnit\Domain\Models\OrderUnitStatus;
 use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Transport\Domain\Models\Transport;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
@@ -135,6 +138,69 @@ class OrderUnitTest extends TestCase
         ]);
 
 
+
+    }
+
+    public function test_response_to_order()
+    {
+
+        /** @var User */
+        $userCustomer = User::factory()->hasAttached(
+                Organization::factory(),
+                ['type_cabinet' => TypeCabinetEnum::customer]
+            )
+            ->has(OrderUnit::factory()->has(OrderUnitStatus::factory(), 'actual_status'), 'order_units')
+            ->has(PhoneList::factory(), 'phone')->create();
+
+
+            /** @var User */
+        $userCarrier = User::factory()->hasAttached(
+            Organization::factory(),
+            ['type_cabinet' => TypeCabinetEnum::carrier]
+        )->has(PhoneList::factory(), 'phone')->create();
+
+
+        $id_order = $userCustomer->order_units->first()->id;
+        $id_organization_carrier = $userCarrier->organizations->first()->id;
+
+        $transport = Transport::factory()
+            ->for($userCarrier->organizations->first(), 'organization')
+            ->create();
+
+        $postData = [
+            "transport_id" => $transport->id,
+            "price" => 100000,
+            "date" => '05.05.2022',
+            "comment" => 'Коммент',
+        ];
+
+
+        // Отправляем POST-запрос на endpoint
+        $response = $this->actingAs($userCarrier)
+        ->withHeaders([
+            'organization_id' => $id_organization_carrier
+        ])
+        ->postJson("/api/orders/$id_order/contractors/$id_organization_carrier", $postData);
+
+
+        // Проверяем, что статус ответа 201 OK
+        $response->assertStatus(201);
+
+        // Проверка наличия заказа в базе данных
+        $this->assertDatabaseHas('organization_order_unit_invoces', [
+            'order_unit_id' => $id_order,
+            'organization_id' => $id_organization_carrier,
+        ]);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id_organization_order_units_invoce',
+                'organization_contract',
+                'order',
+                'invoice_order',
+            ],
+            'message'
+        ]);
 
     }
 

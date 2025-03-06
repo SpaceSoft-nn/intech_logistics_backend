@@ -42,7 +42,7 @@ class AgreementOrderUnitController extends Controller
             AgreementOrderCreateDTO::make(
                 order_unit_id: $orderUnit->id,
                 organization_order_units_invoce_id: $validated['organization_order_units_invoce_id'],
-                organization_contractor_id: null,
+                organization_contractor_id: null, //Здесь устанавливается null, т.к есть ещё endpoint по подтвреждению двух стороннего договора и документа, где уже буде устанавливаться значение явно
             )
         );
 

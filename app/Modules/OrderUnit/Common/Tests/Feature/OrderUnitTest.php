@@ -6,7 +6,9 @@ use App\Modules\Address\Domain\Models\Address;
 use App\Modules\InteractorModules\AddressOrder\App\Data\DTO\OrderToAddressDTO;
 use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
 use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\Notification\Domain\Models\PhoneList;
+use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Models\OrderUnitStatus;
 use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
@@ -198,6 +200,71 @@ class OrderUnitTest extends TestCase
                 'organization_contract',
                 'order',
                 'invoice_order',
+            ],
+            'message'
+        ]);
+
+    }
+
+    public function test_response_accept_to_order()
+    {
+
+        /** @var User */
+        $userCustomer = User::factory()->hasAttached(
+            Organization::factory(),
+            ['type_cabinet' => TypeCabinetEnum::customer]
+        )
+        ->has(OrderUnit::factory()->has(OrderUnitStatus::factory(), 'actual_status'), 'order_units')
+        ->has(PhoneList::factory(), 'phone')->create();
+
+
+            /** @var User */
+        $userCarrier = User::factory()->hasAttached(
+            Organization::factory(),
+            ['type_cabinet' => TypeCabinetEnum::carrier]
+        )->has(PhoneList::factory(), 'phone')->create();
+
+        $id_order = $userCustomer->order_units->first()->id;
+        $id_organization_carrier = $userCarrier->organizations->first()->id;
+
+        // $transport = Transport::factory()
+        //     ->for($userCarrier->organizations->first(), 'organization')
+        //     ->create();
+
+        $organization_order_units_invoce = OrganizationOrderUnitInvoice::factory()->create([
+            'order_unit_id' => $id_order,
+            'organization_id' => $id_organization_carrier,
+        ]);
+
+        $postData = [
+            'organization_order_units_invoce_id' => $organization_order_units_invoce->id,
+        ];
+
+
+        // Отправляем POST-запрос на endpoint
+        $response = $this->actingAs($userCustomer)
+            ->withHeaders([
+                'organization_id' => $userCustomer->organizations->first()->id,
+            ])
+            ->postJson("/api/orders/$id_order/agreements/agreement-order", $postData);
+
+        // Проверяем, что статус ответа 201 OK
+        $response->assertStatus(201);
+
+
+        // Проверка наличия заказа в базе данных
+        $this->assertDatabaseHas('agreement_orders', [
+            'order_unit_id' => $id_order,
+            'organization_order_units_invoce_id' => $organization_order_units_invoce->id,
+        ]);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id_agreement_order',
+                'order_unit_id',
+                'organization_contractor_id',
+                'organization_order_units_invoce_id',
+                'agreement_order_accept_id',
             ],
             'message'
         ]);

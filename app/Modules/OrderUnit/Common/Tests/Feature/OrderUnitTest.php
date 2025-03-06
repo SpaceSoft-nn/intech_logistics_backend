@@ -104,8 +104,6 @@ class OrderUnitTest extends TestCase
         // Проверяем, что статус ответа 201 OK
         $response->assertStatus(201);
 
-        // dd($response->json());
-
         // Проверка наличия заказа в базе данных
         $this->assertDatabaseHas('order_units', [
             'id' => $response->json()['data']['id'],

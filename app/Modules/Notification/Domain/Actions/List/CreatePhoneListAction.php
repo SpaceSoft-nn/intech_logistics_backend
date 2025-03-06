@@ -13,6 +13,7 @@ class CreatePhoneListAction
 
     public function run(string $phone) : ?PhoneList
     {
+
         $model = PhoneList::query()
             ->firstOrCreate(
                 ['value' => $phone],

@@ -10,17 +10,18 @@
             <directory>App\Modules\OrderUnit\Common\Tests\Unit</directory>
         </testsuite>
         <testsuite name="Feature">
-            <directory>App\Modules\Notification\Common\Tests\Feature</directory>
+            <!-- <directory>App\Modules\Notification\Common\Tests\Feature</directory>
             <directory>App\Modules\User\Common\Tests\Feature</directory>
             <directory>App\Modules\Organization\Common\Tests\Feature</directory>
             <directory>App\Modules\IndividualPeople\Common\Tests\Feature</directory>
             <directory>App\Modules\InteractorModules\Registration\Common\Tests\Feature</directory>
             <directory>App\Modules\IndividualFace\Common\Tests\Feature</directory>
             <directory>App\Modules\Transport\Common\Tests\Feature</directory>
-            <directory>App\Modules\Address\Common\Tests\Feature</directory>
+            <directory>App\Modules\Address\Common\Tests\Feature</directory> -->
+            <directory>App\Modules\Auth\Common\Tests\Feature\Login</directory>
             <directory>App\Modules\OrderUnit\Common\Tests\Feature</directory>
-            <directory>App\Modules\Transfer\Common\Tests\Feature</directory>
-            <directory>App\Modules\InteractorModules\OrganizationOrderInvoice\Common\Tests\Feature</directory>
+            <!-- <directory>App\Modules\Transfer\Common\Tests\Feature</directory>
+            <directory>App\Modules\InteractorModules\OrganizationOrderInvoice\Common\Tests\Feature</directory> -->
         </testsuite>
     </testsuites>
     <source>

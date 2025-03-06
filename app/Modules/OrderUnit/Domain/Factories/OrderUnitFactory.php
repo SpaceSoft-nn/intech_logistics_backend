@@ -83,44 +83,44 @@ class OrderUnitFactory extends Factory
         });
     }
 
-    public function configure(): static
-    {
-        return $this->afterCreating(function (OrderUnit $orderUnit) {
+    // public function configure(): static
+    // {
+    //     return $this->afterCreating(function (OrderUnit $orderUnit) {
 
-            if($orderUnit->addresses->isEmpty()) {
+    //         if($orderUnit->addresses->isEmpty()) {
 
-                //Привязываем Адресса
-                $addresses = Address::factory()->count(2)->create();
+    //             //Привязываем Адресса
+    //             $addresses = Address::factory()->count(2)->create();
 
-                // Получим текущую дату и время в ru формате
-                $date = Carbon::now()->format('d.m.Y');
-                $date = add_time_random($date, 4);
+    //             // Получим текущую дату и время в ru формате
+    //             $date = Carbon::now()->format('d.m.Y');
+    //             $date = add_time_random($date, 4);
 
-                LinkOrderToAddressAction::run(
-                    OrderToAddressDTO::make(
-                        address: $addresses[0],
-                        order: $orderUnit,
-                        type_status: TypeStateAddressEnum::sending,
-                        date: $date,
-                    )
-                );
+    //             LinkOrderToAddressAction::run(
+    //                 OrderToAddressDTO::make(
+    //                     address: $addresses[0],
+    //                     order: $orderUnit,
+    //                     type_status: TypeStateAddressEnum::sending,
+    //                     date: $date,
+    //                 )
+    //             );
 
-                LinkOrderToAddressAction::run(
-                    OrderToAddressDTO::make(
-                        address: $addresses[1],
-                        order: $orderUnit,
-                        type_status: TypeStateAddressEnum::coming,
-                        date: $date,
-                    )
-                );
+    //             LinkOrderToAddressAction::run(
+    //                 OrderToAddressDTO::make(
+    //                     address: $addresses[1],
+    //                     order: $orderUnit,
+    //                     type_status: TypeStateAddressEnum::coming,
+    //                     date: $date,
+    //                 )
+    //             );
 
 
-            }
+    //         }
 
-            $this->unionOrderStatus($orderUnit);
+    //         $this->unionOrderStatus($orderUnit);
 
-        });
-    }
+    //     });
+    // }
 
     public function withStatusSet(StatusOrderUnitEnum $enum)
     {

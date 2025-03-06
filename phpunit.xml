@@ -18,7 +18,7 @@
             <directory>App\Modules\IndividualFace\Common\Tests\Feature</directory>
             <directory>App\Modules\Transport\Common\Tests\Feature</directory>
             <directory>App\Modules\Address\Common\Tests\Feature</directory> -->
-            <directory>App\Modules\Auth\Common\Tests\Feature\Login</directory>
+            <directory>App\Modules\Auth\Common\Tests\Feature</directory>
             <directory>App\Modules\OrderUnit\Common\Tests\Feature</directory>
             <!-- <directory>App\Modules\Transfer\Common\Tests\Feature</directory>
             <directory>App\Modules\InteractorModules\OrganizationOrderInvoice\Common\Tests\Feature</directory> -->

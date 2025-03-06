@@ -75,6 +75,7 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
             //Organization end
 
         ];
+        
 
         if(is_null($this->input('organization.type'))){
             $this->fail('organization.type', 'Не указан тип для организации.');

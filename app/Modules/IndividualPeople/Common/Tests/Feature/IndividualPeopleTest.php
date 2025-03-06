@@ -2,69 +2,121 @@
 
 namespace App\Modules\IndividualPeople\Common\Tests\Feature;
 
-use Tests\TestCase;
-use Faker\Factory as Faker;
-use App\Modules\User\App\Data\Enums\UserRoleEnum;
-use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
-use App\Modules\User\Domain\Interactor\UserCreateInteractor;
+use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
-use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
-use App\Modules\IndividualPeople\Domain\Services\IndividualPeopleService;
-use App\Modules\User\App\Data\DTO\User\UserCreateDTO as UserUserCreateDTO;
+use App\Modules\Notification\Domain\Models\PhoneList;
+use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\User\Domain\Models\User;
+use Tests\TestCase;
+
 
 class IndividualPeopleTest extends TestCase
 {
-    // use RefreshDatabase;
-
-    protected $faker;
-
-    protected function setUp(): void
-    {
-        parent::setUp(); // Не забываем вызывать родительский метод
-        $this->faker = Faker::create();
-    }
 
     public function test_create_individual_people()
     {
-        $interactor = app(UserCreateInteractor::class);
-        $rep = app(IndividualPeopleService::class);
 
-        /** @var UserVO */
-        $userVO = UserVO::make(
-            first_name: $this->faker->name,
-            last_name: $this->faker->name,
-            father_name: $this->faker->name,
-            password: bcrypt('password'),
-            role: UserRoleEnum::admin,
-            email_id: null,
-            phone_id: null,
-        );
+        /** @var User */
+        $userCarrier = User::factory()->hasAttached(
+            Organization::factory(),
+            ['type_cabinet' => TypeCabinetEnum::carrier]
+        )->has(PhoneList::factory(), 'phone')->create();
 
-        $user = $interactor->run($userVO);
 
-        $invPeople = $rep->createIndividualPeople(
-            CreateIndividualPeopleDTO::make(
-                first_name: $this->faker->name,
-                last_name: $this->faker->name,
-                father_name: $this->faker->name,
-                position: $this->faker->text,
-                other_contact: $this->faker->text,
-                comment: $this->faker->text,
-                personal_area_id: $user->personal_areas->first()->id,
-            )
-        );
+        //что бы не указывать body post вручную, имитируем создание ресурса
+        /** @var array */
+        $individualPeople = IndividualPeople::factory()->make()->toArray();
 
-        $this->assertNotNull($invPeople);
+        // dd($individualPeople);
+
+        // Отправляем POST-запрос на endpoint
+        $response = $this->actingAs($userCarrier)
+            ->withHeaders([
+                'organization_id' => $userCarrier->organizations->first()->id,
+            ])
+            ->postJson("/api/individual-peoples", $individualPeople);
+
+        // Проверяем, что статус ответа 201 OK
+        $response->assertStatus(201);
+
+
+        // Проверка наличия заказа в базе данных
+        $this->assertDatabaseHas('individual_peoples', [
+            'id' => $response->json()['data']['id_individual_people'],
+        ]);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id_individual_people',
+                'first_name',
+                'last_name',
+                'father_name',
+                'position',
+                'other_contact',
+                'personal_area_id',
+                'email',
+                'phone',
+                'comment',
+            ],
+            'message'
+        ]);
+
     }
 
-    /**
-     * Проверка работы фабрики
-     * @return [type]
-     */
-    public function test_create_factory_individual_people()
+    public function test_create_driver_people()
     {
-        $model = IndividualPeople::factory()->create();
+        /** @var User */
+        $userCarrier = User::factory()->hasAttached(
+            Organization::factory(),
+            ['type_cabinet' => TypeCabinetEnum::carrier]
+        )->has(PhoneList::factory(), 'phone')->create();
 
-        $this->assertNotNull($model);
+        $org_user = $userCarrier->organizations->first();
+
+
+        $individualPeople = IndividualPeople::factory()->create();
+
+        /** @var array */
+        $driverArray = DriverPeople::factory()->make();
+
+        $postData = [
+            "personal_area_id" => $individualPeople->personal_area->id,
+            "individual_people_id" => $individualPeople->id,
+            "organization_id" => $org_user->id,
+            "series" => $driverArray['series'],
+            "number" => $driverArray['number'],
+            "date_get" => '25.05.2020',
+        ];
+
+        // Отправляем POST-запрос на endpoint
+        $response = $this->actingAs($userCarrier)
+            ->withHeaders([
+                'organization_id' => $org_user->id,
+            ])
+            ->postJson("/api/individual-peoples/drivers", $postData);
+
+        // Проверяем, что статус ответа 201 OK
+        $response->assertStatus(201);
+
+
+        // Проверка наличия заказа в базе данных
+        $this->assertDatabaseHas('driver_peoples', [
+            'id' => $response->json()['data']['id_driver_people'],
+        ]);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id_driver_people',
+                'personal_area_id',
+                'individual_people_id',
+                'organization_id',
+                'series',
+                'number',
+                'date_get',
+            ],
+            'message'
+        ]);
     }
+
 }

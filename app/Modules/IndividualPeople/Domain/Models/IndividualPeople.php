@@ -3,9 +3,12 @@
 namespace App\Modules\IndividualPeople\Domain\Models;
 
 use App\Modules\IndividualPeople\Domain\Factories\IndividualPeopleFactory;
+use App\Modules\User\Domain\Models\PersonalArea;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
@@ -121,5 +124,15 @@ class IndividualPeople extends Model
     public function individualable(): MorphTo
     {
         return $this->morphTo(__FUNCTION__, 'individualable_type', 'individualable_id');
+    }
+
+    public function personal(): MorphTo
+    {
+        return $this->morphTo(__FUNCTION__, 'individualable_type', 'individualable_id');
+    }
+
+    public function personal_area(): BelongsTo
+    {
+        return $this->belongsTo(PersonalArea::class,'personal_area_id');
     }
 }

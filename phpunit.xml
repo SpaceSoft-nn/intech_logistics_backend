@@ -21,6 +21,7 @@
             <directory>App\Modules\Auth\Common\Tests\Feature</directory>
             <directory>App\Modules\OrderUnit\Common\Tests\Feature</directory>
             <directory>App\Modules\Tender\Common\Test\Feature</directory>
+            <directory>App\Modules\IndividualPeople\Common\Tests\Feature</directory>
             <!-- <directory>App\Modules\Transfer\Common\Tests\Feature</directory>
             <directory>App\Modules\InteractorModules\OrganizationOrderInvoice\Common\Tests\Feature</directory> -->
         </testsuite>

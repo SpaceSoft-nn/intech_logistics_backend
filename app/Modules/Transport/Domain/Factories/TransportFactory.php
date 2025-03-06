@@ -2,8 +2,6 @@
 
 namespace App\Modules\Transport\Domain\Factories;
 
-use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
-use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
 use App\Modules\Transport\App\Data\Enums\TransportBodyType;

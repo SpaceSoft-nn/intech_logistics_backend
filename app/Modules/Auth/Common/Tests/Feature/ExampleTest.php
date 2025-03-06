@@ -2,12 +2,16 @@
 namespace App\Modules\Auth\Common\Tests\Feature;
 
 
-use App\Modules\Auth\App\Data\DTO\UserAttemptDTO;
-use App\Modules\Auth\Common\Tests\TestCase;
-use App\Modules\Auth\Domain\Services\AuthService;
-use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\Auth\Common\Tests\TestCase;
+use App\Modules\Auth\App\Data\DTO\UserAttemptDTO;
+use App\Modules\Auth\Domain\Services\AuthService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Modules\Notification\Domain\Models\EmailList;
+use App\Modules\Notification\Domain\Models\PhoneList;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 
 class ExampleTest extends TestCase
 {
@@ -28,16 +32,18 @@ class ExampleTest extends TestCase
     {
         $phone = '79200648827';
         $password = '123456';
-        $email = 'test2@example.com';
+        // $email = 'test2@example.com';
 
         {
+
             $token = $this->createUserToken();
 
-            $array = compact('phone', 'password', 'email');
+            $array = compact('phone', 'password');
 
             $response = $this->withHeaders([
                 'Authorization' => 'Bearer ' . $token['access_token'],
-            ])->json('POST', '/api/auth/login', $array);
+            ])->json('POST', '/api/login', $array);
+
 
             $response->assertStatus(200);
 
@@ -55,7 +61,7 @@ class ExampleTest extends TestCase
         {
             $password = '1234567';
 
-            $array = compact('phone', 'password', 'email');
+            $array = compact('phone', 'password');
 
             $response = $this->withHeaders([
                 'Authorization' => 'Bearer ' . $token['access_token'],
@@ -63,7 +69,6 @@ class ExampleTest extends TestCase
 
             $response->assertStatus(404);
         }
-
 
     }
 
@@ -158,18 +163,21 @@ class ExampleTest extends TestCase
 
 
 //Private
-    private function createUser() : Model
+    private function createUser($phone, $email, $password) : Model
     {
-        $phone = '79200648827';
-        $password = '123456';
-        $email = 'test2@example.com';
 
-        return User::factory()->create([
-            'name' => 'Test User',
-            'phone' => $phone,
-            'email' => $email,
-            'password' => $password,
-        ]);
+
+        $phoneList = PhoneList::factory()->state(['value' => $phone]);
+        $emailList = EmailList::factory()->state(['value' => $email]);
+
+        $user = User::factory()->hasAttached(
+                Organization::factory(),
+                ['type_cabinet' => TypeCabinetEnum::carrier]
+            )
+            ->for($phoneList, 'phone')
+            ->for($emailList, 'email')->create(['password' => $password]);
+
+        return $user;
     }
 
     private function createUserToken() : array
@@ -177,7 +185,14 @@ class ExampleTest extends TestCase
         $phone = '79200648827';
         $password = '123456';
         $email = 'test2@example.com';
-        $this->createUser();
+
+
+        //создаём user в бд
+        $this->createUser(
+            phone: $phone,
+            password: $password,
+            email: $email,
+        );
 
         return $this->serv->attemptUserAuth(UserAttemptDTO::make($password, $phone, $email));
     }

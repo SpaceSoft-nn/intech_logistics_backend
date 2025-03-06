@@ -7,6 +7,7 @@ use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Rule\ArrayCargoGoodRule;
@@ -32,6 +33,7 @@ class OrderUnitCreateRequest extends ApiRequest
         // Получаем названия всех кейсов
         $typeLoadingTruckMethod = array_column(TypeLoadingTruckMethod::cases(), 'name');
         $typeTransportWeight = array_column(TypeTransportWeight::cases(), 'name');
+        $orderStatus = array_column(StatusOrderUnitEnum::cases(), 'name');
 
         return [
 
@@ -48,6 +50,8 @@ class OrderUnitCreateRequest extends ApiRequest
             'goods_array' => ['required', new ArrayCargoGoodRule()], //массив грузов
 
             'type_transport_weight'  => ['required', Rule::in($typeTransportWeight)], //Выбор транспорта по габаритам
+
+            "order_status" => ['nullable', Rule::in($orderStatus)], //Устанавливаем статус заказа вручную
 
             "organization_id" => ['required', 'uuid', "exists:organizations,id"], //организация к которой принадлежит заказ
             // "organization_id" => ['required', 'uuid'], //организация к которой принадлежит заказ

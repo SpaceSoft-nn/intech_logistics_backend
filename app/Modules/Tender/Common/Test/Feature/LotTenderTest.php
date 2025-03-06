@@ -7,6 +7,8 @@ use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
 use App\Modules\Tender\Domain\Models\LotTender;
+use App\Modules\Tender\Domain\Models\Response\AgreementTender;
+use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
 use App\Modules\Tender\Domain\Models\SpecificalDatePeriod;
 use App\Modules\Transport\Domain\Models\Transport;
 use App\Modules\User\Domain\Models\User;
@@ -160,6 +162,76 @@ class LotTenderTest extends TestCase
                 'lot_tender_id',
                 'organization_contractor_id',
                 'invoice_lot_tender_id',
+            ],
+            'message'
+        ]);
+    }
+
+    //Принятие отклика на тендер
+    public function test_response_accept_to_tender()
+    {
+        /** @var User */
+        $userCustomer = User::factory()->hasAttached(
+            Organization::factory(),
+            ['type_cabinet' => TypeCabinetEnum::customer]
+        )
+        ->has(PhoneList::factory(), 'phone')->create();
+
+
+        //создамё запись в бд тендер с ключевыми связями
+        $tender = LotTender::factory([
+            'organization_id' => $userCustomer->organizations->first()->id,
+            ])
+            ->has(SpecificalDatePeriod::factory(), 'specifical_date_period')
+            ->has(AgreementDocumentTender::factory(), 'agreement_document_tender')
+            ->create();
+
+
+        /** @var User */
+        $userCarrier = User::factory()->hasAttached(
+            Organization::factory(),
+            ['type_cabinet' => TypeCabinetEnum::carrier]
+        )->has(PhoneList::factory(), 'phone')->create();
+
+        /** @var Organization */
+        $org_carrier = $userCarrier->organizations->first();
+
+
+        //Создаём отклик в бд
+        $lotTenderResponse = LotTenderResponse::factory()->create([
+            'lot_tender_id' => $tender->id,
+            'organization_contractor_id' =>  $org_carrier->id,
+        ]);
+
+        //указываем body для запроса
+        $postData = [
+            'organization_contractor_id' => $org_carrier->id,
+        ];
+
+        // Отправляем POST-запрос на endpoint
+        $response = $this->actingAs($userCustomer)
+            ->withHeaders([
+                'organization_id' => $userCustomer->organizations->first()->id,
+            ])
+            ->postJson("/api/tenders/$lotTenderResponse->id/agreement-tender", $postData);
+
+        // Проверяем, что статус ответа 201 OK
+        $response->assertStatus(201);
+
+        // Проверка наличия заказа в базе данных
+        $this->assertDatabaseHas('agreement_tenders', [
+            'lot_tender_response_id' => $lotTenderResponse->id ,
+            'organization_contractor_id' =>  $org_carrier->id,
+            'lot_tender_id' => $tender->id,
+        ]);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id_agreement_tender',
+                'lot_tender_response_id',
+                'organization_tender_create_id',
+                'lot_tender_id',
+                'agreement_tender_accept_id',
             ],
             'message'
         ]);

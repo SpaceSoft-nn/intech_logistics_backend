@@ -13,7 +13,7 @@
 
 namespace App\Modules\Address\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $region
@@ -53,7 +53,7 @@ namespace App\Modules\Address\Domain\Models{
 
 namespace App\Modules\Avizo\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $sender Отправитель
@@ -82,7 +82,7 @@ namespace App\Modules\Avizo\Domain\Models{
 
 namespace App\Modules\Avizo\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $sender Отправитель
@@ -109,7 +109,7 @@ namespace App\Modules\Avizo\Domain\Models{
 
 namespace App\Modules\GAR\Domain\Models{
 /**
- * 
+ *
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GAR newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GAR newQuery()
@@ -120,7 +120,7 @@ namespace App\Modules\GAR\Domain\Models{
 
 namespace App\Modules\IndividualPeople\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $personal_area_id
@@ -151,7 +151,7 @@ namespace App\Modules\IndividualPeople\Domain\Models{
 
 namespace App\Modules\IndividualPeople\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string|null $owner_id
@@ -220,7 +220,7 @@ namespace App\Modules\IndividualPeople\Domain\Models{
 
 namespace App\Modules\IndividualPeople\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $personal_area_id
@@ -243,7 +243,7 @@ namespace App\Modules\IndividualPeople\Domain\Models{
 
 namespace App\Modules\InteractorModules\AddressOrder\Domain\Models{
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $order_unit_id
@@ -270,7 +270,7 @@ namespace App\Modules\InteractorModules\AddressOrder\Domain\Models{
 
 namespace App\Modules\InteractorModules\AgreementTransfer\Domain\Models{
 /**
- * 
+ *
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AgreementTransfer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AgreementTransfer newQuery()
@@ -281,7 +281,7 @@ namespace App\Modules\InteractorModules\AgreementTransfer\Domain\Models{
 
 namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $transport_id
@@ -309,7 +309,7 @@ namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models{
 
 namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $order_unit_id
@@ -338,7 +338,7 @@ namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models{
 
 namespace App\Modules\InteractorModules\Registration\Domain\Model{
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $user_id
@@ -363,7 +363,7 @@ namespace App\Modules\InteractorModules\Registration\Domain\Model{
 
 namespace App\Modules\Matrix\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string|null $city_start_gar_id Значение Гар для города отправления
@@ -391,7 +391,7 @@ namespace App\Modules\Matrix\Domain\Models{
 
 namespace App\Modules\Matrix\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string|null $region_start_gar_id Значение Гар для области отправления
@@ -421,7 +421,7 @@ namespace App\Modules\Matrix\Domain\Models{
 
 namespace App\Modules\Notification\Domain\Models{
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $key
@@ -443,7 +443,7 @@ namespace App\Modules\Notification\Domain\Models{
 
 namespace App\Modules\Notification\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $uuid_send
@@ -468,7 +468,7 @@ namespace App\Modules\Notification\Domain\Models{
 
 namespace App\Modules\Notification\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $uuid_send
@@ -493,7 +493,7 @@ namespace App\Modules\Notification\Domain\Models{
 
 namespace App\Modules\Notification\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $value Почта
@@ -517,7 +517,7 @@ namespace App\Modules\Notification\Domain\Models{
 
 namespace App\Modules\Notification\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $value Номер телефона
@@ -541,7 +541,7 @@ namespace App\Modules\Notification\Domain\Models{
 
 namespace App\Modules\Notification\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $uuid_list
@@ -567,7 +567,7 @@ namespace App\Modules\Notification\Domain\Models{
 
 namespace App\Modules\Notification\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $uuid_list
@@ -593,7 +593,7 @@ namespace App\Modules\Notification\Domain\Models{
 
 namespace App\Modules\OfferContractor\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $offer_contractor_invoice_order_customer_id
@@ -626,7 +626,7 @@ namespace App\Modules\OfferContractor\Domain\Models{
 
 namespace App\Modules\OfferContractor\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $agreement_order_contractor_id
@@ -650,7 +650,7 @@ namespace App\Modules\OfferContractor\Domain\Models{
 
 namespace App\Modules\OfferContractor\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $order_total Цена/Выплата за заказ
@@ -733,7 +733,7 @@ namespace App\Modules\OfferContractor\Domain\Models{
 
 namespace App\Modules\OfferContractor\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $invoice_order_customer_id
@@ -761,7 +761,7 @@ namespace App\Modules\OfferContractor\Domain\Models{
 
 namespace App\Modules\OrderUnit\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $order_unit_id
@@ -792,7 +792,7 @@ namespace App\Modules\OrderUnit\Domain\Models{
 
 namespace App\Modules\OrderUnit\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string|null $document_agreement_accept_order_type
@@ -823,7 +823,7 @@ namespace App\Modules\OrderUnit\Domain\Models{
 
 namespace App\Modules\OrderUnit\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string|null $name_value Наименование груза
@@ -858,7 +858,7 @@ namespace App\Modules\OrderUnit\Domain\Models{
 
 namespace App\Modules\OrderUnit\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property \App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum $pallets_space Тип Паллета
@@ -885,7 +885,7 @@ namespace App\Modules\OrderUnit\Domain\Models{
 
 namespace App\Modules\OrderUnit\Domain\Models{
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $cargo_good_id
@@ -908,7 +908,7 @@ namespace App\Modules\OrderUnit\Domain\Models{
 
 namespace App\Modules\OrderUnit\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $length Длина
@@ -937,7 +937,7 @@ namespace App\Modules\OrderUnit\Domain\Models{
 
 namespace App\Modules\OrderUnit\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property int $number_order Номер заказа для фронта
@@ -1008,7 +1008,7 @@ namespace App\Modules\OrderUnit\Domain\Models{
 
 namespace App\Modules\OrderUnit\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $order_unit_id
@@ -1030,7 +1030,7 @@ namespace App\Modules\OrderUnit\Domain\Models{
 
 namespace App\Modules\OrderUnit\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $order_unit_id
@@ -1052,7 +1052,7 @@ namespace App\Modules\OrderUnit\Domain\Models{
 
 namespace App\Modules\OrderUnit\Domain\Models\Status{
 /**
- * 
+ *
  *
  * @property-read ChainTransportationStatus|null $next_status
  * @property-read \App\Modules\OrderUnit\Domain\Models\Status\EnumTransportationStatus|null $status
@@ -1066,7 +1066,7 @@ namespace App\Modules\OrderUnit\Domain\Models\Status{
 
 namespace App\Modules\OrderUnit\Domain\Models\Status{
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $enum_name Название статуса
@@ -1087,7 +1087,7 @@ namespace App\Modules\OrderUnit\Domain\Models\Status{
 
 namespace App\Modules\OrderUnit\Domain\Models\Status{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $order_unit_id ссылка на заказ
@@ -1110,7 +1110,7 @@ namespace App\Modules\OrderUnit\Domain\Models\Status{
 
 namespace App\Modules\Organization\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string|null $owner_id
@@ -1174,7 +1174,7 @@ namespace App\Modules\Organization\Domain\Models{
 
 namespace App\Modules\Permission\Domain\Models{
 /**
- * 
+ *
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -1192,7 +1192,7 @@ namespace App\Modules\Permission\Domain\Models{
 
 namespace App\Modules\Tender\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $lot_tender_id
@@ -1219,7 +1219,7 @@ namespace App\Modules\Tender\Domain\Models{
 
 namespace App\Modules\Tender\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $lot_tender_id
@@ -1245,7 +1245,7 @@ namespace App\Modules\Tender\Domain\Models{
 
 namespace App\Modules\Tender\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property int $number_tender Номер тендера для фронта
@@ -1269,8 +1269,8 @@ namespace App\Modules\Tender\Domain\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\OrderUnit\Domain\Models\OrderUnit> $order_unit
  * @property-read int|null $order_unit_count
  * @property-read \App\Modules\Organization\Domain\Models\Organization $organization
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Tender\Domain\Models\SpecificalDatePeriod> $specifica_date_period
- * @property-read int|null $specifica_date_period_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Tender\Domain\Models\SpecificalDatePeriod> $specifical_date_period
+ * @property-read int|null $specifical_date_period_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Tender\Domain\Models\WeekPeriod> $week_period
  * @property-read int|null $week_period_count
  * @method static \App\Modules\Tender\Domain\Factories\TenderFactory factory($count = null, $state = [])
@@ -1297,7 +1297,7 @@ namespace App\Modules\Tender\Domain\Models{
 
 namespace App\Modules\Tender\Domain\Models\Response{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $lot_tender_response_id
@@ -1320,7 +1320,7 @@ namespace App\Modules\Tender\Domain\Models\Response{
 
 namespace App\Modules\Tender\Domain\Models\Response{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $agreement_tender_id
@@ -1343,7 +1343,7 @@ namespace App\Modules\Tender\Domain\Models\Response{
 
 namespace App\Modules\Tender\Domain\Models\Response{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $transport_id
@@ -1368,7 +1368,7 @@ namespace App\Modules\Tender\Domain\Models\Response{
 
 namespace App\Modules\Tender\Domain\Models\Response{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $lot_tender_id
@@ -1392,7 +1392,7 @@ namespace App\Modules\Tender\Domain\Models\Response{
 
 namespace App\Modules\Tender\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $lot_tender_id Выбранный подрядчик на заказ.
@@ -1416,7 +1416,7 @@ namespace App\Modules\Tender\Domain\Models{
 
 namespace App\Modules\Tender\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $lot_tender_id
@@ -1438,7 +1438,7 @@ namespace App\Modules\Tender\Domain\Models{
 
 namespace App\Modules\Transfer\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $transport_id
@@ -1480,7 +1480,7 @@ namespace App\Modules\Transfer\Domain\Models{
 
 namespace App\Modules\Transfer\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $transfer_id
@@ -1508,7 +1508,7 @@ namespace App\Modules\Transfer\Domain\Models{
 
 namespace App\Modules\Transport\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $brand_model модель - например: Volvo FH, MAN TGS
@@ -1556,7 +1556,7 @@ namespace App\Modules\Transport\Domain\Models{
 
 namespace App\Modules\User\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property string $owner_id
@@ -1579,7 +1579,7 @@ namespace App\Modules\User\Domain\Models{
 
 namespace App\Modules\User\Domain\Models{
 /**
- * 
+ *
  *
  * @property string $id
  * @property mixed $password

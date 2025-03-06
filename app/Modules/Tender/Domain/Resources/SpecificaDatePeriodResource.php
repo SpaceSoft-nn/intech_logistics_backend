@@ -13,7 +13,7 @@ class SpecificaDatePeriodResource extends JsonResource
 
         return [
 
-            'id_specifica_date_period' => $this->id,
+            'id_specifical_date_period' => $this->id,
             'date' => $this->date,
             'count_transport' => $this->count_transport,
 

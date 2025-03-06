@@ -38,7 +38,7 @@ class LotTenderResource extends JsonResource
             'organization_id' => $this->organization_id,
             'agreement_document_tender_link' => $this->createFileLinkDownload($this->agreement_document_tender),
             'array_application_document_tender_link' => $this->createFileLinkDownloadArray($this->application_document_tender),
-            'array_specifica_date_period' => SpecificaDatePeriodCollection::make($this->specifica_date_period) ?? null,
+            'array_specifical_date_period' => SpecificaDatePeriodCollection::make($this->specifical_date_period) ?? null,
 
 
         ];
@@ -46,8 +46,11 @@ class LotTenderResource extends JsonResource
 
     private function createFileLinkDownload($agreement_document) : ?string
     {
-        return Storage::disk($agreement_document->disk)->exists($agreement_document->path)
-        ? Storage::disk($agreement_document->disk)->url($agreement_document->path) : null;
+
+        //что бы тесты прошли надо устанавливать ? и при path ?? ''
+        return Storage::disk($agreement_document?->disk)?->exists($agreement_document?->path ?? '')
+        ? Storage::disk($agreement_document?->disk)?->url($agreement_document?->path) : null;
+
     }
 
     private function createFileLinkDownloadArray($application_document_tender) : array|string|null

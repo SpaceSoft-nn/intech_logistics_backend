@@ -87,7 +87,7 @@ class LotTender extends Model
         return $this->hasMany(ApplicationDocumentTender::class, 'lot_tender_id');
     }
 
-    public function specifica_date_period(): HasMany
+    public function specifical_date_period(): HasMany
     {
         return $this->hasMany(SpecificalDatePeriod::class, 'lot_tender_id');
     }

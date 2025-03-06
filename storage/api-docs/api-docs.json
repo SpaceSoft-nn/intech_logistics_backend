@@ -7717,7 +7717,7 @@
             },
             "SpecificaDatePeriodResource": {
                 "properties": {
-                    "id_specifica_date_period": {
+                    "id_specifical_date_period": {
                         "description": "ID специфической даты периода",
                         "type": "integer"
                     },
@@ -7804,7 +7804,7 @@
                             "format": "url"
                         }
                     },
-                    "array_specifica_date_period": {
+                    "array_specifical_date_period": {
                         "description": "Массив специфических дат периода, здесь указываются конкретные даты тендера + количество транспорта",
                         "type": "array",
                         "items": {

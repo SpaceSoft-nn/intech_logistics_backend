@@ -34,6 +34,8 @@ class TenderFactory extends Factory
         $ru_date_format = add_time_random($date, 4);
 
 
+
+
         $tender = LotTenderVO::make(
             general_count_transport: $this->faker->numberBetween(1, 15),
             price_for_km: $this->faker->numberBetween(50, 180),

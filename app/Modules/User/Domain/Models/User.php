@@ -6,6 +6,7 @@ use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -127,4 +128,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(OrderUnit::class, 'user_id', 'id');
     }
+
 }

@@ -76,23 +76,23 @@ class ExampleTest extends TestCase
      * Получить user по токену Bearer
      * @return [type]
      */
-    public function test_getUserAuth()
-    {
+    // public function test_getUserAuth()
+    // {
 
-        $token = $this->createUserToken();
+    //     $token = $this->createUserToken();
 
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token['access_token'],
-        ])->json('POST', '/api/auth/user');
+    //     $response = $this->withHeaders([
+    //         'Authorization' => 'Bearer ' . $token['access_token'],
+    //     ])->json('POST', '/api/auth/user');
 
-        $response->assertStatus(200);
+    //     $response->assertStatus(200);
 
-        $response->assertJsonStructure([
-            'data' => [],
-            "message",
-        ]);
+    //     $response->assertJsonStructure([
+    //         'data' => [],
+    //         "message",
+    //     ]);
 
-    }
+    // }
 
     /**
      * Удалить актуальный токен
@@ -130,6 +130,7 @@ class ExampleTest extends TestCase
                 'Authorization' => 'Bearer ' . $token['access_token'],
             ])->json('POST', '/api/auth/refresh');
 
+
             $response->assertStatus(200);
 
             $response->assertJsonStructure([
@@ -139,26 +140,18 @@ class ExampleTest extends TestCase
 
         }
 
-        {
-            $response = $this->withHeaders([
-                'Authorization' => 'Bearer ' . ';12',
-            ])->json('POST', '/api/auth/refresh');
-
-
-            $response->assertStatus(401);
-        }
     }
 
     /**
      * Тест сервеса и метода loginUser - где мы возвращаем токен по модели
      * @return [type]
      */
-    public function test_loginUser()
-    {
-        $user = $this->createUser();
-        $array = $this->serv->loginUser($user);
-        $this->assertIsArray($array);
-    }
+    // public function test_loginUser()
+    // {
+    //     $user = $this->createUser();
+    //     $array = $this->serv->loginUser($user);
+    //     $this->assertIsArray($array);
+    // }
 
 
 

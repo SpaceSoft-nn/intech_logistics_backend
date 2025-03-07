@@ -7,20 +7,24 @@
     <testsuites>
         <testsuite name="Unit">
             <!-- <directory>tests/Unit</directory> -->
-            <directory>App\Modules\OrderUnit\Common\Tests\Unit</directory>
+            <!-- <directory>App/Modules/OrderUnit/Common/Tests/Unit</directory> -->
         </testsuite>
         <testsuite name="Feature">
-            <directory>App\Modules\Notification\Common\Tests\Feature</directory>
-            <directory>App\Modules\User\Common\Tests\Feature</directory>
-            <directory>App\Modules\Organization\Common\Tests\Feature</directory>
-            <directory>App\Modules\IndividualPeople\Common\Tests\Feature</directory>
-            <directory>App\Modules\InteractorModules\Registration\Common\Tests\Feature</directory>
-            <directory>App\Modules\IndividualFace\Common\Tests\Feature</directory>
-            <directory>App\Modules\Transport\Common\Tests\Feature</directory>
-            <directory>App\Modules\Address\Common\Tests\Feature</directory>
-            <directory>App\Modules\OrderUnit\Common\Tests\Feature</directory>
-            <directory>App\Modules\Transfer\Common\Tests\Feature</directory>
-            <directory>App\Modules\InteractorModules\OrganizationOrderInvoice\Common\Tests\Feature</directory>
+            <!-- <directory>App/Modules/Notification/Common/Tests/Feature</directory>
+            <directory>App/Modules/User/Common/Tests/Feature</directory>
+            <directory>App/Modules/Organization/Common/Tests/Feature</directory>
+            <directory>App/Modules/IndividualPeople/Common/Tests/Feature</directory>
+            <directory>App/Modules/InteractorModules/Registration/Common/Tests/Feature</directory>
+            <directory>App/Modules/IndividualFace/Common/Tests/Feature</directory>
+            <directory>App/Modules/Transport/Common/Tests/Feature</directory>
+            <directory>App/Modules/Address/Common/Tests/Feature</directory> -->
+            <directory>app/Modules/Auth/Common/Tests/Feature</directory>
+            <directory>app/Modules/OrderUnit/Common/Tests/Feature</directory>
+            <directory>app/Modules/Tender/Common/Test/Feature</directory>
+            <directory>app/Modules/IndividualPeople/Common/Tests/Feature</directory>
+            <directory>app/Modules/Transport/Common/Tests/Feature</directory>
+            <!-- <directory>App/Modules/Transfer/Common/Tests/Feature</directory>
+            <directory>App/Modules/InteractorModules/OrganizationOrderInvoice/Common/Tests/Feature</directory> -->
         </testsuite>
     </testsuites>
     <source>
@@ -33,6 +37,7 @@
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_STORE" value="array"/>
+        <env name="DB_DATABASE" value="logistic_project_test"/>
         <!-- <env name="DB_CONNECTION" value="sqlite"/> -->
         <!-- <env name="DB_DATABASE" value=":memory:"/> -->
         <env name="MAIL_MAILER" value="array"/>

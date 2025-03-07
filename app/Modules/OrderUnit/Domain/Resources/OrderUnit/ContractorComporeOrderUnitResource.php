@@ -10,7 +10,6 @@ class ContractorComporeOrderUnitResource extends OrderUnitResource
 
     public function toArray(Request $request): array
     {
-
         //записываем значение в переменную
         $isResponseContractor = $this->isResponseContractor;
 
@@ -20,7 +19,6 @@ class ContractorComporeOrderUnitResource extends OrderUnitResource
         $data = array_merge($data, ['isResponseContractor' => $isResponseContractor]);
 
         return $data;
-
     }
 }
 

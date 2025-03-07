@@ -3,11 +3,10 @@
 namespace App\Modules\IndividualPeople\Domain\Factories;
 
 use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
-use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
-use App\Modules\IndividualPeople\Domain\Services\IndividualPeopleService;
 use App\Modules\User\Domain\Models\PersonalArea;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Model>
@@ -24,6 +23,8 @@ class IndividualPeopleFactory extends Factory
         */
         $personal_area = PersonalArea::factory()->create();
 
+        $mobilePhone = '79' . $this->faker->numerify('#########');
+
         $VO = CreateIndividualPeopleDTO::make(
 
             first_name: $this->faker->firstNameMale(),
@@ -32,7 +33,7 @@ class IndividualPeopleFactory extends Factory
             position: $this->faker->name(),
             other_contact: $this->faker->phoneNumber(). ' ' . $this->faker->email(),
             comment: $this->faker->paragraph(),
-            phone: $this->faker->phoneNumber(),
+            phone: $mobilePhone,
             email: $this->faker->email(),
             remuved: false,
             personal_area_id: $personal_area->id,

@@ -48,7 +48,6 @@ class DriverPeopleController extends Controller
         $createDriverPeopleDTO = $request->createDriverPeopleDTO();
 
 
-
         /** @var DriverPeople */
         $model = $service->createDriverPeople($createDriverPeopleDTO);
 

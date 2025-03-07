@@ -390,19 +390,19 @@ use App\Http\Controllers\Controller;
 *         response=200,
 *         description="Получение всех подрядчиков успешно.",
 *         @OA\JsonContent(
-*             @OA\Property(
-*                 property="data",
-*                 type="array",
-*                 @OA\Items(
-*                     ref="#/components/schemas/OrgOrderInvoiceResource"
-*                 )
-*             ),
-*             @OA\Property(
-*                 property="message",
-*                 type="string",
-*                 example="Возвращены все подрядчики откликнувшиеся на заказ."
-*             )
-*         )
+*           @OA\Property(
+*               property="data",
+*               type="array",
+*               @OA\Items(
+*                   ref="#/components/schemas/OrgOrderInvoiceResource"
+*               )
+*           ),
+*           @OA\Property(
+*               property="message",
+*               type="string",
+*               example="Возвращены все подрядчики откликнувшиеся на заказ."
+*           )
+*        )
 *      ),
 *
 *      @OA\Response(

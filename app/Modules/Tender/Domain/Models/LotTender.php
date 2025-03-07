@@ -17,6 +17,7 @@ use App\Modules\Tender\Domain\Models\ApplicationDocumentTender;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\Domain\Factories\TenderFactory;
+use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LotTender extends Model
@@ -67,7 +68,7 @@ class LotTender extends Model
             "status_tender" => StatusTenderEnum::class,
             "type_tender" => TypeTenderEnum::class,
 
-            // "date_start" => 'datetime',
+            "date_start" => \App\Modules\Base\Casts\RuDateTimeCast::class,
         ];
     }
 
@@ -86,7 +87,7 @@ class LotTender extends Model
         return $this->hasMany(ApplicationDocumentTender::class, 'lot_tender_id');
     }
 
-    public function specifica_date_period(): HasMany
+    public function specifical_date_period(): HasMany
     {
         return $this->hasMany(SpecificalDatePeriod::class, 'lot_tender_id');
     }
@@ -99,5 +100,10 @@ class LotTender extends Model
     public function week_period() : HasMany
     {
         return $this->hasMany(WeekPeriod::class, 'lot_tender_id');
+    }
+
+    public function lot_tender_response() : HasMany
+    {
+        return $this->hasMany(LotTenderResponse::class, 'lot_tender_id', 'id');
     }
 }

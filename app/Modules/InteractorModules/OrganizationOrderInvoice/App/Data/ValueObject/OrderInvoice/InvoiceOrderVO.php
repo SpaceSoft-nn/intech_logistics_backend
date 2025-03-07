@@ -4,7 +4,6 @@ namespace App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueO
 
 use App\Modules\Base\Traits\FilterArrayTrait;
 use Arr;
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 
 class InvoiceOrderVO implements Arrayable
@@ -24,7 +23,7 @@ class InvoiceOrderVO implements Arrayable
 
         string $transport_id,
         ?string $price,
-        ?string $date ,
+        ?string $date,
         ?string $comment = null,
 
     ) : self {
@@ -33,7 +32,7 @@ class InvoiceOrderVO implements Arrayable
 
             transport_id: $transport_id,
             price: $price,
-            date: Carbon::parse($date)->format('Y-m-d'),
+            date: $date,
             comment: $comment,
 
         );

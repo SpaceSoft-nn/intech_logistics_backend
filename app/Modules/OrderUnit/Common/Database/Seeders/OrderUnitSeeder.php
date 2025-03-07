@@ -12,6 +12,7 @@ use App\Modules\Organization\Domain\Models\Organization;
 use Cache;
 use Faker\Generator;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 use function App\Helpers\add_time_random;
 
@@ -37,9 +38,14 @@ class OrderUnitSeeder extends Seeder
 
         $organization = Organization::factory()->create();
 
-        $end_date_order = add_time_random(now(), 4);
+        // Получим текущую дату и время в ru формате
+        $date = Carbon::now()->format('d.m.Y');
+        $end_date_order = add_time_random($date, 4);
+
+
         $startData = add_time_random($end_date_order, 2);
         $endData = add_time_random($startData);
+
 
 
         {
@@ -57,7 +63,6 @@ class OrderUnitSeeder extends Seeder
 
 
             ]);
-
 
 
             //делаем связки через промежуточные таблицы

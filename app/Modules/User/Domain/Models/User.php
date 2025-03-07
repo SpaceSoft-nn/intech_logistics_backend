@@ -6,12 +6,14 @@ use App\Modules\Notification\Domain\Models\EmailList;
 use App\Modules\Notification\Domain\Models\PhoneList;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\User\App\Data\Enums\UserRoleEnum;
 use App\Modules\User\Domain\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -121,4 +123,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(EmailList::class);
     }
+
+    public function order_units(): HasMany
+    {
+        return $this->hasMany(OrderUnit::class, 'user_id', 'id');
+    }
+
 }

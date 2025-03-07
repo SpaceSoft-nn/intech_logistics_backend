@@ -54,10 +54,10 @@ final class AgreementTenderAcceptInteractor
 
 
                 //если есть конкретно указаные даты.
-                if($lot_tender->specifica_date_period)
+                if($lot_tender->specifical_date_period)
                 {
 
-                    $dates = $lot_tender->specifica_date_period;
+                    $dates = $lot_tender->specifical_date_period;
 
                     //проходим по дате
                     foreach ($dates as $date) {

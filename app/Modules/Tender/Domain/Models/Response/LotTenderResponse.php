@@ -3,6 +3,7 @@
 namespace App\Modules\Tender\Domain\Models\Response;
 
 use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Tender\Domain\Factories\LotTenderResponseFactory;
 use App\Modules\Tender\Domain\Models\LotTender;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,10 +17,10 @@ class LotTenderResponse extends Model
 
     protected $table = 'lot_tender_responses';
 
-    // protected static function newFactory()
-    // {
-    //     return OrganizationFactory::new();
-    // }
+    protected static function newFactory()
+    {
+        return LotTenderResponseFactory::new();
+    }
 
     protected $fillable = [
 

@@ -2,12 +2,14 @@
 
 namespace App\Modules\Tender\Domain\Interactor;
 
+use App\Modules\Base\Error\BusinessException;
+use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
 use App\Modules\Tender\App\Data\ValueObject\Response\AgreementTenderAcceptVO;
 use App\Modules\Tender\App\Data\ValueObject\Response\AgreementTenderVO;
 
 use App\Modules\Tender\Domain\Actions\Response\CreateAgreementTenderAcceptAction;
 use App\Modules\Tender\Domain\Actions\Response\CreateAgreementTenderAction;
-
+use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Models\Response\AgreementTender;
 use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
 
@@ -42,6 +44,17 @@ final class CreateAgreementTenderInteractor
                 )
             );
 
+            { //устанавливаем статус для тендера в работе
+
+                /** @var LotTender */
+                $LotTender = $this->findLotTender($vo->lot_tender_id);
+
+                $LotTender->status_tender = StatusTenderEnum::in_work;
+
+                $LotTender->save();
+
+            }
+
             return $agreementTender;
 
         });
@@ -60,5 +73,16 @@ final class CreateAgreementTenderInteractor
         return CreateAgreementTenderAcceptAction::make($vo);
     }
 
+    private function findLotTender(string $id) : LotTender
+    {
+        /** @var LotTender */
+        $LotTender = LotTender::find($id);
+
+        if(!$LotTender){
+           throw new BusinessException('Lot Tender не найден.' ,404);
+        }
+
+        return $LotTender;
+    }
 
 }

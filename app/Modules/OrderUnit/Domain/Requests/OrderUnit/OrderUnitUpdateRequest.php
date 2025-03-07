@@ -9,8 +9,6 @@ use Illuminate\Validation\Rule;
 class OrderUnitUpdateRequest extends ApiRequest
 {
 
-    protected $stopOnFirstFailure = true;
-
     public function authorize(): bool
     {
         return true;

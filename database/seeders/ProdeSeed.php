@@ -53,8 +53,6 @@ class ProdeSeed extends Seeder
             //создаём OrderUnit для user
             $this->createOrderUnit($user);
 
-            //создаём водителей + транспортное средство для организации пользователя
-            $this->createTransportAndDriverAndIndividualPeople($user, 4, 1);
 
         }
 
@@ -172,7 +170,6 @@ class ProdeSeed extends Seeder
             ];
 
             $order = OrderUnit::factory()->withCargoGood($arrayCargoGood)->create([
-                "end_date_order" => now()->addDays(5),
                 "order_total" => "180000",
                 "description" => 'Нужно доставить заказ по данными адресам',
                 "body_volume" => '8.5',
@@ -200,7 +197,6 @@ class ProdeSeed extends Seeder
             ];
 
             $order = OrderUnit::factory()->withCargoGood($arrayCargoGood, $mgx)->create([
-                "end_date_order" => now()->addDays(5),
                 "order_total" => "275000",
                 "description" => 'Нужно доставить заказ по заданным Адрессам.',
                 "body_volume" => '18.75',
@@ -220,6 +216,7 @@ class ProdeSeed extends Seeder
         if($drivers instanceof Collection){
 
             foreach ($drivers as $driver) {
+                /** @var IndividualPeople */
                 $individualPeople = IndividualPeople::factory()->create([
                     'personal_area_id' => $driver->personal_area_id,
                     'individualable_id' => $driver->id,
@@ -229,6 +226,7 @@ class ProdeSeed extends Seeder
 
         } else {
 
+            /** @var IndividualPeople */
             $individualPeople = IndividualPeople::factory()->create([
                 'personal_area_id' => $drivers->personal_area_id,
                 'individualable_id' => $drivers->id,

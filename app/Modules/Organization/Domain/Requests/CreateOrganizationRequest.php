@@ -40,9 +40,9 @@ class CreateOrganizationRequest extends ApiRequest
 
             'name' => ['required' , 'string' , 'max:101' , 'min:2'],
             'address' => ['required' , 'string' , 'max:255' , 'min:12'],
-            'phone' => ['required' , 'string'],
-            'email' => ['required', "string", "email:filter", "max:100"],
-            'website' => ['required', "string"],
+            'phone' => ['nullable' , 'string'],
+            'email' => ['nullable', "string", "email:filter", "max:100"],
+            'website' => ['nullable', "string"],
             'type' =>  ['required', 'string' , Rule::in($typeOrganization)],
             'description' => ['nullable', 'string'],
             'okved' => ['nullable', 'string'],

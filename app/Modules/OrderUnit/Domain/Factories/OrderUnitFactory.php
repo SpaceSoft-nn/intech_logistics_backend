@@ -17,6 +17,9 @@ use App\Modules\OrderUnit\Domain\Models\Mgx;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
+
+use function App\Helpers\add_time_random;
 
 class OrderUnitFactory extends Factory
 {
@@ -29,7 +32,6 @@ class OrderUnitFactory extends Factory
         */
         $organization = Organization::factory()->create();
 
-
         {
 
             #TODO Удалить если не будет нужно
@@ -38,11 +40,15 @@ class OrderUnitFactory extends Factory
             $type_load_truck = $this->faker->randomElement(['ltl', 'ftl', 'business_lines', 'more_load']);
             $type_transport_weight = $this->faker->randomElement(['small', 'medium', 'large']);
 
+            // Получим текущую дату и время в ru формате
+            $date = Carbon::now()->format('d.m.Y');
+            $end_date_order = add_time_random($date, 4);
+
             /**
             * @var OrderUnitVO
             */
             $orderUnitVO = OrderUnitVO::make(
-                end_date_order: now(),
+                end_date_order: $end_date_order,
                 type_load_truck: $type_load_truck,
                 body_volume: $this->faker->randomFloat(2, 1, 80),
                 order_total: $this->faker->numberBetween(50000, 275000),
@@ -69,7 +75,7 @@ class OrderUnitFactory extends Factory
      *
      * @return [type]
      */
-    public function withCargoGood(array $cargoGood = null, array $mgx = null)
+    public function withCargoGood(?array $cargoGood = null, ?array $mgx = null)
     {
         // Добавление статуса после создания заказа
         return $this->afterCreating(function (OrderUnit $order) use ($cargoGood, $mgx) {
@@ -77,41 +83,44 @@ class OrderUnitFactory extends Factory
         });
     }
 
-    public function configure(): static
-    {
-        return $this->afterCreating(function (OrderUnit $orderUnit) {
+    // public function configure(): static
+    // {
+    //     return $this->afterCreating(function (OrderUnit $orderUnit) {
+
+    //         if($orderUnit->addresses->isEmpty()) {
+
+    //             //Привязываем Адресса
+    //             $addresses = Address::factory()->count(2)->create();
+
+    //             // Получим текущую дату и время в ru формате
+    //             $date = Carbon::now()->format('d.m.Y');
+    //             $date = add_time_random($date, 4);
+
+    //             LinkOrderToAddressAction::run(
+    //                 OrderToAddressDTO::make(
+    //                     address: $addresses[0],
+    //                     order: $orderUnit,
+    //                     type_status: TypeStateAddressEnum::sending,
+    //                     date: $date,
+    //                 )
+    //             );
+
+    //             LinkOrderToAddressAction::run(
+    //                 OrderToAddressDTO::make(
+    //                     address: $addresses[1],
+    //                     order: $orderUnit,
+    //                     type_status: TypeStateAddressEnum::coming,
+    //                     date: $date,
+    //                 )
+    //             );
 
 
-            if($orderUnit->addresses->isEmpty()) {
+    //         }
 
-                //Привязываем Адресса
-                $addresses = Address::factory()->count(2)->create();
+    //         $this->unionOrderStatus($orderUnit);
 
-                LinkOrderToAddressAction::run(
-                    OrderToAddressDTO::make(
-                        address: $addresses[0],
-                        order: $orderUnit,
-                        type_status: TypeStateAddressEnum::sending,
-                        date: now(),
-                    )
-                );
-
-                LinkOrderToAddressAction::run(
-                    OrderToAddressDTO::make(
-                        address: $addresses[1],
-                        order: $orderUnit,
-                        type_status: TypeStateAddressEnum::coming,
-                        date: now(),
-                    )
-                );
-
-
-            }
-
-            $this->unionOrderStatus($orderUnit);
-
-        });
-    }
+    //     });
+    // }
 
     public function withStatusSet(StatusOrderUnitEnum $enum)
     {
@@ -149,7 +158,7 @@ class OrderUnitFactory extends Factory
      * @param Mgx $mgx
      *
      */
-    private function createCargoGoodToOrder(OrderUnit $orderUnit, array $cargoGood = null, array $mgx = null)
+    private function createCargoGoodToOrder(OrderUnit $orderUnit, ?array $cargoGood = null, ?array $mgx = null)
     {
         //создамё cargoGood + если нужно MGX (кастомный или случайны из factory)
         if(!is_null($cargoGood))

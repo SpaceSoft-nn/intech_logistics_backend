@@ -3,6 +3,7 @@
 namespace App\Modules\OrderUnit\Domain\Models;
 
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
+use App\Modules\OrderUnit\Domain\Factories\OrderUnitStatusFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,10 +18,10 @@ class OrderUnitStatus extends Model
 
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
-    // protected static function newFactory()
-    // {
-    //     return OrderUnitFactory::new();
-    // }
+    protected static function newFactory()
+    {
+        return OrderUnitStatusFactory::new();
+    }
 
     protected $fillable = [
 

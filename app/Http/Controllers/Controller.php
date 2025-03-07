@@ -54,6 +54,7 @@ namespace App\Http\Controllers;
 *    @OA\Property(property="transportation_status", type="string", description="Статус заказа при транспортировки: В пути, На разгрузке..."),
 *    @OA\Property(property="user_id", ref="#/components/schemas/UserResource", description="Ресурс пользователя"),
 *    @OA\Property(property="organization_id", ref="#/components/schemas/OrganizationResource", description="Ресурс организации"),
+*    @OA\Property(property="count_response", type="number", description="возвращает количество откликнувшиеся на заказ перевозчкиов, только на endpoint: где возвращает все заказы", ),
 * ),
 *
 *
@@ -140,6 +141,56 @@ namespace App\Http\Controllers;
 *         @OA\Property(property="driver_id", type="string", format="uuid", description="UUID водителя", example="123e4567-e89b-12d3-a456-426614174000")
 *     }
 * ),
+*
+*
+*
+* @OA\Schema(
+*     schema="OrganizationLoginResource",
+*     type="object",
+*     title="Organization Login Resource",
+*     properties={
+*         @OA\Property(property="name", type="string", description="Название организации", maxLength=101, minLength=2),
+*         @OA\Property(property="address", type="string", description="Адрес организации", maxLength=255, minLength=12),
+*         @OA\Property(property="phone", type="string", description="Телефон организации"),
+*         @OA\Property(property="email", type="string", format="email", description="Email организации", maxLength=100),
+*         @OA\Property(property="website", type="string", description="Вебсайт организации"),
+*         @OA\Property(
+*           property="type",
+*           type="string",
+*           description="Тип организации",
+*           enum={"legal", "individual"}
+*         ),
+*         @OA\Property(property="user_role_for_organization", type="string", enum={"admin", "manager", "observer"}, description="Роль организации у этого user по phone"),
+*         @OA\Property(property="description", type="string", nullable=true, description="Описание организации"),
+*         @OA\Property(property="okved", type="string", nullable=true, description="Индустрия организации"),
+*         @OA\Property(property="founded_date", type="string", format="date", nullable=true, description="Дата основания организации"),
+*         @OA\Property(property="inn", type="string", description="ИНН организации", pattern="^(([0-9]{12})|([0-9]{10}))?$"),
+*         @OA\Property(
+*           property="type_cabinet",
+*           type="string",
+*           description="Тип кабинета",
+*           enum={"Заказчик", "Склад", "Перевозчик"}
+*         ),
+*         @OA\Property(
+*           property="kpp",
+*           type="string",
+*           description="КПП (для ООО)",
+*           pattern="^([0-9]{9})?$",
+*           nullable=true
+*         ),
+*         @OA\Property(
+*           property="registration_number",
+*           type="string",
+*           description="ОГРН (для ООО)",
+*           pattern="^([0-9]{13})?$",
+*           nullable=true
+*         ),
+*     },
+* ),
+*
+*
+*
+*
 *
 * //Схема при получении OrderUnitResource
 * @OA\Schema(
@@ -464,7 +515,7 @@ namespace App\Http\Controllers;
 * @OA\Schema(
 *     schema="SpecificaDatePeriodResource",
 *     type="object",
-*     @OA\Property(property="id_specifica_date_period", type="integer", description="ID специфической даты периода"),
+*     @OA\Property(property="id_specifical_date_period", type="integer", description="ID специфической даты периода"),
 *     @OA\Property(property="date", type="string", format="date", description="Конкрентая дата для Тендера (Выполнения заказа)"),
 *     @OA\Property(property="count_transport", type="integer", description="Количество транспорта")
 * ),
@@ -486,7 +537,8 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="organization_id", type="string", format="uuid", description="ID организации"),
 *     @OA\Property(property="agreement_document_tender_link", type="string", format="url", description="Ссылка на документ соглашения тендера - договор - будет обязательный и только один"),
 *     @OA\Property(property="array_application_document_tender_link", type="array", @OA\Items(type="string", format="url"), description="Ссылки на документы приложения для тендера"),
-*     @OA\Property(property="array_specifica_date_period", type="array", @OA\Items(ref="#/components/schemas/SpecificaDatePeriodResource"), description="Массив специфических дат периода, здесь указываются конкретные даты тендера + количество транспорта")
+*     @OA\Property(property="array_specifical_date_period", type="array", @OA\Items(ref="#/components/schemas/SpecificaDatePeriodResource"), description="Массив специфических дат периода, здесь указываются конкретные даты тендера + количество транспорта"),
+*     @OA\Property(property="count_response", type="number", description="возвращает количество откликнувшиеся на тендер перевозчкиов, только на endpoint: где возвращает все заказы", ),
 * ),
 *
 *

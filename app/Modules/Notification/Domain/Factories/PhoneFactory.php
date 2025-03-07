@@ -11,7 +11,7 @@ class PhoneFactory extends Factory
 
     public function definition(): array
     {
-        $mobilePhone = '+79' . $this->faker->numerify('#########');
+        $mobilePhone = '79' . $this->faker->numerify('#########');
 
         return [
             'value' => $mobilePhone,

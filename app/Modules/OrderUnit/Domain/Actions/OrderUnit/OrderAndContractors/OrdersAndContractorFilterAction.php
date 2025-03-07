@@ -19,18 +19,15 @@ class OrdersAndContractorFilterAction
     private static function run(string $organization_id, array $status) : Collection
     {
 
-        $status_enum = collect(StatusOrderUnitEnum::stringByCaseToObjectArray($status))->filter(function ($value){
-            return $value !== null;
-        });
+        // $status_enum = collect(StatusOrderUnitEnum::stringByCaseToObjectArray($status))->filter(function ($value){
+        //     return $value !== null;
+        // });
 
-        if(is_null($status_enum))
-        {
-            $status_enum = [
-                StatusOrderUnitEnum::published,
-                StatusOrderUnitEnum::in_work,
-                StatusOrderUnitEnum::pre_order,
-            ];
-        }
+        $status_enum = collect([
+            StatusOrderUnitEnum::published,
+            StatusOrderUnitEnum::in_work,
+            StatusOrderUnitEnum::pre_order,
+        ]);
 
 
         //Возвращаем все заказы + отфильтрованные выбранным перевозчиком

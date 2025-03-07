@@ -31,7 +31,7 @@ class TendersAndContractorFilterAction
 
         $tenders = LotTender::with(
                 "agreement_document_tender", "application_document_tender",
-                "specifica_date_period",
+                "specifical_date_period",
                 "order_unit",
                 "week_period",
         )

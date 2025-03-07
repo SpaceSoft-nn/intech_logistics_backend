@@ -21,11 +21,12 @@ class OrderUnitService
 
     public function createOrderUnit(OrderUnitCreateDTO $dto) : ?OrderUnit
     {
+        //При Lot_tender
         if(!is_null($dto->orderUnitVO->lot_tender_id)){
             //Если в VO существует ссылка на lot_tender_id - выбираем бизнес логику по созданию lot_tender_id
             return $this->сreateOrderUnitHasTenderInteractor->execute($dto->orderUnitVO);
         }
-
+        
         return $this->createOrderUnitInteractor->execute($dto);
     }
 

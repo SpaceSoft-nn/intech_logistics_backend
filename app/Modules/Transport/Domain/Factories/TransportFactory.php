@@ -2,8 +2,6 @@
 
 namespace App\Modules\Transport\Domain\Factories;
 
-use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
-use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
 use App\Modules\Transport\App\Data\Enums\TransportBodyType;
@@ -20,15 +18,15 @@ class TransportFactory extends Factory
     public function definition(): array
     {
 
-        /** @var IndividualPeople */
-        $individualPeople = IndividualPeople::factory()
-        ->for(
-            DriverPeople::factory(), 'individualable'
-        )
-        ->create();
+        // /** @var IndividualPeople */
+        // $individualPeople = IndividualPeople::factory()
+        // ->for(
+        //     DriverPeople::factory(), 'individualable'
+        // )
+        // ->create();
 
-        /** @var DriverPeople  */
-        $driver = $individualPeople->individualable;
+        // /** @var DriverPeople  */
+        // $driver = $individualPeople->individualable;
 
         $type_loading = array_column(TransportLoadingType::cases(), 'name');
         $type_weight = array_column(TransportTypeWeight::cases(), 'name');
@@ -36,7 +34,6 @@ class TransportFactory extends Factory
         $type_status = array_column(TransportStatusEnum::cases(), 'name');
 
         $organization = Organization::factory()->create();
-
 
         /**
         * @var TransportVO
@@ -54,7 +51,7 @@ class TransportFactory extends Factory
             type_status : $this->faker->randomElement($type_status),
 
             organization_id : $organization->id,
-            driver_id : $driver->id,
+            driver_id : null,
             description : $this->faker->text(),
         );
 

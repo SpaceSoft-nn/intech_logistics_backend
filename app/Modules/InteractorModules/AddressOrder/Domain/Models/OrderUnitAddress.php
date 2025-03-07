@@ -24,6 +24,7 @@ class OrderUnitAddress extends Pivot
     protected $casts = [
         'type' => TypeStateAddressEnum::class,
         'priority' => 'integer',
+        'data_time' => \App\Modules\Base\Casts\RuDateTimeCast::class,
     ];
 
     /**

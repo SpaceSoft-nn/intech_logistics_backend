@@ -2,13 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Test\TestController;
-use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Address\AddressController;
-use App\Http\Controllers\API\Transfer\TransferContoller;
-use App\Http\Controllers\API\Auth\RegistrationController;
+use App\Http\Controllers\API\Auth\PhoneLoginController;
 use App\Http\Controllers\API\Avizo\AvizoEmailController;
 use App\Http\Controllers\API\Avizo\AvizoPhoneController;
+use App\Http\Controllers\API\Transfer\TransferContoller;
+use App\Http\Controllers\API\Auth\RegistrationController;
 use App\Http\Controllers\API\OrderUnit\OrderUnitController;
 use App\Http\Controllers\API\Transport\TransportController;
 use App\Http\Controllers\API\Matrix\MatrixDistanceController;
@@ -26,8 +26,14 @@ use App\Http\Controllers\API\Tender\ResponseTenderController\ResponseTenderContr
 
 //сделано создание user + organization вместе store
 Route::post('/registration', [RegistrationController::class, 'store']);
-Route::post('/login', LoginController::class);
+// Route::post('/login', LoginController::class);
 
+Route::prefix('login')->group(function () {
+
+    Route::post('/phones', PhoneLoginController::class);
+    Route::post('/', LoginController::class);
+
+});
 
 Route::post('/notification/send', [NotificationController::class, 'sendNotification']);
 Route::post('/notification/confirm', [NotificationController::class, 'confirmCode']);
@@ -63,7 +69,6 @@ Route::prefix('users')->middleware(['auth:sanctum', 'isActiveUser','hasOrgHeader
 
     // Route::post('/', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
 
-
 });
 
 
@@ -90,12 +95,6 @@ Route::post('/addresses', [AddressController::class, 'create']);
 
     //orderUnit
 Route::prefix('/orders')->group(function () {
-
-    { //Установка статутса транспортировки события: в пути, на разгрузке...
-        #TODO Возможно в будущем uuid заказа нужно будет отправлять в теле запроса.
-        #TODO Нужна ли проверка на заказчика?
-        Route::post('/{orderUnit}/status-transportation', [OrderUnitController::class, 'setStatusTransportationEvent'])->whereUuid('orderUnit');
-    }
 
     {
         //Вернуть все записи если заказчик - только заказы которые принадлежат ему, если перевозчик - то все
@@ -125,7 +124,7 @@ Route::prefix('/orders')->group(function () {
                 //Возврат всех подрятчиков откликнувшиеся на заказ.
                 Route::get('/{orderUnit}/contractors', [OrderUnitController::class, 'getContractors'])->whereUuid('orderUnit', 'organization');
 
-                //Добавление исполнителей к заказу
+                //Добавление исполнителей к заказу (отклик)
                 Route::post('/{orderUnit}/contractors/{organization}', [OrderUnitController::class, 'addСontractor'])->whereUuid('orderUnit', 'organization')
                     ->withoutMiddleware('isCustomerOrganization')
                     ->middleware('isCarrierOrganization');
@@ -325,6 +324,10 @@ Route::prefix('/avizos')->group(function () {
     });
 
 });
+
+
+
+
 
 Route::get('/test', [TestController::class, 'index']);
 

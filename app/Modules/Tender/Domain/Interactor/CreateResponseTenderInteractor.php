@@ -2,11 +2,14 @@
 
 namespace App\Modules\Tender\Domain\Interactor;
 
+use App\Modules\Base\Error\BusinessException;
 use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
+use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
 use App\Modules\Tender\App\Data\ValueObject\Response\InvoiceLotTenderVO;
 use App\Modules\Tender\App\Data\ValueObject\Response\LotTenderResponseVO;
 use App\Modules\Tender\Domain\Actions\Response\CreateInvoiceLotTenderAction;
 use App\Modules\Tender\Domain\Actions\Response\CreateLotTenderResponseAction;
+use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\Domain\Models\Response\InvoiceLotTender;
 use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
 use DB;

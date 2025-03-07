@@ -4,6 +4,7 @@ namespace App\Modules\OrderUnit\Domain\Models;
 
 use App\Modules\Address\Domain\Models\Address;
 use App\Modules\InteractorModules\AddressOrder\Domain\Models\OrderUnitAddress;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
@@ -32,6 +33,7 @@ class OrderUnit extends Model
 
     protected $fillable = [
 
+        //date
         "end_date_order",
         "exemplary_date_start",
 
@@ -39,10 +41,12 @@ class OrderUnit extends Model
         "order_total",
         "description",
 
-        "type_transport_weight",
-        "cargo_unit_sum",
 
+        "cargo_unit_sum",
         "product_type",
+
+        //enum
+        "type_transport_weight",
         "type_load_truck",
 
         "user_id",
@@ -79,7 +83,6 @@ class OrderUnit extends Model
 
             "type_load_truck" => TypeLoadingTruckMethod::class,
             "type_transport_weight" => TypeTransportWeight::class,
-            'end_date_order' => "datetime",
             'exemplary_date_start' => "datetime",
 
             'add_load_space' => "boolean",
@@ -87,6 +90,8 @@ class OrderUnit extends Model
             'change_time' => "boolean",
             'address_is_array' => "boolean",
             'goods_is_array' => "boolean",
+
+            'end_date_order' => \App\Modules\Base\Casts\RuDateTimeCast::class,
         ];
     }
 
@@ -154,6 +159,15 @@ class OrderUnit extends Model
     public function lot_tender(): BelongsTo
     {
         return $this->belongsTo(LotTender::class, 'lot_tender_id', 'id');
+    }
+
+    /**
+     * Вернуть все отклики от перевозчиков на заказ
+     * @return HasMany
+     */
+    public function organization_order_unit_invoices(): HasMany
+    {
+        return $this->hasMany(OrganizationOrderUnitInvoice::class, 'order_unit_id', 'id');
     }
 
 }

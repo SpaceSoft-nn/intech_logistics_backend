@@ -124,7 +124,7 @@ Route::prefix('/orders')->group(function () {
                 //Возврат всех подрятчиков откликнувшиеся на заказ.
                 Route::get('/{orderUnit}/contractors', [OrderUnitController::class, 'getContractors'])->whereUuid('orderUnit', 'organization');
 
-                //Добавление исполнителей к заказу
+                //Добавление исполнителей к заказу (отклик)
                 Route::post('/{orderUnit}/contractors/{organization}', [OrderUnitController::class, 'addСontractor'])->whereUuid('orderUnit', 'organization')
                     ->withoutMiddleware('isCustomerOrganization')
                     ->middleware('isCarrierOrganization');

@@ -19,7 +19,7 @@ class AddContractorRequest extends ApiRequest
 
             "transport_id" => ['required', 'uuid', "exists:transports,id"],
             "price" => ['nullable', 'numeric'],
-            "date" => ['nullable', 'date'],
+            "date" => ['nullable', 'date', 'date_format:d.m.Y'],
             "comment" => [ 'nullable', 'string', 'max:1000'],
 
         ];

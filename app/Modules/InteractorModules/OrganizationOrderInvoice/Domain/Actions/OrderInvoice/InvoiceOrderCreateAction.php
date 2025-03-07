@@ -34,8 +34,8 @@ class InvoiceOrderCreateAction
             $model = InvoiceOrder::create($vo->toArray());
 
         } catch (\Throwable $th) {
-            Mylog('Ошибка создание OrderInvoice: ' . $th);
-            throw new Exception('Ошибка создание OrderInvoice', 500);
+            Mylog('Ошибка создание InvoiceOrderCreateAction: ' . $th);
+            throw new Exception('Ошибка создание InvoiceOrderCreateAction', 500);
         }
 
         return $model ? $model : null;

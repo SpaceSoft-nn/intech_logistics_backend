@@ -51,6 +51,8 @@ class OrderUnitResource extends JsonResource
 
             'address_array' => AddressCollection::make(resource: $this->addresses, idOrderUnit: $this->id),
 
+            "contractor_id" => $this->contractor_id,
+
             //bool
                 "add_load_space" => $this->add_load_space,
                 "change_price" => $this->change_price,

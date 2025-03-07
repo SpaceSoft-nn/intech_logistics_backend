@@ -44,7 +44,7 @@ class InvoiceOrder extends Model
     protected function casts(): array
     {
         return [
-            'data' => "datetime",
+            'data' => \App\Modules\Base\Casts\RuDateTimeCast::class,
         ];
     }
 

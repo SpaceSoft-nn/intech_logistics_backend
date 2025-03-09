@@ -13,6 +13,7 @@
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "prog-time/laravel-request-testdata": "^0.1.2",
         "ramsey/uuid": "^4.7",
         "symfony/var-dumper": "^7.2",
         "webklex/laravel-imap": "5.3.0"

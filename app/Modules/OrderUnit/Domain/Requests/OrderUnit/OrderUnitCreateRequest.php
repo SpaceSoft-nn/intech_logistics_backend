@@ -2,6 +2,7 @@
 
 namespace App\Modules\OrderUnit\Domain\Requests\OrderUnit;
 
+use App\Modules\Address\Domain\Models\Address;
 use App\Modules\Address\Domain\Rules\ArrayAddressRule;
 use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
@@ -66,6 +67,7 @@ class OrderUnitCreateRequest extends ApiRequest
 
         ];
     }
+
 
     /**
     * Получить или сохранить валидированные данные.

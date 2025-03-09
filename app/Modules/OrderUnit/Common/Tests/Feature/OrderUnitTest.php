@@ -2,24 +2,22 @@
 
 namespace App\Modules\OrderUnit\Common\Tests\Feature;
 
+use Tests\TestCase;
+use Illuminate\Support\Collection;
+use App\Modules\User\Domain\Models\User;
+use function App\Helpers\add_time_random;
 use App\Modules\Address\Domain\Models\Address;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\Transport\Domain\Models\Transport;
+use App\Modules\Notification\Domain\Models\PhoneList;
+use App\Modules\OrderUnit\Domain\Models\OrderUnitStatus;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
 use App\Modules\InteractorModules\AddressOrder\App\Data\DTO\OrderToAddressDTO;
 use App\Modules\InteractorModules\AddressOrder\App\Data\Enum\TypeStateAddressEnum;
 use App\Modules\InteractorModules\AddressOrder\Domain\Actions\LinkOrderToAddressAction;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
-use App\Modules\Notification\Domain\Models\PhoneList;
-use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
-use App\Modules\OrderUnit\Domain\Models\OrderUnitStatus;
-use App\Modules\Organization\App\Data\Enums\TypeCabinetEnum;
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Transport\Domain\Models\Transport;
-use App\Modules\User\Domain\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Collection;
-use Tests\TestCase;
 
-use function App\Helpers\add_time_random;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 
 class OrderUnitTest extends TestCase
 {

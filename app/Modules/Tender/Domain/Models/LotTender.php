@@ -8,17 +8,17 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Modules\Tender\App\Data\Enums\TypeTenderEnum;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Modules\Tender\Domain\Factories\TenderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
+use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\Domain\Models\SpecificalDatePeriod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
 use App\Modules\Tender\Domain\Models\ApplicationDocumentTender;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Tender\Domain\Factories\TenderFactory;
 use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LotTender extends Model
 {

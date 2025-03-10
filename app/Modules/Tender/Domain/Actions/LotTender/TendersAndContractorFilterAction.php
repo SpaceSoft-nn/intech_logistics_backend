@@ -18,13 +18,11 @@ class TendersAndContractorFilterAction
     private static function run(string $organization_id) : Collection
     {
 
-        //указываем фильтрацию по статусам для перевозчика
-        $status_enum = [
+        $status_enum = collect([
             StatusTenderEnum::published,
             StatusTenderEnum::in_work,
-            // StatusTenderEnum::draft,
-            // StatusTenderEnum::accepted,
-        ];
+        ]);
+
 
         //Возвращаем все заказы + отфильтрованные выбранным перевозчиком
         $responses = LotTenderResponse::where('organization_contractor_id', $organization_id)->get();

@@ -127,7 +127,9 @@ class ProdeSeed extends Seeder
                 Arr::get($userValue, "phone_id", $phone->id);
             }
 
-            $orgArray = Organization::factory()->make()->toArray();
+            $orgArray = Organization::factory()->make([
+                'remuved' => false
+            ])->toArray();
             //меняем user на своего
             Arr::set($orgArray, 'owner_id', $user->id);
             Arr::set($orgArray, 'type', "legal");

@@ -35,7 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'isCarrierOrganization' => isCarrierOrganization::class, //Проверяет связку организация + пользователь и организация типа Carrier 'перевозчик'
             'hasOrgHeader' => HasOrganizationHeader::class, //Проверяет связку организация + пользователь и организация типа Carrier 'перевозчик'
             'isActiveUser' => isActiveUser::class, //Активирован ли user user->active
-            'manuallyActivatedOrganization' => isActiveUser::class, //Активирована ли организация в проекте вручную
+            'manuallyActivatedOrganization' => ManuallyActivatedOrganization::class, //Активирована ли организация в проекте вручную
         ]);
 
         $middleware->prependToGroup('organizaionGroupMiddleware', [
@@ -46,16 +46,23 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
 
-        $exceptions->render(function (Exception $ex) {
+        $exceptions->render(function (Exception $e) {
 
-            //Для ошибок Exception - и коде 500, присылаем минимальную информацию
-            // if($ex->getCode() === 500)
-            // {
-            //     return response()->json([
-            //         'message' => 'Внутренняя Ошибка Сервера'
-            //     ], 500);
-            // }
+                if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
+                    $status = $e->getStatusCode();
+                } else {
+                    $status = 500;
+                }
 
-        });
+                if ($status === 500) {
+                    return;
+                }
+
+                return response()->json([
+                    'error' => $e->getMessage(),
+                    'code'  => $e->getCode() ?: $status
+                ], $status);
+
+            });
 
     })->create();

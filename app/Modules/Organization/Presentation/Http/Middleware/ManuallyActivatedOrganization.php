@@ -4,6 +4,7 @@ namespace App\Modules\Organization\Presentation\Http\Middleware;
 
 use App\Modules\Organization\Domain\Models\Organization;
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,7 +27,9 @@ class ManuallyActivatedOrganization
 
         $organization = Organization::find($organization_id);
 
-        abort_if( $organization->remuved, 403, 'Организация не активирована, попросите Администраторов проекта, активировать организацию.');
+        // dd($organization->remuved);
+
+        abort_if( $organization->remuved , 403, 'Организация не активирована, попросите Администраторов проекта, активировать организацию.');
 
         return $next($request);
 

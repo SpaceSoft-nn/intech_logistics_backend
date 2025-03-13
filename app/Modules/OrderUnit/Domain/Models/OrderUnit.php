@@ -41,7 +41,6 @@ class OrderUnit extends Model
         "order_total",
         "description",
 
-
         "cargo_unit_sum",
         "product_type",
 

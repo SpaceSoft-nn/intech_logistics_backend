@@ -33,8 +33,8 @@ class OfferContractorAddCustomerRequest extends ApiRequest
             'type_load_truck' => ['required', Rule::in($transportLoadingType)],
             'start_address_id' => ['required', 'uuid', "exists:addresses,id"],
             'end_address_id' => ['required', 'uuid', "exists:addresses,id"],
-            'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date'],
+            'start_date' => ['required', 'date', 'date_format:d.m.Y'],
+            'end_date' => ['required', 'date', 'date_format:d.m.Y' ,'after_or_equal:start_date'],
             'description' => ['nullable', 'string', "max:1000"],
         ];
     }

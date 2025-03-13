@@ -50,8 +50,8 @@ class InvoiceOrderCustomer extends Model
     protected function casts(): array
     {
         return [
-            "start_date" => 'date',
-            "end_date" => 'date',
+            "start_date" => \App\Modules\Base\Casts\RuDateTimeCast::class,
+            "end_date" => \App\Modules\Base\Casts\RuDateTimeCast::class,
             "type_transport_weight" => TransportTypeWeight::class,
             "type_load_truck" => TransportLoadingType::class,
         ];

@@ -38,6 +38,7 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\Organiz
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
 
 class OrderUnitController extends Controller
 {
@@ -228,6 +229,49 @@ class OrderUnitController extends Controller
         return ($status)
             ? response()->json(array_success(null, 'Update order successfully.'), 200)
             : response()->json(array_error(null, 'Update order error.'), 404);
+
+    }
+
+    /** Обновление заказа в статусе 'черновик' */
+    public function updateDraft(
+        OrderUnit $orderUnit,
+        OrderUnitCreateRequest $request,
+        OrderUnitService $service,
+    ) {
+
+
+        abort_unless( StatusOrderUnitEnum::isDraft($orderUnit->actual_status->status), 403, "Статус у заказа должен быть 'Черновик'");
+
+        /**
+        * @var OrderUnitVO
+        */
+        $orderUnitVO = $request->createOrderUnitVO();
+
+        /**
+        * @var ?CargoGoodVO[]
+        */
+        $cargoGoodVO = $request->createCargoGoodVO();
+
+        /**
+        * @var OrderUnitAddressDTO
+        */
+        $orderUnitAddressDTO = $request->createOrderUnitAddressDTO();
+
+        /** @var OrderUnitCreateDTO  */
+        $dto  = OrderUnitCreateDTO::make(
+            orderUnitVO: $orderUnitVO,
+            orderUnitAddressDTO: $orderUnitAddressDTO,
+            cargoGoodVO : $cargoGoodVO,
+        );
+
+        /** @var OrderUnit */
+        $order = $service->updateDraftOrderUnit(
+            dto: $dto,
+            order: $orderUnit,
+        );
+
+
+        return response()->json(array_success(OrderUnitResource::make($order), 'Update OrderUnit Successfully.'), 200);
 
     }
 

@@ -113,5 +113,9 @@ enum StatusOrderUnitEnum : string
         };
     }
 
+    public static function isDraft(StatusOrderUnitEnum $enum) : bool
+    {
+        return self::draft == $enum;
+    }
 
 }

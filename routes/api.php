@@ -89,9 +89,17 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 });
 
     //Address
-Route::get('/addresses', [AddressController::class, 'index']);
-Route::get('/addresses/{address}', [AddressController:: class, 'show'])->whereUuid('address');
-Route::post('/addresses', [AddressController::class, 'create']);
+Route::prefix('/addresses')->controller(AuthController::class)->group(function () {
+
+    Route::get('/', [AddressController::class, 'index']);
+    Route::post('/', [AddressController::class, 'create']);
+
+    Route::get('/{address}', [AddressController:: class, 'show'])->whereUuid('address');
+
+    Route::patch('/{address}', [AddressController::class, 'update'])->whereUuid('orderUnit');
+});
+
+
 
     //orderUnit
 Route::prefix('/orders')->group(function () {
@@ -115,6 +123,9 @@ Route::prefix('/orders')->group(function () {
             Route::post('/select-offers', [OrderUnitController::class, 'selectPrice']);
 
             Route::patch('/{orderUnit}', [OrderUnitController::class, 'update'])->whereUuid('orderUnit');
+
+            //обновление orderUnit в том случае если находится в статусе черновик
+            Route::patch('/{orderUnit}/draft', [OrderUnitController::class, 'updateDraft'])->whereUuid('orderUnit');
 
             {   //contractors
 

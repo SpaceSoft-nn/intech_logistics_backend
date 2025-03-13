@@ -6,6 +6,7 @@ use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Interactor\Order\CreateOrderUnitHasTenderInteractor;
 use App\Modules\OrderUnit\Domain\Interactor\Order\CreateOrderUnitInteractor;
+use App\Modules\OrderUnit\Domain\Interactor\Order\UpdateDraftOrderUnitInteractor;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Illuminate\Support\Collection;
 use Exception;
@@ -14,9 +15,10 @@ class OrderUnitService
 {
 
     public function __construct(
-        public OrderUnitRepository $repOrder,
-        public CreateOrderUnitInteractor $createOrderUnitInteractor,
-        public CreateOrderUnitHasTenderInteractor $сreateOrderUnitHasTenderInteractor,
+        private OrderUnitRepository $repOrder,
+        private CreateOrderUnitInteractor $createOrderUnitInteractor,
+        private CreateOrderUnitHasTenderInteractor $сreateOrderUnitHasTenderInteractor,
+        private UpdateDraftOrderUnitInteractor $updateDraftOrderUnitInteractor,
     ) {}
 
     public function createOrderUnit(OrderUnitCreateDTO $dto) : ?OrderUnit
@@ -26,8 +28,14 @@ class OrderUnitService
             //Если в VO существует ссылка на lot_tender_id - выбираем бизнес логику по созданию lot_tender_id
             return $this->сreateOrderUnitHasTenderInteractor->execute($dto->orderUnitVO);
         }
-        
+
         return $this->createOrderUnitInteractor->execute($dto);
+    }
+
+    /** Обновляем все возможные данные у заказа который в статусе 'черновик */
+    public function updateDraftOrderUnit(OrderUnitCreateDTO $dto, OrderUnit $order) : OrderUnit
+    {
+        return $this->updateDraftOrderUnitInteractor->execute($dto, $order);
     }
 
 
@@ -68,6 +76,7 @@ class OrderUnitService
 
         return $total;
     }
+
 
     #TODO Вынести эту логику в отдельный класс
     /**

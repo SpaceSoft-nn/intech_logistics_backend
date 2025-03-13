@@ -37,8 +37,8 @@ class OfferContractorAgreementOrderRequest extends ApiRequest
             "start_address_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс начало.
             "end_address_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс окончания.
 
-            "start_date_delivery" => ['required', 'date'], // Дата начала заказа
-            "end_date_delivery" => ['required', 'date'], // Дата окончания заказа
+            "start_date_delivery" => ['required', 'date', 'date_format:d.m.Y'], // Дата начала заказа
+            "end_date_delivery" => ['required', 'date', 'date_format:d.m.Y', 'after_or_equal:start_date_delivery'], // Дата окончания заказа
 
 
             //массивы
@@ -50,7 +50,7 @@ class OfferContractorAgreementOrderRequest extends ApiRequest
             //Убрали организацию т.к она должна указывать от связей
             // "organization_id" => ['required', 'uuid', "exists:organizations,id"],
 
-            "end_date_order" => ['required', 'date'], //Дата окончание order
+            "end_date_order" => ['required', 'date', 'date_format:d.m.Y', 'before:start_date_delivery'], //Дата окончание order
 
             "type_load_truck" => ['required', Rule::in($typeLoadingTruckMethod)], //типа загрузки ftl, ltl, custom
 

@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('individualable_type')->nullable();
 
 
+
                 $table->foreignUuid('personal_area_id')
                     ->constrained('personal_areas', 'id')->noActionOnDelete();
 

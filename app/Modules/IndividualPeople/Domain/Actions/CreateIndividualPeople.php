@@ -2,27 +2,38 @@
 
 namespace App\Modules\IndividualPeople\Domain\Actions;
 
-use App\Modules\IndividualPeople\App\Data\DTO\Base\BaseDTO;
-use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
-use App\Modules\IndividualPeople\Domain\Models\IndividualPeople as Model;
+use App\Modules\IndividualPeople\App\Data\ValueObject\IndividualPeopleVO;
+use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
+use Exception;
+
+use function App\Helpers\Mylog;
 
 class CreateIndividualPeople
 {
 
-    /**
-     * @param CreateIndividualPeopleDTO $dto
-     *
-     * @return Model
-     */
-    public static function make(BaseDTO $dto) : Model
+
+    public static function make(IndividualPeopleVO $vo) : IndividualPeople
     {
-        return (new self())->run($dto);
+        return (new self())->run($vo);
     }
 
-    public function run(CreateIndividualPeopleDTO $dto) : Model
+    public function run(IndividualPeopleVO $vo) : IndividualPeople
     {
-        $model = Model::query()
-            ->create($dto->toArrayNotNull());
+
+
+        try {
+
+            $model = IndividualPeople::query()
+                ->create($vo->toArrayNotNull());
+
+        } catch (\Throwable $th) {
+
+            $nameClass = self::class;
+
+            Mylog("Ошибка в {$nameClass} при создании записи: " . $th);
+            throw new Exception('Ошибка в классе: ' . $nameClass, 500);
+
+        }
 
         return $model;
     }

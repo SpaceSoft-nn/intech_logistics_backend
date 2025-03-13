@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
+use App\Modules\IndividualPeople\Domain\Models\Passport;
 use Arr;
 use Illuminate\Database\Seeder;
 use App\Modules\User\Domain\Models\User;
@@ -217,21 +218,39 @@ class ProdeSeed extends Seeder
 
             foreach ($drivers as $driver) {
                 /** @var IndividualPeople */
-                $individualPeople = IndividualPeople::factory()->create([
-                    'personal_area_id' => $driver->personal_area_id,
-                    'individualable_id' => $driver->id,
-                    'individualable_type' => DriverPeople::class,
-                ]);
+                $individualPeople = IndividualPeople::factory()
+                    ->has(Passport::factory()->state(function (array $attributes, IndividualPeople $ipeople) {
+                            return [
+                                'first_name' => $ipeople->first_name,
+                                'last_name' => $ipeople->last_name,
+                                'father_name' => $ipeople->father_name,
+                            ];
+                        })
+                    )
+                    ->create([
+                        'personal_area_id' => $driver->personal_area_id,
+                        'individualable_id' => $driver->id,
+                        'individualable_type' => DriverPeople::class,
+                    ]);
             }
 
         } else {
 
             /** @var IndividualPeople */
-            $individualPeople = IndividualPeople::factory()->create([
-                'personal_area_id' => $drivers->personal_area_id,
-                'individualable_id' => $drivers->id,
-                'individualable_type' => DriverPeople::class,
-            ]);
+            $individualPeople = IndividualPeople::factory()
+                ->has(Passport::factory()->state(function (array $attributes, IndividualPeople $ipeople) {
+                        return [
+                            'first_name' => $ipeople->first_name,
+                            'last_name' => $ipeople->last_name,
+                            'father_name' => $ipeople->father_name,
+                        ];
+                    })
+                )
+                ->create([
+                    'personal_area_id' => $drivers->personal_area_id,
+                    'individualable_id' => $drivers->id,
+                    'individualable_type' => DriverPeople::class,
+                ]);
 
         }
 

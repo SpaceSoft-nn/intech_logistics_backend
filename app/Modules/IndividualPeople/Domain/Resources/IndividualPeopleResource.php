@@ -4,6 +4,7 @@ namespace App\Modules\IndividualPeople\Domain\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Modules\IndividualPeople\Domain\Resources\Passport\PassportResource;
 
 class IndividualPeopleResource extends JsonResource
 {
@@ -23,6 +24,7 @@ class IndividualPeopleResource extends JsonResource
             "email" => $this->email,
             "phone" => $this->phone,
             "comment" => $this->comment,
+            "passport" => PassportResource::make($this->passport),
 
         ];
     }

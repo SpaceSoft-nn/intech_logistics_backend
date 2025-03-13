@@ -41,7 +41,12 @@ class IndividualPeopleController extends Controller
         */
         $dto = $request->createCreateIndividualPeopleDTO();
 
+
+        /**
+        * @var IndividualPeople
+        */
         $model = $service->createIndividualPeople($dto);
+
 
         return $model ?
         response()->json(array_success(IndividualPeopleResource::make($model), 'Create individual people.'), 201)

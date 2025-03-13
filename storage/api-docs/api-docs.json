@@ -551,8 +551,36 @@
                                         "example": "71234567890",
                                         "nullable": true
                                     },
-                                    "comment": {
+                                    "passport_series": {
+                                        "description": "Серия паспорта..",
                                         "type": "string",
+                                        "maxLength": 4,
+                                        "minLength": 4,
+                                        "example": "1234"
+                                    },
+                                    "passport_number": {
+                                        "description": "Номер паспорта.",
+                                        "type": "string",
+                                        "maxLength": 6,
+                                        "minLength": 6,
+                                        "example": "123456"
+                                    },
+                                    "issue_date": {
+                                        "description": "Дата выдачи паспорта в ру формате",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "01.01.2020"
+                                    },
+                                    "issued_by": {
+                                        "description": "Орган, выдавший паспорт.",
+                                        "type": "string",
+                                        "example": "Some comment"
+                                    },
+                                    "department_code": {
+                                        "description": "Код подразделения, выдавшего паспорт. Допускается значение null.",
+                                        "type": "string",
+                                        "maxLength": 6,
+                                        "minLength": 6,
                                         "example": "Some comment",
                                         "nullable": true
                                     }
@@ -7662,6 +7690,58 @@
                 },
                 "type": "object"
             },
+            "PassportResource": {
+                "title": "Passport Resource",
+                "properties": {
+                    "first_name": {
+                        "description": "Имя",
+                        "type": "string",
+                        "example": "Имя"
+                    },
+                    "last_name": {
+                        "description": "Фамилия",
+                        "type": "string",
+                        "example": "Фамилия"
+                    },
+                    "father_name": {
+                        "description": "Отчество",
+                        "type": "string",
+                        "example": "Отчество"
+                    },
+                    "passport_series": {
+                        "description": "Серия паспорта",
+                        "type": "string",
+                        "example": "1234"
+                    },
+                    "passport_number": {
+                        "description": "Номер паспорта",
+                        "type": "string",
+                        "example": "123456"
+                    },
+                    "issue_date": {
+                        "description": "Дата выдачи паспорта",
+                        "type": "string",
+                        "format": "date",
+                        "example": "01.01.2021"
+                    },
+                    "issued_by": {
+                        "description": "Орган, выдавший паспорт",
+                        "type": "string",
+                        "example": "ОВД г.Москва"
+                    },
+                    "department_code": {
+                        "description": "Код подразделения, выдавшего паспорт",
+                        "type": "string",
+                        "example": "777777"
+                    },
+                    "individual_people_id": {
+                        "description": "Идентификатор физического лица",
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
             "AgreementTenderResource": {
                 "properties": {
                     "id_agreement_tender": {
@@ -7818,6 +7898,151 @@
                 },
                 "type": "object"
             },
+            "IndividualPeopleResource": {
+                "title": "IndividualPeopleResource",
+                "description": "Individual People Resource",
+                "properties": {
+                    "id_individual_people": {
+                        "description": "UUID of the individual person",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "first_name": {
+                        "description": "First name of the individual person",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "last_name": {
+                        "description": "Last name of the individual person",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "father_name": {
+                        "description": "Father's name of the individual person",
+                        "type": "string",
+                        "example": "Smith"
+                    },
+                    "position": {
+                        "description": "Позиция (пока что обычный string)",
+                        "type": "string",
+                        "example": "Manager"
+                    },
+                    "passport": {
+                        "description": "Resource Паспорта",
+                        "type": "string",
+                        "example": "придёт Resource Passport"
+                    },
+                    "other_contact": {
+                        "description": "Other contact information of the individual person",
+                        "type": "string",
+                        "example": "Some contact info"
+                    },
+                    "personal_area_id": {
+                        "description": "UUID of the personal area - id кабинета",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "email": {
+                        "description": "Email",
+                        "type": "string",
+                        "format": "email",
+                        "example": "john.doe@example.com"
+                    },
+                    "phone": {
+                        "description": "Phone number of the individual person",
+                        "type": "string",
+                        "example": "71234567890"
+                    },
+                    "comment": {
+                        "description": "Comment about the individual person",
+                        "type": "string",
+                        "example": "Some comment"
+                    }
+                },
+                "type": "object"
+            },
+            "DriverPeopleResource": {
+                "title": "DriverPeopleResource",
+                "description": "Driver People Resource",
+                "properties": {
+                    "id_driver_people": {
+                        "description": "UUID of the driver person",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "personal_area_id": {
+                        "description": "UUID of the personal area",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "individual_people_id": {
+                        "description": "UUID of the individual person",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "organization_id": {
+                        "description": "UUID of the organization",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "series": {
+                        "description": "Серия Водительского Удостоверения",
+                        "type": "integer",
+                        "format": "int32",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "number": {
+                        "description": "UUID of the organization",
+                        "type": "integer",
+                        "format": "int32",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "date_get": {
+                        "description": "UUID of the organization",
+                        "type": "string",
+                        "format": "date",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    }
+                },
+                "type": "object"
+            },
+            "StorekeeperPeopleResource": {
+                "title": "StorekeeperPeopleResource",
+                "description": "Storekeeper People Resource",
+                "properties": {
+                    "id_storekeeper_people": {
+                        "description": "UUID of the driver person",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "personal_area_id": {
+                        "description": "UUID of the personal area",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "individual_people_id": {
+                        "description": "UUID of the individual person",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "organization_id": {
+                        "description": "UUID of the organization",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    }
+                },
+                "type": "object"
+            },
             "TransportBodyTypeEnum": {
                 "description": "Тип кузова транспорта",
                 "type": "string",
@@ -7952,146 +8177,6 @@
                     "more_load"
                 ],
                 "example": "more_load"
-            },
-            "IndividualPeopleResource": {
-                "title": "IndividualPeopleResource",
-                "description": "Individual People Resource",
-                "properties": {
-                    "id_individual_people": {
-                        "description": "UUID of the individual person",
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "first_name": {
-                        "description": "First name of the individual person",
-                        "type": "string",
-                        "example": "John"
-                    },
-                    "last_name": {
-                        "description": "Last name of the individual person",
-                        "type": "string",
-                        "example": "Doe"
-                    },
-                    "father_name": {
-                        "description": "Father's name of the individual person",
-                        "type": "string",
-                        "example": "Smith"
-                    },
-                    "position": {
-                        "description": "Позиция (пока что обычный string)",
-                        "type": "string",
-                        "example": "Manager"
-                    },
-                    "other_contact": {
-                        "description": "Other contact information of the individual person",
-                        "type": "string",
-                        "example": "Some contact info"
-                    },
-                    "personal_area_id": {
-                        "description": "UUID of the personal area - id кабинета",
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "email": {
-                        "description": "Email",
-                        "type": "string",
-                        "format": "email",
-                        "example": "john.doe@example.com"
-                    },
-                    "phone": {
-                        "description": "Phone number of the individual person",
-                        "type": "string",
-                        "example": "71234567890"
-                    },
-                    "comment": {
-                        "description": "Comment about the individual person",
-                        "type": "string",
-                        "example": "Some comment"
-                    }
-                },
-                "type": "object"
-            },
-            "DriverPeopleResource": {
-                "title": "DriverPeopleResource",
-                "description": "Driver People Resource",
-                "properties": {
-                    "id_driver_people": {
-                        "description": "UUID of the driver person",
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "personal_area_id": {
-                        "description": "UUID of the personal area",
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "individual_people_id": {
-                        "description": "UUID of the individual person",
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "organization_id": {
-                        "description": "UUID of the organization",
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "series": {
-                        "description": "Серия Водительского Удостоверения",
-                        "type": "integer",
-                        "format": "int32",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "number": {
-                        "description": "UUID of the organization",
-                        "type": "integer",
-                        "format": "int32",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "date_get": {
-                        "description": "UUID of the organization",
-                        "type": "string",
-                        "format": "date",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    }
-                },
-                "type": "object"
-            },
-            "StorekeeperPeopleResource": {
-                "title": "StorekeeperPeopleResource",
-                "description": "Storekeeper People Resource",
-                "properties": {
-                    "id_storekeeper_people": {
-                        "description": "UUID of the driver person",
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "personal_area_id": {
-                        "description": "UUID of the personal area",
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "individual_people_id": {
-                        "description": "UUID of the individual person",
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "organization_id": {
-                        "description": "UUID of the organization",
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    }
-                },
-                "type": "object"
             },
             "BearerToken": {
                 "title": "Bearer Token Object",

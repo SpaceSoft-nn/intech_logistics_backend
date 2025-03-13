@@ -82,9 +82,48 @@ namespace App\Http\Controllers\Swagger\API;
  *              @OA\Property(property="personal_area_id", type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000"),
  *              @OA\Property(property="email", type="string", format="email", example="john.doe@example.com"),
  *              @OA\Property(property="phone", nullable=true, type="string", example="71234567890"),
- *              @OA\Property(property="comment", nullable=true, type="string", example="Some comment")
- *          )
+ *              @OA\Property(
+ *                property="passport_series",
+ *                type="string",
+ *                example="1234",
+ *                minLength=4,
+ *                maxLength=4,
+ *                description="Серия паспорта.."
+ *              ),
+ *
+ *              @OA\Property(
+ *                property="passport_number",
+ *                type="string",
+ *                example="123456",
+ *                minLength=6,
+ *                maxLength=6,
+ *                description="Номер паспорта."
+ *              ),
+ *              @OA\Property(
+ *                property="issue_date",
+ *                type="string",
+ *                format="date",
+ *                example="01.01.2020",
+ *                description="Дата выдачи паспорта в ру формате"
+ *              ),
+ *              @OA\Property(
+ *                property="issued_by",
+ *                type="string",
+ *                example="Some comment",
+ *                description="Орган, выдавший паспорт."
+ *              ),
+ *              @OA\Property(
+ *                property="department_code",
+ *                type="string",
+ *                nullable=true,
+ *                example="Some comment",
+ *                minLength=6,
+ *                maxLength=6,
+ *                description="Код подразделения, выдавшего паспорт. Допускается значение null."
+ *              ),
+ *          ),
  *      ),
+ *
  *      @OA\Response(
  *          response=201,
  *          description="Физическое лицо создано",

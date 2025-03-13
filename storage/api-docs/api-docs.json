@@ -2307,7 +2307,7 @@
                 "tags": [
                     "Order Unit"
                 ],
-                "summary": "Создать Заказ (OrderUnit)\n*      (если догруз разрешён (ltl) - присылается главный массив адрессов start_address_id/end_address_id (начало/конца) и массив address_array), если тип ftl (без догруза) address_array - опускается",
+                "summary": "Создать Заказ (OrderUnit)\n *      (если догруз разрешён (ltl) - присылается главный массив адрессов start_address_id/end_address_id (начало/конца) и массив address_array), если тип ftl (без догруза) address_array - опускается",
                 "operationId": "f6fd7c39cf5ef7bc1eeb9c592d181abb",
                 "requestBody": {
                     "required": true,
@@ -3619,6 +3619,249 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Error set status order transportation event."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/{OrderUnit::uuid}/draft": {
+            "patch": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Обновить данные заказа при статусе 'Черновик'.",
+                "description": "Обновляет информацию о заказе по UUID при статусе заказа Черновик",
+                "operationId": "d3e67aa03c734a84cf7462c2f965b913",
+                "parameters": [
+                    {
+                        "name": "OrderUnit::uuid",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "start_address_id": {
+                                                "description": "**UUID адреса начала. Поле обязательно и должно существовать в таблице addresses.**",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "end_address_id": {
+                                                "description": "**UUID адреса окончания. Поле обязательно и должно существовать в таблице addresses.**",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "start_date_delivery": {
+                                                "description": "**Дата начала заказа. Обязательное поле.**",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-10-01"
+                                            },
+                                            "end_date_delivery": {
+                                                "description": "**Дата окончания заказа. Обязательное поле.**",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-10-10"
+                                            },
+                                            "address_array": {
+                                                "description": "**Массив объектов с UUID адресов и датами (nullable) не обязательное поле - Данное поле предназначеное для промежуточных адрессов погрузки/разгрузки между главным адрессом движение.**",
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "description": "**UUID адреса. Обязательное поле.**",
+                                                            "type": "string",
+                                                            "format": "uuid",
+                                                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                                                        },
+                                                        "date": {
+                                                            "description": "**Дата. Обязательное поле.** - Это дата нужна для указание когда забрать груз",
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2023-10-01"
+                                                        },
+                                                        "type": {
+                                                            "description": "**Тип адреса. Обязательное поле. Возможные значения: 'sending' - Аддресс отправка, 'coming' - Адресс прибытия **",
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "sending",
+                                                                "coming"
+                                                            ],
+                                                            "example": "sending"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "nullable": true
+                                            },
+                                            "goods_array": {
+                                                "description": "Массив объектов, представляющих грузы. Обязательное поле. Минимум 1+ груз",
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "product_type": {
+                                                            "description": "**Тип продукта. Обязательное поле.**",
+                                                            "type": "string",
+                                                            "example": "Тип 1"
+                                                        },
+                                                        "type_pallet": {
+                                                            "description": "**Тип поддона. Обязательное поле. Возможные значения: 'eur', 'ecom', 'fin' **",
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "eur",
+                                                                "ecom",
+                                                                "fin"
+                                                            ],
+                                                            "example": "eur"
+                                                        },
+                                                        "cargo_units_count": {
+                                                            "description": "**Количество паллетов. Обязательное поле. Минимум 1.**",
+                                                            "type": "integer",
+                                                            "minimum": 1,
+                                                            "example": 5
+                                                        },
+                                                        "body_volume": {
+                                                            "description": "**Объем кузова. Обязательное поле. Минимум 0.**",
+                                                            "type": "number",
+                                                            "format": "float",
+                                                            "minimum": 0,
+                                                            "example": 12.5
+                                                        },
+                                                        "name_value": {
+                                                            "description": "**Название. Необязательное поле. Максимум 100 символов.**",
+                                                            "type": "string",
+                                                            "maxLength": 100,
+                                                            "example": "Название груза",
+                                                            "nullable": true
+                                                        },
+                                                        "description": {
+                                                            "description": "**Описание. Необязательное поле. Максимум 500 символов.**",
+                                                            "type": "string",
+                                                            "maxLength": 500,
+                                                            "example": "Описание груза",
+                                                            "nullable": true
+                                                        },
+                                                        "mgx": {
+                                                            "oneOf": [
+                                                                {
+                                                                    "$ref": "#/components/schemas/MgxObject"
+                                                                }
+                                                            ],
+                                                            "nullable": true,
+                                                            "description": "**Массогабаритные Характеристики - поле не обязательное, если указано, то будет валидироватья относительно количество паллетов**",
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type_transport_weight": {
+                                                "description": "**Тип транспортировки по габаритам. Обязательное поле.** extraSmall: до 0.8 тонны, small: до 1.5 тонны , medium: до 3 тонн, large: до 5 тонн, extraLarge: до 10 тонн, superSize: Более 10 тонн",
+                                                "type": "string",
+                                                "enum": [
+                                                    "extraSmall",
+                                                    "small",
+                                                    "medium",
+                                                    "large",
+                                                    "extraLarge",
+                                                    "superSize"
+                                                ],
+                                                "example": "small"
+                                            },
+                                            "organization_id": {
+                                                "description": "**UUID организации. Поле обязательно и должно существовать в таблице organizations.**",
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "end_date_order": {
+                                                "description": "**Дата окончания заказа. Обязательное поле.**",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-10-15"
+                                            },
+                                            "type_load_truck": {
+                                                "description": "**Тип загрузки грузовика. Обязательное поле. Возможные значения: ftl, ltl, custom.**",
+                                                "type": "string",
+                                                "enum": [
+                                                    "ftl",
+                                                    "ltl",
+                                                    "custom"
+                                                ],
+                                                "example": "ftl"
+                                            },
+                                            "order_total": {
+                                                "description": "**Цена заказа. Обязательное поле.**",
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": 50000
+                                            },
+                                            "description": {
+                                                "description": "**Описание (необязательное поле, максимум 1000 символов).**",
+                                                "type": "string",
+                                                "maxLength": 1000,
+                                                "example": "Это пример описания заказа.",
+                                                "nullable": true
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное обновление заказа.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OrderUnitResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Update Order Unit Successfully."
                                         }
                                     },
                                     "type": "object"

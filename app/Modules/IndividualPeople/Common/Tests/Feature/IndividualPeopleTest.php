@@ -28,7 +28,13 @@ class IndividualPeopleTest extends TestCase
         /** @var array */
         $individualPeople = IndividualPeople::factory()->make()->toArray();
 
-        // dd($individualPeople);
+        $individualPeople = array_merge($individualPeople, [
+            'passport_series' => '1234',
+            'passport_number' => '123456',
+            'issue_date' => '05.05.1990',
+            'issued_by' => 'Гу МВД Сочи',
+        ]);
+
 
         // Отправляем POST-запрос на endpoint
         $response = $this->actingAs($userCarrier)
@@ -46,6 +52,7 @@ class IndividualPeopleTest extends TestCase
             'id' => $response->json()['data']['id_individual_people'],
         ]);
 
+
         $response->assertJsonStructure([
             'data' => [
                 'id_individual_people',
@@ -58,6 +65,7 @@ class IndividualPeopleTest extends TestCase
                 'email',
                 'phone',
                 'comment',
+                'passport',
             ],
             'message'
         ]);

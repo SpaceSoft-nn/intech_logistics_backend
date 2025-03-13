@@ -271,7 +271,7 @@ class OrderUnitController extends Controller
         );
 
 
-        return response()->json(array_success(OrderUnitResource::make($order), 'Update OrderUnit Successfully.'), 200);
+        return response()->json(array_success(OrderUnitResource::make($order), 'Update Order Unit Successfully.'), 200);
 
     }
 

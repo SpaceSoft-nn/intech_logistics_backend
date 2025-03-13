@@ -450,7 +450,8 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="postal_code", type="string", description="Почтовый индекс адреса", nullable=true),
 *     @OA\Property(property="type_Address", type="string", description="Тип адреса", nullable=true),
 *     @OA\Property(property="latitude", type="float", description="Широта адреса"),
-*     @OA\Property(property="longitude", type="float", description="Долгота адреса")
+*     @OA\Property(property="longitude", type="float", description="Долгота адреса"),
+*     @OA\Property(property="nomination", type="string", description="Наименование Адресса"),
 * ),
 *
 * @OA\Schema(

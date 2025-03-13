@@ -92,7 +92,7 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 Route::prefix('/addresses')->controller(AuthController::class)->group(function () {
 
     Route::get('/', [AddressController::class, 'index']);
-    Route::post('/', [AddressController::class, 'create']);
+    Route::post('/', [AddressController::class, 'store']);
 
     Route::get('/{address}', [AddressController:: class, 'show'])->whereUuid('address');
 

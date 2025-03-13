@@ -23,6 +23,7 @@ class AddressCreateRequest extends ApiRequest
     {
         return [
 
+            'unrestricted_value' => ['nullable', 'string'],
             'data' => ['required', 'array'],
             'data.data*' => ['required', 'array'],
 
@@ -36,7 +37,7 @@ class AddressCreateRequest extends ApiRequest
             'data.geo_lat' => ['required', 'string'],
             'data.geo_lon' => ['required', 'string'],
 
-            'data.unrestricted_value' => ['nullable', 'string'],
+
             'data.value' => ['nullable', 'string'],
 
         ];

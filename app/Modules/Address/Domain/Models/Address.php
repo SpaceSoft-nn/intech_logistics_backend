@@ -33,6 +33,7 @@ class Address extends Model
         "longitude",
         'json',
         'update_json',
+        'nomination',
 
     ];
 

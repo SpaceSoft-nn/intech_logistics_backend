@@ -26,7 +26,7 @@ class AddressController extends Controller
         return response()->json(array_success(AddressResource::make($address), 'Return create Address.'), 200);
     }
 
-    public function create(
+    public function store(
         AddressCreateRequest $request,
         CreateAddressAction $action,
     )  {
@@ -35,7 +35,6 @@ class AddressController extends Controller
         * @var AddressVO
         */
         $addressVO = $request->getAddressVO();
-
 
         $address = $action->make($addressVO);
 

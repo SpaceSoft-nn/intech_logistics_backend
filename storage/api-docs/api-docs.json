@@ -7831,6 +7831,10 @@
                         "description": "Долгота адреса",
                         "type": "number",
                         "format": "float"
+                    },
+                    "nomination": {
+                        "description": "Наименование Адресса",
+                        "type": "string"
                     }
                 },
                 "type": "object"

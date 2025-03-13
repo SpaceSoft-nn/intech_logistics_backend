@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('building')->nullable();
             $table->string('postal_code')->nullable();
 
+            $table->string('nomination')->nullable()->comment('Наименование Адресса, может указать сам пользователь');
+
             // $table->string('type_address')->nullable();
 
             $table->decimal('latitude', 10, 7);

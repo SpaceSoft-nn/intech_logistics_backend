@@ -3,6 +3,7 @@
 use App\Modules\Organization\Presentation\Http\Middleware\HasOrganizationHeader;
 use App\Modules\Organization\Presentation\Http\Middleware\isCarrierOrganization;
 use App\Modules\Organization\Presentation\Http\Middleware\isCustomerOrganization;
+use App\Modules\Organization\Presentation\Http\Middleware\ManuallyActivatedOrganization;
 use App\Modules\User\Presentation\HTTP\Middleware\isActiveUser;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -34,6 +35,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'isCarrierOrganization' => isCarrierOrganization::class, //Проверяет связку организация + пользователь и организация типа Carrier 'перевозчик'
             'hasOrgHeader' => HasOrganizationHeader::class, //Проверяет связку организация + пользователь и организация типа Carrier 'перевозчик'
             'isActiveUser' => isActiveUser::class, //Активирован ли user user->active
+            'manuallyActivatedOrganization' => isActiveUser::class, //Активирована ли организация в проекте вручную
+        ]);
+
+        $middleware->prependToGroup('organizaionGroupMiddleware', [
+            ManuallyActivatedOrganization::class,
+            HasOrganizationHeader::class,
         ]);
 
     })

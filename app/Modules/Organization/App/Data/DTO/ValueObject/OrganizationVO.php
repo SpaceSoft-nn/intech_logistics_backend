@@ -73,7 +73,7 @@ final class OrganizationVO extends BaseDTO implements Arrayable
         ?string $description = null,
         ?string $phone = null,
         ?string $email = null,
-        ?bool $remuved = null,
+        ?bool $remuved = true,
         ?string $kpp = null,
         ?string $registration_number = null,
     ) : self {

@@ -30,6 +30,7 @@ class AddressFactory extends Factory
             postal_code: $this->faker->postcode,
             latitude:$this->faker->latitude(55.0, 56.0),
             longitude:$this->faker->longitude(37.0, 38.0),
+            nomination: $this->faker->city(),
 
         );
 

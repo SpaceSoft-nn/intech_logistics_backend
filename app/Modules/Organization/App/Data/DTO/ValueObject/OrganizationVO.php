@@ -73,7 +73,7 @@ final class OrganizationVO extends BaseDTO implements Arrayable
         ?string $description = null,
         ?string $phone = null,
         ?string $email = null,
-        ?bool $remuved = true,
+        ?bool $remuved = null,
         ?string $kpp = null,
         ?string $registration_number = null,
     ) : self {
@@ -113,7 +113,9 @@ final class OrganizationVO extends BaseDTO implements Arrayable
             // type_cabinet: Arr::get($data, 'type_cabinet'),
             okved: Arr::get($data, 'okved' , null),
             founded_date: Arr::get($data, 'founded_date' , null),
-            remuved: Arr::get($data, 'remuved' , null),
+
+            #TODO Явно при создании органиации установили remuved true
+            remuved: Arr::get($data, 'remuved' , true),
             inn: Arr::get($data, 'inn' , null),
             kpp: Arr::get($data, 'kpp' , null),
             registration_number: Arr::get($data, 'registration_number'),

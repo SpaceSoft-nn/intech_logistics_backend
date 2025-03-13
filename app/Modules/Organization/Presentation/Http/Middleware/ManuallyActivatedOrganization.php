@@ -27,6 +27,7 @@ class ManuallyActivatedOrganization
 
         $organization = Organization::find($organization_id);
 
+
         // dd($organization->remuved);
 
         abort_if( $organization->remuved , 403, 'Организация не активирована, попросите Администраторов проекта, активировать организацию.');

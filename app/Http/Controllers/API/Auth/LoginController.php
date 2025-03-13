@@ -4,7 +4,10 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Modules\Auth\App\Data\DTO\UserAttemptDTO;
 use App\Modules\Auth\Domain\Services\AuthService;
+use App\Modules\Notification\Domain\Models\EmailList;
+use App\Modules\Notification\Domain\Models\PhoneList;
 use App\Modules\User\Domain\Requests\UserLoginRequest;
+use Auth;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;

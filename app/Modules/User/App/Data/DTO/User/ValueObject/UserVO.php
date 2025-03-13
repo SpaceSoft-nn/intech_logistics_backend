@@ -135,7 +135,8 @@ class UserVO extends BaseDTO implements Arrayable
         $role =  UserRoleEnum::returnObjectByString(Arr::get($data, 'role', 'admin'));
         $email_id = Arr::get($data, 'email_user' , null);
         $phone_id = Arr::get($data, 'phone_user' , null);
-        $active = null;
+
+        $active = false; #TODO Временно устанавливаем что польщователь для активирован, активировать вручную через БД
 
         if ($first_name === '' || $last_name === '' || $father_name === '' || $password === '') {
             throw new \InvalidArgumentException('Обязательные параметры не могут быть пустыми.', 500);

@@ -25,17 +25,10 @@ class IndividualPeopleFactory extends Factory
         */
         $personal_area = PersonalArea::factory()->create();
 
-        $first_name = $this->faker->firstNameMale();
-        $last_name = $this->faker->lastName();
-        $father_name = $this->faker->name();
-
         $mobilePhone = '79' . $this->faker->numerify('#########');
 
         $vo = IndividualPeopleVO::make(
 
-            first_name: $first_name,
-            last_name: $last_name,
-            father_name: $father_name,
             position: $this->faker->name(),
             other_contact: $this->faker->phoneNumber(). ' ' . $this->faker->email(),
             comment: $this->faker->paragraph(),

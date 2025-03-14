@@ -221,14 +221,7 @@ class ProdeSeed extends Seeder
             foreach ($drivers as $driver) {
                 /** @var IndividualPeople */
                 $individualPeople = IndividualPeople::factory()
-                    ->has(Passport::factory()->state(function (array $attributes, IndividualPeople $ipeople) {
-                            return [
-                                'first_name' => $ipeople->first_name,
-                                'last_name' => $ipeople->last_name,
-                                'father_name' => $ipeople->father_name,
-                            ];
-                        })
-                    )
+                    ->has(Passport::factory())
                     ->create([
                         'personal_area_id' => $driver->personal_area_id,
                         'individualable_id' => $driver->id,
@@ -240,14 +233,7 @@ class ProdeSeed extends Seeder
 
             /** @var IndividualPeople */
             $individualPeople = IndividualPeople::factory()
-                ->has(Passport::factory()->state(function (array $attributes, IndividualPeople $ipeople) {
-                        return [
-                            'first_name' => $ipeople->first_name,
-                            'last_name' => $ipeople->last_name,
-                            'father_name' => $ipeople->father_name,
-                        ];
-                    })
-                )
+                ->has(Passport::factory())
                 ->create([
                     'personal_area_id' => $drivers->personal_area_id,
                     'individualable_id' => $drivers->id,

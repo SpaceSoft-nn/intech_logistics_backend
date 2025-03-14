@@ -19,7 +19,6 @@ class ManuallyActivatedOrganization
 
     ): Response {
 
-        // dd(1);
 
         #TODD - вынести в отдельный middleware и создать группу middleware
         $organization_id = $request->header('organization_id');
@@ -28,8 +27,6 @@ class ManuallyActivatedOrganization
         abort_unless( (bool) $organization_id, 422, 'Для доступа к этому endpoint в header должено быть значение :{organization_id}');
 
         $organization = Organization::find($organization_id);
-
-        // dd(1);
 
         abort_unless( $organization , 404, 'Организация не найдена.');
 

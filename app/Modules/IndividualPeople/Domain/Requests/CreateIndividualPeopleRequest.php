@@ -3,9 +3,9 @@
 namespace App\Modules\IndividualPeople\Domain\Requests;
 
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\IndividualPeople\App\Data\ValueObject\PassportVO;
 use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
 use App\Modules\IndividualPeople\App\Data\ValueObject\IndividualPeopleVO;
-use App\Modules\IndividualPeople\App\Data\ValueObject\PassportVO;
 
 class CreateIndividualPeopleRequest extends ApiRequest
 {

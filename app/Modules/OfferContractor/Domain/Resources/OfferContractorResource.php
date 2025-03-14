@@ -2,7 +2,7 @@
 
 namespace App\Modules\OfferContractor\Domain\Resources;
 
-use app\Modules\Transport\Domain\Resources\TransportResource;
+use App\Modules\Transport\Domain\Resources\TransportResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

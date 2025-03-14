@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('passport_number', 6)->comment('Номер');
             $table->date('issue_date')->comment('Когда выдан');
             $table->string('issued_by')->comment('Кем выдан');
-            $table->string('department_code', 6)->nullable()->comment('Код подразделения в формате XXX-XXX (7 символов с включённым дефисом)');
+            $table->string('department_code', 7)->nullable()->comment('Код подразделения в формате XXX-XXX (7 символов с включённым дефисом)');
 
             $table->uuid('individual_people_id')->unique()
                 ->constrained('individual_peoples', 'id')->noActionOnDelete();

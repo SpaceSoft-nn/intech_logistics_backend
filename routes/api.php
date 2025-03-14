@@ -190,7 +190,7 @@ Route::prefix('/matrix-distance')->middleware('manuallyActivatedOrganization')->
 
 
     //Предложения перевозчика
-Route::prefix('/offer-contractors')->middleware('manuallyActivatedOrganization')->group(function () {
+Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization', 'isCarrierOrganization'])->group(function () {
 
     Route::get('/', [OfferContractorController::class, 'index']);
 
@@ -199,16 +199,16 @@ Route::prefix('/offer-contractors')->middleware('manuallyActivatedOrganization')
 
     Route::middleware(['isCarrierOrganization'])->group(function () {
 
+        //создание предложения от перевозчика
         Route::post('/', [OfferContractorController::class, 'store']);
 
         //перевозчик выбирает (организацию - заказчика) на исполнение заявки предложения
         Route::post('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'agreementOffer'])->whereUuid('offerContractor');
 
-        //Получение все предложения (от заказчиколв которые откликнулись) -> (по предложнию)
+        //Получение все предложения (от заказчиков которые откликнулись) -> (по предложнию)
         Route::get('/{offerContractor}/customer', [OfferContractorController::class, 'getAddCustomer'])->whereUuid('offerContractor');
 
     });
-
 
     //Вернуть подтверждённую заявку (выбранная организация - заказчика на исполнения) по предложению (если имется)
     Route::get('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'getAgreementOffer'])->whereUuid('offerContractor');
@@ -218,11 +218,12 @@ Route::prefix('/offer-contractors')->middleware('manuallyActivatedOrganization')
     Route::patch('/{agreementOrderContractorAccept}/agreement-offer-accept', [OfferContractorController::class, 'agreementOfferAccept'])->whereUuid('agreementOrderContractorAccept');
 
     //Отклик Заказчика на предложения перевозчика
-    Route::post('/{offerContractor}/customer/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization')->middleware('isCustomerOrganization');
+    Route::post('/{offerContractor}/customer/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization')
+        ->withoutMiddleware('isCarrierOrganization')
+        ->middleware('isCustomerOrganization');
 
     //Создание заказа после утверждения двух-стороннего договора на предложении от перевозчика
     Route::post('/{agreementOrderContractorAccept}/agreement-offer-order', [OfferContractorController::class, 'agreementOfferOrder'])->whereUuid('agreementOrderContractorAccept')->middleware('isCustomerOrganization');
-
 
 });
 
@@ -235,7 +236,7 @@ Route::prefix('/transports')->middleware('manuallyActivatedOrganization')->group
 
 });
 
-Route::prefix('/individual-peoples')->middleware('manuallyActivatedOrganization')->group(function () {
+Route::prefix('/individual-peoples')->middleware('manuallyActivatedOrganization')->group(function () {  
 
 
     Route::get('/', [IndividualPeopleController::class, 'index']);

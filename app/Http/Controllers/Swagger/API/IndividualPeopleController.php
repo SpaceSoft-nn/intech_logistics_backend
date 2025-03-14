@@ -23,7 +23,7 @@ namespace App\Http\Controllers\Swagger\API;
  *              @OA\Property(property="code", type="integer", example=500),
  *          ),
  *      ),
- * )
+ * ),
  *
  *
  * @OA\Get(
@@ -63,7 +63,7 @@ namespace App\Http\Controllers\Swagger\API;
  *              @OA\Property(property="code", type="integer", example=500),
  *          ),
  *      ),
- * )
+ * ),
  *
  *
  *
@@ -90,7 +90,6 @@ namespace App\Http\Controllers\Swagger\API;
  *                maxLength=4,
  *                description="Серия паспорта.."
  *              ),
- *
  *              @OA\Property(
  *                property="passport_number",
  *                type="string",
@@ -117,8 +116,9 @@ namespace App\Http\Controllers\Swagger\API;
  *                type="string",
  *                nullable=true,
  *                example="Some comment",
- *                minLength=6,
- *                maxLength=6,
+ *                minLength=7,
+ *                maxLength=7,
+ *                pattern="/^\d{3}-\d{3}$/",
  *                description="Код подразделения, выдавшего паспорт. Допускается значение null."
  *              ),
  *          ),
@@ -147,7 +147,9 @@ namespace App\Http\Controllers\Swagger\API;
  *              @OA\Property(property="code", type="integer", example=500),
  *          ),
  *      ),
- * )
+ * ),
+ *
+ *
  */
 class IndividualPeopleController
 {

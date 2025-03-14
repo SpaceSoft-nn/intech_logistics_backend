@@ -19,6 +19,8 @@ class ManuallyActivatedOrganization
 
     ): Response {
 
+        // dd(1);
+
         #TODD - вынести в отдельный middleware и создать группу middleware
         $organization_id = $request->header('organization_id');
 
@@ -27,8 +29,9 @@ class ManuallyActivatedOrganization
 
         $organization = Organization::find($organization_id);
 
+        // dd(1);
 
-        // dd($organization->remuved);
+        abort_unless( $organization , 404, 'Организация не найдена.');
 
         abort_if( $organization->remuved , 403, 'Организация не активирована, попросите Администраторов проекта, активировать организацию.');
 

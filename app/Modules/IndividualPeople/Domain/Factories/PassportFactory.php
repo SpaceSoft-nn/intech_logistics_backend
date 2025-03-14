@@ -33,6 +33,7 @@ class PassportFactory extends Factory
             issue_date: $date,
             issued_by: $this->faker->paragraph(),
             department_code: $this->faker->numerify('######'),
+            birth_day: $date,
             // individual_people_id: $individual_people->id,
         );
 

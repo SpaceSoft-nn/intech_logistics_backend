@@ -107,6 +107,7 @@ class OfferContractorController extends Controller
         */
         $offerContractorVO = $request->createOfferContractorVO();
 
+        /** @var OfferContractor */
         $offerContractor = $serv->createOfferContractor($offerContractorVO);
 
         return response()->json(array_success(OfferContractorResource::make($offerContractor), 'Return create offer contractor.'), 201);

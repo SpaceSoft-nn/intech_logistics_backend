@@ -30,6 +30,7 @@ class OfferContractorResource extends JsonResource
 
             "description" => $this->description ?? null,
             "order_unit_id" => $this->order_unit_id ?? null,
+            "number" => $this->number,
 
         ];
     }

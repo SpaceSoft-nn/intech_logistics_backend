@@ -31,7 +31,13 @@ final class OfferContractorService
      */
     public function createOfferContractor(OfferContractorVO $vo) : OfferContractor
     {
-        return $this->offerCotractorRep->create($vo);
+        /** @var OfferContractor */
+        $offerContractor = $this->offerCotractorRep->create($vo);
+
+        //обновляем что бы получить number из БД
+        $offerContractor->refresh();
+
+        return $offerContractor;
     }
 
     /**

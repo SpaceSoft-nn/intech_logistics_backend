@@ -45,11 +45,11 @@ class OfferContractor extends Model
         'add_load_space', //Возможен ли догруз
         'road_back', //Обратная дорога
         'directly_road', //Прямая дорога
-
     ];
 
     protected $guarded = [
         'id',
+        'number',
         'created_at',
         'updated_at',
     ];

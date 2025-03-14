@@ -34,6 +34,9 @@ class IndividualPeopleTest extends TestCase
             'issue_date' => '05.05.1990',
             'issued_by' => 'Гу МВД Сочи',
             'birth_day' => '21.05.1988',
+            'first_name' => 'Имя',
+            'last_name' => 'Фамилия',
+            'father_name' => 'Отчество',
         ]);
 
 
@@ -58,9 +61,6 @@ class IndividualPeopleTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 'id_individual_people',
-                'first_name',
-                'last_name',
-                'father_name',
                 'position',
                 'other_contact',
                 'personal_area_id',

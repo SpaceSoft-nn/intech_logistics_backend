@@ -2,23 +2,20 @@
 
 namespace App\Modules\Organization\Presentation\Http\Middleware;
 
-use App\Modules\Organization\Domain\Models\Organization;
 use Closure;
-use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Modules\Organization\Domain\Models\Organization;
 
 
 class ManuallyActivatedOrganization
 {
-
     /** Устанавливаем организацию в remuved = true при создании орг, и ждём пока мы активируем сами через БД */
     public function handle(
         Request $request,
         Closure $next,
 
     ): Response {
-
 
         #TODD - вынести в отдельный middleware и создать группу middleware
         $organization_id = $request->header('organization_id');

@@ -8,7 +8,7 @@ use App\Modules\Transport\Domain\Actions\Transport\CreateTransportAction;
 use App\Modules\Transport\Domain\Models\Transport;
 use App\Modules\Transport\Domain\Requests\TransportCreateRequest;
 use App\Modules\Transport\Domain\Resources\TransportCollection;
-use App\Modules\Transport\Domain\Resources\TransportResoruce;
+use App\Modules\Transport\Domain\Resources\TransportResource;
 use Illuminate\Http\Request;
 
 use function App\Helpers\array_error;
@@ -30,7 +30,7 @@ class TransportController
 
     public function show(Transport $transport)
     {
-        return response()->json(array_success(TransportResoruce::make($transport), 'Return object transport'), 200);
+        return response()->json(array_success(TransportResource::make($transport), 'Return object transport'), 200);
     }
 
     public function store(TransportCreateRequest $request)
@@ -48,6 +48,6 @@ class TransportController
         */
         $transport = CreateTransportAction::make($transportVO);
 
-        return response()->json(array_success(TransportResoruce::make($transport), 'Return create transports'), 201);
+        return response()->json(array_success(TransportResource::make($transport), 'Return create transports'), 201);
     }
 }

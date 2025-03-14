@@ -4,9 +4,11 @@ namespace App\Modules\OfferContractor\Domain\Models;
 
 use App\Modules\OfferContractor\App\Data\Enums\OfferContractorStatusEnum;
 use App\Modules\OfferContractor\Domain\Factories\OfferContractorFactory;
+use App\Modules\Transport\Domain\Models\Transport;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -81,5 +83,13 @@ class OfferContractor extends Model
         return $this->hasOne(AgreementOrderContractor::class, 'offer_contractor_id', 'id');
     }
 
+    /**
+    *
+    * @return HasOne
+    */
+    public function transport() : HasOne
+    {
+        return $this->hasOne(Transport::class, 'transport_id', 'id');
+    }
 
 }

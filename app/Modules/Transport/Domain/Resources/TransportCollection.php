@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class TransportCollection extends ResourceCollection
 {
-    public $collects = TransportResoruce::class;
+    public $collects = TransportResource::class;
 
     public function toArray(Request $request): array
     {

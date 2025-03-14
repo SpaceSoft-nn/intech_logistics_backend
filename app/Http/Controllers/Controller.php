@@ -504,6 +504,7 @@ namespace App\Http\Controllers;
 *             @OA\Property(property="passport_series", type="string", description="Серия паспорта", example="1234"),
 *             @OA\Property(property="passport_number", type="string", description="Номер паспорта", example="123456"),
 *             @OA\Property(property="issue_date", type="string", format="date", description="Дата выдачи паспорта", example="01.01.2021"),
+*             @OA\Property(property="birth_day", type="string", format="date", description="Дата рождения", example="01.01.2021"),
 *             @OA\Property(property="issued_by", type="string", description="Орган, выдавший паспорт", example="ОВД г.Москва"),
 *             @OA\Property(property="department_code", type="string", description="Код подразделения, выдавшего паспорт", example="777777"),
 *             @OA\Property(property="individual_people_id", type="integer", description="Идентификатор физического лица", example=1)

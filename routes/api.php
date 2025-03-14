@@ -192,9 +192,9 @@ Route::prefix('/matrix-distance')->middleware('manuallyActivatedOrganization')->
     //Предложения перевозчика
 Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization', 'isCarrierOrganization'])->group(function () {
 
-    Route::get('/', [OfferContractorController::class, 'index']);
+    Route::get('/', [OfferContractorController::class, 'index'])->withoutMiddleware(['isCarrierOrganization']);
 
-    Route::get('/{offerContractor}', [OfferContractorController::class, 'show']);
+    Route::get('/{offerContractor}', [OfferContractorController::class, 'show'])->withoutMiddleware(['isCarrierOrganization']);
 
 
     Route::middleware(['isCarrierOrganization'])->group(function () {
@@ -236,7 +236,7 @@ Route::prefix('/transports')->middleware('manuallyActivatedOrganization')->group
 
 });
 
-Route::prefix('/individual-peoples')->middleware('manuallyActivatedOrganization')->group(function () {  
+Route::prefix('/individual-peoples')->middleware('manuallyActivatedOrganization')->group(function () {
 
 
     Route::get('/', [IndividualPeopleController::class, 'index']);

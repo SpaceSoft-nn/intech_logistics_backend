@@ -34,6 +34,8 @@ use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorAcceptR
 
 use App\Modules\OfferContractor\Domain\Resources\Filter\CustomerComporeOfferContractorResource;
 use App\Modules\OfferContractor\Domain\Resources\Filter\CustomerComporeOfferContractorCollection;
+use App\Modules\OfferContractor\Domain\Resources\Filter\OfferContactorWrappResponse\OfferContractorWrappCollection;
+use App\Modules\OfferContractor\Domain\Resources\Filter\OfferContactorWrappResponse\OfferContractorWrappResource;
 
 class OfferContractorController extends Controller
 {
@@ -51,7 +53,7 @@ class OfferContractorController extends Controller
 
         if($array['status']) {
 
-            //Возвращаем предложения перевозчика которыесвязаны только с ним
+            //Возвращаем предложения перевозчика которые связаны только с ним
 
             //получаем все ордеры, и указываем на какие предложения откликнулся заказчик
             $offers = $rep->getOfferContractorsFilterByContractor($organization->id);
@@ -61,7 +63,7 @@ class OfferContractorController extends Controller
 
         } else {
 
-            return response()->json(array_success(OfferContractorCollection::make($organization->offer_contractors), 'Return offer сontractor by organization carrier.'), 200);
+            return response()->json(array_success(OfferContractorWrappCollection::make($organization->offer_contractors), 'Return offer сontractor by organization carrier.'), 200);
         }
 
     }
@@ -91,7 +93,7 @@ class OfferContractorController extends Controller
 
         } else {
 
-            return response()->json(array_success(OfferContractorResource::make($offerContractor), 'Return offer сontractor by organization carrier.'), 200);
+            return response()->json(array_success(OfferContractorWrappResource::make($offerContractor), 'Return offer сontractor by organization carrier.'), 200);
         }
     }
 

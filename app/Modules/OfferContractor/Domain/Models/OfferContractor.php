@@ -75,7 +75,7 @@ class OfferContractor extends Model
     }
 
     /**
-    *
+    * связь к таблице, когда перевозчик выбрал исполнителя "заказчика", то есть возьмёт в работу заказ
     * @return HasOne
     */
     public function agreement_order_contractor() : HasOne

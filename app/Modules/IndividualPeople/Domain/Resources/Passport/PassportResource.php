@@ -23,6 +23,7 @@ class PassportResource extends JsonResource
             'issued_by' => $this->issued_by,
             'department_code' => $this->department_code,
             'individual_people_id' => $this->individual_people_id,
+            'birth_day' => $this->birth_day,
 
         ];
     }

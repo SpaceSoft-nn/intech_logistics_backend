@@ -33,7 +33,7 @@ class IndividualPeopleController extends Controller
 
     public function store(
         CreateIndividualPeopleRequest $request,
-        IndividualPeopleService $service,
+        IndividualPeopleService $service,р
     ) {
 
         /**

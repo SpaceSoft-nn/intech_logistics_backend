@@ -21,8 +21,10 @@ final readonly class PassportVO implements Arrayable
         public string $passport_number,
         public string $issue_date,
         public string $issued_by,
+        public string $birth_day,
         public ?string $department_code,
         public ?string $individual_people_id,
+
 
 
     ) { }
@@ -36,6 +38,7 @@ final readonly class PassportVO implements Arrayable
         string $passport_number,
         string $issue_date,
         string $issued_by,
+        string $birth_day,
         ?string $department_code = null,
         ?string $individual_people_id = null,
 
@@ -54,6 +57,7 @@ final readonly class PassportVO implements Arrayable
             issued_by: $issued_by,
             department_code: $department_code,
             individual_people_id: $individual_people_id,
+            birth_day: $birth_day,
 
         );
 
@@ -73,6 +77,7 @@ final readonly class PassportVO implements Arrayable
             issued_by: $this->issued_by,
             department_code: $this->department_code,
             individual_people_id: $individualPeopleId,
+            birth_day: $this->birth_day,
 
         );
 
@@ -92,6 +97,7 @@ final readonly class PassportVO implements Arrayable
             'issued_by' => $this->issued_by,
             'department_code' => $this->department_code,
             'individual_people_id' => $this->individual_people_id,
+            'birth_day' => $this->birth_day,
         ];
     }
 
@@ -105,6 +111,7 @@ final readonly class PassportVO implements Arrayable
             passport_number: Arr::get($data, "passport_number"),
             issue_date: Arr::get($data, "issue_date"),
             issued_by: Arr::get($data, "issued_by"),
+            birth_day: Arr::get($data, "birth_day"),
             department_code: Arr::get($data, "department_code", null),
             individual_people_id: Arr::get($data, "individual_people_id", null),
         );

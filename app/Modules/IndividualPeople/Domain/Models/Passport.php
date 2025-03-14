@@ -35,6 +35,8 @@ class Passport extends Model
         "department_code",
         "individual_people_id",
 
+        "birth_day",
+
     ];
 
 
@@ -48,6 +50,7 @@ class Passport extends Model
     {
         return [
             'issue_date' => \App\Modules\Base\Casts\RuDateTimeCast::class,
+            'birth_day' => \App\Modules\Base\Casts\RuDateTimeCast::class,
         ];
     }
 

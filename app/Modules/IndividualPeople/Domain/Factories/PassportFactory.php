@@ -3,7 +3,6 @@
 namespace App\Modules\IndividualPeople\Domain\Factories;
 
 use App\Modules\IndividualPeople\App\Data\ValueObject\PassportVO;
-use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 use App\Modules\IndividualPeople\Domain\Models\Passport;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;

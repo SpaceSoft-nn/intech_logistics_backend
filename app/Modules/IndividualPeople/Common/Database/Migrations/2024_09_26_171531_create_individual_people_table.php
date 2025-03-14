@@ -16,10 +16,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->timestamps();
 
-            $table->string('first_name')->comment('Имя');
-            $table->string('last_name')->comment('Фамилия');
-            $table->string('father_name')->comment('Отчество');
-
             $table->string('position')->nullable();
             $table->string('phone')->uniqid()->nullable(); #TODO - должен быть уканильный?
             $table->string('email')->uniqid()->nullable(); #TODO - должен быть уканильный?

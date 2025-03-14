@@ -33,7 +33,9 @@ class IndividualPeopleTest extends TestCase
             'passport_number' => '123456',
             'issue_date' => '05.05.1990',
             'issued_by' => 'Гу МВД Сочи',
+            'birth_day' => '21.05.1988',
         ]);
+
 
 
         // Отправляем POST-запрос на endpoint

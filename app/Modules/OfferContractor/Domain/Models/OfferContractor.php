@@ -87,9 +87,9 @@ class OfferContractor extends Model
     *
     * @return HasOne
     */
-    public function transport() : HasOne
+    public function transport() : BelongsTo
     {
-        return $this->hasOne(Transport::class, 'transport_id', 'id');
+        return $this->belongsTo(Transport::class, 'transport_id', 'id');
     }
 
 }

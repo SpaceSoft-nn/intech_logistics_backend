@@ -2,6 +2,7 @@
 
 namespace App\Modules\OfferContractor\Domain\Models;
 
+use App\Modules\Organization\Domain\Models\Organization;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -57,6 +58,15 @@ class OfferContractorCustomer extends Model
     }
 
     /**
+    * Связь к таблице организации
+    * @return HasMany
+    */
+    public function organization() : BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organizaion_id', 'id');
+    }
+
+    /**
     * Связь к таблице Когда перевозчик выбрал исполнителя "заказчика", то есть возьмёт в работу заказ
     * @return HasMany
     */
@@ -65,7 +75,7 @@ class OfferContractorCustomer extends Model
         return $this->belongsTo(InvoiceOrderCustomer::class, 'offer_contractors');
     }
 
-      /**
+    /**
     * Таблица - когда отклик выбрал
     * @return HasOne
     */

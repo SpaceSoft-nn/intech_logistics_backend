@@ -2,6 +2,8 @@
 
 namespace App\Modules\OfferContractor\Domain\Resources;
 
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\InvoceOrderResource;
+use App\Modules\Organization\Domain\Resources\OrganizationResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -13,9 +15,9 @@ class OfferContractorCustomerResource extends JsonResource
         return [
 
             "id_offer_contractor_customer" => $this->id,
-            "invoice_order_customer_id" => $this->invoice_order_customer_id,
-            "offer_contractor_id" => $this->offer_contractor_id,
-            "organization_id" => $this->organization_id,
+            "invoice_order_customer" => InvoceOrderResource::make($this->invoice_order_customer),
+            "offer_contractor" => OfferContractorResource::make($this->offer_contractor),
+            "organization_id" => OrganizationResource::make($this->organization),
             "user_id" => $this->user_id,
 
         ];

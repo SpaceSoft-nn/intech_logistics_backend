@@ -83,6 +83,12 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="end_address_id", type="string", format="uuid", description="ID адреса доставки", example="123e4567-e89b-12d3-a456-426614174001"),
 *     @OA\Property(property="start_date", type="string", format="date", description="Дата отправления", example="2023-12-01"),
 *     @OA\Property(property="end_date", type="string", format="date", description="Дата прибытия", example="2023-12-05"),
+*     @OA\Property(
+*         property="cargo_good",
+*         type="array",
+*         @OA\Items(ref="#/components/schemas/AddressList"),
+*         description="Коллекция грузов"
+*     ),
 *
 * ),
 *

@@ -579,8 +579,9 @@
                                     "department_code": {
                                         "description": "Код подразделения, выдавшего паспорт. Допускается значение null.",
                                         "type": "string",
-                                        "maxLength": 6,
-                                        "minLength": 6,
+                                        "maxLength": 7,
+                                        "minLength": 7,
+                                        "pattern": "/^\\d{3}-\\d{3}$/",
                                         "example": "Some comment",
                                         "nullable": true
                                     }
@@ -1587,7 +1588,7 @@
                                         "example": "Товары народного потребления"
                                     },
                                     "type_load_truck": {
-                                        "$ref": "#/components/schemas/TransportStatusEnum"
+                                        "$ref": "#/components/schemas/TypeLoadingTruckMethodEnum"
                                     },
                                     "type_transport_weight": {
                                         "$ref": "#/components/schemas/TransportTypeWeightEnum"
@@ -1622,6 +1623,67 @@
                                         "maxLength": 1000,
                                         "example": "Доставка из Москвы в Санкт-Петербург",
                                         "nullable": true
+                                    },
+                                    "goods_array": {
+                                        "description": "Массив объектов, представляющих грузы. Обязательное поле. Минимум 1+ груз",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "product_type": {
+                                                    "description": "**Тип продукта. Обязательное поле.**",
+                                                    "type": "string",
+                                                    "example": "Тип 1"
+                                                },
+                                                "type_pallet": {
+                                                    "description": "**Тип поддона. Обязательное поле. Возможные значения: 'eur', 'ecom', 'fin' **",
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "eur",
+                                                        "ecom",
+                                                        "fin"
+                                                    ],
+                                                    "example": "eur"
+                                                },
+                                                "cargo_units_count": {
+                                                    "description": "**Количество паллетов. Обязательное поле. Минимум 1.**",
+                                                    "type": "integer",
+                                                    "minimum": 1,
+                                                    "example": 5
+                                                },
+                                                "body_volume": {
+                                                    "description": "**Объем кузова. Обязательное поле. Минимум 0.**",
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "minimum": 0,
+                                                    "example": 12.5
+                                                },
+                                                "name_value": {
+                                                    "description": "**Название. Необязательное поле. Максимум 100 символов.**",
+                                                    "type": "string",
+                                                    "maxLength": 100,
+                                                    "example": "Название груза",
+                                                    "nullable": true
+                                                },
+                                                "description": {
+                                                    "description": "**Описание. Необязательное поле. Максимум 500 символов.**",
+                                                    "type": "string",
+                                                    "maxLength": 500,
+                                                    "example": "Описание груза",
+                                                    "nullable": true
+                                                },
+                                                "mgx": {
+                                                    "oneOf": [
+                                                        {
+                                                            "$ref": "#/components/schemas/MgxObject"
+                                                        }
+                                                    ],
+                                                    "nullable": true,
+                                                    "description": "**Массогабаритные Характеристики - поле не обязательное, если указано, то будет валидироватья относительно количество паллетов**",
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
                                     }
                                 },
                                 "type": "object"
@@ -7967,6 +8029,12 @@
                     },
                     "issue_date": {
                         "description": "Дата выдачи паспорта",
+                        "type": "string",
+                        "format": "date",
+                        "example": "01.01.2021"
+                    },
+                    "birth_day": {
+                        "description": "Дата рождения",
                         "type": "string",
                         "format": "date",
                         "example": "01.01.2021"

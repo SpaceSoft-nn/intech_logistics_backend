@@ -3,6 +3,7 @@
 namespace App\Modules\OfferContractor\Domain\Resources;
 
 use App\Modules\Organization\Domain\Resources\OrganizationResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,6 +19,8 @@ class OfferContractorCustomerResource extends JsonResource
             "invoice_order_customer" => InvoiceOrderCustomerResource::make($this->invoice_order_customer),
             "offer_contractor" => OfferContractorResource::make($this->offer_contractor),
             "organization_id" => OrganizationResource::make($this->organization),
+            "created_at" => Carbon::parse($this->created_at)->format('d.m.Y'),
+            "created_at" => $this->created_at,
             "user_id" => $this->user_id,
 
         ];

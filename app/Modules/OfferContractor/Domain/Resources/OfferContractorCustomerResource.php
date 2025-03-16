@@ -20,7 +20,6 @@ class OfferContractorCustomerResource extends JsonResource
             "offer_contractor" => OfferContractorResource::make($this->offer_contractor),
             "organization_id" => OrganizationResource::make($this->organization),
             "created_at" => Carbon::parse($this->created_at)->format('d.m.Y'),
-            "created_at" => $this->created_at,
             "user_id" => $this->user_id,
 
         ];

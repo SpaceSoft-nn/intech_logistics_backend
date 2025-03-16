@@ -21,7 +21,7 @@ class OfferContractorsAndCustomerFilter
         $status_enum = [
             OfferContractorStatusEnum::published,
             OfferContractorStatusEnum::in_work,
-            OfferContractorStatusEnum::draft,
+            // OfferContractorStatusEnum::draft,
         ];
 
 

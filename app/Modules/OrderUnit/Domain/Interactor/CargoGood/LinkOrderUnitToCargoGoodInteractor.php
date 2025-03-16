@@ -74,6 +74,7 @@ final class LinkOrderUnitToCargoGoodInteractor
 
                 if(isset($cargoGood->mgx)) {
 
+                    #TODO В сервисе надо отвязаться от самой модели и привязаться к CargoGoodVO
                     //создаём сервес валидации и указываем cargoGood
                     $serviceValidationMgx = new MgxValidationService($cargoGood);
 

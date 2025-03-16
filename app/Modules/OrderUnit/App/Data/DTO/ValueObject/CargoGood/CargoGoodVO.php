@@ -2,11 +2,11 @@
 
 namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood;
 
+use Arr;
+use Illuminate\Contracts\Support\Arrayable;
 use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\MgxVO;
 use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
-use Arr;
-use Illuminate\Contracts\Support\Arrayable;
 
 final readonly class CargoGoodVO implements Arrayable
 {
@@ -72,10 +72,53 @@ final readonly class CargoGoodVO implements Arrayable
     public static function fromArrayToObject(array $data): ?array
     {
 
-        if(empty($data['goods_array'])) { return null; }
+        if(empty($data['goods_array']) || empty($data['cargo_good'])) { return null; }
 
         //получаем массив goods_array
         $datas = $data['goods_array'];
+        $array = [];
+
+        foreach ($datas as $data) {
+
+            $product_type = Arr::get($data, "product_type");
+            $cargo_units_count = Arr::get($data, "cargo_units_count");
+            $body_volume = Arr::get($data, "body_volume");
+            $type_pallet = Arr::get($data, "type_pallet");
+            $mgx = Arr::get($data, "mgx", null);
+            $name_value = Arr::get($data, "name_value", null);
+            $description = Arr::get($data, "description", null);
+
+            if(!is_null($mgx)) {
+                $mgx = MgxVO::fromArrayToObject($mgx);
+            }
+
+            $array[] = static::make(
+                product_type: $product_type,
+                cargo_units_count: $cargo_units_count,
+                body_volume: $body_volume,
+                type_pallet: $type_pallet,
+                mgx: $mgx,
+                name_value: $name_value,
+                description: $description,
+            );
+        }
+
+        return $array;
+    }
+
+     /**
+     * переводим из модели InvoiceOrderCustomer - которое присылаем как string, в объект CargoGoodVO
+     * @param array $data
+     *
+     * @return ?CargoGoodVO[]
+     */
+    public static function fromArrayInvoiceOrderCustomerToObject(array $data): ?array
+    {
+
+        if(empty($data['cargo_good'])) { return null; }
+
+        //получаем массив goods_array
+        $datas = $data['cargo_good'];
         $array = [];
 
         foreach ($datas as $data) {

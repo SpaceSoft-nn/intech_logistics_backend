@@ -30,6 +30,8 @@ return new class extends Migration
             $table->uuid('end_address_id')->comment('Адресс доставки')
                 ->constrained('addresses')->noActionOnDelete();
 
+            $table->json('cargo_good');
+
             $table->date('start_date')->comment('Дата отправления');
 
             $table->date('end_date')->comment('Дата прибытия');

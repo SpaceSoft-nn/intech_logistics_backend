@@ -9,7 +9,7 @@ use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use Illuminate\Contracts\Support\Arrayable;
 use Arr;
 
-readonly class  OrderUnitVO implements Arrayable
+readonly class OrderUnitVO implements Arrayable
 {
     use FilterArrayTrait;
 
@@ -276,6 +276,56 @@ readonly class  OrderUnitVO implements Arrayable
             organization_id: $organization_id,
 
             add_load_space: self::filterEnumTypeLoad($type_load_truck),
+            change_price: $change_price,
+            change_time: $change_time,
+            lot_tender_id: $lot_tender_id,
+        );
+    }
+
+    //переводим из модели InvoiceOrderCustomer - которое присылаем как string, в объект OrderUnitVO
+    public static function fromArrayInvoiceOrderCustomerToObject(array $data): self
+    {
+
+
+        $end_date_order = Arr::get($data, "end_date");
+        $exemplary_date_start = Arr::get($data, "start_date" , null);
+
+        $body_volume = Arr::get($data, "body_volume", null);
+        $order_total = Arr::get($data, "order_total");
+        $description = Arr::get($data, "description", null);
+
+        // dd(TypeLoadingTruckMethod::stringValueCaseToObject(Arr::get($data, "type_load_truck")));
+
+        $type_load_truck = TypeLoadingTruckMethod::stringValueCaseToObject(Arr::get($data, "type_load_truck"));
+        $type_transport_weight = TypeTransportWeight::stringValueCaseToObject(Arr::get($data, "type_transport_weight"));
+        $order_status = Arr::get($data, "order_status", null);
+
+        $user_id = Arr::get($data, "user_id", null);
+        $contractor_id = Arr::get($data, "contractor_id", null);
+        $organization_id = Arr::get($data, "organization_id", null);
+
+        $change_price = Arr::get($data, "change_price", null);
+        $change_time = Arr::get($data, "change_time", null);
+        $lot_tender_id = Arr::get($data, "lot_tender_id" , null);
+
+        return static::make(
+
+            end_date_order: $end_date_order,
+            exemplary_date_start: $exemplary_date_start,
+
+            body_volume: $body_volume,
+            order_total: $order_total,
+            description: $description,
+
+            type_load_truck: $type_load_truck->value,
+            type_transport_weight: $type_transport_weight->value,
+            order_status: $order_status,
+
+            user_id: $user_id,
+            contractor_id: $contractor_id,
+            organization_id: $organization_id,
+
+            add_load_space: self::filterEnumTypeLoad($type_load_truck->value),
             change_price: $change_price,
             change_time: $change_time,
             lot_tender_id: $lot_tender_id,

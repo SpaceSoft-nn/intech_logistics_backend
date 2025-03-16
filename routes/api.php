@@ -196,7 +196,6 @@ Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization'
 
     Route::get('/{offerContractor}', [OfferContractorController::class, 'show'])->withoutMiddleware(['isCarrierOrganization']);
 
-
     Route::middleware(['isCarrierOrganization'])->group(function () {
 
         //создание предложения от перевозчика

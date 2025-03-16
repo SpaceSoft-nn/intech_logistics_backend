@@ -18,7 +18,6 @@ use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OfferContractor\App\Data\DTO\OfferCotractorAddCustomerDTO;
 use App\Modules\OfferContractor\App\Repositories\OfferCotractorRepository;
-use App\Modules\OfferContractor\Domain\Resources\OfferContractorCollection;
 use App\Modules\OfferContractor\App\Data\ValueObject\InvoiceOrderCustomerVO;
 use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractorAccept;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorCreateRequest;
@@ -124,12 +123,15 @@ class OfferContractorController extends Controller
         OfferContractorAddCustomerRequest $request,
         OfferContractorService $offerContractorService,
     ) {
+
         /**
         * @var InvoiceOrderCustomerVO
-        *
         */
         $invoiceOrderCustomerVO = $request->createInvoiceOrderCustomerVO();
 
+
+        /** @var CargoGoodVO[] */
+        $cargoGoodVO_array = $request->createCargoGoodVO();
 
         /**
          * @var OfferContractorCustomer
@@ -139,8 +141,10 @@ class OfferContractorController extends Controller
                 invoiceOrderCustomerVO: $invoiceOrderCustomerVO,
                 organization: $organization,
                 offerContractor: $offerContractor,
+                cargoGoodVO_array: $cargoGoodVO_array,
             ),
         );
+        
 
         return response()->json(array_success(OfferContractorCustomerResource::make($offerContractorCustomer), 'Успешно добавлен отклик на предложения перевозчика.'), 201);
 

@@ -35,7 +35,7 @@ class OfferContractorCreateRequest extends ApiRequest
             'road_back' => ['nullable', 'boolean'],
             'directly_road' => ['nullable', 'boolean'],
             'description' => ['nullable', 'string', "max:1000"],
-            'status' => ['nullable', 'required', Rule::in($offerContractorStatusEnum)]
+            'status' => ['nullable', 'string', Rule::in($offerContractorStatusEnum)]
         ];
     }
 

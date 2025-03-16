@@ -16,12 +16,31 @@ enum TransportTypeWeight : string implements IEnumStringToObject
     case superSize = 'более 10 тонны';
 
     /**
-    * Получить значение case в string и прислать объект
+    * Принять в параметр ключ как тип string, и вернуть эквивалетный объект
     * @param string $value
     *
     * @return self
     */
     public static function stringByCaseToObject(?string $value) : self
+    {
+        return match ($value) {
+            "extraSmall" => TransportTypeWeight::extraSmall,
+            "small" => TransportTypeWeight::small,
+            "medium" => TransportTypeWeight::medium,
+            "large" => TransportTypeWeight::large,
+            "extraLarge" => TransportTypeWeight::extraLarge,
+            "superSize" => TransportTypeWeight::superSize,
+            default => throw new Exception('Ошибка преобразование Enum TransportTypeWeight', 500),
+        };
+    }
+
+    /**
+    * Принять в параметр ключ как тип string, и вернуть эквивалетный объект
+    * @param string $value
+    *
+    * @return self
+    */
+    public static function ObjectByCaseToStringKey(?string $value) : self
     {
         return match ($value) {
             "extraSmall" => TransportTypeWeight::extraSmall,

@@ -59,7 +59,7 @@ class CreateOrderUnitInteractor
                 {   //Создание CargoGoods[] и линковака с OrderUnit + Линковка с CargoUnit + валидация MGX и создание записей CargoUnit + уточнее слоёв Factory
                     $this->orderToCargoGoodInteractor->execute($order, $dto->cargoGoodVO);
                 }
-                
+
                 return $order;
 
             });

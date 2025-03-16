@@ -2,16 +2,15 @@
 
 namespace App\Modules\OrderUnit\Domain\Services;
 
+use function App\Helpers\Mylog;
+use App\Modules\OrderUnit\Domain\Models\Mgx;
 use App\Modules\Base\Error\BusinessException;
-use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
+use App\Modules\OrderUnit\Domain\Models\CargoGood;
 use App\Modules\OrderUnit\Common\Helpers\Pallets\PalletSize;
 use App\Modules\OrderUnit\Common\Helpers\Pallets\PalletSizeHelper;
-use App\Modules\OrderUnit\Domain\Models\CargoGood;
-use App\Modules\OrderUnit\Domain\Models\Mgx;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Exception;
 
-use function App\Helpers\Mylog;
+
+use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
 
 /**
  * Сервес предназначен для проверки валидации указанных MGX и указанного типа паллета в грузе.

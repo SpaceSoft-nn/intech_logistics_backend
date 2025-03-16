@@ -54,4 +54,30 @@ final readonly class OrderUnitAddressDTO
         );
     }
 
+    //переводим из модели InvoiceOrderCustomer - которое присылаем как string, в объект OrderUnitVO
+    public static function fromArrayInvoiceOrderCustomerToObject(array $data): self
+    {
+
+        $start_address_id = Arr::get($data, "start_address_id");
+        $end_address_id = Arr::get($data, "end_address_id");
+
+        $start_date_delivery = Arr::get($data, "start_date");
+        $end_date_delivery = Arr::get($data, "end_date");
+
+
+        $address_array = Arr::get($data, "address_array", null);
+
+        return static::make(
+            mainAddressVectorVO: mainAddressVectorVO::make(
+                start_address_id: $start_address_id,
+                end_address_id: $end_address_id,
+                start_date_delivery: $start_date_delivery,
+                end_date_delivery: $end_date_delivery,
+            ),
+            addressArray: $address_array,
+        );
+    }
+
+
+
 }

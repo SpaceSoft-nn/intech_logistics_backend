@@ -32,7 +32,6 @@ class AgreementOfferOrderInteractor
             $dto = $this->mappingOrderUnitVO($dto);
         }
 
-
         /**
         * @var bool
         */
@@ -51,21 +50,25 @@ class AgreementOfferOrderInteractor
             /**
             * @var AgreementOrderContractor
             */
-            $agreementOrderContractorAccept = $agreementOrderContractorAccept->agreement_order_contractor;
+            $agreementOrderContractor = $agreementOrderContractorAccept->agreement_order_contractor;
 
-            //получаем созданный заказ и устанавливаем его в таблицу agreementOrderContractorAccept
-            $order_unit = $this->orderUnitService->createOrderUnit(
-                OrderUnitCreateDTO::make(
-                    orderUnitVO: $orderUnitCreateDTO->orderUnitVO,
-                    orderUnitAddressDTO: $orderUnitCreateDTO->orderUnitAddressDTO,
-                    cargoGoodVO: $orderUnitCreateDTO->cargoGoodVO,
-                ),
-            );
+            { #TODO Вырезали временно логику ЭДО
+
+                //получаем созданный заказ и устанавливаем его в таблицу agreementOrderContractorAccept
+                $order_unit = $this->orderUnitService->createOrderUnit(
+                    OrderUnitCreateDTO::make(
+                        orderUnitVO: $orderUnitCreateDTO->orderUnitVO,
+                        orderUnitAddressDTO: $orderUnitCreateDTO->orderUnitAddressDTO,
+                        cargoGoodVO: $orderUnitCreateDTO->cargoGoodVO,
+                    ),
+                );
+
+            }
 
             //устанавливаем в таблицу где подрядчик выбрал исполнителя (организацию заказчика), order_unit с которым теперь будет работать
-            $agreementOrderContractorAccept->order_unit_id = $order_unit->id;
+            $agreementOrderContractor->order_unit_id = $order_unit->id;
 
-            return $agreementOrderContractorAccept->save();
+            return $agreementOrderContractor->save();
 
 
         });

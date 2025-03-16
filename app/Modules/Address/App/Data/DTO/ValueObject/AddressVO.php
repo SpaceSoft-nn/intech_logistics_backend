@@ -41,7 +41,6 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
         string $latitude,
         string $longitude,
 
-
         ?string $building = null,
         ?string $postal_code = null,
         ?array $json = null,

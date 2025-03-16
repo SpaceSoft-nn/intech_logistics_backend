@@ -82,7 +82,7 @@ class AgreementOrderContractor extends Model
     */
     public function order_unit() : BelongsTo
     {
-        return $this->belongsTo(OrderUnit::class, 'order_units');
+        return $this->belongsTo(OrderUnit::class, 'order_unit_id', 'id');
     }
 
     /**

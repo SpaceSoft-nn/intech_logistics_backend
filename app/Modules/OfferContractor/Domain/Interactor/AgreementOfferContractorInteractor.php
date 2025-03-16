@@ -85,7 +85,9 @@ class AgreementOfferContractorInteractor
 
                 $order = $orderService->createOrderUnit($orderUnitCreateDTO);
 
-                dd($order);
+                //устанавливаем значения что бы у предложения перевозчика, было понятно к какому заказу относится
+                $agreementOrderContractor->order_unit_id = $order->id;
+                $agreementOrderContractor->save();
             }
 
             { // временно устанавливаем статус в работе

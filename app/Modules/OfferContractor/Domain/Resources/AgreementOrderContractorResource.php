@@ -12,6 +12,7 @@ class AgreementOrderContractorResource extends JsonResource
 
     public function toArray(Request $request): array
     {
+
         return [
             'id' => $this->id,
             "invoice"  => OfferContractorCustomerResource::make($this->offer_contractor_invoice_order_customer),

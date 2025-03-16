@@ -2,7 +2,7 @@
 
 namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources;
 
-use App\Modules\Address\Domain\Resources\AddressResource;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,16 +14,10 @@ class InvoceOrderResource extends JsonResource
         return [
 
             "id" => $this->id,
-            "order_total" => $this->order_total,
-            "description" => $this->description,
-            "body_volume" => $this->body_volume,
-            "type_product" => $this->type_product,
-            "type_transport_weight" => $this->type_transport_weight,
-            "type_load_truck" => $this->type_load_truck,
-            "start_address_id" => AddressResource::make($this->start_address_id),
-            "end_address_id" => AddressResource::make($this->end_address_id),
-            "start_date" => $this->start_date,
-            "end_date" => $this->end_date,
+            "transport_id" => $this->transport,
+            "price" => $this->price,
+            "date" => $this->date,
+            "comment" => $this->comment,
 
         ];
     }

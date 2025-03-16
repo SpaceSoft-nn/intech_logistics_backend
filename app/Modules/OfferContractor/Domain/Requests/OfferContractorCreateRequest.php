@@ -3,7 +3,9 @@
 namespace App\Modules\OfferContractor\Domain\Requests;
 
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\OfferContractor\App\Data\Enums\OfferContractorStatusEnum;
 use App\Modules\OfferContractor\App\Data\ValueObject\OfferContractorVO;
+use Illuminate\Validation\Rule;
 
 class OfferContractorCreateRequest extends ApiRequest
 {
@@ -19,6 +21,9 @@ class OfferContractorCreateRequest extends ApiRequest
 
     public function rules(): array
     {
+
+        $offerContractorStatusEnum = array_column(OfferContractorStatusEnum::cases(), 'name');
+
         return [
             'city_name_start' => ['required', 'string' , 'min:2'],
             'city_name_end' => ['required', 'string', 'min:2'],
@@ -30,6 +35,7 @@ class OfferContractorCreateRequest extends ApiRequest
             'road_back' => ['nullable', 'boolean'],
             'directly_road' => ['nullable', 'boolean'],
             'description' => ['nullable', 'string', "max:1000"],
+            'status' => ['nullable', 'required', Rule::in($offerContractorStatusEnum)]
         ];
     }
 

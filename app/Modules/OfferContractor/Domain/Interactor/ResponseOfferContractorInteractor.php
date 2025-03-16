@@ -35,6 +35,7 @@ class ResponseOfferContractorInteractor
          */
         $offerContractorCustomer = DB::transaction(function () use ($dto) {
 
+
             //валидируем значение mgx для cargoGood
             foreach ($dto->cargoGoodVO_array as $cargoGoodVO) {
 

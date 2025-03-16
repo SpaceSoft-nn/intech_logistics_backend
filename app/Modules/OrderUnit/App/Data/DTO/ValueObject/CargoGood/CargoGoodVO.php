@@ -72,7 +72,7 @@ final readonly class CargoGoodVO implements Arrayable
     public static function fromArrayToObject(array $data): ?array
     {
 
-        if(empty($data['goods_array']) || empty($data['cargo_good'])) { return null; }
+        if(empty($data['goods_array'])) { return null; }
 
         //получаем массив goods_array
         $datas = $data['goods_array'];

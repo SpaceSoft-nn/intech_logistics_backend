@@ -144,7 +144,7 @@ class OfferContractorController extends Controller
                 cargoGoodVO_array: $cargoGoodVO_array,
             ),
         );
-        
+
 
         return response()->json(array_success(OfferContractorCustomerResource::make($offerContractorCustomer), 'Успешно добавлен отклик на предложения перевозчика.'), 201);
 

@@ -4,6 +4,7 @@ namespace App\Modules\OfferContractor\Domain\Interactor;
 
 use App\Modules\Base\Error\BusinessException;
 use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOfferDTO;
+use App\Modules\OfferContractor\App\Data\Enums\OfferContractorStatusEnum;
 use App\Modules\OfferContractor\App\Data\ValueObject\AgreementOrderContractorVO;
 use App\Modules\OfferContractor\Domain\Actions\CreateAgreementOrderContractorAcceptAction;
 use App\Modules\OfferContractor\Domain\Actions\CreateAgreementOrderContractorAction;
@@ -48,6 +49,18 @@ class AgreementOfferContractorInteractor
             return $agreementOrderContractor;
 
         });
+
+        { // временно устанавливаем статус в работе
+
+            /** @var OfferContractor */
+            $offerContractor = $dto->offerContractor;
+
+            $offerContractor->status = OfferContractorStatusEnum::in_work;
+
+            $offerContractor->save();
+
+        }
+
 
         return $agreementOrderContractor;
     }

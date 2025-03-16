@@ -153,6 +153,7 @@ class OfferContractorController extends Controller
         return response()->json(array_success(OfferContractorCustomerCollection::make($offerContractorCustomers), 'Возврат всех откликов по предложению.'), 200);
     }
 
+    //перевозчик выбирает (организацию - заказчика) на исполнение заявки предложения
     public function agreementOffer(
         OfferContractor $offerContractor,
         OfferContractorAgreementOfferRequest $request,

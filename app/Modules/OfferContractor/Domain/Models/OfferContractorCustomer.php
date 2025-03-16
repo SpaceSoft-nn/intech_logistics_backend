@@ -54,7 +54,7 @@ class OfferContractorCustomer extends Model
     */
     public function offer_contractor() : BelongsTo
     {
-        return $this->belongsTo(OfferContractorCustomer::class, 'offer_contractors');
+        return $this->belongsTo(OfferContractor::class, 'offer_contractor_id', 'id');
     }
 
     /**
@@ -63,7 +63,7 @@ class OfferContractorCustomer extends Model
     */
     public function organization() : BelongsTo
     {
-        return $this->belongsTo(Organization::class, 'organizaion_id', 'id');
+        return $this->belongsTo(Organization::class, 'organization_id', 'id');
     }
 
     /**
@@ -72,7 +72,7 @@ class OfferContractorCustomer extends Model
     */
     public function invoice_order_customer() : BelongsTo
     {
-        return $this->belongsTo(InvoiceOrderCustomer::class, 'offer_contractors');
+        return $this->belongsTo(InvoiceOrderCustomer::class, 'invoice_order_customer_id', 'id');
     }
 
     /**

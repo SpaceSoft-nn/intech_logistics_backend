@@ -11,6 +11,7 @@ class OfferContractorCustomerResource extends JsonResource
 
     public function toArray(Request $request): array
     {
+
         return [
 
             "id_offer_contractor_customer" => $this->id,

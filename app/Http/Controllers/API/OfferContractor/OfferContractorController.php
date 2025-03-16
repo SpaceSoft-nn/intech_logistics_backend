@@ -153,6 +153,7 @@ class OfferContractorController extends Controller
         $offerContractorCustomers = OfferContractorCustomer::where('offer_contractor_id', $offerContractor->id)
             ->with('offer_contractor', 'invoice_order_customer', 'organization')->get();
 
+
         return response()->json(array_success(OfferContractorCustomerCollection::make($offerContractorCustomers), 'Возврат всех откликов по предложению.'), 200);
     }
 

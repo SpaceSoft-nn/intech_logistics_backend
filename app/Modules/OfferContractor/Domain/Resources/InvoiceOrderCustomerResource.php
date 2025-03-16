@@ -10,6 +10,7 @@ class InvoiceOrderCustomerResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+
         return [
 
             "id" => $this->id,
@@ -19,8 +20,8 @@ class InvoiceOrderCustomerResource extends JsonResource
             "type_product" => $this->type_product,
             "type_transport_weight" => $this->type_transport_weight,
             "type_load_truck" => $this->type_load_truck,
-            "start_address_id" => AddressResource::make($this->start_address_id),
-            "end_address_id" => AddressResource::make($this->end_address_id),
+            "start_address_id" => AddressResource::make($this->start_address),
+            "end_address_id" => AddressResource::make($this->end_address),
             "start_date" => $this->start_date,
             "end_date" => $this->end_date,
 

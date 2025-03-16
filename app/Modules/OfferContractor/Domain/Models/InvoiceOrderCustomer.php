@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class InvoiceOrderCustomer extends Model
 { //Таблица когда заказчики откликнулись на предложение перевозчика (пред создание заказа)
@@ -59,15 +58,15 @@ class InvoiceOrderCustomer extends Model
         ];
     }
 
-    /**
-     * Связь к таблице информации от Организации: заказчика
-     * @return HasOne
-    */
-    public function offer_contractor_customer() : HasOne
-    {
-        #TODO Может быть случай когда эта таблица может использоваться как черновик и HasOne не подойдёт
-        return $this->hasOne(InvoiceOrderCustomer::class, 'offer_contractors');
-    }
+    // /**
+    //  * Связь к таблице информации от Организации: заказчика
+    //  * @return HasOne
+    // */
+    // public function offer_contractor_customer() : HasOne
+    // {
+    //     #TODO Может быть случай когда эта таблица может использоваться как черновик и HasOne не подойдёт
+    //     return $this->hasOne(InvoiceOrderCustomer::class, 'offer_contractors');
+    // }
 
     /**
      * Связь к таблице информации от Организации: заказчика

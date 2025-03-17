@@ -32,7 +32,7 @@ class LoginController
         return $json_token ?
             response()->json(array_success($json_token, 'Successfully login.'), 200)
         :
-            response()->json(array_error(null, 'Faild login.'), 401);
+            response()->json(array_error(null, 'Неверный телефон/почта или пароль..'), 400);
 
     }
 

@@ -16,8 +16,6 @@ use Illuminate\Validation\Rule;
 class OrderUnitCreateRequest extends ApiRequest
 {
 
-    protected $stopOnFirstFailure = true;
-
     //Сохраняем состояние валидации 1 раз, что бы не вызывать её множество раз при создании VO
     private array $validatedData = [];
 

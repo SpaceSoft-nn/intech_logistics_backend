@@ -159,9 +159,14 @@ final readonly class OrderUnitVO implements Arrayable
         );
     }
 
+    /**
+     * @param StatusOrderUnitEnum $orderStatus
+     *
+     * @return self
+     */
     public function setOrderStatus(StatusOrderUnitEnum $orderStatus) : self
     {
-        return new self (
+        return $this::make(
             body_volume: $this->body_volume,
             order_total: $this->order_total,
             description: $this->description,
@@ -170,9 +175,9 @@ final readonly class OrderUnitVO implements Arrayable
             end_date_order: $this->end_date_order,
             exemplary_date_start: $this->exemplary_date_start,
 
-            type_load_truck: $this->type_load_truck,
-            type_transport_weight: $this->type_transport_weight,
-            order_status: $orderStatus,
+            type_load_truck: $this->type_load_truck->value,
+            type_transport_weight: $this->type_transport_weight->value,
+            order_status: $orderStatus->value,
 
             user_id: $this->user_id,
             contractor_id: $this->contractor_id,
@@ -240,6 +245,7 @@ final readonly class OrderUnitVO implements Arrayable
             lot_tender_id: $this->lot_tender_id,
         );
     }
+
 
     public function toArray() : array
     {

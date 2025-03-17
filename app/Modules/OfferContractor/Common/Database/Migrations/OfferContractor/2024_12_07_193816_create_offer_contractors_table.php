@@ -14,6 +14,8 @@ return new class extends Migration
 
             $table->uuid('id')->primary();
 
+            $table->bigIncrements('number')->comment('Номер предложения для фронта')->index('number_offer_contractor');
+
             $table->string('city_name_start')->comment('Только город');
             $table->string('city_name_end')->comment('Только город');
 

@@ -17,8 +17,6 @@ use Illuminate\Validation\Rule;
 class OrderUnitCreateRequest extends ApiRequest
 {
 
-    protected $stopOnFirstFailure = true;
-
     //Сохраняем состояние валидации 1 раз, что бы не вызывать её множество раз при создании VO
     private array $validatedData = [];
 
@@ -43,7 +41,7 @@ class OrderUnitCreateRequest extends ApiRequest
             "end_address_id" => ['required', 'uuid', "exists:addresses,id"], //Адресс окончания.
 
             "start_date_delivery" => ['required', 'date', 'date_format:d.m.Y'], // Дата начала заказа
-            "end_date_delivery" => ['required', 'date', 'date_format:d.m.Y'], // Дата окончания заказа
+            "end_date_delivery" => ['required', 'date', 'date_format:d.m.Y', 'after_or_equal:start_date_delivery'], // Дата окончания заказа
 
 
             //массивы
@@ -57,7 +55,7 @@ class OrderUnitCreateRequest extends ApiRequest
             "organization_id" => ['required', 'uuid', "exists:organizations,id"], //организация к которой принадлежит заказ
             // "organization_id" => ['required', 'uuid'], //организация к которой принадлежит заказ
 
-            "end_date_order" => ['required', 'date', 'date_format:d.m.Y'], //Дата окончание order
+            "end_date_order" => ['required', 'date', 'date_format:d.m.Y', 'before:start_date_delivery'], //Дата окончание order
 
             "type_load_truck" => ['required', Rule::in($typeLoadingTruckMethod)], //типа загрузки ftl, ltl, custom
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Address;
 use App\Http\Controllers\Controller;
 use App\Modules\Address\App\Data\DTO\ValueObject\AddressVO;
 use App\Modules\Address\Domain\Actions\Address\CreateAddressAction;
+use App\Modules\Address\Domain\Actions\Address\UpdateAddressAction;
 use App\Modules\Address\Domain\Models\Address;
 use App\Modules\Address\Domain\Requests\Address\AddressCreateRequest;
 use App\Modules\Address\Domain\Resources\AddressCollection;
@@ -25,7 +26,7 @@ class AddressController extends Controller
         return response()->json(array_success(AddressResource::make($address), 'Return create Address.'), 200);
     }
 
-    public function create(
+    public function store(
         AddressCreateRequest $request,
         CreateAddressAction $action,
     )  {
@@ -35,9 +36,25 @@ class AddressController extends Controller
         */
         $addressVO = $request->getAddressVO();
 
-
         $address = $action->make($addressVO);
 
         return response()->json(array_success(AddressResource::make($address), 'Return create Address.'), 201);
+    }
+
+    public function update(
+        Address $address,
+        AddressCreateRequest $request,
+        UpdateAddressAction $action,
+    )  {
+
+        /**
+        * @var AddressVO
+        */
+        $addressVO = $request->getAddressVO();
+
+        $address = $action->make($addressVO, $address);
+
+        return response()->json(array_success(AddressResource::make($address), 'Update Address.'), 201);
+
     }
 }

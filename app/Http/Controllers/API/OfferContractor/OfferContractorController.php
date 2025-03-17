@@ -18,7 +18,6 @@ use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 use App\Modules\OfferContractor\App\Data\DTO\OfferCotractorAddCustomerDTO;
 use App\Modules\OfferContractor\App\Repositories\OfferCotractorRepository;
-use App\Modules\OfferContractor\Domain\Resources\OfferContractorCollection;
 use App\Modules\OfferContractor\App\Data\ValueObject\InvoiceOrderCustomerVO;
 use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractorAccept;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorCreateRequest;
@@ -30,10 +29,13 @@ use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorResourc
 use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerCollection;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOfferRequest;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOrderRequest;
+use App\Modules\OfferContractor\Domain\Requests\UpdateOfferContractorRequest;
 use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorAcceptResource;
 
 use App\Modules\OfferContractor\Domain\Resources\Filter\CustomerComporeOfferContractorResource;
 use App\Modules\OfferContractor\Domain\Resources\Filter\CustomerComporeOfferContractorCollection;
+use App\Modules\OfferContractor\Domain\Resources\Filter\OfferContactorWrappResponse\OfferContractorWrappCollection;
+use App\Modules\OfferContractor\Domain\Resources\Filter\OfferContactorWrappResponse\OfferContractorWrappResource;
 
 class OfferContractorController extends Controller
 {
@@ -51,7 +53,7 @@ class OfferContractorController extends Controller
 
         if($array['status']) {
 
-            //Возвращаем предложения перевозчика которыесвязаны только с ним
+            //Возвращаем предложения перевозчика которые связаны только с ним
 
             //получаем все ордеры, и указываем на какие предложения откликнулся заказчик
             $offers = $rep->getOfferContractorsFilterByContractor($organization->id);
@@ -61,7 +63,7 @@ class OfferContractorController extends Controller
 
         } else {
 
-            return response()->json(array_success(OfferContractorCollection::make($organization->offer_contractors), 'Return offer сontractor by organization carrier.'), 200);
+            return response()->json(array_success(OfferContractorWrappCollection::make($organization->offer_contractors), 'Return offer сontractor by organization carrier.'), 200);
         }
 
     }
@@ -91,7 +93,7 @@ class OfferContractorController extends Controller
 
         } else {
 
-            return response()->json(array_success(OfferContractorResource::make($offerContractor), 'Return offer сontractor by organization carrier.'), 200);
+            return response()->json(array_success(OfferContractorWrappResource::make($offerContractor), 'Return offer сontractor by organization carrier.'), 200);
         }
     }
 
@@ -105,10 +107,30 @@ class OfferContractorController extends Controller
         */
         $offerContractorVO = $request->createOfferContractorVO();
 
+        /** @var OfferContractor */
         $offerContractor = $serv->createOfferContractor($offerContractorVO);
 
         return response()->json(array_success(OfferContractorResource::make($offerContractor), 'Return create offer contractor.'), 201);
 
+    }
+
+    public function update(
+        OfferContractor $offerContractor,
+        UpdateOfferContractorRequest $request,
+        OfferContractorService $serv,
+    ) {
+
+        /**
+        * @var OfferContractorVO
+        */
+        $offerContractorVO = $request->fromArrayToObjectForModel($offerContractor);
+
+        /**
+        * @var OfferContractor
+        */
+        $model = $serv->updateOfferContractor($offerContractorVO, $offerContractor);
+
+        return response()->json(array_success(OfferContractorResource::make($model), 'Update Offer Contractor Successfully.'), 200);
     }
 
     /**
@@ -121,12 +143,15 @@ class OfferContractorController extends Controller
         OfferContractorAddCustomerRequest $request,
         OfferContractorService $offerContractorService,
     ) {
+
         /**
         * @var InvoiceOrderCustomerVO
-        *
         */
         $invoiceOrderCustomerVO = $request->createInvoiceOrderCustomerVO();
 
+
+        /** @var CargoGoodVO[] */
+        $cargoGoodVO_array = $request->createCargoGoodVO();
 
         /**
          * @var OfferContractorCustomer
@@ -136,8 +161,10 @@ class OfferContractorController extends Controller
                 invoiceOrderCustomerVO: $invoiceOrderCustomerVO,
                 organization: $organization,
                 offerContractor: $offerContractor,
+                cargoGoodVO_array: $cargoGoodVO_array,
             ),
         );
+
 
         return response()->json(array_success(OfferContractorCustomerResource::make($offerContractorCustomer), 'Успешно добавлен отклик на предложения перевозчика.'), 201);
 
@@ -145,11 +172,16 @@ class OfferContractorController extends Controller
 
     public function getAddCustomer(OfferContractor $offerContractor)
     {
-        $offerContractorCustomers = OfferContractorCustomer::where('offer_contractor_id', $offerContractor->id)->get();
+
+        /** @var OfferContractorCustomer */
+        $offerContractorCustomers = OfferContractorCustomer::where('offer_contractor_id', $offerContractor->id)
+            ->with('offer_contractor', 'invoice_order_customer', 'organization')->get();
+
 
         return response()->json(array_success(OfferContractorCustomerCollection::make($offerContractorCustomers), 'Возврат всех откликов по предложению.'), 200);
     }
 
+    //перевозчик выбирает (организацию - заказчика) на исполнение заявки предложения
     public function agreementOffer(
         OfferContractor $offerContractor,
         OfferContractorAgreementOfferRequest $request,

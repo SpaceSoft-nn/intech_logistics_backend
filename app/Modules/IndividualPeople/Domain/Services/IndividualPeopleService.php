@@ -5,17 +5,18 @@ namespace App\Modules\IndividualPeople\Domain\Services;
 use App\Modules\IndividualPeople\App\Data\DTO\Base\BaseDTO;
 use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
 use App\Modules\IndividualPeople\App\Repositories\IndividualPeopleRepository;
+use App\Modules\IndividualPeople\Domain\Interactor\CreateIndividualPeopleInteractor;
 use App\Modules\IndividualPeople\Domain\Interface\Service\IIndividualPeopleService;
 use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 
 class IndividualPeopleService implements IIndividualPeopleService
 {
     public function __construct(
-        public IndividualPeopleRepository $rep,
+        private CreateIndividualPeopleInteractor $createIndividualPeopleInteractor,
+        private IndividualPeopleRepository $rep,
     ) {}
 
     /**
-     * #TODO CreateIndividualPeopleDTO - Менять на Value Object
      * Создание Individual People
      * @param CreateIndividualPeopleDTO $dto
      *
@@ -23,7 +24,7 @@ class IndividualPeopleService implements IIndividualPeopleService
      */
     public function createIndividualPeople(BaseDTO $dto) : IndividualPeople
     {
-        return $this->rep->save($dto);
+        return $this->createIndividualPeopleInteractor::execute($dto);
     }
     /**а
      * Вернуть Individual people по uuid

@@ -2,6 +2,7 @@
 
 namespace App\Modules\OfferContractor\Domain\Models;
 
+use App\Modules\Organization\Domain\Models\Organization;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -53,7 +54,16 @@ class OfferContractorCustomer extends Model
     */
     public function offer_contractor() : BelongsTo
     {
-        return $this->belongsTo(OfferContractorCustomer::class, 'offer_contractors');
+        return $this->belongsTo(OfferContractor::class, 'offer_contractor_id', 'id');
+    }
+
+    /**
+    * Связь к таблице организации
+    * @return HasMany
+    */
+    public function organization() : BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_id', 'id');
     }
 
     /**
@@ -62,10 +72,10 @@ class OfferContractorCustomer extends Model
     */
     public function invoice_order_customer() : BelongsTo
     {
-        return $this->belongsTo(InvoiceOrderCustomer::class, 'offer_contractors');
+        return $this->belongsTo(InvoiceOrderCustomer::class, 'invoice_order_customer_id', 'id');
     }
 
-      /**
+    /**
     * Таблица - когда отклик выбрал
     * @return HasOne
     */

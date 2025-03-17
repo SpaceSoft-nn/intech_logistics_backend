@@ -2,14 +2,15 @@
 
 namespace App\Modules\IndividualPeople\Domain\Models;
 
-use App\Modules\IndividualPeople\Domain\Factories\IndividualPeopleFactory;
-use App\Modules\User\Domain\Models\PersonalArea;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Modules\User\Domain\Models\PersonalArea;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Modules\IndividualPeople\Domain\Models\Passport;
+use App\Modules\IndividualPeople\Domain\Factories\IndividualPeopleFactory;
 
 /**
  *
@@ -83,10 +84,6 @@ class IndividualPeople extends Model
 
     protected $fillable = [
 
-        'first_name',
-        'last_name',
-        'father_name',
-
         'position',
         'type',
 
@@ -135,4 +132,10 @@ class IndividualPeople extends Model
     {
         return $this->belongsTo(PersonalArea::class,'personal_area_id');
     }
+
+    public function passport(): HasOne
+    {
+        return $this->hasOne(Passport::class, 'individual_people_id', 'id');
+    }
+
 }

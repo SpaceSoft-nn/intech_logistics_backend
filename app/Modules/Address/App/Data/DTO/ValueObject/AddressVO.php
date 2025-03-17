@@ -16,6 +16,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
         public readonly string $region,
         public readonly string $city,
         public readonly string $street,
+        public readonly ?string $nomination,
 
 
         public readonly string $latitude,
@@ -26,6 +27,8 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
         public ?string $postal_code,
         public ?array $json,
         public ?string $update_json,
+
+
     ) {}
 
     public static function make(
@@ -33,10 +36,10 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
         string $region,
         string $city,
         string $street,
+        string $nomination,
 
         string $latitude,
         string $longitude,
-
 
         ?string $building = null,
         ?string $postal_code = null,
@@ -58,6 +61,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
             longitude: $longitude,
             json: $json,
             update_json: $update_json,
+            nomination: $nomination,
 
         );
 
@@ -69,6 +73,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
             "region" => $this->region,
             "city" => $this->city,
             "street" => $this->street,
+            "nomination" => $this->nomination,
             "building" => $this->building,
             "postal_code" => $this->postal_code,
             // "type_address" => $this->type_address,
@@ -86,6 +91,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
         return $this->make(
             region: $this->region,
             city: $this->city,
+            nomination: $this->nomination,
             street: $this->street,
             building: $this->building,
             postal_code: $this->postal_code,
@@ -112,6 +118,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
             region: Arr::get($data, 'region') ?? Arr::get($data, 'country'), //Сделано country т.к в city_with_type и street_with_type - могут значение повторяться
             city: Arr::get($data, 'city'),
             street: Arr::get($data, 'street'),
+            nomination: Arr::get($array, 'unrestricted_value', null),
             building: $building,
             postal_code: Arr::get($data, 'postal_code', null),
             latitude: Arr::get($data, 'geo_lat'),

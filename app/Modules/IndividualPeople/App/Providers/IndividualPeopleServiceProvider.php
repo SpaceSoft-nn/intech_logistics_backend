@@ -17,6 +17,7 @@ class IndividualPeopleServiceProvider extends ServiceProvider
 
             $this->loadMigrationsFrom(dirname(__DIR__) . '/..' . '/Common' . '/Database' . "/Migrations");
             $this->loadMigrationsFrom(dirname(__DIR__) . '/..' . '/Common' . '/Database' . "/Migrations" . "/TypePeople");
+            $this->loadMigrationsFrom(dirname(__DIR__) . '/..' . '/Common' . '/Database' . "/Migrations" . "/Passport");
 
         }
     }

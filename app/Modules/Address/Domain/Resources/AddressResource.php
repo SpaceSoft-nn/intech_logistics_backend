@@ -7,11 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class AddressResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
@@ -23,6 +18,7 @@ class AddressResource extends JsonResource
             "postal_code" => $this->postal_code,
             "latitude" => $this->latitude,
             "longitude" => $this->longitude,
+            "nomination" => $this->nomination,
         ];
     }
 }

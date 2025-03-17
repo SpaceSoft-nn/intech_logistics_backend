@@ -18,6 +18,8 @@ class UserLoginRequest extends ApiRequest
         {
             $email = EmailList::where('value', $this->input('email'))->first();
 
+            abort_unless( (bool) $email, 400, 'Неверный телефон/почта или пароль.');
+
             /** @var EmailList */
             $user = $email?->user;
 
@@ -29,6 +31,8 @@ class UserLoginRequest extends ApiRequest
         if($this->input('phone'))
         {
             $phone = PhoneList::where('value', $this->input('phone'))->first();
+
+            abort_unless( (bool) $phone, 400, 'Неверный телефон/почта или пароль.');
 
             /** @var PhoneList */
             $user = $phone?->user;

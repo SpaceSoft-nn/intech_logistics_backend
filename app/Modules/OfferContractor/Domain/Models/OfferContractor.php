@@ -4,9 +4,11 @@ namespace App\Modules\OfferContractor\Domain\Models;
 
 use App\Modules\OfferContractor\App\Data\Enums\OfferContractorStatusEnum;
 use App\Modules\OfferContractor\Domain\Factories\OfferContractorFactory;
+use App\Modules\Transport\Domain\Models\Transport;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -43,11 +45,11 @@ class OfferContractor extends Model
         'add_load_space', //Возможен ли догруз
         'road_back', //Обратная дорога
         'directly_road', //Прямая дорога
-
     ];
 
     protected $guarded = [
         'id',
+        'number',
         'created_at',
         'updated_at',
     ];
@@ -73,7 +75,7 @@ class OfferContractor extends Model
     }
 
     /**
-    *
+    * связь к таблице, когда перевозчик выбрал исполнителя "заказчика", то есть возьмёт в работу заказ
     * @return HasOne
     */
     public function agreement_order_contractor() : HasOne
@@ -81,5 +83,13 @@ class OfferContractor extends Model
         return $this->hasOne(AgreementOrderContractor::class, 'offer_contractor_id', 'id');
     }
 
+    /**
+    *
+    * @return HasOne
+    */
+    public function transport() : BelongsTo
+    {
+        return $this->belongsTo(Transport::class, 'transport_id', 'id');
+    }
 
 }

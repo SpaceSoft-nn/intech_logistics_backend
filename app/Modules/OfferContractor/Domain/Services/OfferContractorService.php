@@ -2,19 +2,20 @@
 
 namespace App\Modules\OfferContractor\Domain\Services;
 
-use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOfferDTO;
-use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOrderDTO;
-use App\Modules\OfferContractor\App\Data\DTO\OfferCotractorAddCustomerDTO;
-use App\Modules\OfferContractor\App\Data\ValueObject\OfferContractorVO;
-use App\Modules\OfferContractor\App\Repositories\OfferCotractorRepository;
-use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferAcceptInteractor;
-use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferContractorInteractor;
-use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferOrderInteractor;
-use App\Modules\OfferContractor\Domain\Interactor\ResponseOfferContractorInteractor;
-use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractor;
-use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractorAccept;
 use App\Modules\OfferContractor\Domain\Models\OfferContractor;
 use App\Modules\OfferContractor\Domain\Models\OfferContractorCustomer;
+use App\Modules\OfferContractor\App\Data\ValueObject\OfferContractorVO;
+use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractor;
+use App\Modules\OfferContractor\App\Data\DTO\OfferCotractorAddCustomerDTO;
+use App\Modules\OfferContractor\App\Repositories\OfferCotractorRepository;
+use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractorAccept;
+use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOfferDTO;
+use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOrderDTO;
+use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferOrderInteractor;
+use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferAcceptInteractor;
+use App\Modules\OfferContractor\Domain\Interactor\ResponseOfferContractorInteractor;
+use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferContractorInteractor;
+use App\Modules\OfferContractor\Domain\Interactor\UpdateOfferContractorInteractor;
 
 final class OfferContractorService
 {
@@ -31,7 +32,23 @@ final class OfferContractorService
      */
     public function createOfferContractor(OfferContractorVO $vo) : OfferContractor
     {
-        return $this->offerCotractorRep->create($vo);
+        /** @var OfferContractor */
+        $offerContractor = $this->offerCotractorRep->create($vo);
+
+        //обновляем что бы получить number из БД
+        $offerContractor->refresh();
+
+        return $offerContractor;
+    }
+
+    /**
+     * @param OfferContractorVO $vo
+     *
+     * @return OfferContractor
+    */
+    public function updateOfferContractor(OfferContractorVO $vo, OfferContractor $model) : OfferContractor
+    {
+        return UpdateOfferContractorInteractor::execute($vo, $model);
     }
 
     /**

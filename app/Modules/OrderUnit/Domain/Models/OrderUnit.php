@@ -10,6 +10,7 @@ use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\Domain\Models\LotTender;
+use App\Modules\Transport\Domain\Models\Transport;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,7 +42,6 @@ class OrderUnit extends Model
         "order_total",
         "description",
 
-
         "cargo_unit_sum",
         "product_type",
 
@@ -53,6 +53,7 @@ class OrderUnit extends Model
         "organization_id",
         "contractor_id",
         "lot_tender_id",
+        "transport_id",
 
         //bool
         "add_load_space",
@@ -149,6 +150,11 @@ class OrderUnit extends Model
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'organization_id');
+    }
+
+    public function transport(): BelongsTo
+    {
+        return $this->belongsTo(Transport::class, 'transport_id', 'id');
     }
 
     public function contractor(): BelongsTo

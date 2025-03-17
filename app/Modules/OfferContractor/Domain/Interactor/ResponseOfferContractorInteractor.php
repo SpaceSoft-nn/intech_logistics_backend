@@ -2,18 +2,22 @@
 
 namespace App\Modules\OfferContractor\Domain\Interactor;
 
+use DB;
+use App\Modules\OrderUnit\Domain\Models\Mgx;
 use App\Modules\Base\Error\BusinessException;
+use App\Modules\OrderUnit\Domain\Models\CargoGood;
+use App\Modules\OrderUnit\Domain\Services\MgxValidationService;
+use App\Modules\OfferContractor\Domain\Models\InvoiceOrderCustomer;
+use App\Modules\OfferContractor\Domain\Models\OfferContractorCustomer;
 use App\Modules\OfferContractor\App\Data\DTO\OfferCotractorAddCustomerDTO;
 use App\Modules\OfferContractor\App\Data\ValueObject\InvoiceOrderCustomerVO;
 use App\Modules\OfferContractor\App\Data\ValueObject\OfferContractorCustomerVO;
 use App\Modules\OfferContractor\Domain\Actions\InvoiceOrderCustomerCreateAction;
 use App\Modules\OfferContractor\Domain\Actions\OfferContractorInvoiceOrderCustomerCreateAction;
-use App\Modules\OfferContractor\Domain\Models\InvoiceOrderCustomer;
-use App\Modules\OfferContractor\Domain\Models\OfferContractorCustomer;
-use DB;
 
 class ResponseOfferContractorInteractor
 {
+
     public static function execute(OfferCotractorAddCustomerDTO $dto)
     {
         return (new self())->run($dto);
@@ -31,16 +35,33 @@ class ResponseOfferContractorInteractor
          */
         $offerContractorCustomer = DB::transaction(function () use ($dto) {
 
+
+            //валидируем значение mgx для cargoGood
+            foreach ($dto->cargoGoodVO_array as $cargoGoodVO) {
+
+                if($cargoGoodVO->mgx)
+                {
+                    //создамё объект модели без добавление в бд, для валидации.
+                    $mgx = new Mgx($cargoGoodVO->mgx->toArrayNotNull());
+                    $cargoGood = (new CargoGood($cargoGoodVO->toArrayNotNull()))->setRelation('mgx', $mgx);
+
+                    //валидируем значения
+                    (new MgxValidationService($cargoGood))->runVlidationMgx();
+
+                }
+
+            }
+
             /**
              * создаём абстрактный заказ от заказчика, для перевозчика.
-            * @var InvoiceOrderCustomer
+             * @var InvoiceOrderCustomer
             */
             $invoiceOrderCustomer = $this->createInvoiceOrderCustomer($dto->invoiceOrderCustomerVO);
 
             /**
              * Создаём отклик на предложения перевозчика от Заказчика
              * @var OfferContractorCustomer
-             */
+            */
             $offerContractorCustomer = $this->createOfferContractorInvoiceOrderCustomer($dto, $invoiceOrderCustomer);
 
             return $offerContractorCustomer;
@@ -56,7 +77,7 @@ class ResponseOfferContractorInteractor
      *
      * @return InvoiceOrderCustomer
      */
-    private function createInvoiceOrderCustomer(InvoiceOrderCustomerVO $vo) : InvoiceOrderCustomer
+    private function    createInvoiceOrderCustomer(InvoiceOrderCustomerVO $vo) : InvoiceOrderCustomer
     {
         return InvoiceOrderCustomerCreateAction::make($vo);
     }
@@ -81,7 +102,7 @@ class ResponseOfferContractorInteractor
                 invoice_order_customer_id: $invoiceOrderCustomer->id,
                 offer_contractor_id: $dto->offerContractor->id,
                 organization_id: $dto->organization->id,
-                user_id: null,
+                user_id: null, #TODO Переделывать на таблицу где указано org + user
             ),
         );
 

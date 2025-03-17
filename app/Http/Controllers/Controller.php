@@ -83,6 +83,12 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="end_address_id", type="string", format="uuid", description="ID адреса доставки", example="123e4567-e89b-12d3-a456-426614174001"),
 *     @OA\Property(property="start_date", type="string", format="date", description="Дата отправления", example="2023-12-01"),
 *     @OA\Property(property="end_date", type="string", format="date", description="Дата прибытия", example="2023-12-05"),
+*     @OA\Property(
+*         property="cargo_good",
+*         type="array",
+*         @OA\Items(ref="#/components/schemas/AddressList"),
+*         description="Коллекция грузов"
+*     ),
 *
 * ),
 *
@@ -450,7 +456,8 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="postal_code", type="string", description="Почтовый индекс адреса", nullable=true),
 *     @OA\Property(property="type_Address", type="string", description="Тип адреса", nullable=true),
 *     @OA\Property(property="latitude", type="float", description="Широта адреса"),
-*     @OA\Property(property="longitude", type="float", description="Долгота адреса")
+*     @OA\Property(property="longitude", type="float", description="Долгота адреса"),
+*     @OA\Property(property="nomination", type="string", description="Наименование Адресса"),
 * ),
 *
 * @OA\Schema(
@@ -490,6 +497,24 @@ namespace App\Http\Controllers;
 *         @OA\Property(property="order_bool", type="boolean", description="Статус утверждения со стороны Заказчика", example=true),
 *         @OA\Property(property="contractor_bool", type="boolean", description="Статус утверждения со стороны Перевозчика", example=true)
 *     }
+* ),
+*
+*
+* @OA\Schema(
+*     schema="PassportResource",
+*     type="object",
+*     title="Passport Resource",
+*             @OA\Property(property="first_name", type="string", description="Имя", example="Имя"),
+*             @OA\Property(property="last_name", type="string", description="Фамилия", example="Фамилия"),
+*             @OA\Property(property="father_name", type="string", description="Отчество", example="Отчество"),
+*             @OA\Property(property="passport_series", type="string", description="Серия паспорта", example="1234"),
+*             @OA\Property(property="passport_number", type="string", description="Номер паспорта", example="123456"),
+*             @OA\Property(property="issue_date", type="string", format="date", description="Дата выдачи паспорта", example="01.01.2021"),
+*             @OA\Property(property="birth_day", type="string", format="date", description="Дата рождения", example="01.01.2021"),
+*             @OA\Property(property="issued_by", type="string", description="Орган, выдавший паспорт", example="ОВД г.Москва"),
+*             @OA\Property(property="department_code", type="string", description="Код подразделения, выдавшего паспорт", example="777777"),
+*             @OA\Property(property="individual_people_id", type="integer", description="Идентификатор физического лица", example=1)
+*     )
 * ),
 *
 *
@@ -539,6 +564,173 @@ namespace App\Http\Controllers;
 *     @OA\Property(property="array_application_document_tender_link", type="array", @OA\Items(type="string", format="url"), description="Ссылки на документы приложения для тендера"),
 *     @OA\Property(property="array_specifical_date_period", type="array", @OA\Items(ref="#/components/schemas/SpecificaDatePeriodResource"), description="Массив специфических дат периода, здесь указываются конкретные даты тендера + количество транспорта"),
 *     @OA\Property(property="count_response", type="number", description="возвращает количество откликнувшиеся на тендер перевозчкиов, только на endpoint: где возвращает все заказы", ),
+* ),
+*
+* @OA\Schema(
+*     schema="IndividualPeopleResource",
+*     type="object",
+*     title="IndividualPeopleResource",
+*     description="Individual People Resource",
+*     @OA\Property(
+*         property="id_individual_people",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the individual person",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="first_name",
+*         type="string",
+*         description="First name of the individual person",
+*         example="John"
+*     ),
+*     @OA\Property(
+*         property="last_name",
+*         type="string",
+*         description="Last name of the individual person",
+*         example="Doe"
+*     ),
+*     @OA\Property(
+*         property="father_name",
+*         type="string",
+*         description="Father's name of the individual person",
+*         example="Smith"
+*     ),
+*     @OA\Property(
+*         property="position",
+*         type="string",
+*         description="Позиция (пока что обычный string)",
+*         example="Manager"
+*     ),
+*     @OA\Property(
+*         property="passport",
+*         type="string",
+*         description="Resource Паспорта",
+*         example="придёт Resource Passport"
+*     ),
+*     @OA\Property(
+*         property="other_contact",
+*         type="string",
+*         description="Other contact information of the individual person",
+*         example="Some contact info"
+*     ),
+*     @OA\Property(
+*         property="personal_area_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the personal area - id кабинета",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="email",
+*         type="string",
+*         format="email",
+*         description="Email",
+*         example="john.doe@example.com"
+*     ),
+*     @OA\Property(
+*         property="phone",
+*         type="string",
+*         description="Phone number of the individual person",
+*         example="71234567890"
+*     ),
+*     @OA\Property(
+*         property="comment",
+*         type="string",
+*         description="Comment about the individual person",
+*         example="Some comment"
+*     )
+* ),
+*
+* @OA\Schema(
+*     schema="DriverPeopleResource",
+*     type="object",
+*     title="DriverPeopleResource",
+*     description="Driver People Resource",
+*     @OA\Property(
+*         property="id_driver_people",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the driver person",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="personal_area_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the personal area",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="individual_people_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the individual person",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="organization_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the organization",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="series",
+*         type="integer",
+*         format="int32",
+*         description="Серия Водительского Удостоверения",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="number",
+*         type="integer",
+*         format="int32",
+*         description="UUID of the organization",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="date_get",
+*         type="string",
+*         format="date",
+*         description="UUID of the organization",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+* ),
+*
+* @OA\Schema(
+*     schema="StorekeeperPeopleResource",
+*     type="object",
+*     title="StorekeeperPeopleResource",
+*     description="Storekeeper People Resource",
+*     @OA\Property(
+*         property="id_storekeeper_people",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the driver person",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="personal_area_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the personal area",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="individual_people_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the individual person",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
+*     @OA\Property(
+*         property="organization_id",
+*         type="string",
+*         format="uuid",
+*         description="UUID of the organization",
+*         example="123e4567-e89b-12d3-a456-426614174000"
+*     ),
 * ),
 *
 *
@@ -704,166 +896,6 @@ namespace App\Http\Controllers;
 *     example="more_load"
 * ),
 *
-* @OA\Schema(
-*     schema="IndividualPeopleResource",
-*     type="object",
-*     title="IndividualPeopleResource",
-*     description="Individual People Resource",
-*     @OA\Property(
-*         property="id_individual_people",
-*         type="string",
-*         format="uuid",
-*         description="UUID of the individual person",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-*     @OA\Property(
-*         property="first_name",
-*         type="string",
-*         description="First name of the individual person",
-*         example="John"
-*     ),
-*     @OA\Property(
-*         property="last_name",
-*         type="string",
-*         description="Last name of the individual person",
-*         example="Doe"
-*     ),
-*     @OA\Property(
-*         property="father_name",
-*         type="string",
-*         description="Father's name of the individual person",
-*         example="Smith"
-*     ),
-*     @OA\Property(
-*         property="position",
-*         type="string",
-*         description="Позиция (пока что обычный string)",
-*         example="Manager"
-*     ),
-*     @OA\Property(
-*         property="other_contact",
-*         type="string",
-*         description="Other contact information of the individual person",
-*         example="Some contact info"
-*     ),
-*     @OA\Property(
-*         property="personal_area_id",
-*         type="string",
-*         format="uuid",
-*         description="UUID of the personal area - id кабинета",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-*     @OA\Property(
-*         property="email",
-*         type="string",
-*         format="email",
-*         description="Email",
-*         example="john.doe@example.com"
-*     ),
-*     @OA\Property(
-*         property="phone",
-*         type="string",
-*         description="Phone number of the individual person",
-*         example="71234567890"
-*     ),
-*     @OA\Property(
-*         property="comment",
-*         type="string",
-*         description="Comment about the individual person",
-*         example="Some comment"
-*     )
-* ),
-*
-* @OA\Schema(
-*     schema="DriverPeopleResource",
-*     type="object",
-*     title="DriverPeopleResource",
-*     description="Driver People Resource",
-*     @OA\Property(
-*         property="id_driver_people",
-*         type="string",
-*         format="uuid",
-*         description="UUID of the driver person",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-*     @OA\Property(
-*         property="personal_area_id",
-*         type="string",
-*         format="uuid",
-*         description="UUID of the personal area",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-*     @OA\Property(
-*         property="individual_people_id",
-*         type="string",
-*         format="uuid",
-*         description="UUID of the individual person",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-*     @OA\Property(
-*         property="organization_id",
-*         type="string",
-*         format="uuid",
-*         description="UUID of the organization",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-*     @OA\Property(
-*         property="series",
-*         type="integer",
-*         format="int32",
-*         description="Серия Водительского Удостоверения",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-*     @OA\Property(
-*         property="number",
-*         type="integer",
-*         format="int32",
-*         description="UUID of the organization",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-*     @OA\Property(
-*         property="date_get",
-*         type="string",
-*         format="date",
-*         description="UUID of the organization",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-* ),
-*
-* @OA\Schema(
-*     schema="StorekeeperPeopleResource",
-*     type="object",
-*     title="StorekeeperPeopleResource",
-*     description="Storekeeper People Resource",
-*     @OA\Property(
-*         property="id_storekeeper_people",
-*         type="string",
-*         format="uuid",
-*         description="UUID of the driver person",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-*     @OA\Property(
-*         property="personal_area_id",
-*         type="string",
-*         format="uuid",
-*         description="UUID of the personal area",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-*     @OA\Property(
-*         property="individual_people_id",
-*         type="string",
-*         format="uuid",
-*         description="UUID of the individual person",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-*     @OA\Property(
-*         property="organization_id",
-*         type="string",
-*         format="uuid",
-*         description="UUID of the organization",
-*         example="123e4567-e89b-12d3-a456-426614174000"
-*     ),
-* ),
 *
 */
 abstract class Controller

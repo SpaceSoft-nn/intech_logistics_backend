@@ -18,8 +18,6 @@ return new class extends Migration
 
             $table->string('order_total')->comment('Цена/Выплата за заказ');
             $table->string('description')->nullable();
-            $table->string('body_volume')->comment('Общий объём заказа');
-            $table->string('type_product')->comment('Тип товара перевозки');
 
             $table->string('type_transport_weight')->comment('Тип траспортного средства');
             $table->string('type_load_truck')->comment('Тип загрузки трака: LTL, FTL, Custom...');
@@ -29,6 +27,8 @@ return new class extends Migration
 
             $table->uuid('end_address_id')->comment('Адресс доставки')
                 ->constrained('addresses')->noActionOnDelete();
+
+            $table->json('cargo_good');
 
             $table->date('start_date')->comment('Дата отправления');
 

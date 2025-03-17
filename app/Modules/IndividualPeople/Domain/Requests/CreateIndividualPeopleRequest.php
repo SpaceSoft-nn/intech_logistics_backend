@@ -3,8 +3,9 @@
 namespace App\Modules\IndividualPeople\Domain\Requests;
 
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\IndividualPeople\App\Data\ValueObject\PassportVO;
 use App\Modules\IndividualPeople\App\Data\DTO\CreateIndividualPeopleDTO;
-
+use App\Modules\IndividualPeople\App\Data\ValueObject\IndividualPeopleVO;
 
 class CreateIndividualPeopleRequest extends ApiRequest
 {
@@ -36,13 +37,34 @@ class CreateIndividualPeopleRequest extends ApiRequest
             'other_contact' => ['nullable', 'string'],
             'comment' => ['nullable', 'string', 'max:1000'],
 
+            'passport_series' => ['required', 'digits:4'],
+            'passport_number' => ['required', 'digits:6'],
+            'issue_date' => ['required', 'date', 'date_format:d.m.Y', 'before_or_equal:today'],
+            'birth_day' => ['required', 'date', 'date_format:d.m.Y'],
+            'issued_by' => ['required', 'string', 'min:3'],
+            'department_code' => ['nullable', 'regex:/^\d{3}-\d{3}$/'],
+
         ];
     }
+
 
     public function createCreateIndividualPeopleDTO() : CreateIndividualPeopleDTO
     {
 
-        return CreateIndividualPeopleDTO::fromArrayToObject($this->validated());
+        return CreateIndividualPeopleDTO::make(
+            individualPeopleVO: $this->createCreateIndividualPeopleVO(),
+            passportVO: $this->createPassportVO(),
+        );
+    }
+
+    public function createCreateIndividualPeopleVO() : IndividualPeopleVO
+    {
+        return IndividualPeopleVO::fromArrayToObject($this->validated());
+    }
+
+    public function createPassportVO() : PassportVO
+    {
+        return PassportVO::fromArrayToObject($this->validated());
     }
 
 }

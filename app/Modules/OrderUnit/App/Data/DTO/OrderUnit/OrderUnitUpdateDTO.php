@@ -23,9 +23,9 @@ class OrderUnitUpdateDTO implements Arrayable
     public static function make(
 
         OrderUnit $order,
-        bool $change_price = null,
-        bool $change_time = null,
-        string $order_status = null,
+        ?bool $change_price = null,
+        ?bool $change_time = null,
+        ?string $order_status = null,
 
     ) : self {
 

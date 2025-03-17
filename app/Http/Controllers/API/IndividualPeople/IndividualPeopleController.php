@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\API\IndividualPeople;
 
 use App\Http\Controllers\Controller;
-use App\Modules\IndividualPeople\App\Data\DTO\Base\BaseDTO;
-use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
-use App\Modules\IndividualPeople\Domain\Requests\CreateIndividualPeopleRequest;
-use App\Modules\IndividualPeople\Domain\Resources\IndividualPeopleCollection;
-use App\Modules\IndividualPeople\Domain\Resources\IndividualPeopleResource;
-use App\Modules\IndividualPeople\Domain\Services\IndividualPeopleService;
-
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use App\Modules\IndividualPeople\App\Data\DTO\Base\BaseDTO;
+use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
+use App\Modules\IndividualPeople\Domain\Services\IndividualPeopleService;
+use App\Modules\IndividualPeople\Domain\Resources\IndividualPeopleResource;
+
+use App\Modules\IndividualPeople\Domain\Resources\IndividualPeopleCollection;
+use App\Modules\IndividualPeople\Domain\Requests\CreateIndividualPeopleRequest;
 
 class IndividualPeopleController extends Controller
 {
@@ -41,7 +41,12 @@ class IndividualPeopleController extends Controller
         */
         $dto = $request->createCreateIndividualPeopleDTO();
 
+
+        /**
+        * @var IndividualPeople
+        */
         $model = $service->createIndividualPeople($dto);
+
 
         return $model ?
         response()->json(array_success(IndividualPeopleResource::make($model), 'Create individual people.'), 201)

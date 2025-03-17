@@ -23,6 +23,7 @@ class AddressCreateRequest extends ApiRequest
     {
         return [
 
+            'unrestricted_value' => ['nullable', 'string'],
             'data' => ['required', 'array'],
             'data.data*' => ['required', 'array'],
 
@@ -31,12 +32,12 @@ class AddressCreateRequest extends ApiRequest
             'data.city' => ['required', 'string'],
             'data.region' => ['required', 'string'],
             'data.street' => ['required', 'string'],
-            // 'data.house' => ['nullable', 'string'],
+            'data.house' => ['nullable', 'string'],
             // 'data.stead' => ['nullable', 'string'],
             'data.geo_lat' => ['required', 'string'],
             'data.geo_lon' => ['required', 'string'],
 
-            'data.unrestricted_value' => ['nullable', 'string'],
+
             'data.value' => ['nullable', 'string'],
 
         ];

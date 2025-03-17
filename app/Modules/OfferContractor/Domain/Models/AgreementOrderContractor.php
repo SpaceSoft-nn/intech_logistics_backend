@@ -3,6 +3,7 @@
 namespace App\Modules\OfferContractor\Domain\Models;
 
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transfer\Domain\Models\Transfer;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -53,6 +54,8 @@ class AgreementOrderContractor extends Model
         ];
     }
 
+
+
     /**
     * Таблица
     * @return BelongsTo
@@ -62,13 +65,24 @@ class AgreementOrderContractor extends Model
         return $this->belongsTo(OfferContractorCustomer::class);
     }
 
+
+    /**
+    * Таблица
+    * @return BelongsTo
+    */
+    public function organization_contractor() : BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_contractor_id', 'id');
+    }
+
+
     /**
     * Таблица
     * @return BelongsTo
     */
     public function order_unit() : BelongsTo
     {
-        return $this->belongsTo(OrderUnit::class, 'order_units');
+        return $this->belongsTo(OrderUnit::class, 'order_unit_id', 'id');
     }
 
     /**

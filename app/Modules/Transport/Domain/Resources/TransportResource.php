@@ -5,7 +5,7 @@ namespace App\Modules\Transport\Domain\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TransportResoruce extends JsonResource
+class TransportResource extends JsonResource
 {
 
     public function toArray(Request $request): array

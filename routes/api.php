@@ -39,7 +39,7 @@ Route::post('/notification/send', [NotificationController::class, 'sendNotificat
 Route::post('/notification/confirm', [NotificationController::class, 'confirmCode']);
 
     //Organization
-Route::prefix('organizations')->group(function () {
+Route::prefix('organizations')->middleware('manuallyActivatedOrganization')->group(function () {
 
 
     Route::get('/', [OrganizationController::class, 'index']);
@@ -63,15 +63,6 @@ Route::prefix('organizations')->group(function () {
 });
 
 
-
-    //User
-Route::prefix('users')->middleware(['auth:sanctum', 'isActiveUser','hasOrgHeader'])->controller(AuthController::class)->group(function () {
-
-    // Route::post('/', [UserController:: class, 'create'])->middleware(['auth:sanctum']);
-
-});
-
-
 //routing аутентификации по токену
 Route::prefix('auth')->controller(AuthController::class)->group(function () {
 
@@ -89,12 +80,20 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 });
 
     //Address
-Route::get('/addresses', [AddressController::class, 'index']);
-Route::get('/addresses/{address}', [AddressController:: class, 'show'])->whereUuid('address');
-Route::post('/addresses', [AddressController::class, 'create']);
+Route::prefix('/addresses')->middleware('manuallyActivatedOrganization')->controller(AuthController::class)->group(function () {
+
+    Route::get('/', [AddressController::class, 'index']);
+    Route::post('/', [AddressController::class, 'store']);
+
+    Route::get('/{address}', [AddressController:: class, 'show'])->whereUuid('address');
+
+    Route::patch('/{address}', [AddressController::class, 'update'])->whereUuid('orderUnit');
+});
+
+
 
     //orderUnit
-Route::prefix('/orders')->group(function () {
+Route::prefix('/orders')->middleware('manuallyActivatedOrganization')->group(function () {
 
     {
         //Вернуть все записи если заказчик - только заказы которые принадлежат ему, если перевозчик - то все
@@ -115,6 +114,9 @@ Route::prefix('/orders')->group(function () {
             Route::post('/select-offers', [OrderUnitController::class, 'selectPrice']);
 
             Route::patch('/{orderUnit}', [OrderUnitController::class, 'update'])->whereUuid('orderUnit');
+
+            //обновление orderUnit в том случае если находится в статусе черновик
+            Route::patch('/{orderUnit}/draft', [OrderUnitController::class, 'updateDraft'])->whereUuid('orderUnit');
 
             {   //contractors
 
@@ -169,7 +171,7 @@ Route::prefix('/orders')->group(function () {
 
 
     //transfer
-Route::prefix('/transfer')->group(function () {
+Route::prefix('/transfer')->middleware('manuallyActivatedOrganization')->group(function () {
 
     Route::get('', [TransferContoller:: class, 'index']);
     Route::get('/{transfer}', [TransferContoller:: class, 'show'])->whereUuid('transfer');
@@ -178,7 +180,7 @@ Route::prefix('/transfer')->group(function () {
 });
 
     //Матрица расстояний
-Route::prefix('/matrix-distance')->group(function () {
+Route::prefix('/matrix-distance')->middleware('manuallyActivatedOrganization')->group(function () {
 
     Route::get('/', [MatrixDistanceController:: class, 'index']);
     Route::get('/filter', [MatrixDistanceController:: class, 'show']);
@@ -188,25 +190,29 @@ Route::prefix('/matrix-distance')->group(function () {
 
 
     //Предложения перевозчика
-Route::prefix('/offer-contractors')->group(function () {
+Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization'])->group(function () {
 
     Route::get('/', [OfferContractorController::class, 'index']);
 
     Route::get('/{offerContractor}', [OfferContractorController::class, 'show']);
 
 
+
     Route::middleware(['isCarrierOrganization'])->group(function () {
 
+        //создание предложения от перевозчика
         Route::post('/', [OfferContractorController::class, 'store']);
+
+        //Частичное обновление #TODO - есть проблема с 'безопаностью' обновление статуса, нужно в будущем продумать ка ограничить обновление во всех статусов, кроме draft
+        Route::patch('/{offerContractor}', [OfferContractorController::class, 'update']);
 
         //перевозчик выбирает (организацию - заказчика) на исполнение заявки предложения
         Route::post('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'agreementOffer'])->whereUuid('offerContractor');
 
-        //Получение все предложения (от заказчиколв которые откликнулись) -> (по предложнию)
+        //Получение все предложения (от заказчиков которые откликнулись) -> (по предложнию)
         Route::get('/{offerContractor}/customer', [OfferContractorController::class, 'getAddCustomer'])->whereUuid('offerContractor');
 
     });
-
 
     //Вернуть подтверждённую заявку (выбранная организация - заказчика на исполнения) по предложению (если имется)
     Route::get('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'getAgreementOffer'])->whereUuid('offerContractor');
@@ -216,16 +222,16 @@ Route::prefix('/offer-contractors')->group(function () {
     Route::patch('/{agreementOrderContractorAccept}/agreement-offer-accept', [OfferContractorController::class, 'agreementOfferAccept'])->whereUuid('agreementOrderContractorAccept');
 
     //Отклик Заказчика на предложения перевозчика
-    Route::post('/{offerContractor}/customer/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization')->middleware('isCustomerOrganization');
+    Route::post('/{offerContractor}/customer/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization')
+        ->middleware('isCustomerOrganization');
 
     //Создание заказа после утверждения двух-стороннего договора на предложении от перевозчика
     Route::post('/{agreementOrderContractorAccept}/agreement-offer-order', [OfferContractorController::class, 'agreementOfferOrder'])->whereUuid('agreementOrderContractorAccept')->middleware('isCustomerOrganization');
 
-
 });
 
     //Endpoint transports
-Route::prefix('/transports')->group(function () {
+Route::prefix('/transports')->middleware('manuallyActivatedOrganization')->group(function () {
 
     Route::get('/', [TransportController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum', 'isActiveUser']);
     Route::get('/{transport}', [TransportController::class, 'show'])->whereUuid('transport');
@@ -233,7 +239,7 @@ Route::prefix('/transports')->group(function () {
 
 });
 
-Route::prefix('/individual-peoples')->group(function () {
+Route::prefix('/individual-peoples')->middleware('manuallyActivatedOrganization')->group(function () {
 
 
     Route::get('/', [IndividualPeopleController::class, 'index']);
@@ -259,7 +265,7 @@ Route::prefix('/individual-peoples')->group(function () {
 
 });
 
-Route::prefix('/tenders')->group(function () {
+Route::prefix('/tenders')->middleware('manuallyActivatedOrganization')->group(function () {
 
 
     Route::get('/', [LotTenderController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum', 'isActiveUser']);
@@ -304,7 +310,7 @@ Route::prefix('/tenders')->group(function () {
 
 });
 
-Route::prefix('/avizos')->group(function () {
+Route::prefix('/avizos')->middleware('manuallyActivatedOrganization')->group(function () {
 
     Route::prefix('/emails')->group(function () {
 

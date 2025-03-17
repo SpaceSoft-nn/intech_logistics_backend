@@ -2,6 +2,7 @@
 
 namespace App\Modules\OfferContractor\Domain\Resources;
 
+use App\Modules\Transport\Domain\Resources\TransportResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +18,7 @@ class OfferContractorResource extends JsonResource
             "city_name_end" => $this->city_name_end,
             "price_for_distance" => $this->price_for_distance,
 
-            "transport_id" => $this->transport_id,
+            "transport_id" => TransportResource::make($this->transport),
             "user_id" => $this->user_id,
             "organization_id" => $this->organization_id,
 
@@ -29,6 +30,7 @@ class OfferContractorResource extends JsonResource
 
             "description" => $this->description ?? null,
             "order_unit_id" => $this->order_unit_id ?? null,
+            "number" => $this->number,
 
         ];
     }

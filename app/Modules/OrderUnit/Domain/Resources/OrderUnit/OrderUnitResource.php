@@ -6,6 +6,7 @@ use App\Modules\Address\Domain\Resources\AddressCollection;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\OrderUnit\Domain\Resources\CargoGood\CargoGoodCollection;
 use App\Modules\Organization\Domain\Resources\OrganizationResource;
+use App\Modules\Transport\Domain\Resources\TransportResource;
 use App\Modules\User\Domain\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -46,6 +47,7 @@ class OrderUnitResource extends JsonResource
             "type_transport_weight" => $this->type_transport_weight,
             "cargo_unit_sum" => $this->cargo_unit_sum,
             "type_load_truck" => $this->type_load_truck,
+            "transport" => TransportResource::make($this->transport),
 
             'cargo_goods' => CargoGoodCollection::make($this->cargo_goods),
 

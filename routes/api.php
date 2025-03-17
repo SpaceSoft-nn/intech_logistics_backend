@@ -190,16 +190,21 @@ Route::prefix('/matrix-distance')->middleware('manuallyActivatedOrganization')->
 
 
     //Предложения перевозчика
-Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization', 'isCarrierOrganization'])->group(function () {
+Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization'])->group(function () {
 
-    Route::get('/', [OfferContractorController::class, 'index'])->withoutMiddleware(['isCarrierOrganization']);
+    Route::get('/', [OfferContractorController::class, 'index']);
 
-    Route::get('/{offerContractor}', [OfferContractorController::class, 'show'])->withoutMiddleware(['isCarrierOrganization']);
+    Route::get('/{offerContractor}', [OfferContractorController::class, 'show']);
+
+
 
     Route::middleware(['isCarrierOrganization'])->group(function () {
 
         //создание предложения от перевозчика
         Route::post('/', [OfferContractorController::class, 'store']);
+
+        //Частичное обновление #TODO - есть проблема с 'безопаностью' обновление статуса, нужно в будущем продумать ка ограничить обновление во всех статусов, кроме draft
+        Route::patch('/{offerContractor}', [OfferContractorController::class, 'update']);
 
         //перевозчик выбирает (организацию - заказчика) на исполнение заявки предложения
         Route::post('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'agreementOffer'])->whereUuid('offerContractor');
@@ -218,7 +223,6 @@ Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization'
 
     //Отклик Заказчика на предложения перевозчика
     Route::post('/{offerContractor}/customer/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization')
-        ->withoutMiddleware('isCarrierOrganization')
         ->middleware('isCustomerOrganization');
 
     //Создание заказа после утверждения двух-стороннего договора на предложении от перевозчика

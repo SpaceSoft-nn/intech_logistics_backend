@@ -4,6 +4,7 @@ namespace App\Modules\OfferContractor\App\Data\ValueObject;
 
 use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\OfferContractor\App\Data\Enums\OfferContractorStatusEnum;
+use App\Modules\OfferContractor\Domain\Models\OfferContractor;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 
@@ -20,8 +21,6 @@ readonly class OfferContractorVO implements Arrayable
         public string $transport_id,
         public string $user_id,
         public string $organization_id,
-
-
 
         public bool $add_load_space, //Возможен ли догруз
         public bool $road_back, //Обратная дорога
@@ -89,6 +88,57 @@ readonly class OfferContractorVO implements Arrayable
             "order_unit_id" => $this->order_unit_id,
         ];
     }
+
+    public static function toObject(OfferContractor $model) : self
+    {
+        return self::make(
+            city_name_start: $model->city_name_start,
+            city_name_end: $model->city_name_end,
+            price_for_distance: $model->price_for_distance,
+            transport_id: $model->transport_id,
+            user_id: $model->user_id,
+            organization_id: $model->organization_id,
+            add_load_space: $model->add_load_space,
+            road_back: $model->road_back,
+            directly_road: $model->directly_road,
+            status: $model->status->value,
+            description: $model->description,
+            order_unit_id: $model->order_unit_id,
+        );
+    }
+
+    /**
+     * Сначала из модели мы собираем VO, потом на основе валидированных значений помещаем их в массив, и переписываем VO
+     * У нас будет VO, На основе модели из БД, но так же с обновленными данными из Валидации
+     * @param OfferContractor $model
+     * @param array $data
+     *
+     * @return self
+     */
+    public static function fromArrayToObjectForModel(OfferContractor $model, array $data) : self
+    {
+        /** @var OfferContractorVO  */
+        $vo = self::toObject($model);
+
+
+        return self::make(
+            city_name_start: Arr::get($data, 'city_name_start', null) ? Arr::get($data, 'city_name_start', null) : $vo->city_name_start,
+            city_name_end: Arr::get($data, 'city_name_end', null)  ? Arr::get($data, 'city_name_end', null) : $vo->city_name_end,
+            price_for_distance: Arr::get($data, 'price_for_distance', null)  ? Arr::get($data, 'price_for_distance', null)  : $vo->price_for_distance,
+            transport_id: Arr::get($data, 'transport_id', null)  ? Arr::get($data, 'transport_id', null) : $vo->transport_id,
+            user_id: Arr::get($data, 'user_id', null)  ? Arr::get($data, 'user_id', null) : $vo->user_id,
+            organization_id: Arr::get($data, 'organization_id', null)  ?  Arr::get($data, 'organization_id', null) : $vo->organization_id,
+            add_load_space: Arr::get($data, 'add_load_space', null)  ? Arr::get($data, 'add_load_space', null) : $vo->add_load_space,
+            road_back: Arr::get($data, 'road_back', null)  ? Arr::get($data, 'road_back', null) : $vo->road_back,
+            directly_road: Arr::get($data, 'directly_road', null)  ? Arr::get($data, 'directly_road', null) : $vo->directly_road,
+            status: Arr::get($data, 'status', null)  ? Arr::get($data, 'status', null) : $vo->status->value,
+            description: Arr::get($data, 'description', null)  ? Arr::get($data, 'description', null) : $vo->description,
+            order_unit_id: Arr::get($data, 'order_unit_id', null)  ? Arr::get($data, 'order_unit_id', null) : $vo->order_unit_id,
+        );
+
+    }
+
+
 
     public static function fromArrayToObject(array $data) : self
     {

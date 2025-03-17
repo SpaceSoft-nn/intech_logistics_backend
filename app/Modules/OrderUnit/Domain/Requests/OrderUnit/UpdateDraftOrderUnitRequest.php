@@ -2,16 +2,16 @@
 
 namespace App\Modules\OrderUnit\Domain\Requests\OrderUnit;
 
-use App\Modules\Address\Domain\Rules\ArrayAddressRule;
+use Illuminate\Validation\Rule;
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\Address\Domain\Rules\ArrayAddressRule;
+use App\Modules\OrderUnit\Domain\Rule\ArrayCargoGoodRule;
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
+use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
+use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
 use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
-use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
-use App\Modules\OrderUnit\Domain\Rule\ArrayCargoGoodRule;
-use Illuminate\Validation\Rule;
 
 class OrderUnitCreateRequest extends ApiRequest
 {

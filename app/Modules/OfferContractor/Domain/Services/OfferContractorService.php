@@ -15,6 +15,7 @@ use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferOrderInteractor;
 use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferAcceptInteractor;
 use App\Modules\OfferContractor\Domain\Interactor\ResponseOfferContractorInteractor;
 use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferContractorInteractor;
+use App\Modules\OfferContractor\Domain\Interactor\UpdateOfferContractorInteractor;
 
 final class OfferContractorService
 {
@@ -38,6 +39,16 @@ final class OfferContractorService
         $offerContractor->refresh();
 
         return $offerContractor;
+    }
+
+    /**
+     * @param OfferContractorVO $vo
+     *
+     * @return OfferContractor
+    */
+    public function updateOfferContractor(OfferContractorVO $vo, OfferContractor $model) : OfferContractor
+    {
+        return UpdateOfferContractorInteractor::execute($vo, $model);
     }
 
     /**

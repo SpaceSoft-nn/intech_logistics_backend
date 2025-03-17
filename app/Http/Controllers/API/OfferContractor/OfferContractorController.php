@@ -29,6 +29,7 @@ use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorResourc
 use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerCollection;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOfferRequest;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOrderRequest;
+use App\Modules\OfferContractor\Domain\Requests\UpdateOfferContractorRequest;
 use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorAcceptResource;
 
 use App\Modules\OfferContractor\Domain\Resources\Filter\CustomerComporeOfferContractorResource;
@@ -111,6 +112,25 @@ class OfferContractorController extends Controller
 
         return response()->json(array_success(OfferContractorResource::make($offerContractor), 'Return create offer contractor.'), 201);
 
+    }
+
+    public function update(
+        OfferContractor $offerContractor,
+        UpdateOfferContractorRequest $request,
+        OfferContractorService $serv,
+    ) {
+
+        /**
+        * @var OfferContractorVO
+        */
+        $offerContractorVO = $request->fromArrayToObjectForModel($offerContractor);
+
+        /**
+        * @var OfferContractor
+        */
+        $model = $serv->updateOfferContractor($offerContractorVO, $offerContractor);
+
+        return response()->json(array_success(OfferContractorResource::make($model), 'Update Offer Contractor Successfully.'), 200);
     }
 
     /**

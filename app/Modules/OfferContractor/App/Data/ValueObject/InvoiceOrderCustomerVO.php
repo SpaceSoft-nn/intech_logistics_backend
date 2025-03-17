@@ -17,8 +17,6 @@ readonly class InvoiceOrderCustomerVO implements Arrayable
         public float $order_total, #TODO Добавить класс для работы с деньгами
 
 
-        public float $body_volume,
-        public string $type_product,
         public TransportTypeWeight $type_transport_weight,
         public TypeLoadingTruckMethod $type_load_truck,
         public string $start_address_id,
@@ -34,8 +32,6 @@ readonly class InvoiceOrderCustomerVO implements Arrayable
     public static function make(
 
         float $order_total,
-        float $body_volume,
-        string $type_product,
         string $type_transport_weight,
         string $type_load_truck,
         string $start_address_id,
@@ -52,8 +48,6 @@ readonly class InvoiceOrderCustomerVO implements Arrayable
 
         return new self(
             order_total: $order_total,
-            body_volume: $body_volume,
-            type_product: $type_product,
             type_transport_weight: TransportTypeWeight::stringByCaseToObject($type_transport_weight),
             type_load_truck: TypeLoadingTruckMethod::stringByCaseToObject($type_load_truck),
             start_address_id: $start_address_id,
@@ -70,8 +64,6 @@ readonly class InvoiceOrderCustomerVO implements Arrayable
     {
         return $this->make(
             order_total: $this->order_total,
-            body_volume: $this->body_volume,
-            type_product: $this->type_product,
             type_transport_weight: $this->type_transport_weight->name,
             type_load_truck: $this->type_load_truck->name,
             start_address_id: $this->start_address_id,
@@ -87,8 +79,6 @@ readonly class InvoiceOrderCustomerVO implements Arrayable
     {
         return [
             "order_total" => $this->order_total,
-            "body_volume" => $this->body_volume,
-            "type_product" => $this->type_product,
             "type_transport_weight" => $this->type_transport_weight,
             "type_load_truck" => $this->type_load_truck,
             "start_address_id" => $this->start_address_id,
@@ -103,12 +93,8 @@ readonly class InvoiceOrderCustomerVO implements Arrayable
     public static function fromArrayToObject(array $data) : self
     {
 
-        // dd(Arr::get($data, "goods_array"));
-
         return self::make(
             order_total : Arr::get($data, "order_total"),
-            body_volume : Arr::get($data, "body_volume"),
-            type_product : Arr::get($data, "type_product"),
             type_transport_weight : Arr::get($data, "type_transport_weight"),
             type_load_truck : Arr::get($data, "type_load_truck"),
             start_address_id : Arr::get($data, "start_address_id"),

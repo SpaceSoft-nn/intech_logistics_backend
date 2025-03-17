@@ -58,6 +58,9 @@ class AgreementOfferContractorInteractor
                 /** @var OfferContractorCustomer */
                 $invoice_customer = $agreementOrderContractor->offer_contractor_invoice_order_customer;
 
+                /** @var OfferContractor */
+                $offerContractor = $invoice_customer->offer_contractor;
+
 
                 {   //Формируем VO для OrderUnitCreateDTO - передаём invoice_customer как массив
                     /** @var InvoiceOrderCustomer */
@@ -65,6 +68,7 @@ class AgreementOfferContractorInteractor
 
                     /** @var OrderUnitVO */
                     $orderUnitVO = OrderUnitVO::fromArrayInvoiceOrderCustomerToObject($invoce_order->toArray())
+                        ->setTransportId($offerContractor->transport_id)
                         ->setOrganizationId($invoice_customer->organization_id)
                         ->setContractorId($agreementOrderContractor->organization_contractor_id);
 

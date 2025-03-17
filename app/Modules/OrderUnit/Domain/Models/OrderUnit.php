@@ -52,6 +52,7 @@ class OrderUnit extends Model
         "organization_id",
         "contractor_id",
         "lot_tender_id",
+        "transport_id",
 
         //bool
         "add_load_space",

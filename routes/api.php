@@ -108,7 +108,7 @@ Route::prefix('/orders')->middleware('manuallyActivatedOrganization')->group(fun
         Route::middleware(['isCustomerOrganization'])->group(function () {
 
             //Создать заказ
-            Route::post('/', [OrderUnitController::class, 'store']);
+            Route::post('/', [OrderUnitController::class, 'storze']);
 
             //Поиск цены от параметров Order
             Route::post('/select-offers', [OrderUnitController::class, 'selectPrice']);

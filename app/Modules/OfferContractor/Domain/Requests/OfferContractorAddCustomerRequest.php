@@ -41,8 +41,7 @@ class OfferContractorAddCustomerRequest extends ApiRequest
             'goods_array' => ['required', new ArrayCargoGoodRule()],
 
             'order_total' => ['required', 'numeric'],
-            'body_volume' => ['required', 'numeric'],
-            'type_product' => ['required', 'string', "max:255"],
+
             'type_transport_weight' => ['required',  Rule::in($transportTypeWeight)],
             'type_load_truck' => ['required', Rule::in($typeLoadingTruckMethod)],
 

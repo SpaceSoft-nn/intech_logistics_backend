@@ -9,7 +9,7 @@ use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use Illuminate\Contracts\Support\Arrayable;
 use Arr;
 
-readonly class OrderUnitVO implements Arrayable
+final readonly class OrderUnitVO implements Arrayable
 {
     use FilterArrayTrait;
 
@@ -32,6 +32,7 @@ readonly class OrderUnitVO implements Arrayable
         public ?string $organization_id,
         public ?string $user_id,
         public ?string $contractor_id,
+        public ?string $transport_id,
 
         //bool
         public ?bool $add_load_space,
@@ -59,6 +60,7 @@ readonly class OrderUnitVO implements Arrayable
         ?string $user_id = null,
         ?string $contractor_id = null,
         ?string $organization_id = null,
+        ?string $transport_id = null,
 
         ?bool $change_price = null,
         ?bool $change_time = null,
@@ -83,6 +85,7 @@ readonly class OrderUnitVO implements Arrayable
             user_id: $user_id,
             contractor_id: $contractor_id,
             organization_id: $organization_id,
+            transport_id: $transport_id,
 
             add_load_space: $add_load_space,
             change_price: $change_price,
@@ -116,6 +119,7 @@ readonly class OrderUnitVO implements Arrayable
             user_id: $this->user_id,
             contractor_id: $this->contractor_id,
             organization_id: $this->organization_id,
+            transport_id: $this->transport_id,
 
             add_load_space: $this->add_load_space,
             change_price: $this->change_price,
@@ -146,6 +150,7 @@ readonly class OrderUnitVO implements Arrayable
             user_id: $this->user_id,
             contractor_id: $contractor_id,
             organization_id: $this->organization_id,
+            transport_id: $this->transport_id,
 
             add_load_space: $this->add_load_space,
             change_price: $this->change_price,
@@ -172,6 +177,7 @@ readonly class OrderUnitVO implements Arrayable
             user_id: $this->user_id,
             contractor_id: $this->contractor_id,
             organization_id: $this->organization_id,
+            transport_id: $this->transport_id,
 
             add_load_space: $this->add_load_space,
             change_price: $this->change_price,
@@ -199,6 +205,34 @@ readonly class OrderUnitVO implements Arrayable
             user_id: $this->user_id,
             contractor_id: $this->contractor_id,
             organization_id: $organization_id,
+            transport_id: $this->transport_id,
+
+            add_load_space: $this->add_load_space,
+            change_price: $this->change_price,
+            change_time: $this->change_time,
+            lot_tender_id: $this->lot_tender_id,
+        );
+    }
+
+    public function setTransportId(string $transport_id) : self
+    {
+        return new self (
+            body_volume: $this->body_volume,
+            order_total: $this->order_total,
+            description: $this->description,
+
+            //date
+            end_date_order: $this->end_date_order,
+            exemplary_date_start: $this->exemplary_date_start,
+
+            type_load_truck: $this->type_load_truck,
+            type_transport_weight: $this->type_transport_weight,
+            order_status: $this->order_status,
+
+            user_id: $this->user_id,
+            contractor_id: $this->contractor_id,
+            organization_id: $this->organization_id,
+            transport_id: $transport_id,
 
             add_load_space: $this->add_load_space,
             change_price: $this->change_price,
@@ -225,6 +259,7 @@ readonly class OrderUnitVO implements Arrayable
             "user_id" => $this->user_id,
             "contractor_id" => $this->contractor_id,
             "organization_id" => $this->organization_id,
+            "transport_id" => $this->transport_id,
 
             //служебные
             "add_load_space" => $this->add_load_space,
@@ -253,6 +288,8 @@ readonly class OrderUnitVO implements Arrayable
         $user_id = Arr::get($data, "user_id", null);
         $contractor_id = Arr::get($data, "contractor_id", null);
         $organization_id = Arr::get($data, "organization_id", null);
+        $transport_id = Arr::get($data, "transport_id" , null);
+
 
         $change_price = Arr::get($data, "change_price", null);
         $change_time = Arr::get($data, "change_time", null);
@@ -274,6 +311,7 @@ readonly class OrderUnitVO implements Arrayable
             user_id: $user_id,
             contractor_id: $contractor_id,
             organization_id: $organization_id,
+            transport_id: $transport_id,
 
             add_load_space: self::filterEnumTypeLoad($type_load_truck),
             change_price: $change_price,
@@ -303,6 +341,7 @@ readonly class OrderUnitVO implements Arrayable
         $user_id = Arr::get($data, "user_id", null);
         $contractor_id = Arr::get($data, "contractor_id", null);
         $organization_id = Arr::get($data, "organization_id", null);
+        $transport_id = Arr::get($data, "transport_id", null);
 
         $change_price = Arr::get($data, "change_price", null);
         $change_time = Arr::get($data, "change_time", null);
@@ -324,6 +363,7 @@ readonly class OrderUnitVO implements Arrayable
             user_id: $user_id,
             contractor_id: $contractor_id,
             organization_id: $organization_id,
+            transport_id: $transport_id,
 
             add_load_space: self::filterEnumTypeLoad($type_load_truck->value),
             change_price: $change_price,

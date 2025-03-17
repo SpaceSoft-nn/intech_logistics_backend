@@ -16,8 +16,6 @@ class InvoiceOrderCustomerResource extends JsonResource
             "id" => $this->id,
             "order_total" => $this->order_total,
             "description" => $this->description,
-            "body_volume" => $this->body_volume,
-            "type_product" => $this->type_product,
             "type_transport_weight" => $this->type_transport_weight,
             "type_load_truck" => $this->type_load_truck,
             "start_address_id" => AddressResource::make($this->start_address),

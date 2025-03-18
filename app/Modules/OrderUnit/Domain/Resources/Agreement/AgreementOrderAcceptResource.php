@@ -11,10 +11,10 @@ class AgreementOrderAcceptResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "agreement_order_accept_id" => $this->id,
+            "id" => $this->id,
             "agreement_order" => $this->agreement,
-            "order_bool" => $this->order_bool,
-            "contractor_bool" => $this->contractor_bool,
+            "is_customer" => $this->order_bool,
+            "is_contractor" => $this->contractor_bool,
         ];
     }
 }

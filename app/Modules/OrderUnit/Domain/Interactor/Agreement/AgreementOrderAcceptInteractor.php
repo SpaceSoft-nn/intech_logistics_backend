@@ -98,7 +98,7 @@ final class AgreementOrderAcceptInteractor
                                 $agreementOrderAccept->contractor_bool = true;
                                 $agreementOrderAccept->save();
 
-                                return $this->response(true, 'Подрядчик успешно согласовал выполнение заказа.');
+                                return $this->response(true, 'Перевозчик успешно согласовал выполнение заказа.');
                             }
                         }
                     }

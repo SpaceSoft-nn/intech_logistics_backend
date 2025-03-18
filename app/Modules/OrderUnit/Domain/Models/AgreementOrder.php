@@ -4,6 +4,7 @@ namespace App\Modules\OrderUnit\Domain\Models;
 
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 use App\Modules\OrderUnit\Domain\Factories\AgreementOrderFactory;
+use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transfer\Domain\Models\Transfer;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -68,6 +69,12 @@ class AgreementOrder extends Model
     public function orgOrdertInvoices() : BelongsTo
     {
         return $this->belongsTo(OrganizationOrderUnitInvoice::class, 'organization_order_units_invoce_id');
+    }
+
+
+    public function organization() : BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_contractor_id', 'id');
     }
 
     public function order() : BelongsTo

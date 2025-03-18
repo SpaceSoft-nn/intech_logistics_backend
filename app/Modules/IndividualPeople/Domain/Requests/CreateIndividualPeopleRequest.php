@@ -39,7 +39,7 @@ class CreateIndividualPeopleRequest extends ApiRequest
 
             'passport_series' => ['required', 'digits:4'],
             'passport_number' => ['required', 'digits:6'],
-            'issue_date' => ['required', 'date', 'date_format:d.m.Y', 'before_or_equal:today'],
+            'issue_date' => ['required', 'date', 'date_format:d.m.Y'],
             'birth_day' => ['required', 'date', 'date_format:d.m.Y'],
             'issued_by' => ['required', 'string', 'min:3'],
             'department_code' => ['nullable', 'regex:/^\d{3}-\d{3}$/'],

@@ -64,7 +64,6 @@ class OrderUnitController extends Controller
 
 
             //Возвращаем все созданные заказы, ЗАКАЗЧИКА
-
             return response()->json(array_success(OrderUnitWrappCollection::make($organization->order_units), 'Return all orders by organization Customer.'), 200);
 
         } else {

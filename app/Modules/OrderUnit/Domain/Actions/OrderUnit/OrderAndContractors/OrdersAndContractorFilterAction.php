@@ -23,6 +23,7 @@ class OrdersAndContractorFilterAction
             StatusOrderUnitEnum::published,
             StatusOrderUnitEnum::in_work,
             StatusOrderUnitEnum::pre_order,
+            StatusOrderUnitEnum::accepted,
         ]);
 
 
@@ -61,8 +62,8 @@ class OrdersAndContractorFilterAction
         })->filter(function (OrderUnit $item) {
 
             //проверяем что при статусе in_work, отклик на заказ принадлежит перевозчику
-            if( ($item->actual_status->status === StatusOrderUnitEnum::in_work) &&
-            ($item->getAttribute('isResponseContractor') === false) )
+            if( ($item->actual_status->status === (StatusOrderUnitEnum::in_work || StatusOrderUnitEnum::accepted) ) &&
+                    ($item->getAttribute('isResponseContractor') === false) )
             {   return false;  }
 
             return true;

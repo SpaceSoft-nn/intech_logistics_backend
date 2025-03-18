@@ -84,10 +84,10 @@ final class AgreementOrderInteractor
                 //Устанавливаем OrderUnit - выбранного подрядичка в contractor_id
                 $this->addContractorOrder();
 
-                //пока что устанавливаем статус в работе - после принятие перевозчика на заказ.
+                //устанавливаем в статус, что принят (указан перевозчик для выполнения заказа)
                 $this->setStatusOrder(OrderUnitStatusVO::make(
                     order_unit_id: $this->orderUnit->id,
-                    status: "in_work",
+                    status: "accepted",
                 ));
 
                 //Что бы получить bool значение из модели

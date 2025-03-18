@@ -21,6 +21,7 @@ class TendersAndContractorFilterAction
         $status_enum = collect([
             StatusTenderEnum::published,
             StatusTenderEnum::in_work,
+            StatusTenderEnum::accepted,
         ]);
 
 
@@ -60,7 +61,7 @@ class TendersAndContractorFilterAction
         })->filter(function (LotTender $item) {
 
             //проверяем что при статусе in_work, отклик на тендер принадлежит перевозчику
-            if( ($item->status_tender === StatusTenderEnum::in_work) &&
+            if( ($item->status_tender === (StatusTenderEnum::in_work || StatusTenderEnum::accepted) ) &&
             ($item->getAttribute('isResponseContractor') === false) )
             {   return false;  }
 

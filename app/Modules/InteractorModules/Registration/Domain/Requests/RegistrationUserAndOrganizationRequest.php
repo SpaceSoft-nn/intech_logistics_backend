@@ -60,7 +60,7 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
 
             //Organization start
                 'organization' => ['required' , 'array'],
-                'organization.name' => ['required' , 'string' , 'max:101' , 'min:2'],
+                'organization.name' => ['required' , 'string' , 'max:255' , 'min:2'],
                 'organization.type' =>  ['required', 'string' , Rule::in($typeOrganization)],
                 'organization.type_cabinet' => ['required' , Rule::in($typeCabinet)],
                 'organization.address' => ['nullable' , 'string' , 'max:255' , 'min:2'],
@@ -75,7 +75,7 @@ class RegistrationUserAndOrganizationRequest extends ApiRequest
             //Organization end
 
         ];
-        
+
 
         if(is_null($this->input('organization.type'))){
             $this->fail('organization.type', 'Не указан тип для организации.');

@@ -37,7 +37,14 @@ final class AgreementOrderAcceptInteractor
      */
     public function execute(User $user, AgreementOrderAccept $agreementOrderAccept) : object
     {
-        return $this->run($user, $agreementOrderAccept);
+
+        $object = $this->run($user, $agreementOrderAccept);
+
+        #TODO Вынести в триггер?
+        //проверяем если документы подписаны с двух сторон, то устанавливаем для AgreementOrder - подрядчика в свойства contractor_id
+        $this->checkAcceptAgreement($agreementOrderAccept);
+
+        return $object;
     }
 
     /**
@@ -114,9 +121,6 @@ final class AgreementOrderAcceptInteractor
                     }
                 }
 
-                #TODO Вынести в триггер
-                //проверяем если документы подписаны с двух сторон, то устанавливаем для AgreementOrder - подрядчика в свойства contractor_id
-                $this->checkAcceptAgreement($agreementOrderAccept);
 
                 return $this->response(false, 'У данного пользователя нет прав на согласования заказа.');
 
@@ -148,7 +152,7 @@ final class AgreementOrderAcceptInteractor
      * Проверяем что со стороны заказчика и подрядчика документы были подписаны, и устанавливает в AgreementOrder - подрядчика
      * @return bool
      */
-    public function checkAcceptAgreement(AgreementOrderAccept $agreementOrderAccept)
+    private function checkAcceptAgreement(AgreementOrderAccept $agreementOrderAccept)
     {
         $agreementOrderAccept = $agreementOrderAccept->refresh();
 

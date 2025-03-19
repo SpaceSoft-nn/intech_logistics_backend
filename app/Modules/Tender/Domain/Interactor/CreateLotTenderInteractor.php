@@ -87,7 +87,7 @@ final class CreateLotTenderInteractor
                 }
             }
 
-            //создаём записи SpecificalDatePeriodFile
+            //создаём записи SpecificalDatePeriod
             if(collect($dto->arraySpecificalDatePeriod)->isNotEmpty()) {
                 foreach ($dto->arraySpecificalDatePeriod as $object) {
                     $object['lot_tender_id'] = $lotTender->id;
@@ -97,7 +97,7 @@ final class CreateLotTenderInteractor
                 }
             }
 
-            dd($lotTender);
+            // dd($lotTender->specifical_date_period);
 
             return $lotTender;
 

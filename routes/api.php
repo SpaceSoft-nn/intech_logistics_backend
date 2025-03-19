@@ -290,8 +290,8 @@ Route::prefix('/tenders')->middleware(['manuallyActivatedOrganization', 'auth:sa
             // Выбор "создателем тендера" - перевозчика на выполнение тендера
             Route::post('/{lotTenderResponse}/agreement-tender', [ResponseTenderController::class, 'agreementTender'])->whereUuid('lotTenderResponse');
 
-            //Добавить к заказу дополнительную информацию
-            // Route::patch('/{lotTender}/orders/{orderUnit}', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender', 'orderUnit');
+            //Добавить к заказу дополнительную информацию - нужна будет обязательно для того что бы точно дополнить тендер к заказу
+            Route::patch('/{lotTender}/orders/{orderUnit}', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender', 'orderUnit');
         }
     });
 

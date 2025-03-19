@@ -41,17 +41,21 @@ class AgreementTender extends Model
         ];
     }
 
-    protected function agreement_tender_accept(): HasOne
+    public function agreement_tender_accept(): HasOne
     {
         return $this->hasOne(AgreementTenderAccept::class, 'agreement_tender_id');
     }
 
-    protected function lot_tender(): BelongsTo
+    public function lot_tender(): BelongsTo
     {
         return $this->belongsTo(LotTender::class, 'lot_tender_id', 'id');
     }
 
-    protected function lot_tender_response(): BelongsTo
+    /**
+     * //Отклик подрядичка (перевозчика) на тендер
+     * @return BelongsTo
+     */
+    public function lot_tender_response(): BelongsTo
     {
         return $this->belongsTo(LotTenderResponse::class, 'lot_tender_response_id', 'id');
     }

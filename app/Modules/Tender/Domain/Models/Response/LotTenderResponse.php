@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+//Отклик подрядичка (перевозчика) на тендер
 class LotTenderResponse extends Model
 {
     use HasFactory, HasUuids;

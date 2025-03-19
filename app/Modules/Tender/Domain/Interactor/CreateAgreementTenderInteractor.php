@@ -29,8 +29,12 @@ final class CreateAgreementTenderInteractor
 
     public function run(AgreementTenderVO $vo) : AgreementTender
     {
+        //проверяем был ли уже выбран перевозчик
+        $this->exestResponse($vo);
+
         /** @var AgreementTender  */
         $model = DB::transaction(function () use ($vo) {
+
 
             /** @var AgreementTender */
             $agreementTender = $this->createAgreementTender($vo);
@@ -83,6 +87,18 @@ final class CreateAgreementTenderInteractor
         }
 
         return $LotTender;
+    }
+
+    #TODO Если будет функционал изменение выбранного отклика или удаление, нужно менять проверку
+    //Проверяем выбрал ли заказчик уже перевозчика
+    private function exestResponse(AgreementTenderVO $vo)
+    {
+        $model = AgreementTender::where('lot_tender_response_id', $vo->lot_tender_response_id)
+            ->where('organization_contractor_id', $vo->organization_contractor_id)
+            ->where('lot_tender_id', $vo->lot_tender_id)
+            ->first();
+
+        if(!is_null($model)) { return throw new BusinessException('Заказчик уже выбрал перевозчика, на исполнения этого Тендера'); }
     }
 
 }

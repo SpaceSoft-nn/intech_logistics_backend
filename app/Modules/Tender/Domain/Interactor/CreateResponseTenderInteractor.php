@@ -3,19 +3,18 @@
 namespace App\Modules\Tender\Domain\Interactor;
 
 use App\Modules\Base\Error\BusinessException;
+use DB;
+use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
-use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
+use App\Modules\Tender\Domain\Models\Response\InvoiceLotTender;
+use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
 use App\Modules\Tender\App\Data\ValueObject\Response\InvoiceLotTenderVO;
 use App\Modules\Tender\App\Data\ValueObject\Response\LotTenderResponseVO;
 use App\Modules\Tender\Domain\Actions\Response\CreateInvoiceLotTenderAction;
 use App\Modules\Tender\Domain\Actions\Response\CreateLotTenderResponseAction;
-use App\Modules\Tender\Domain\Models\LotTender;
-use App\Modules\Tender\Domain\Models\Response\InvoiceLotTender;
-use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
-use DB;
 
 /**
- * Интерактор для создание LotTender - так же логика добавление файлов + адрессов к LotTender
+ * Интерактор для создание Отклика на тендер
  */
 final class CreateResponseTenderInteractor
 {
@@ -33,6 +32,11 @@ final class CreateResponseTenderInteractor
 
     public function run(CreateResponseTenderDTO $dto) : LotTenderResponse
     {
+
+        //Проверяем откликнулась ли данная организация, если да выкидываем бизнес ошибку
+        $this->exestResponse($dto->lot_tender_id, $dto->organizaion_id);
+
+
         /** @var LotTenderResponse  */
         $model = DB::transaction(function () use ($dto) {
 
@@ -76,5 +80,24 @@ final class CreateResponseTenderInteractor
         );
     }
 
+    /**
+     * Проверяем откликалась ли данная организация, если да выкидываешь бизнес ошибку
+     * @param string $lotTenderId
+     * @param string $organizaionContractorId
+     *
+     * @return void
+     */
+    private function exestResponse(string $lotTenderId, string $organizaionContractorId) : bool|BusinessException
+    {
+
+        $lotTender = LotTender::find($lotTenderId);
+
+        /** @var LotTenderResponse */
+        $lot_tender_response = $lotTender->lot_tender_response->where('organization_contractor_id', $organizaionContractorId)->first();
+
+        if(!is_null($lot_tender_response)) { throw new BusinessException('Данная организация уже откликнулась на этот тендер.'); }
+
+        return false;
+    }
 
 }

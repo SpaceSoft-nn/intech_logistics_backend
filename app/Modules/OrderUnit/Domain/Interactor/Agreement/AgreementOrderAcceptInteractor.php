@@ -68,8 +68,6 @@ final class AgreementOrderAcceptInteractor
                 {
                     if(!empty($order->organization_id)) {
 
-
-
                         foreach ($user->organizations as $organization) {
 
                             if($order->organization_id == $organization->id)
@@ -100,8 +98,6 @@ final class AgreementOrderAcceptInteractor
 
                 //проверяем что запрос был от подрядчика
                 {
-
-
 
                     if(!empty($order->contractor_id))
                     {

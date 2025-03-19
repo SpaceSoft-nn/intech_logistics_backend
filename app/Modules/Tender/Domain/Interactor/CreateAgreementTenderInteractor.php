@@ -49,7 +49,7 @@ final class CreateAgreementTenderInteractor
                 /** @var LotTender */
                 $LotTender = $this->findLotTender($vo->lot_tender_id);
 
-                $LotTender->status_tender = StatusTenderEnum::in_work;
+                $LotTender->status_tender = StatusTenderEnum::accepted;
 
                 $LotTender->save();
 

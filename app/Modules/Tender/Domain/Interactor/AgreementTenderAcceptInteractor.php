@@ -2,18 +2,19 @@
 
 namespace App\Modules\Tender\Domain\Interactor;
 
-use App\Modules\Base\Enums\WeekEnum;
-use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
-use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
-use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
-use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
-use App\Modules\Tender\Domain\Models\LotTender;
-use App\Modules\Tender\Domain\Models\Response\AgreementTender;
-use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
 use DB;
-use Illuminate\Support\Carbon;
 use Str;
+use Illuminate\Support\Carbon;
+use App\Modules\Base\Enums\WeekEnum;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\Tender\Domain\Models\LotTender;
+use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
+use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
+use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
+use App\Modules\Tender\Domain\Models\Response\AgreementTender;
+use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
+use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
+use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
 
 // Бизнес логика на согласование Тендера с двух сторон - здесь же создаются заказы (pre-order)
 final class AgreementTenderAcceptInteractor
@@ -24,26 +25,99 @@ final class AgreementTenderAcceptInteractor
     ) { }
 
 
-    public function execute(AgreementTenderAccept $agreementTenderAccept) : AgreementTenderAccept
+    public function execute(User $user, AgreementTenderAccept $agreementTenderAccept) : Object
     {
-        return $this->run($agreementTenderAccept);
+        $statusResponse = $this->run($user, $agreementTenderAccept);
+
+        $this->checkSignature($agreementTenderAccept);
+
+        return $statusResponse;
     }
 
 
-    public function run(AgreementTenderAccept $agreementTenderAccept) : AgreementTenderAccept
+    public function run(User $user, AgreementTenderAccept $agreementTenderAccept) : Object
+    {
+        $object = DB::transaction(function ($pdo)  use ($user, $agreementTenderAccept) {
+
+            /** @var AgreementTender */
+            $agreement_tender = $agreementTenderAccept->agreement_tender;
+
+            /** @var LotTender */
+            $lot_tender = $agreement_tender->lot_tender;
+
+            //проверяем что запрос был от заказчика
+            {
+
+                if(!empty($lot_tender->organization_id)) {
+
+                    foreach ($user->organizations as $organization) {
+
+                        if($lot_tender->organization_id == $organization->id)
+                        {
+                            $agreementTenderAccept->tender_creater_bool = true;
+                            $agreementTenderAccept->save();
+
+                            return $this->response(true, "Заказчик успешно согласовал выполнение тендера.", $agreementTenderAccept);
+                        }
+                    }
+
+                }
+
+                #TODO В тендер проверять не только по оргаанизации но и по user кто создавла тендер
+                // if(!empty($order->user_id))
+                // {
+                //     if($order->user_id == $user->id)
+                //     {
+
+                //         return $this->response( true, "Заказчик успешно согласовал выполнение тендера.", $agreementOrderAccept);
+                //     }
+                // }
+            }
+
+            //проверяем что запрос был от подрядчика
+            {
+
+                if(!empty($agreement_tender->organization_contractor_id))
+                {
+
+                    foreach ($user->organizations as $organizations) {
+
+                        if($agreement_tender->organization_contractor_id == $organizations->id)
+                        {
+
+                            $agreementTenderAccept->contractor_bool = true;
+                            $agreementTenderAccept->save();
+
+                            return $this->response(true, 'Перевозчик успешно согласовал выполнение тендера.', $agreementTenderAccept);
+                        }
+                    }
+                }
+            }
+
+            //проверять что соглашения подписаны с обоих сторон
+
+            return $this->response(false, 'У данного пользователя нет прав на согласования заказа.');
+        });
+
+        return $object;
+    }
+
+
+    private function response(bool $status, string $message, ?AgreementTenderAccept $agreementAccept = null) : Object
     {
 
-        #TODO Временная логика - устанавливаем bool с двух сторон
-        $agreementTenderAccept->tender_creater_bool = true;
-        $agreementTenderAccept->contractor_bool = true;
-        #TODO - Создание заказов
+        return (object) [
+            'data' => $agreementAccept,
+            'status' => $status,
+            'message' => $message,
+        ];
+    }
 
-        $agreementTenderAccept->save();
-
-
-        //проверять что соглашения подписаны с обоих сторон
+    private function checkSignature(AgreementTenderAccept $agreementTenderAccept)
+    {
         if($agreementTenderAccept->tender_creater_bool && $agreementTenderAccept->contractor_bool)
         {
+
             /** @var AgreementTender */
             $agreement_tender = $agreementTenderAccept->agreement_tender;
 
@@ -166,7 +240,6 @@ final class AgreementTenderAcceptInteractor
                         );
 
 
-
                     }
 
                 }
@@ -177,10 +250,6 @@ final class AgreementTenderAcceptInteractor
             });
 
         }
-
-        return $agreementTenderAccept;
-
     }
-
 
 }

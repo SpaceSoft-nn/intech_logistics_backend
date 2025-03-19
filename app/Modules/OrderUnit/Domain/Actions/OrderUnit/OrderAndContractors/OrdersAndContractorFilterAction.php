@@ -23,7 +23,7 @@ class OrdersAndContractorFilterAction
             StatusOrderUnitEnum::published,
             StatusOrderUnitEnum::in_work,
             StatusOrderUnitEnum::pre_order,
-            StatusOrderUnitEnum::accepted,
+            // StatusOrderUnitEnum::accepted,
         ]);
 
 

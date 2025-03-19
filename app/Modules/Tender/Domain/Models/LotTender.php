@@ -102,6 +102,10 @@ class LotTender extends Model
         return $this->hasMany(WeekPeriod::class, 'lot_tender_id');
     }
 
+    /**
+     * Отклики на тендер
+     * @return HasMany
+     */
     public function lot_tender_response() : HasMany
     {
         return $this->hasMany(LotTenderResponse::class, 'lot_tender_id', 'id');

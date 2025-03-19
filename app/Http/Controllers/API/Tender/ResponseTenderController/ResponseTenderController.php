@@ -3,23 +3,28 @@
 namespace App\Http\Controllers\API\Tender\ResponseTenderController;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
-use App\Modules\Tender\App\Data\ValueObject\Response\AgreementTenderVO;
-use App\Modules\Tender\Domain\Models\LotTender;
-use App\Modules\Tender\Domain\Models\Response\AgreementTender;
-use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
-use App\Modules\Tender\Domain\Requests\CreateAgreementTenderRequest;
-use App\Modules\Tender\Domain\Requests\CreateResponseTenderRequest;
-use App\Modules\Tender\Domain\Resources\Response\AgreementTenderResource;
-use App\Modules\Tender\Domain\Resources\Response\LotTenderResponseResource;
-use App\Modules\Tender\Domain\Services\AgreementTenderService;
-use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
-use App\Modules\Tender\Domain\Resources\Response\AgreementTenderAcceptResource;
-use App\Modules\Tender\Domain\Resources\Response\LotTenderResponseCollection;
+use App\Modules\Auth\Domain\Services\AuthService;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use function App\Helpers\isAuthorized;
+
+use App\Modules\Tender\Domain\Models\LotTender;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
+use App\Modules\Tender\Domain\Models\Response\AgreementTender;
+use App\Modules\Tender\Domain\Services\AgreementTenderService;
+use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
+use App\Modules\Tender\Domain\Requests\CreateResponseTenderRequest;
+use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
+use App\Modules\Tender\Domain\Requests\CreateAgreementTenderRequest;
+use App\Modules\Tender\App\Data\ValueObject\Response\AgreementTenderVO;
+use App\Modules\Tender\Domain\Resources\Response\AgreementTenderResource;
+use App\Modules\Tender\Domain\Resources\Response\LotTenderResponseResource;
+
+use App\Modules\Tender\Domain\Resources\Response\LotTenderResponseCollection;
+use App\Modules\Tender\Domain\Resources\Response\AgreementTenderAcceptResource;
+use App\Modules\User\Domain\Models\User;
 
 class ResponseTenderController extends Controller
 {
@@ -30,8 +35,9 @@ class ResponseTenderController extends Controller
         CreateResponseTenderRequest $request,
         AgreementTenderService $service,
     ) {
+
         /** @var CreateResponseTenderDTO создаём DTO для сервиса, указываем дополнительные поля пересоздавая экземпляр */
-        $createResponseTenderDTO = $request->CreateResponseTenderDTO()
+        $createResponseTenderDTO = $request->createResponseTenderDTO()
             ->setOrganizationId($organization->id)->setLotTenderId($lotTender->id);
 
         /** @var LotTenderResponse */
@@ -79,12 +85,20 @@ class ResponseTenderController extends Controller
 
     //Двух-соторонне соглашения
     public function agreementTenderAccept(
+
         AgreementTenderAccept $agreementTenderAccept,
         AgreementTenderService $agreementTenderService,
+        AuthService $auth,
+
     ) {
 
+        /**
+        * @var User
+        */
+        $user = isAuthorized($auth);
+
         /** @var AgreementTenderAccept */
-        $model = $agreementTenderService->agreementTenderAccept($agreementTenderAccept);
+        $model = $agreementTenderService->agreementTenderAccept($user, $agreementTenderAccept);
 
         return $model ?
         response()->json(array_success(AgreementTenderAcceptResource::make($model), 'Successfully agreement tender accept.'), 200)

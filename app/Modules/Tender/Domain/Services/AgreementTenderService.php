@@ -3,13 +3,14 @@
 namespace App\Modules\Tender\Domain\Services;
 
 use App\Modules\Tender\App\Data\DTO\CreateResponseTenderDTO;
+use App\Modules\Tender\Domain\Models\Response\AgreementTender;
+use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
+use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
 use App\Modules\Tender\App\Data\ValueObject\Response\AgreementTenderVO;
+use App\Modules\Tender\Domain\Interactor\CreateResponseTenderInteractor;
 use App\Modules\Tender\Domain\Interactor\AgreementTenderAcceptInteractor;
 use App\Modules\Tender\Domain\Interactor\CreateAgreementTenderInteractor;
-use App\Modules\Tender\Domain\Interactor\CreateResponseTenderInteractor;
-use App\Modules\Tender\Domain\Models\Response\AgreementTender;
-use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
-use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
+use App\Modules\User\Domain\Models\User;
 
 final class AgreementTenderService
 {
@@ -45,13 +46,15 @@ final class AgreementTenderService
     /**
      * Подтврждения соглашения между сторонами, на принятие тендера в работу - после двух-стороннего подтврждения создаются заказы с минимальной информацией
      * #TODO - тут создавать заказы, после подтврждения и предусмотреть нормальную логику работы при ролях
+     *
+     * @param User $user
      * @param AgreementTenderAccept $agreementTenderAccept
      *
      * @return AgreementTenderAccept
      */
-    public function agreementTenderAccept(AgreementTenderAccept $agreementTenderAccept) : AgreementTenderAccept
+    public function agreementTenderAccept(User $user, AgreementTenderAccept $agreementTenderAccept) : AgreementTenderAccept
     {
-        return $this->agreementTenderAcceptInteractor->execute($agreementTenderAccept);
+        return $this->agreementTenderAcceptInteractor->execute($user, $agreementTenderAccept);
     }
 
 }

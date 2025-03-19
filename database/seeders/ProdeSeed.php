@@ -205,7 +205,7 @@ class ProdeSeed extends Seeder
                 "body_volume" => '18.75',
                 "user_id" => $user_id,
                 "organization_id" => $organization_id,
-            ]);
+            ]);     
 
             $orderRep->setStatus(StatusOrderUnitEnum::published, $order->id);
         }

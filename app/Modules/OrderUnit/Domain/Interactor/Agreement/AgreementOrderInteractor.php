@@ -93,6 +93,8 @@ final class AgreementOrderInteractor
                 //Что бы получить bool значение из модели
                 $agreementOrderCreate->refresh();
 
+
+
                 return $agreementOrderCreate;
 
             });

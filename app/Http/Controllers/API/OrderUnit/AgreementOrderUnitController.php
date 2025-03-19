@@ -7,21 +7,18 @@ use function App\Helpers\isAuthorized;
 use function App\Helpers\array_success;
 use App\Modules\User\Domain\Models\User;
 use App\Modules\Auth\Domain\Services\AuthService;
-use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
 use App\Modules\OrderUnit\Domain\Requests\AgreementOrderRequest;
 use App\Modules\OrderUnit\Domain\Services\AgreementOrderService;
 use App\Modules\OrderUnit\Domain\Services\AgreementOrderAcceptService;
+
+
 use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
 
-
 use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderResource;
-
-use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderCollection;
 use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderAcceptResource;
-use App\Modules\Organization\Domain\Models\Organization;
 
 class AgreementOrderUnitController extends Controller
 {
@@ -45,9 +42,12 @@ class AgreementOrderUnitController extends Controller
             AgreementOrderCreateDTO::make(
                 order_unit_id: $orderUnit->id,
                 organization_order_units_invoce_id: $validated['organization_order_units_invoce_id'],
-                organization_contractor_id: null, //Здесь устанавливается null, т.к есть ещё endpoint по подтвреждению двух стороннего договора и документа, где уже буде устанавливаться значение явно
+
+                //Здесь устанавливается null, т.к есть ещё endpoint по подтвреждению двух стороннего договора и документа, где уже буде устанавливаться значение явно
+                organization_contractor_id: null, #TODO Внутри серверса мы уставливаем сразу, без ЭДО, если у нас будет функционал отмены ЭДО или отклика, могут быть проблемы. предусмотреть это
             )
         );
+
 
 
         return response()->json(array_success(AgreementOrderResource::make($model), 'Заказчик успешно выбрал подрятчика, запись создана.'), 201);

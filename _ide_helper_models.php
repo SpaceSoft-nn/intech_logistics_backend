@@ -771,7 +771,7 @@ namespace App\Modules\OrderUnit\Domain\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept|null $agreementOrderAccept
  * @property-read \App\Modules\OrderUnit\Domain\Models\OrderUnit|null $order
- * @property-read \App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice|null $orgOrdertInvoices
+ * @property-read \App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice|null $orgOrderInvoices
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Transfer\Domain\Models\Transfer> $transfer
  * @property-read int|null $transfer_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Transfer\Domain\Models\Transfer> $transfers

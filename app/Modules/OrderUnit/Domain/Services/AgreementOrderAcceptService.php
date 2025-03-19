@@ -27,8 +27,6 @@ class AgreementOrderAcceptService
         //Ответ придёт в массиве - описания
         $object = $this->agreementOrderInteractor->execute($user, $agreementOrderAccept);
 
-
-
         return $object;
     }
 

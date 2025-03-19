@@ -265,10 +265,10 @@ Route::prefix('/individual-peoples')->middleware('manuallyActivatedOrganization'
 
 });
 
-Route::prefix('/tenders')->middleware('manuallyActivatedOrganization')->group(function () {
+Route::prefix('/tenders')->middleware(['manuallyActivatedOrganization', 'auth:sanctum'])->group(function () {
 
 
-    Route::get('/', [LotTenderController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum', 'isActiveUser']);
+    Route::get('/', [LotTenderController::class, 'index'])->middleware(['hasOrgHeader', 'isActiveUser']);
 
 
     Route::middleware(['isCarrierOrganization'])->group(function () {
@@ -300,8 +300,8 @@ Route::prefix('/tenders')->middleware('manuallyActivatedOrganization')->group(fu
 
     {
 
-        //Подтверждения соглашения с двух сторон, о взятие тендера и работу со стороны перевозчика, и отдачи в работу со стороны создателя тендера, !создание заказов после утверждения!
-        Route::post('/{agreementTenderAccept}/agreement-tender-accept', [ResponseTenderController::class, 'agreementTenderAccept'])->whereUuid('agreementTenderAccept');
+        //ЭДО Подтверждения соглашения с двух сторон, о взятие тендера и работу со стороны перевозчика, и отдачи в работу со стороны создателя тендера, !создание заказов после утверждения!
+        Route::patch('/{agreementTenderAccept}/agreement-tender-accept', [ResponseTenderController::class, 'agreementTenderAccept'])->whereUuid('agreementTenderAccept');
 
         //Получить все заказы по тендеру
         Route::get('/{lotTender}/orders', [LotTenderController::class, 'getAllOrderFromTender'])->whereUuid('lotTender');

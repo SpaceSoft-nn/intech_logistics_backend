@@ -29,6 +29,7 @@ final class AgreementTenderAcceptInteractor
     {
         $statusResponse = $this->run($user, $agreementTenderAccept);
 
+        //проверяем что есть двух стороняя подпись и создаём заказы в зависимости от типа тендера
         $this->checkSignature($agreementTenderAccept);
 
         return $statusResponse;
@@ -54,6 +55,9 @@ final class AgreementTenderAcceptInteractor
 
                         if($lot_tender->organization_id == $organization->id)
                         {
+
+                            if( $agreementTenderAccept->tender_creater_bool ) { return $this->response(true, "Заказчик успешно согласовал выполнение тендера.", $agreementTenderAccept); }
+
                             $agreementTenderAccept->tender_creater_bool = true;
                             $agreementTenderAccept->save();
 
@@ -85,6 +89,8 @@ final class AgreementTenderAcceptInteractor
                         if($agreement_tender->organization_contractor_id == $organizations->id)
                         {
 
+                            if($agreementTenderAccept->contractor_bool) { return $this->response(true, 'Перевозчик успешно согласовал выполнение тендера.', $agreementTenderAccept); }
+
                             $agreementTenderAccept->contractor_bool = true;
                             $agreementTenderAccept->save();
 
@@ -93,8 +99,6 @@ final class AgreementTenderAcceptInteractor
                     }
                 }
             }
-
-            //проверять что соглашения подписаны с обоих сторон
 
             return $this->response(false, 'У данного пользователя нет прав на согласования заказа.');
         });
@@ -113,8 +117,9 @@ final class AgreementTenderAcceptInteractor
         ];
     }
 
-    private function checkSignature(AgreementTenderAccept $agreementTenderAccept)
+    private function checkSignature(AgreementTenderAccept $agreementTenderAccept) : bool
     {
+
         if($agreementTenderAccept->tender_creater_bool && $agreementTenderAccept->contractor_bool)
         {
 
@@ -128,13 +133,14 @@ final class AgreementTenderAcceptInteractor
 
 
                 //если есть конкретно указаные даты.
-                if($lot_tender->specifical_date_period)
+                if($lot_tender->specifical_date_period->isNotEmpty())
                 {
 
                     $dates = $lot_tender->specifical_date_period;
 
                     //проходим по дате
                     foreach ($dates as $date) {
+
 
                         { //Высчитывает дату
                             $carbon_date_start = Carbon::createFromFormat('Y-m-d', $date->date, 'Europe/Moscow');
@@ -143,6 +149,8 @@ final class AgreementTenderAcceptInteractor
                             $carbon_date_end = $carbon_date_start->copy()->addDays($lot_tender->period);
 
                         }
+
+
 
                         //у каждой даты, есть количество транспорта, который равен: транспорт = заказ
                         for ($i = 0; $i < $date->count_transport; $i++) {
@@ -162,6 +170,7 @@ final class AgreementTenderAcceptInteractor
                                 add_load_space: false, #TODO Продумать что тут указывать?
                             );
 
+
                             // //создаём заказы
                             $order_unit = $this->orderUnitService->createOrderUnit(
                                 dto: OrderUnitCreateDTO::make(orderUnitVO: $orderUnitVO)
@@ -178,7 +187,7 @@ final class AgreementTenderAcceptInteractor
                 }
 
                 //Если установлена периодичность
-                if($lot_tender->week_period)
+                if($lot_tender->week_period->isNotEmpty())
                 {
 
                     { //Высчитывает дату
@@ -249,7 +258,13 @@ final class AgreementTenderAcceptInteractor
 
             });
 
+            return false;
+
+        } else {
+            return false;
         }
+
+
     }
 
 }

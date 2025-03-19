@@ -52,16 +52,15 @@ class ResponseTenderController extends Controller
     /** Создатель тендера выбирает подрядчика на выполнения тендера */
     public function agreementTender(
         LotTenderResponse $lotTenderResponse,
-        CreateAgreementTenderRequest $request,
+        // CreateAgreementTenderRequest $request,
         AgreementTenderService $service,
     ) {
 
-        $validated = $request->validated();
-
+        // $validated = $request->validated();
 
         $agreementTenderVO = AgreementTenderVO::make(
             lot_tender_response_id: $lotTenderResponse->id,
-            organization_contractor_id: $validated['organization_contractor_id'] ?? null,
+            organization_contractor_id: $lotTenderResponse->organization_contractor_id ?? null,
             lot_tender_id: $lotTenderResponse->lot_tender_id,
         );
 
@@ -97,13 +96,14 @@ class ResponseTenderController extends Controller
         */
         $user = isAuthorized($auth);
 
-        /** @var AgreementTenderAccept */
-        $model = $agreementTenderService->agreementTenderAccept($user, $agreementTenderAccept);
+        // /** @var AgreementTenderAccept */
 
-        return $model ?
-        response()->json(array_success(AgreementTenderAcceptResource::make($model), 'Successfully agreement tender accept.'), 200)
-        :
-        response()->json(array_error(null, 'Error agreement tender accept.'), 400);
+        /** @var object придёт массив описания */
+        $result = $agreementTenderService->agreementTenderAccept($user, $agreementTenderAccept);
+
+        return $result->status
+        ? response()->json(array_success(AgreementTenderAcceptResource::make($result->data), $result->message), 200)
+        : response()->json(array_error(null, 'Faild agreement tender accept.'), 400);
     }
 
 }

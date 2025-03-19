@@ -75,7 +75,9 @@ final class CreateLotTenderInteractor
             //Создаём записи дней недели при выборе тендера как периодность выполнения
             if($dto->arrayWeekPeriod)
             {
+
                 foreach ($dto->arrayWeekPeriod as $enum) {
+
                     $this->createWeekPeriod(
                         WeekPeriodVO::make(
                             lot_tender_id: $lotTender->id,
@@ -86,7 +88,7 @@ final class CreateLotTenderInteractor
             }
 
             //создаём записи SpecificalDatePeriodFile
-            if($dto->arraySpecificalDatePeriod) {
+            if(collect($dto->arraySpecificalDatePeriod)->isNotEmpty()) {
                 foreach ($dto->arraySpecificalDatePeriod as $object) {
                     $object['lot_tender_id'] = $lotTender->id;
                     $this->сreateSpecificalDatePeriod(
@@ -94,6 +96,8 @@ final class CreateLotTenderInteractor
                     );
                 }
             }
+
+            dd($lotTender);
 
             return $lotTender;
 

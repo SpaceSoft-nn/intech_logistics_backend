@@ -50,9 +50,8 @@ final class AgreementTenderService
      * @param User $user
      * @param AgreementTenderAccept $agreementTenderAccept
      *
-     * @return AgreementTenderAccept
      */
-    public function agreementTenderAccept(User $user, AgreementTenderAccept $agreementTenderAccept) : AgreementTenderAccept
+    public function agreementTenderAccept(User $user, AgreementTenderAccept $agreementTenderAccept) : Object
     {
         return $this->agreementTenderAcceptInteractor->execute($user, $agreementTenderAccept);
     }

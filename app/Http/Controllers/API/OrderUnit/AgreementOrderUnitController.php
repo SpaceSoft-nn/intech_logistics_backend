@@ -3,23 +3,25 @@
 namespace App\Http\Controllers\API\OrderUnit;
 
 use App\Http\Controllers\Controller;
+use function App\Helpers\isAuthorized;
+use function App\Helpers\array_success;
+use App\Modules\User\Domain\Models\User;
 use App\Modules\Auth\Domain\Services\AuthService;
-use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
+use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrder;
 use App\Modules\OrderUnit\Domain\Models\AgreementOrderAccept;
-use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Requests\AgreementOrderRequest;
-use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderAcceptResource;
-use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderCollection;
-use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderResource;
-use App\Modules\OrderUnit\Domain\Services\AgreementOrderAcceptService;
 use App\Modules\OrderUnit\Domain\Services\AgreementOrderService;
+use App\Modules\OrderUnit\Domain\Services\AgreementOrderAcceptService;
+use App\Modules\OrderUnit\App\Data\DTO\Agreement\AgreementOrderCreateDTO;
 
 
-use App\Modules\User\Domain\Models\User;
+use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderResource;
 
-use function App\Helpers\array_success;
-use function App\Helpers\isAuthorized;
+use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderCollection;
+use App\Modules\OrderUnit\Domain\Resources\Agreement\AgreementOrderAcceptResource;
+use App\Modules\Organization\Domain\Models\Organization;
 
 class AgreementOrderUnitController extends Controller
 {
@@ -109,14 +111,15 @@ class AgreementOrderUnitController extends Controller
     /**
     * Возвращаем AgreementOrder по OrderUnit - uuid (заказу)
     */
-    public function getAgreementOrderByOrder(OrderUnit $orderUnit)
-    {
+    public function getAgreementOrderByOrder(
+        OrderUnit $orderUnit,
+    ) {
 
         abort_unless($orderUnit, 404);
 
-        $model = AgreementOrder::where('order_unit_id',  $orderUnit->id)->get();
+        $model = AgreementOrder::where('order_unit_id',  $orderUnit->id)->first();
 
-        return response()->json(array_success(AgreementOrderCollection::make($model), 'Записи успешна возвращены.'), 200);
+        return response()->json(array_success(AgreementOrderResource::make($model), 'Запись выбранного отклинка успешна возвращена.'), 200);
     }
 
 }

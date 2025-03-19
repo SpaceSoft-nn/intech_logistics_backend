@@ -2,17 +2,17 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
-use App\Modules\OrderUnit\Domain\Factories\AgreementOrderFactory;
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Transfer\Domain\Models\Transfer;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Modules\Transfer\Domain\Models\Transfer;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use App\Modules\Organization\Domain\Models\Organization;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Modules\OrderUnit\Domain\Factories\AgreementOrderFactory;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 
 class AgreementOrder extends Model
 {

@@ -56,7 +56,7 @@ final class AgreementOrderInteractor
         $this->organizationOrderUnitInvoiceModel = $this->getOrganizationOrderUnitsInvoce($dto->organization_order_units_invoce_id);
 
         //Обновляекм DTO указываем в значения organization_contractor_id
-        $dto = $dto->setOrgContractroId($this->organizationOrderUnitInvoiceModel->id);
+        $dto = $dto->setOrgContractroId($this->organizationOrderUnitInvoiceModel->organization_id);
 
         return $this->run($dto);
     }

@@ -216,8 +216,9 @@ class OfferContractorController extends Controller
      */
     public function getAgreementOffer(OfferContractor $offerContractor)
     {
-        return $offerContractor->agreement_order_contractor ?
-            response()->json(array_success(AgreementOrderContractorResource::make($offerContractor->agreement_order_contractor ), 'Возвратили запись о назначенном исполнителе в лице организации заказчика, по предложению перевозчика.'), 200)
+
+        return $offerContractor->agreement_order_contractor
+            ? response()->json(array_success(AgreementOrderContractorResource::make($offerContractor->agreement_order_contractor ), 'Возвратили запись о назначенном исполнителе в лице организации заказчика, по предложению перевозчика.'), 200)
             : response()->json(array_success(null, 'Возвратили запись о назначенном исполнителе в лице организации заказчика, по предложению перевозчика.'), 200);
     }
 

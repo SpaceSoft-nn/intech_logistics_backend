@@ -202,26 +202,30 @@ Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization'
         Route::patch('/{offerContractor}', [OfferContractorController::class, 'update']);
 
         //перевозчик выбирает (организацию - заказчика) на исполнение заявки предложения
-        Route::post('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'agreementOffer'])->whereUuid('offerContractor');
+        Route::post('/{offerContractor}/agreements', [OfferContractorController::class, 'agreementOffer'])->whereUuid('offerContractor');
 
-        //Получение все предложения (от заказчиков которые откликнулись) -> (по предложнию)
-        Route::get('/{offerContractor}/customer', [OfferContractorController::class, 'getAddCustomer'])->whereUuid('offerContractor');
+        //Вернуть подтверждённую заявку (выбранная организация - заказчика на исполнения) по предложению (если имется)
+        Route::get('/{offerContractor}/agreements', [OfferContractorController::class, 'getAgreementOffer'])->whereUuid('offerContractor')->withoutMiddleware(['isCarrierOrganization']);
 
     });
 
-    //Вернуть подтверждённую заявку (выбранная организация - заказчика на исполнения) по предложению (если имется)
-    Route::get('/{offerContractor}/agreement-offer', [OfferContractorController::class, 'getAgreementOffer'])->whereUuid('offerContractor');
 
     //Утверждения Двух сторонний договор, о принятии в работу Предложения и принятии заказа,
     //P.S Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer
     Route::patch('/{agreementOrderContractorAccept}/agreement-offer-accept', [OfferContractorController::class, 'agreementOfferAccept'])->whereUuid('agreementOrderContractorAccept');
 
-    //Отклик Заказчика на предложения перевозчика
-    Route::post('/{offerContractor}/customer/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization')
-        ->middleware('isCustomerOrganization');
+    { // отклик
+
+        //Отклик Заказчика на предложения перевозчика
+        Route::post('/{offerContractor}/customers/{organization}', [OfferContractorController::class, 'addCustomer'])->whereUuid('offerContractor', 'organization')
+            ->middleware('isCustomerOrganization');
+
+        //Получить все отклики
+        Route::get('/{offerContractor}/customers', [OfferContractorController::class, 'getAddCustomer'])->whereUuid('offerContractor');
+    }
 
     //Создание заказа после утверждения двух-стороннего договора на предложении от перевозчика
-    Route::post('/{agreementOrderContractorAccept}/agreement-offer-order', [OfferContractorController::class, 'agreementOfferOrder'])->whereUuid('agreementOrderContractorAccept')->middleware('isCustomerOrganization');
+    // Route::post('/{agreementOrderContractorAccept}/agreement-offer-order', [OfferContractorController::class, 'agreementOfferOrder'])->whereUuid('agreementOrderContractorAccept')->middleware('isCustomerOrganization');
 
 });
 

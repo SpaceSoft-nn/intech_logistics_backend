@@ -117,8 +117,6 @@ class AgreementOrderUnitController extends Controller
         OrderUnit $orderUnit,
     ) {
 
-        abort_unless($orderUnit, 404);
-
         $model = AgreementOrder::where('order_unit_id',  $orderUnit->id)->first();
 
         return is_null($model)

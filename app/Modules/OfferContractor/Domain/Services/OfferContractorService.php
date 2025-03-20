@@ -16,12 +16,14 @@ use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferAcceptInteractor
 use App\Modules\OfferContractor\Domain\Interactor\ResponseOfferContractorInteractor;
 use App\Modules\OfferContractor\Domain\Interactor\AgreementOfferContractorInteractor;
 use App\Modules\OfferContractor\Domain\Interactor\UpdateOfferContractorInteractor;
+use App\Modules\User\Domain\Models\User;
 
 final class OfferContractorService
 {
 
     public function __construct(
         private OfferCotractorRepository $offerCotractorRep,
+        private AgreementOfferAcceptInteractor $agreementOfferAcceptInteractor,
     ) { }
 
 
@@ -75,14 +77,15 @@ final class OfferContractorService
 
     /**
      * Согласование с двух сторон.
+     * @param User $user пользователь, который подтверждает
      * @param AgreementOrderContractorAccept $agreementOrderContractorAccept
      *
-     * @return AgreementOrderContractorAccept
+     * @return object
      */
-    public function agreementOfferAccept(AgreementOrderContractorAccept $agreementOrderContractorAccept) : AgreementOrderContractorAccept
+    public function agreementOfferAccept(User $user, AgreementOrderContractorAccept $agreementOrderContractorAccept) : object
     {
         #TODO При работе с ролями организовать подтврждения
-        return AgreementOfferAcceptInteractor::execute($agreementOrderContractorAccept);
+        return $this->agreementOfferAcceptInteractor->execute($user, $agreementOrderContractorAccept);
     }
 
     public function agreementOfferOrder(OfferContractorAgreementOrderDTO $dto)

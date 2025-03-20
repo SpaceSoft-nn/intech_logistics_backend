@@ -2,36 +2,28 @@
 
 namespace App\Modules\OfferContractor\Domain\Interactor;
 
-use App\Modules\Base\Error\BusinessException;
-use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOfferDTO;
-use App\Modules\OfferContractor\App\Data\Enums\OfferContractorStatusEnum;
-use App\Modules\OfferContractor\App\Data\ValueObject\AgreementOrderContractorVO;
-use App\Modules\OfferContractor\Domain\Actions\CreateAgreementOrderContractorAcceptAction;
-use App\Modules\OfferContractor\Domain\Actions\CreateAgreementOrderContractorAction;
-use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractor;
-use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractorAccept;
-use App\Modules\OfferContractor\Domain\Models\InvoiceOrderCustomer;
-use App\Modules\OfferContractor\Domain\Models\OfferContractor;
-use App\Modules\OfferContractor\Domain\Models\OfferContractorCustomer;
-use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
-use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitCreateDTO;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\CargoGood\CargoGoodVO;
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\OrderUnitVO;
-use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
-use App\Modules\OrderUnit\Domain\Services\OrderUnitService;
 use DB;
+use App\Modules\Base\Error\BusinessException;
+use App\Modules\OfferContractor\Domain\Models\OfferContractor;
+use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractor;
+use App\Modules\OfferContractor\App\Data\Enums\OfferContractorStatusEnum;
+use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractorAccept;
+use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOfferDTO;
+use App\Modules\OfferContractor\App\Data\ValueObject\AgreementOrderContractorVO;
+use App\Modules\OfferContractor\Domain\Actions\CreateAgreementOrderContractorAction;
+
+use App\Modules\OfferContractor\Domain\Actions\CreateAgreementOrderContractorAcceptAction;
 
 class AgreementOfferContractorInteractor
 {
 
     public static function execute(OfferContractorAgreementOfferDTO $dto) : AgreementOrderContractor
     {
-        $orderService = app(OrderUnitService::class);
-        return (new self())->run($dto, $orderService);
+        return (new self())->run($dto);
     }
 
 
-    private function run(OfferContractorAgreementOfferDTO $dto, OrderUnitService $orderService) : AgreementOrderContractor
+    private function run(OfferContractorAgreementOfferDTO $dto) : AgreementOrderContractor
     {
 
         //валидимируем данные (выкидываем бизнес ошибки)
@@ -40,7 +32,7 @@ class AgreementOfferContractorInteractor
         /**
         * @var AgreementOrderContractor
         */
-        $agreementOrderContractor = DB::transaction(function () use ($dto, $orderService) {
+        $agreementOrderContractor = DB::transaction(function () use ($dto) {
 
             /**
             * @var AgreementOrderContractor
@@ -53,67 +45,20 @@ class AgreementOfferContractorInteractor
             $agreementOrderContractorAccept = $this->createAgreementOrderContractorAccept($agreementOrderContractor->id);
 
 
-
-            //создаём заказ
-            {
-                /** @var OfferContractorCustomer */
-                $invoice_customer = $agreementOrderContractor->offer_contractor_invoice_order_customer;
-
-                /** @var OfferContractor */
-                $offerContractor = $invoice_customer->offer_contractor;
-
-
-                {   //Формируем VO для OrderUnitCreateDTO - передаём invoice_customer как массив
-                    /** @var InvoiceOrderCustomer */
-                    $invoce_order = $invoice_customer->invoice_order_customer;
-
-                    /** @var OrderUnitVO */
-                    $orderUnitVO = OrderUnitVO::fromArrayInvoiceOrderCustomerToObject($invoce_order->toArray())
-                        ->setOrderStatus(StatusOrderUnitEnum::in_work)
-                        ->setTransportId($offerContractor->transport_id)
-                        ->setOrganizationId($invoice_customer->organization_id)
-                        ->setContractorId($agreementOrderContractor->organization_contractor_id);
-
-                    /** @var orderUnitAddressDTO */
-                    $orderUnitAddressDTO = OrderUnitAddressDTO::fromArrayInvoiceOrderCustomerToObject($invoce_order->toArray());
-                }
-
-                /** @var CargoGoodVO[] */
-                $cargoGoodVO = CargoGoodVO::fromArrayInvoiceOrderCustomerToObject($invoce_order->toArray());
-
-
-                /** @var OrderUnitCreateDTO */
-                $orderUnitCreateDTO = OrderUnitCreateDTO::make(
-                    orderUnitVO: $orderUnitVO,
-                    cargoGoodVO : $cargoGoodVO,
-                    orderUnitAddressDTO: $orderUnitAddressDTO, #TODO Нужно будет потом добавлять логику при множественных Адрессах
-                );
-
-                $order = $orderService->createOrderUnit($orderUnitCreateDTO);
-
-                //устанавливаем значения что бы у предложения перевозчика, было понятно к какому заказу относится
-                $agreementOrderContractor->order_unit_id = $order->id;
-                $agreementOrderContractor->save();
-            }
-
-            { // временно устанавливаем статус в работе
+            { // устанавливаем статус принят
 
                 /** @var OfferContractor */
                 $offerContractor = $dto->offerContractor;
 
-                $offerContractor->status = OfferContractorStatusEnum::in_work;
+                $offerContractor->status = OfferContractorStatusEnum::accepted;
 
                 $offerContractor->save();
 
             }
 
-
             return $agreementOrderContractor;
 
         });
-
-
-
 
 
 

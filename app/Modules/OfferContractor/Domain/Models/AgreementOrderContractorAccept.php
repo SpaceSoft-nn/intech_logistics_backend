@@ -2,6 +2,7 @@
 
 namespace App\Modules\OfferContractor\Domain\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,4 +55,20 @@ class AgreementOrderContractorAccept extends Model
     {
         return $this->belongsTo(AgreementOrderContractor::class, 'agreement_order_contractor_id');
     }
+
+
+    /**
+     * Прямая связь к таблице orderUnit через промежуточную табилцу agreement_order_contractor с помощью акксесора
+     * @return Attribute
+     */
+    protected function order(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->agreement_order_contractor?->order_unit ? $this->agreement_order_contractor->order_unit : null,
+        );
+
+        // Логика для вычисления offer_invoice
+        // return $this->orgOrderInvoices->invoice_order ? $this->orgOrderInvoices->invoice_order : null;
+    }
 }
+

@@ -16,7 +16,7 @@ class AgreementOrderContractorResource extends JsonResource
         return [
             'id' => $this->id,
             "invoice"  => OfferContractorCustomerResource::make($this->offer_contractor_invoice_order_customer),
-            // "agreement_order_contractor_accept_id"  => $this->agreement_order_contractor_accept,
+            "agreement_accept"  => AgreementOrderContractorAcceptResource::make($this->agreement_order_contractor_accept),
             "order"  => OrderUnitResource::make($this->order_unit),
             "organization"  => OrganizationResource::make($this->organization_contractor),
             "user_id" => $this->user,

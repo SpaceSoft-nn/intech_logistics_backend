@@ -198,7 +198,7 @@ Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization'
         //создание предложения от перевозчика
         Route::post('/', [OfferContractorController::class, 'store']);
 
-        //Частичное обновление #TODO - есть проблема с 'безопаностью' обновление статуса, нужно в будущем продумать ка ограничить обновление во всех статусов, кроме draft
+        //Частичное обновление #TODO - есть проблема с 'безопаностью' обновление статуса, нужно в будущем продумать как ограничить обновление во всех статусов, кроме draft
         Route::patch('/{offerContractor}', [OfferContractorController::class, 'update']);
 
         //перевозчик выбирает (организацию - заказчика) на исполнение заявки предложения

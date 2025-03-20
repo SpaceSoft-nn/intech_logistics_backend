@@ -18,7 +18,6 @@ use App\Modules\Tender\Domain\Services\AgreementTenderService;
 use App\Modules\Tender\Domain\Models\Response\LotTenderResponse;
 use App\Modules\Tender\Domain\Requests\CreateResponseTenderRequest;
 use App\Modules\Tender\Domain\Models\Response\AgreementTenderAccept;
-use App\Modules\Tender\Domain\Requests\CreateAgreementTenderRequest;
 use App\Modules\Tender\App\Data\ValueObject\Response\AgreementTenderVO;
 use App\Modules\Tender\Domain\Resources\Response\AgreementTenderResource;
 use App\Modules\Tender\Domain\Resources\Response\LotTenderResponseResource;
@@ -59,6 +58,7 @@ class ResponseTenderController extends Controller
     ) {
 
         { // проверяем что заказчик относится к тендеру.
+
             /** @var array */
             $array = $action->isCustomer();
 
@@ -69,6 +69,7 @@ class ResponseTenderController extends Controller
             $tender = $lotTenderResponse->tender;
 
             abort_unless($tender->organization_id == $organization->id, 401, 'Заказчик не относится к этому Тендеру.');
+
         }
 
         $agreementTenderVO = AgreementTenderVO::make(
@@ -108,8 +109,6 @@ class ResponseTenderController extends Controller
         * @var User
         */
         $user = isAuthorized($auth);
-
-        // /** @var AgreementTenderAccept */
 
         /** @var object придёт массив описания */
         $result = $agreementTenderService->agreementTenderAccept($user, $agreementTenderAccept);

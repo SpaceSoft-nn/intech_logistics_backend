@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\API\OfferContractor;
 
 use App\Http\Controllers\Controller;
+use function App\Helpers\isAuthorized;
+
 use function App\Helpers\array_success;
+use App\Modules\User\Domain\Models\User;
+
+use App\Modules\Auth\Domain\Services\AuthService;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use App\Modules\OfferContractor\Domain\Models\OfferContractor;
@@ -21,6 +26,7 @@ use App\Modules\OfferContractor\App\Repositories\OfferCotractorRepository;
 use App\Modules\OfferContractor\App\Data\ValueObject\InvoiceOrderCustomerVO;
 use App\Modules\OfferContractor\Domain\Models\AgreementOrderContractorAccept;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorCreateRequest;
+use App\Modules\OfferContractor\Domain\Requests\UpdateOfferContractorRequest;
 use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOfferDTO;
 use App\Modules\OfferContractor\App\Data\DTO\OfferContractorAgreementOrderDTO;
 use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerResource;
@@ -29,13 +35,12 @@ use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorResourc
 use App\Modules\OfferContractor\Domain\Resources\OfferContractorCustomerCollection;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOfferRequest;
 use App\Modules\OfferContractor\Domain\Requests\OfferContractorAgreementOrderRequest;
-use App\Modules\OfferContractor\Domain\Requests\UpdateOfferContractorRequest;
 use App\Modules\OfferContractor\Domain\Resources\AgreementOrderContractorAcceptResource;
 
 use App\Modules\OfferContractor\Domain\Resources\Filter\CustomerComporeOfferContractorResource;
 use App\Modules\OfferContractor\Domain\Resources\Filter\CustomerComporeOfferContractorCollection;
-use App\Modules\OfferContractor\Domain\Resources\Filter\OfferContactorWrappResponse\OfferContractorWrappCollection;
 use App\Modules\OfferContractor\Domain\Resources\Filter\OfferContactorWrappResponse\OfferContractorWrappResource;
+use App\Modules\OfferContractor\Domain\Resources\Filter\OfferContactorWrappResponse\OfferContractorWrappCollection;
 
 class OfferContractorController extends Controller
 {
@@ -224,11 +229,20 @@ class OfferContractorController extends Controller
     public function agreementOfferAccept(
         AgreementOrderContractorAccept $agreementOrderContractorAccept,
         OfferContractorService $offerContractorService,
+        AuthService $auth,
     ) {
 
-        $agreementOrderContractorAccept = $offerContractorService->agreementOfferAccept($agreementOrderContractorAccept);
+        /**
+        * @var User
+        */
+        $user = isAuthorized($auth);
 
-        return response()->json(array_success(AgreementOrderContractorAcceptResource::make($agreementOrderContractorAccept), 'Успешное подтверждения с двух сторон.'), 200);
+        $result = $offerContractorService->agreementOfferAccept($user, $agreementOrderContractorAccept);
+
+        return $result->status
+            ? response()->json(array_success(AgreementOrderContractorAcceptResource::make($result->data) ?? null, $result->message), 200)
+                : response()->json(array_success(null, $result->message), 403);
+
     }
 
     public function agreementOfferOrder(

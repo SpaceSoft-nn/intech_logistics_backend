@@ -74,7 +74,7 @@ class AgreementTender extends Model
     protected function invoiceTender(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->lot_tender_response?->invoice_lot_tender ? $this->lot_tender_response->invoice_lot_tender : 1,
+            get: fn () => $this->lot_tender_response?->invoice_lot_tender ? $this->lot_tender_response->invoice_lot_tender : null,
         );
 
     }

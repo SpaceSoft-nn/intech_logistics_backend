@@ -96,7 +96,7 @@ class AgreementOrder extends Model
     protected function invoiceOrder(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->orgOrderInvoices?->invoice_order ? $this->orgOrderInvoices->invoice_order : 1,
+            get: fn () => $this->orgOrderInvoices?->invoice_order ? $this->orgOrderInvoices->invoice_order : null,
         );
 
         // Логика для вычисления offer_invoice

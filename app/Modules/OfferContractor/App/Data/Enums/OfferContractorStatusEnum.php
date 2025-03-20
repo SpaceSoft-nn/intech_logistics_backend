@@ -11,6 +11,8 @@ enum OfferContractorStatusEnum : string
 
     case published = "Сбор предложений"; // Опубликован в общем доступен - доступен для исполнителей
 
+    case accepted = "Принят"; // Опубликован в общем доступен - доступен для исполнителей
+
     case in_work = "В работе"; // В работе
 
 
@@ -27,6 +29,7 @@ enum OfferContractorStatusEnum : string
 
             "draft" => OfferContractorStatusEnum::draft,
             "published" => OfferContractorStatusEnum::published,
+            "accepted" => OfferContractorStatusEnum::accepted,
             "in_work" => OfferContractorStatusEnum::in_work,
             null => null,
             default => self::stringValueCaseToObject($value),
@@ -49,6 +52,7 @@ enum OfferContractorStatusEnum : string
             $arrNew[] = match ($value) {
                 "draft" => OfferContractorStatusEnum::draft,
                 "published" => OfferContractorStatusEnum::published,
+                "accepted" => OfferContractorStatusEnum::accepted,
                 "in_work" => OfferContractorStatusEnum::in_work,
                 default => null,
                 null => null,
@@ -63,7 +67,8 @@ enum OfferContractorStatusEnum : string
         return match ($this)
         {
             OfferContractorStatusEnum::draft => "draft",
-            OfferContractorStatusEnum::published=> "published",
+            OfferContractorStatusEnum::published => "published",
+            OfferContractorStatusEnum::accepted => "accepted",
             OfferContractorStatusEnum::in_work => "in_work",
             null => null,
             default => throw new Exception('Ошибка преобразование Enum OfferContractorStatusEnum', 500),
@@ -76,6 +81,7 @@ enum OfferContractorStatusEnum : string
         {
             "Черновик" => OfferContractorStatusEnum::draft,
             "Сбор предложений" => OfferContractorStatusEnum::published,
+            "Принят" => OfferContractorStatusEnum::accepted,
             "В работе" => OfferContractorStatusEnum::in_work,
             null => null,
             default => throw new Exception('Ошибка преобразование Enum OfferContractorStatusEnum', 500),

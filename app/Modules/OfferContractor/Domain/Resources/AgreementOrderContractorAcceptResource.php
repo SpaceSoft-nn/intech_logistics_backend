@@ -2,6 +2,7 @@
 
 namespace App\Modules\OfferContractor\Domain\Resources;
 
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -12,10 +13,11 @@ class AgreementOrderContractorAcceptResource extends JsonResource
     {
         return [
 
-            'id_agreement_order_contractor_accept' => $this->id,
-            'agreement_order_contractor_id' => $this->agreement_order_contractor,
-            'order_bool' => $this->order_bool,
-            'contractor_bool' => $this->contractor_bool,
+            'id' => $this->id,
+            // 'agreement_order_contractor_id' => $this->agreement_order_contractor,
+            'is_customer' => $this->order_bool,
+            'is_contactor' => $this->contractor_bool,
+            "order" => OrderUnitResource::make($this->order),
 
         ];
     }

@@ -27,6 +27,7 @@ use App\Modules\Tender\Domain\Requests\AddInfoOrderByTenderRequest;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
+use App\Modules\Tender\Domain\Requests\UpdateLotTenderRequest;
 use App\Modules\Tender\Domain\Resources\Response\AgreementTenderResource;
 use App\Modules\Tender\Domain\Resources\Response\Wrapp\WrappLotTenderCollection;
 use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderResource;
@@ -128,6 +129,15 @@ class LotTenderController extends Controller
             response()->json(array_success(LotTenderResource::make($model), 'Create lot tender.'), 201)
         :
             response()->json(array_error(null, 'Faild create lot tender.'), 400);
+    }
+
+    public function update(
+        LotTender $lotTender,
+        UpdateLotTenderRequest $request,
+        TenderService $service,
+    ){
+        /** @var UpdateLotTenderDTO */
+        $lotTenderVo = LotTenderVO $a;
     }
 
     public function agreementDocumentFile(

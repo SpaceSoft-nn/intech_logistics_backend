@@ -2,12 +2,12 @@
 
 namespace App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit;
 
+use Arr;
+use Illuminate\Contracts\Support\Arrayable;
 use App\Modules\Base\Traits\FilterArrayTrait;
 use App\Modules\OrderUnit\App\Data\Enums\StatusOrderUnitEnum;
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
-use Illuminate\Contracts\Support\Arrayable;
-use Arr;
+use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 
 final readonly class OrderUnitVO implements Arrayable
 {
@@ -329,7 +329,6 @@ final readonly class OrderUnitVO implements Arrayable
     //переводим из модели InvoiceOrderCustomer - которое присылаем как string, в объект OrderUnitVO
     public static function fromArrayInvoiceOrderCustomerToObject(array $data): self
     {
-
 
         $end_date_order = Arr::get($data, "end_date");
         $exemplary_date_start = Arr::get($data, "start_date" , null);

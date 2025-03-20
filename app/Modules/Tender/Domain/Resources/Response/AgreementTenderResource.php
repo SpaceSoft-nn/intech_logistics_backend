@@ -4,7 +4,6 @@ namespace App\Modules\Tender\Domain\Resources\Response;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\Domain\Resources\LotTenderResource;
 use App\Modules\Organization\Domain\Resources\OrganizationResource;
 

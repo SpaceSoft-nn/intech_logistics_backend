@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\OrderUnit;
 use App\Http\Controllers\Controller;
 use function App\Helpers\isAuthorized;
 use function App\Helpers\array_success;
+use function App\Helpers\Mylog;
+
 use App\Modules\User\Domain\Models\User;
 use App\Modules\Auth\Domain\Services\AuthService;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
@@ -119,7 +121,11 @@ class AgreementOrderUnitController extends Controller
 
         $model = AgreementOrder::where('order_unit_id',  $orderUnit->id)->first();
 
-        return response()->json(array_success(AgreementOrderResource::make($model), 'Запись выбранного отклинка успешна возвращена.'), 200);
+        return is_null($model)
+        ? response()->json(array_success(null, 'Запись выбранного отклинка успешна возвращена.'), 200)
+        : response()->json(array_success(AgreementOrderResource::make($model), 'Запись выбранного отклинка успешна возвращена.'), 200);
+
+
     }
 
 }

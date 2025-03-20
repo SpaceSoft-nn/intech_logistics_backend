@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use App\Modules\Organization\Domain\Models\Organization;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Modules\OrderUnit\Domain\Factories\AgreementOrderFactory;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 
 class AgreementOrder extends Model

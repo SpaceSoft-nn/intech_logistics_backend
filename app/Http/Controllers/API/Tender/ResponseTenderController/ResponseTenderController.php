@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Tender\ResponseTenderController;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Auth\Domain\Services\AuthService;
+use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
@@ -53,10 +54,22 @@ class ResponseTenderController extends Controller
     public function agreementTender(
         LotTenderResponse $lotTenderResponse,
         // CreateAgreementTenderRequest $request,
+        GetTypeCabinetByOrganization $action,
         AgreementTenderService $service,
     ) {
 
-        // $validated = $request->validated();
+        { // проверяем что заказчик относится к тендеру.
+            /** @var array */
+            $array = $action->isCustomer();
+
+            /** @var Organization */
+            $organization = $array['organization'];
+
+            /** @var LotTender */
+            $tender = $lotTenderResponse->tender;
+
+            abort_unless($tender->organization_id == $organization->id, 401, 'Заказчик не относится к этому Тендеру.');
+        }
 
         $agreementTenderVO = AgreementTenderVO::make(
             lot_tender_response_id: $lotTenderResponse->id,

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Tender\Domain\Models\Response;
 
+use App\Modules\Organization\Domain\Models\Organization;
 use Illuminate\Database\Eloquent\Model;
 use App\Modules\Tender\Domain\Models\LotTender;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -45,6 +46,11 @@ class AgreementTender extends Model
     public function agreement_tender_accept(): HasOne
     {
         return $this->hasOne(AgreementTenderAccept::class, 'agreement_tender_id');
+    }
+
+    public function organization_contractor(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_contractor_id', 'id');
     }
 
     public function lot_tender(): BelongsTo

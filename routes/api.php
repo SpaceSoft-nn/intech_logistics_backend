@@ -277,7 +277,7 @@ Route::prefix('/tenders')->middleware(['manuallyActivatedOrganization', 'auth:sa
 
         {
             //Создание Тендера
-            Route::post('/', [LotTenderController::class, 'store']);
+            Route::post('/', [LotTenderController::class, 'store']);    
 
             //Вернуть всех исполнителей откликнувшиеся на Тендер
             Route::get('/{lotTender}/contractors', [ResponseTenderController::class, 'getСontractorForTender'])->whereUuid('lotTender');
@@ -296,7 +296,6 @@ Route::prefix('/tenders')->middleware(['manuallyActivatedOrganization', 'auth:sa
 
     //Вернуть принятый отклик на тендер
     Route::get('/{lotTender}/agreements', [LotTenderController::class, 'getAgreementTenderByTender'])->whereUuid('lotTender');
-
 
     {
 

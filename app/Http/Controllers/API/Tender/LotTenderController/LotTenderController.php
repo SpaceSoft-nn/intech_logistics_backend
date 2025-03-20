@@ -137,7 +137,7 @@ class LotTenderController extends Controller
         TenderService $service,
     ){
         /** @var UpdateLotTenderDTO */
-        $lotTenderVo = LotTenderVO $a;
+        // $lotTenderVo = LotTenderVO $a;
     }
 
     public function agreementDocumentFile(

@@ -421,10 +421,29 @@ namespace App\Http\Controllers;
 *         description="Уникальный идентификатор ресурса",
 *         example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"
 *     ),
-*     @OA\Property(property="order_unit_id", ref="#/components/schemas/OrderUnitResource", description="Ресурс Заказа"),
-*     @OA\Property(property="organization_contractor_id", ref="#/components/schemas/OrganizationResource", description="Организация откликнувшиеся на заказ"),
-*     @OA\Property(property="organization_order_units_invoce_id", ref="#/components/schemas/OrgOrderInvoiceResource", description="organization_order_units_invoce"),
-*     @OA\Property(property="agreement_order_accept_id", ref="#/components/schemas/AgreementOrderAcceptResource", description="Ссылка на Agreement Order Accept Resource"),
+*     @OA\Property(property="order", ref="#/components/schemas/OrderUnitResource", description="Заказ"),
+*     @OA\Property(property="organization_contractor", ref="#/components/schemas/OrganizationResource", description="Организация откликнувшиеся на заказ"),
+*     @OA\Property(property="contractor_invoice", ref="#/components/schemas/InvoceOrderResource", description="InvoceOrderResource - дополнительная информация при отклике"),
+*     @OA\Property(property="agreement_order_accept", ref="#/components/schemas/AgreementOrderAcceptResource", description="Ссылка на Agreement Order Accept Resource для ЭДО"),
+*
+* ),
+*
+* @OA\Schema(
+*     schema="InvoceOrderResource",
+*     description="Дополнительная информаци к отклику от перевозчика",
+*     title="Agreement Order Accept Resource",
+*     @OA\Property(
+*         property="id",
+*         type="string",
+*         format="uuid",
+*         description="Уникальный идентификатор ресурса",
+*         example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+*     ),
+*     @OA\Property(property="transport_id", ref="#/components/schemas/TransportResource", description="Ресурс Заказа"),
+*     @OA\Property(property="price" , description="Цена"),
+*     @OA\Property(property="date" , description="Примерная дата"),
+*     @OA\Property(property="comment" , description="Комментарий"),
+*     @OA\Property(property="created_at",  description="Дата создание"),
 *
 * ),
 *
@@ -492,10 +511,9 @@ namespace App\Http\Controllers;
 *     type="object",
 *     title="Agreement Order Contractor Accept Resource",
 *     properties={
-*         @OA\Property(property="id_agreement_order_contractor_accept", type="string", format="uuid", description="UUID принятия соглашения заказа подрядчика", example="123e4567-e89b-12d3-a456-426614174000"),
-*         @OA\Property(property="agreement_order_contractor_id", type="string", format="uuid", description="UUID соглашения заказа подрядчика", example="123e4567-e89b-12d3-a456-426614174000"),
-*         @OA\Property(property="order_bool", type="boolean", description="Статус утверждения со стороны Заказчика", example=true),
-*         @OA\Property(property="contractor_bool", type="boolean", description="Статус утверждения со стороны Перевозчика", example=true)
+*         @OA\Property(property="id", type="string", format="uuid", description="UUID принятия соглашения заказа подрядчика", example="123e4567-e89b-12d3-a456-426614174000"),
+*         @OA\Property(property="is_customer", type="boolean", description="Статус утверждения со стороны Заказчика", example=true),
+*         @OA\Property(property="is_contractor", type="boolean", description="Статус утверждения со стороны Перевозчика", example=true)
 *     }
 * ),
 *
@@ -521,11 +539,11 @@ namespace App\Http\Controllers;
 * @OA\Schema(
 *     schema="AgreementTenderResource",
 *     type="object",
-*     @OA\Property(property="id_agreement_tender", type="string", format="uuid", description="ID соглашения тендера"),
-*     @OA\Property(property="lot_tender_response_id", type="string", format="uuid", description="uuid lot_tender_respons"),
-*     @OA\Property(property="organization_tender_create_id", type="string", format="uuid", description="ID организации создателя тендера"),
-*     @OA\Property(property="lot_tender_id", type="string", format="uuid", description="ID лота тендера"),
-*     @OA\Property(property="agreement_tender_accept_id", ref="#/components/schemas/AgreementTenderAcceptResource", description="Соглашение тендера")
+*     @OA\Property(property="id", type="string", format="uuid", description="ID соглашения тендера"),
+*     @OA\Property(property="contractor_invoice", type="string", format="uuid", description="uuid lot_tender_respons"),
+*     @OA\Property(property="organization_contractor", type="string", format="uuid", description="ID организации создателя тендера"),
+*     @OA\Property(property="tender", ref="#/components/schemas/LotTenderResource", description="Лот Тендер"),
+*     @OA\Property(property="agreement_tender_accept", ref="#/components/schemas/AgreementTenderAcceptResource", description="Соглашение тендера")
 * ),
 *
 * @OA\Schema(

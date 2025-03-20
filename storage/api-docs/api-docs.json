@@ -1822,13 +1822,13 @@
                 }
             }
         },
-        "/api/offer-contractors/{offerContractor}/agreement-offer": {
+        "/api/offer-contractors/{offerContractor}/agreements": {
             "get": {
                 "tags": [
                     "Offer Contractor"
                 ],
                 "summary": "Вернуть подтверждённую заявку (выбранная организация - заказчика на исполнение) по предложению (если имеется).",
-                "operationId": "35e0f099db82d518d5248fff4916369f",
+                "operationId": "432c5d2d0b42df34125d442f4dd48884",
                 "parameters": [
                     {
                         "name": "offerContractor",
@@ -1895,7 +1895,7 @@
                     "Offer Contractor"
                 ],
                 "summary": "Выбрать организацию заказчика на исполнение предложения.",
-                "operationId": "138e904698095ef11e5d185e12da5f08",
+                "operationId": "8776dcfb52af44ddd2873208aa49cb6e",
                 "parameters": [
                     {
                         "name": "offerContractor",
@@ -1978,13 +1978,13 @@
                 }
             }
         },
-        "/api/offer-contractors/{agreementOrderContractorAccept}/agreement-offer-accept": {
+        "/api/offer-contractors/{agreementOrderContractorAccept}/accept": {
             "patch": {
                 "tags": [
                     "Offer Contractor"
                 ],
                 "summary": "Утверждение двухстороннего договора о принятии в работу предложения и принятии заказа.",
-                "operationId": "888c43734a2305ad487629602faa471c",
+                "operationId": "5082c4cd896be62147c197cd6558ab88",
                 "parameters": [
                     {
                         "name": "agreementOrderContractorAccept",
@@ -2011,267 +2011,6 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Успешное подтверждение с двух сторон."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Общая ошибка сервера.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message_error": {
-                                            "type": "string",
-                                            "example": "Error server"
-                                        },
-                                        "code": {
-                                            "type": "integer",
-                                            "example": "500"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/offer-contractors/{agreementOrderContractorAccept}/agreement-offer-order": {
-            "post": {
-                "tags": [
-                    "Offer Contractor"
-                ],
-                "summary": "Создание заказа после утверждения двух-стороннего договора на предложении от перевозчика.",
-                "operationId": "f99e0b8fcd8e3b0091714ba8e6d1de7a",
-                "parameters": [
-                    {
-                        "name": "agreementOrderContractorAccept",
-                        "in": "path",
-                        "description": "ID принятия соглашения заказа подрядчика",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid",
-                            "example": "123e4567-e89b-12d3-a456-426614174000"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "properties": {
-                                            "start_address_id": {
-                                                "description": "**UUID адреса начала. Поле обязательно и должно существовать в таблице addresses.**",
-                                                "type": "string",
-                                                "format": "uuid",
-                                                "example": "123e4567-e89b-12d3-a456-426614174000"
-                                            },
-                                            "end_address_id": {
-                                                "description": "**UUID адреса окончания. Поле обязательно и должно существовать в таблице addresses.**",
-                                                "type": "string",
-                                                "format": "uuid",
-                                                "example": "123e4567-e89b-12d3-a456-426614174000"
-                                            },
-                                            "start_date_delivery": {
-                                                "description": "**Дата начала заказа. Обязательное поле.**",
-                                                "type": "string",
-                                                "format": "date",
-                                                "example": "2023-10-01"
-                                            },
-                                            "end_date_delivery": {
-                                                "description": "**Дата окончания заказа. Обязательное поле.**",
-                                                "type": "string",
-                                                "format": "date",
-                                                "example": "2023-10-10"
-                                            },
-                                            "address_array": {
-                                                "description": "**Массив объектов с UUID адресов и датами (nullable) не обязательное поле - Данное поле предназначеное для промежуточных адрессов погрузки/разгрузки между главным адрессом движение.**",
-                                                "type": "array",
-                                                "items": {
-                                                    "properties": {
-                                                        "id": {
-                                                            "description": "**UUID адреса. Обязательное поле.**",
-                                                            "type": "string",
-                                                            "format": "uuid",
-                                                            "example": "123e4567-e89b-12d3-a456-426614174000"
-                                                        },
-                                                        "date": {
-                                                            "description": "**Дата. Обязательное поле.** - Это дата нужна для указание когда забрать груз",
-                                                            "type": "string",
-                                                            "format": "date",
-                                                            "example": "2023-10-01"
-                                                        },
-                                                        "type": {
-                                                            "description": "**Тип адреса. Обязательное поле. Возможные значения: 'sending' - Аддресс отправка, 'coming' - Адресс прибытия **",
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "sending",
-                                                                "coming"
-                                                            ],
-                                                            "example": "sending"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                },
-                                                "nullable": true
-                                            },
-                                            "goods_array": {
-                                                "description": "Массив объектов, представляющих грузы. Обязательное поле. Минимум 1+ груз",
-                                                "type": "array",
-                                                "items": {
-                                                    "properties": {
-                                                        "product_type": {
-                                                            "description": "**Тип продукта. Обязательное поле.**",
-                                                            "type": "string",
-                                                            "example": "Тип 1"
-                                                        },
-                                                        "type_pallet": {
-                                                            "description": "**Тип поддона. Обязательное поле. Возможные значения: 'eur', 'ecom', 'fin' **",
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "eur",
-                                                                "ecom",
-                                                                "fin"
-                                                            ],
-                                                            "example": "eur"
-                                                        },
-                                                        "cargo_units_count": {
-                                                            "description": "**Количество паллетов. Обязательное поле. Минимум 1.**",
-                                                            "type": "integer",
-                                                            "minimum": 1,
-                                                            "example": 5
-                                                        },
-                                                        "body_volume": {
-                                                            "description": "**Объем кузова. Обязательное поле. Минимум 0.**",
-                                                            "type": "number",
-                                                            "format": "float",
-                                                            "minimum": 0,
-                                                            "example": 12.5
-                                                        },
-                                                        "name_value": {
-                                                            "description": "**Название. Необязательное поле. Максимум 100 символов.**",
-                                                            "type": "string",
-                                                            "maxLength": 100,
-                                                            "example": "Название груза",
-                                                            "nullable": true
-                                                        },
-                                                        "description": {
-                                                            "description": "**Описание. Необязательное поле. Максимум 500 символов.**",
-                                                            "type": "string",
-                                                            "maxLength": 500,
-                                                            "example": "Описание груза",
-                                                            "nullable": true
-                                                        },
-                                                        "mgx": {
-                                                            "oneOf": [
-                                                                {
-                                                                    "$ref": "#/components/schemas/MgxObject"
-                                                                }
-                                                            ],
-                                                            "nullable": true,
-                                                            "description": "**Массогабаритные Характеристики - поле не обязательное, если указано, то будет валидироватья относительно количество паллетов**",
-                                                            "type": "object"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                }
-                                            },
-                                            "type_transport_weight": {
-                                                "description": "**Тип транспортировки по габаритам. Обязательное поле.** small: 1.5-3 тонны, medium: 5 - 10 тонн, large: 10 - 20 тонн, extraLarge: 20 - 40 тонн, superSize: Более 40 тонн",
-                                                "type": "string",
-                                                "enum": [
-                                                    "small",
-                                                    "medium",
-                                                    "large",
-                                                    "extraLarge",
-                                                    "superSize"
-                                                ],
-                                                "example": "small"
-                                            },
-                                            "organization_id": {
-                                                "description": "**UUID организации. Поле обязательно и должно существовать в таблице organizations.**",
-                                                "type": "string",
-                                                "format": "uuid",
-                                                "example": "123e4567-e89b-12d3-a456-426614174000"
-                                            },
-                                            "end_date_order": {
-                                                "description": "**Дата окончания заказа. Обязательное поле.**",
-                                                "type": "string",
-                                                "format": "date",
-                                                "example": "2023-10-15"
-                                            },
-                                            "type_load_truck": {
-                                                "description": "**Тип загрузки грузовика. Обязательное поле. Возможные значения: ftl, ltl, custom.**",
-                                                "type": "string",
-                                                "enum": [
-                                                    "ftl",
-                                                    "ltl",
-                                                    "custom"
-                                                ],
-                                                "example": "ftl"
-                                            },
-                                            "order_total": {
-                                                "description": "**Цена заказа. Обязательное поле.**",
-                                                "type": "number",
-                                                "format": "float",
-                                                "example": 50000
-                                            },
-                                            "description": {
-                                                "description": "**Описание (необязательное поле, максимум 1000 символов).**",
-                                                "type": "string",
-                                                "maxLength": 1000,
-                                                "example": "Это пример описания заказа.",
-                                                "nullable": true
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Заказ был успешно создан.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "null"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Заказ был успешно создан."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Ошибка создание заказа.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "null"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Ошибка создание заказа."
                                         }
                                     },
                                     "type": "object"
@@ -2761,7 +2500,7 @@
                 "tags": [
                     "Order Unit"
                 ],
-                "summary": "Обновить данные заказа.",
+                "summary": "Обновить частично данные заказа.",
                 "description": "Обновляет информацию о заказе по UUID",
                 "operationId": "14a9a4f41dcce93793f26265c94b80c3",
                 "parameters": [
@@ -3101,86 +2840,12 @@
                 }
             }
         },
-        "/api/orders/contractors/compare": {
-            "get": {
-                "tags": [
-                    "Order Unit"
-                ],
-                "summary": "Получить все заказы и указать на какие заказы откликнулся перевозчик в bool переменной",
-                "description": "Фильтрация заказов на которые откликнулся перевозчик",
-                "operationId": "8cbba051e2f3a402257782629583c6d3",
-                "parameters": [
-                    {
-                        "name": "organization_id",
-                        "in": "header",
-                        "description": "Идентификатор организации, который должен быть передан в заголовке",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Получение всех подрядчиков успешно.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "order": {
-                                                        "$ref": "#/components/schemas/OrderUnitResource"
-                                                    },
-                                                    "isResponseContractor": {
-                                                        "type": "boolean",
-                                                        "example": true
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Возвращены все подрядчики откликнувшиеся на заказ."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Общая ошибка сервера.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message_error": {
-                                            "type": "string",
-                                            "example": "Error server"
-                                        },
-                                        "code": {
-                                            "type": "integer",
-                                            "example": "500"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/orders/contractors": {
             "get": {
                 "tags": [
                     "Order Unit"
                 ],
-                "summary": "Получить всех подрятчиков откликнувшиеся на заказ (вне зависимости от заказа - Временный endpoint)",
+                "summary": "Получить всех подрятчиков откликнувшиеся на заказ (Возвращаем в зависимости от типа организации)",
                 "description": "Получить всех подрятчиков которые откликнулись на заказ, и заинтересованы в работе, возвращает: organization_order_unit_invoces",
                 "operationId": "2e28832a212ab90106707ade50fb9976",
                 "responses": {
@@ -3362,14 +3027,14 @@
                 }
             }
         },
-        "api/orders/{OrderUnit::uuid}/agreements/agreement-order": {
+        "api/orders/{OrderUnit::uuid}/agreements": {
             "get": {
                 "tags": [
                     "Order Unit"
                 ],
-                "summary": "Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
+                "summary": "Возвращаем выбранный отклик Заказчиком",
                 "description": "Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
-                "operationId": "ee8bb6e75e4ec7e2cdbbc8909d917fa1",
+                "operationId": "d71530bf04f318a70d2d80820e861028",
                 "parameters": [
                     {
                         "name": "OrderUnit::uuid",
@@ -3433,7 +3098,7 @@
                 ],
                 "summary": "Выбор подрядчика (исполнителя), заказчиком",
                 "description": "//Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи",
-                "operationId": "c6f1e49c04cee8034ef083fae46fd0c1",
+                "operationId": "c4cdbef401422608dca5ed8f9ffdee51",
                 "parameters": [
                     {
                         "name": "OrderUnit::uuid",
@@ -3446,27 +3111,26 @@
                         }
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "properties": {
-                                            "id_contractor": {
-                                                "description": "organization_order_units_invoce - откликнувшиеся подрядчики на заказ",
-                                                "type": "uuid",
-                                                "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
-                                            }
+                "responses": {
+                    "201": {
+                        "description": "Successfully added a contractor to the order.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/AgreementOrderResource"
                                         },
-                                        "type": "object"
-                                    }
-                                ]
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Заказчик успешно выбрал подрятчика, запись создана."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
-                    }
-                },
-                "responses": {
+                    },
                     "200": {
                         "description": "Заказчик успешно выбрал подрятчика, запись создана.",
                         "content": {
@@ -3512,14 +3176,14 @@
                 }
             }
         },
-        "api/orders/agreements/{agreementOrderAccept::uuid}/agreement-order-accept": {
-            "patch": {
+        "api/orders/agreements/{agreementOrderAccept::uuid}/accept": {
+            "get": {
                 "tags": [
                     "Order Unit"
                 ],
-                "summary": "Утверждения Двух-стороннего договор, о принятии в работу Заказа, со стороны Заказчика/Подрядчика",
+                "summary": "//вернуть agreementOrderAccept по uuid",
                 "description": "Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer",
-                "operationId": "21228e9329daa94e88fc8e23795ff68c",
+                "operationId": "d9950bc9fa3d57230b4594787f23aef5",
                 "parameters": [
                     {
                         "name": "agreementOrderAccept::uuid",
@@ -3543,6 +3207,104 @@
                                             "type": "string",
                                             "example": null,
                                             "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Заказчик успешно согласовал выполнение заказа."
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "Подрядчик успешно согласовал выполнение заказа."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "У данного пользователя нет прав на согласования заказа.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "У Данного пользователя недостаточно прав, для подтврждения указанного договора agreementOrderAccept::uuid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "ЭДО Утверждения Двух-стороннего договор, о принятии в работу Заказа, со стороны Заказчика/Подрядчика",
+                "description": "Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer",
+                "operationId": "f80519efc60b17daabd1e7f38584cec4",
+                "parameters": [
+                    {
+                        "name": "agreementOrderAccept::uuid",
+                        "in": "path",
+                        "description": "uuid записи agreementOrderAccept (двухстороннего договора)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заказчик успешно выбрал подрятчика, запись создана.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AgreementOrderAcceptResource"
+                                            }
+                                        },
+                                        "message0": {
+                                            "type": "string",
+                                            "example": "Записи успешна возвращены."
                                         },
                                         "message": {
                                             "type": "string",
@@ -5449,7 +5211,7 @@
                 "tags": [
                     "Tender"
                 ],
-                "summary": "Добавление исполнителей к заказу",
+                "summary": "Добавление исполнителей к заказу *отклик",
                 "operationId": "0c9c84cf6518d1eeb354fc8797ab1de7",
                 "parameters": [
                     {
@@ -5633,13 +5395,13 @@
                 }
             }
         },
-        "/api/tenders/{lotTenderResponse}/agreement-tender": {
+        "/api/tenders/{lotTenderResponse}/agreements": {
             "post": {
                 "tags": [
                     "Tender"
                 ],
                 "summary": "Выбор 'создателем тендера' - перевозчика на выполнение тендера",
-                "operationId": "49ce80634a061ee69fae47acf45b746d",
+                "operationId": "f98cc97029299b1d0b8497cc635d3fa7",
                 "parameters": [
                     {
                         "name": "lotTenderResponse",
@@ -5734,13 +5496,94 @@
                 }
             }
         },
-        "/api/tenders/{agreementTenderAccept}/agreement-tender-accept": {
+        "/api/tenders/{lotTender}/agreements": {
+            "get": {
+                "tags": [
+                    "Tender"
+                ],
+                "summary": "Вернуть принятый отклик на тендер",
+                "operationId": "cdf87e7816b67265b4bc87b0d548f44a",
+                "parameters": [
+                    {
+                        "name": "lotTender",
+                        "in": "path",
+                        "description": "UUID тендера",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "organization_contractor_id": {
+                                        "description": "UUID организации пордяичка откликнувшиеся на тендер",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Запись выбранного отклика успешна возвращена.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/AgreementTenderResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Create agreement tender."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tenders/agreements/{agreementTenderAccept}/accept": {
             "post": {
                 "tags": [
                     "Tender"
                 ],
                 "summary": "Подтверждение соглашения с двух сторон + создание заказов по Tender при двух стороннем соглашении",
-                "operationId": "3a90077a20000848aec28686f4220baa",
+                "operationId": "39818b85b88a898e89940d90a1a55bd3",
                 "parameters": [
                     {
                         "name": "agreementTenderAccept",
@@ -7069,6 +6912,13 @@
                         "type": "string",
                         "format": "date",
                         "example": "2023-12-05"
+                    },
+                    "cargo_good": {
+                        "description": "Коллекция грузов",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AddressList"
+                        }
                     }
                 },
                 "type": "object"
@@ -7791,17 +7641,45 @@
                         "format": "uuid",
                         "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
                     },
-                    "order_unit_id": {
+                    "order": {
                         "$ref": "#/components/schemas/OrderUnitResource"
                     },
-                    "organization_contractor_id": {
+                    "organization_contractor": {
                         "$ref": "#/components/schemas/OrganizationResource"
                     },
-                    "organization_order_units_invoce_id": {
-                        "$ref": "#/components/schemas/OrgOrderInvoiceResource"
+                    "contractor_invoice": {
+                        "$ref": "#/components/schemas/InvoceOrderResource"
                     },
-                    "agreement_order_accept_id": {
+                    "agreement_order_accept": {
                         "$ref": "#/components/schemas/AgreementOrderAcceptResource"
+                    }
+                },
+                "type": "object"
+            },
+            "InvoceOrderResource": {
+                "title": "Agreement Order Accept Resource",
+                "description": "Дополнительная информаци к отклику от перевозчика",
+                "properties": {
+                    "id": {
+                        "description": "Уникальный идентификатор ресурса",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "41e9b50e-22c3-48b4-81be-efd6da3fa95b"
+                    },
+                    "transport_id": {
+                        "$ref": "#/components/schemas/TransportResource"
+                    },
+                    "price": {
+                        "description": "Цена"
+                    },
+                    "date": {
+                        "description": "Примерная дата"
+                    },
+                    "comment": {
+                        "description": "Комментарий"
+                    },
+                    "created_at": {
+                        "description": "Дата создание"
                     }
                 },
                 "type": "object"
@@ -7974,24 +7852,18 @@
             "AgreementTenderAcceptResource": {
                 "title": "Agreement Order Contractor Accept Resource",
                 "properties": {
-                    "id_agreement_order_contractor_accept": {
+                    "id": {
                         "description": "UUID принятия соглашения заказа подрядчика",
                         "type": "string",
                         "format": "uuid",
                         "example": "123e4567-e89b-12d3-a456-426614174000"
                     },
-                    "agreement_order_contractor_id": {
-                        "description": "UUID соглашения заказа подрядчика",
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    "order_bool": {
+                    "is_customer": {
                         "description": "Статус утверждения со стороны Заказчика",
                         "type": "boolean",
                         "example": true
                     },
-                    "contractor_bool": {
+                    "is_contractor": {
                         "description": "Статус утверждения со стороны Перевозчика",
                         "type": "boolean",
                         "example": true
@@ -8059,27 +7931,25 @@
             },
             "AgreementTenderResource": {
                 "properties": {
-                    "id_agreement_tender": {
+                    "id": {
                         "description": "ID соглашения тендера",
                         "type": "string",
                         "format": "uuid"
                     },
-                    "lot_tender_response_id": {
+                    "contractor_invoice": {
                         "description": "uuid lot_tender_respons",
                         "type": "string",
                         "format": "uuid"
                     },
-                    "organization_tender_create_id": {
+                    "organization_contractor": {
                         "description": "ID организации создателя тендера",
                         "type": "string",
                         "format": "uuid"
                     },
-                    "lot_tender_id": {
-                        "description": "ID лота тендера",
-                        "type": "string",
-                        "format": "uuid"
+                    "tender": {
+                        "$ref": "#/components/schemas/LotTenderResource"
                     },
-                    "agreement_tender_accept_id": {
+                    "agreement_tender_accept": {
                         "$ref": "#/components/schemas/AgreementTenderAcceptResource"
                     }
                 },

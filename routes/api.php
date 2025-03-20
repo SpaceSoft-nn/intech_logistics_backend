@@ -120,7 +120,7 @@ Route::prefix('/orders')->middleware('manuallyActivatedOrganization')->group(fun
 
             {   //contractors
 
-                //Возврат всех подрятчиков откликнувшиеся на заказ. (Временно возвращаем все записи из таблицы)
+                //Возврат всех подрятчиков откликнувшиеся на заказ. Возвращаем в зависимости от организации
                 Route::get('/contractors', [OrderUnitController::class, 'getContractorsAll']);
 
                 //Возврат всех подрятчиков откликнувшиеся на заказ.
@@ -153,7 +153,7 @@ Route::prefix('/orders')->middleware('manuallyActivatedOrganization')->group(fun
             //Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи
             Route::post('{orderUnit}/agreements', [AgreementOrderUnitController::class, 'agreementOrder'])->whereUuid('orderUnit')->middleware('isCustomerOrganization');
 
-            //Возвращаем AgreementOrder по OrderUnit - uuid (заказу)
+            //Возвращаем выбранный отклик Заказчиком
             Route::get('/{orderUnit}/agreements', [AgreementOrderUnitController::class, 'getAgreementOrderByOrder'])->whereUuid('orderUnit');
 
         }
@@ -283,6 +283,7 @@ Route::prefix('/tenders')->middleware(['manuallyActivatedOrganization', 'auth:sa
             //Создание Тендера
             Route::post('/', [LotTenderController::class, 'store']);
 
+            //частичное обновление тендера
             Route::patch('/{lotTender}', [LotTenderController::class, 'update']);
 
             //Вернуть всех исполнителей откликнувшиеся на Тендер
@@ -290,6 +291,9 @@ Route::prefix('/tenders')->middleware(['manuallyActivatedOrganization', 'auth:sa
 
             // Выбор "создателем тендера" - перевозчика на выполнение тендера
             Route::post('/{lotTenderResponse}/agreements', [ResponseTenderController::class, 'agreementTender'])->whereUuid('lotTenderResponse');
+
+            //Вернуть принятый отклик на тендер
+            Route::get('/{lotTender}/agreements', [LotTenderController::class, 'getAgreementTenderByTender'])->withoutMiddleware('isCustomerOrganization')->whereUuid('lotTender');
 
             //Добавить к заказу дополнительную информацию - нужна будет обязательно для того что бы точно дополнить тендер к заказу
             Route::patch('/{lotTender}/orders/{orderUnit}', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender', 'orderUnit');
@@ -300,8 +304,7 @@ Route::prefix('/tenders')->middleware(['manuallyActivatedOrganization', 'auth:sa
 
     Route::get('/{lotTender}', [LotTenderController::class, 'show'])->whereUuid('lotTender');
 
-    //Вернуть принятый отклик на тендер
-    Route::get('/{lotTender}/agreements', [LotTenderController::class, 'getAgreementTenderByTender'])->whereUuid('lotTender');
+
 
     {
 

@@ -298,7 +298,7 @@ use App\Http\Controllers\Controller;
  * @OA\Patch(
  *
  *      path="/api/orders/{OrderUnit::uuid}",
- *      summary="Обновить данные заказа.",
+ *      summary="Обновить частично данные заказа.",
  *      description="Обновляет информацию о заказе по UUID",
  *      tags={"Order Unit"},
  *      @OA\Parameter(
@@ -418,65 +418,10 @@ use App\Http\Controllers\Controller;
  * ),
  *
  *
- * * @OA\Get(
- *
- *      path="/api/orders/contractors/compare",
- *      summary="Получить все заказы и указать на какие заказы откликнулся перевозчик в bool переменной",
- *      description="Фильтрация заказов на которые откликнулся перевозчик",
- *      tags={"Order Unit"},
- *      @OA\Parameter(
- *         name="organization_id",
- *         in="header",
- *         required=true,
- *         @OA\Schema(
- *             type="string"
- *         ),
- *         description="Идентификатор организации, который должен быть передан в заголовке"
- *      ),
- *
- *
- *       @OA\Response(
- *         response=200,
- *         description="Получение всех подрядчиков успешно.",
- *         @OA\JsonContent(
- *             @OA\Property(
- *                 property="data",
- *                 type="array",
- *                 @OA\Items(
- *                     @OA\Property(
- *                         property="order",
- *                         ref="#/components/schemas/OrderUnitResource"
- *                     ),
- *                     @OA\Property(
- *                         property="isResponseContractor",
- *                         type="boolean",
- *                         example=true
- *                     ),
- *                 ),
- *             ),
- *             @OA\Property(
- *                 property="message",
- *                 type="string",
- *                 example="Возвращены все подрядчики откликнувшиеся на заказ."
- *             )
- *         )
- *      ),
- *
- *      @OA\Response(
- *           response=500,
- *           description="Общая ошибка сервера.",
- *           @OA\JsonContent(
- *               @OA\Property(property="message_error", type="string", example="Error server"),
- *               @OA\Property(property="code", type="integer", example="500"),
- *           ),
- *      ),
- *
- * ),
- *
  * @OA\Get(
  *
  *      path="/api/orders/contractors",
- *      summary="Получить всех подрятчиков откликнувшиеся на заказ (вне зависимости от заказа - Временный endpoint)",
+ *      summary="Получить всех подрятчиков откликнувшиеся на заказ (Возвращаем в зависимости от типа организации)",
  *      description="Получить всех подрятчиков которые откликнулись на заказ, и заинтересованы в работе, возвращает: organization_order_unit_invoces",
  *      tags={"Order Unit"},
  *
@@ -604,7 +549,7 @@ use App\Http\Controllers\Controller;
  * ),
  *
  * @OA\Post(
- *     path="api/orders/{OrderUnit::uuid}/agreements/agreement-order",
+ *     path="api/orders/{OrderUnit::uuid}/agreements",
  *     tags={"Order Unit"},
  *     summary="Выбор подрядчика (исполнителя), заказчиком",
  *     description="//Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи",
@@ -619,20 +564,14 @@ use App\Http\Controllers\Controller;
  *          )
  *     ),
  *
- *     @OA\RequestBody(
- *           @OA\JsonContent(
- *               allOf={
- *                  @OA\Schema(
- *                     @OA\Property(
- *                         property="id_contractor",
- *                         type="uuid",
- *                         description="organization_order_units_invoce - откликнувшиеся подрядчики на заказ",
- *                         example="41e9b50e-22c3-48b4-81be-efd6da3fa95b"
- *                     ),
- *                  ),
- *               },
- *            ),
- *      ),
+ *     @OA\Response(
+ *          response=201,
+ *          description="Successfully added a contractor to the order.",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="data", ref="#/components/schemas/AgreementOrderResource"),
+ *              @OA\Property(property="message", type="string", example="Заказчик успешно выбрал подрятчика, запись создана."),
+ *          ),
+ *     ),
  *
  *     @OA\Response(
  *          response=200,
@@ -662,9 +601,9 @@ use App\Http\Controllers\Controller;
  * ),
  *
  * @OA\GET(
- *     path="api/orders/{OrderUnit::uuid}/agreements/agreement-order",
+ *     path="api/orders/{OrderUnit::uuid}/agreements",
  *     tags={"Order Unit"},
- *     summary="Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
+ *     summary="Возвращаем выбранный отклик Заказчиком",
  *     description="Возвращаем AgreementOrder по OrderUnit - uuid (заказу)",
  *     @OA\Parameter(
  *          name="OrderUnit::uuid",
@@ -700,9 +639,61 @@ use App\Http\Controllers\Controller;
  *
  * @OA\patch(
  *
- *     path="api/orders/agreements/{agreementOrderAccept::uuid}/agreement-order-accept",
+ *     path="api/orders/agreements/{agreementOrderAccept::uuid}/accept",
  *     tags={"Order Unit"},
- *     summary="Утверждения Двух-стороннего договор, о принятии в работу Заказа, со стороны Заказчика/Подрядчика",
+ *     summary="ЭДО Утверждения Двух-стороннего договор, о принятии в работу Заказа, со стороны Заказчика/Подрядчика",
+ *     description="Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer",
+ *     @OA\Parameter(
+ *          name="agreementOrderAccept::uuid",
+ *          in="path",
+ *          description="uuid записи agreementOrderAccept (двухстороннего договора)",
+ *          required=true,
+ *          @OA\Schema(
+ *              type="string",
+ *              format="uuid"
+ *          )
+ *     ),
+ *
+ *     @OA\Response(
+ *          response=200,
+ *          description="Заказчик успешно выбрал подрятчика, запись создана.",
+ *          @OA\JsonContent(
+ *              @OA\Property( property="data", type="array", @OA\Items(ref="#/components/schemas/AgreementOrderAcceptResource") ),
+*               @OA\Property(property="message0", type="string", example="Записи успешна возвращены."),
+ *              @OA\Property(property="message", type="string", example="Заказчик успешно согласовал выполнение заказа."),
+ *              @OA\Property(property="message2", type="string", example="Подрядчик успешно согласовал выполнение заказа."),
+ *          ),
+ *     ),
+ *
+ *     @OA\Response(
+ *           response=500,
+ *           description="Общая ошибка сервера.",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message_error", type="string", example="Error server"),
+ *               @OA\Property(property="code", type="integer", example="500"),
+ *           ),
+ *     ),
+ *
+ *     @OA\Response(
+ *           response=403,
+ *           description="У данного пользователя нет прав на согласования заказа.",
+ *           @OA\JsonContent(
+ *              @OA\Property(property="data", type="string", nullable=true , example=null),
+ *              @OA\Property(property="message", type="string", example="У Данного пользователя недостаточно прав, для подтврждения указанного договора agreementOrderAccept::uuid."),
+ *           ),
+ *     ),
+ *
+ *    security={
+ *         {"bearerAuth": {}}
+ *    },
+ *
+ * ),
+ *
+ * @OA\get(
+ *
+ *     path="api/orders/agreements/{agreementOrderAccept::uuid}/accept",
+ *     tags={"Order Unit"},
+ *     summary="//вернуть agreementOrderAccept по uuid",
  *     description="Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer",
  *     @OA\Parameter(
  *          name="agreementOrderAccept::uuid",

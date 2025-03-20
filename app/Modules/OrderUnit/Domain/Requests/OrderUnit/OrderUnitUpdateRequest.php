@@ -20,6 +20,27 @@ class OrderUnitUpdateRequest extends ApiRequest
         return !empty(array_filter($value));
     }
 
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+
+            // Берём только те поля, которые участвуют в обновлении
+            $data = array_filter($this->only(
+                [
+                    'change_price',
+                    'change_time',
+                    'order_status',
+                ])
+            );
+
+            if (empty($data)) {
+                $validator->errors()->add('request', 'Необходимо указать хотя бы одно поле для обновления.');
+            }
+
+        });
+    }
+
+
     public function rules(): array
     {
 

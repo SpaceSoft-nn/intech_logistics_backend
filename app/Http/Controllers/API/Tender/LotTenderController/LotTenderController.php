@@ -13,6 +13,7 @@ use App\Modules\Tender\Domain\Models\LotTender;
 
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Tender\Domain\Services\TenderService;
+use App\Modules\Tender\App\Data\DTO\UpdateLotTenderDTO;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
 use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
@@ -23,11 +24,11 @@ use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
 use App\Modules\Tender\App\Data\DTO\CreateLotTenderServiceDTO;
 use App\Modules\Tender\Domain\Models\Response\AgreementTender;
 use App\Modules\Tender\Domain\Requests\CreateLotTenderRequest;
+use App\Modules\Tender\Domain\Requests\UpdateLotTenderRequest;
 use App\Modules\Tender\Domain\Requests\AddInfoOrderByTenderRequest;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
-use App\Modules\Tender\Domain\Requests\UpdateLotTenderRequest;
 use App\Modules\Tender\Domain\Resources\Response\AgreementTenderResource;
 use App\Modules\Tender\Domain\Resources\Response\Wrapp\WrappLotTenderCollection;
 use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderResource;
@@ -137,7 +138,11 @@ class LotTenderController extends Controller
         TenderService $service,
     ){
         /** @var UpdateLotTenderDTO */
-        // $lotTenderVo = LotTenderVO $a;
+        $updateLotTenderDTO = $request->createUpdateLotTenderDTO();
+
+        $lotTender = $service->patchUpdateTenderLot($lotTender, $updateLotTenderDTO);
+
+        return response()->json(array_success(LotTenderResource::make($lotTender), 'Successful update tender lot.'), 200);
     }
 
     public function agreementDocumentFile(

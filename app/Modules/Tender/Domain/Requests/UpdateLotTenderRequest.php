@@ -4,25 +4,38 @@ namespace App\Modules\Tender\Domain\Requests;
 
 use Illuminate\Validation\Rule;
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\Tender\App\Data\DTO\UpdateLotTenderDTO;
 use App\Modules\Tender\App\Data\Enums\StatusTenderEnum;
-use App\Modules\Tender\App\Data\ValueObject\LotTenderVO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-
 
 class UpdateLotTenderRequest extends ApiRequest
 {
 
-    public function __construct(
-        private ?array $validated = null,
-    ) {
-        // parent::__construct();
-    }
-
-
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+
+            // Берём только те поля, которые участвуют в обновлении
+            $data = array_filter($this->only(
+                [ 'general_count_transport',
+                'price_for_km',
+                'body_volume_for_order',
+                'status_tender',
+                'type_transport_weight',
+                'type_load_truck',])
+            );
+
+            if (empty($data)) {
+                $validator->errors()->add('request', 'Необходимо указать хотя бы одно поле для обновления.');
+            }
+
+        });
     }
 
     public function rules(): array
@@ -44,26 +57,13 @@ class UpdateLotTenderRequest extends ApiRequest
 
         ];
 
-
     }
 
-    public function createLotTenderVO() : LotTenderVO
+    public function createUpdateLotTenderDTO() : UpdateLotTenderDTO
     {
-
-        //вызываем 1 раз $this->validate(), что бюы его запомнить в переменную и не вызывать в других функциях по новой
-        $data = $this->validated ?? $this->validated();
-
-        return LotTenderVO::fromArrayToObject($data);
+        return UpdateLotTenderDTO::fromArrayToObject($this->validated());
     }
 
-    public function createLotTenderVOBy() : LotTenderVO
-    {
-
-        //вызываем 1 раз $this->validate(), что бюы его запомнить в переменную и не вызывать в других функциях по новой
-        $data = $this->validated ?? $this->validated();
-
-        return LotTenderVO::fromArrayToObject($data);
-    }
 
 
 }

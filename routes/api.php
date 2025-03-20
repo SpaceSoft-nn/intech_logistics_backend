@@ -283,7 +283,7 @@ Route::prefix('/tenders')->middleware(['manuallyActivatedOrganization', 'auth:sa
             //Создание Тендера
             Route::post('/', [LotTenderController::class, 'store']);
 
-            Route::put('/{lotTender}', [LotTenderController::class, 'update']);
+            Route::patch('/{lotTender}', [LotTenderController::class, 'update']);
 
             //Вернуть всех исполнителей откликнувшиеся на Тендер
             Route::get('/{lotTender}/contractors', [ResponseTenderController::class, 'getСontractorForTender'])->whereUuid('lotTender');

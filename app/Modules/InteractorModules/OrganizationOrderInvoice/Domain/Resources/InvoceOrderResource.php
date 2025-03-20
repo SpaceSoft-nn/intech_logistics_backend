@@ -2,7 +2,7 @@
 
 namespace App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources;
 
-
+use App\Modules\Transport\Domain\Resources\TransportResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,7 +14,7 @@ class InvoceOrderResource extends JsonResource
         return [
 
             "id" => $this->id,
-            "transport_id" => $this->transport,
+            "transport_id" => TransportResource::make($this->transport),
             "price" => $this->price,
             "date" => $this->date,
             "comment" => $this->comment,

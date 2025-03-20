@@ -14,10 +14,10 @@ class LotTenderResponseResource extends JsonResource
     {
         return [
 
-            "id_lot_tender_response" => $this->id,
+            "id" => $this->id,
             "lot_tender_id" => LotTenderResource::make($this->tender),
             "organization_contractor_id" => OrganizationResource::make($this->organization_contractor),
-            "invoice_lot_tender_id" => $this->invoice_lot_tender,
+            "invoice_lot_tender_id" => InvoiceLotTenderResource::make($this->invoice_lot_tender),
 
         ];
     }

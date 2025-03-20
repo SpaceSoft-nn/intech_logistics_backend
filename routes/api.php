@@ -148,9 +148,6 @@ Route::prefix('/orders')->middleware('manuallyActivatedOrganization')->group(fun
                 //вернуть agreementOrderAccept по uuid
                 Route::get('/{agreementOrderAccept}/accept', [AgreementOrderUnitController::class, 'getAgreementOrderAccept'])->whereUuid('agreementOrderAccept');
 
-                // Вернуть agreementOrder по uuid
-                // Route::get('/{agreementOrder}/agreement-order', [AgreementOrderUnitController::class, 'getAgreementOrder'])->whereUuid('agreementOrder');
-
             });
 
             //Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи
@@ -195,8 +192,6 @@ Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization'
     Route::get('/', [OfferContractorController::class, 'index']);
 
     Route::get('/{offerContractor}', [OfferContractorController::class, 'show']);
-
-
 
     Route::middleware(['isCarrierOrganization'])->group(function () {
 
@@ -299,8 +294,8 @@ Route::prefix('/tenders')->middleware(['manuallyActivatedOrganization', 'auth:sa
 
     Route::get('/{lotTender}', [LotTenderController::class, 'show'])->whereUuid('lotTender');
 
-    //получение принятого отклика
-    Route::get('/{lotTender}/agreements', [LotTenderController::class, 'show'])->whereUuid('lotTender');
+    //Вернуть принятый отклик на тендер
+    Route::get('/{lotTender}/agreements', [LotTenderController::class, 'getAgreementTenderByTender'])->whereUuid('lotTender');
 
 
     {

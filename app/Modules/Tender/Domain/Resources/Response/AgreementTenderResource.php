@@ -15,7 +15,7 @@ class AgreementTenderResource extends JsonResource
         return [
 
             "id" => $this->id,
-            "contactor_invoice" => LotTenderResponseResource::make($this->lot_tender_response), #TODO Сделать сущность InvoiceTender
+            "contactor_invoice" => InvoiceLotTenderResource::make($this->invoiceTender),
             "organization_contractor" => OrganizationResource::make(Organization::find($this->organization_tender_create_id)),
             "tender" => LotTenderResource::make($this->lot_tender),
             "agreement_tender_accept" => AgreementTenderAcceptResource::make($this->agreement_tender_accept),

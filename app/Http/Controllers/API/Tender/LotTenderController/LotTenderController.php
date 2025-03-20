@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\Tender\LotTenderController;
 
-use function App\Helpers\Mylog;
 use Illuminate\Http\UploadedFile;
 use App\Http\Controllers\Controller;
 use App\Modules\Base\Enums\WeekEnum;
@@ -20,18 +19,18 @@ use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use App\Modules\Tender\Domain\Resources\LotTenderResource;
 use App\Modules\Tender\App\Repositories\TenderRepositories;
 use App\Modules\Tender\App\Data\DTO\AddInfoOrderByTenderDTO;
-use App\Modules\Tender\Domain\Resources\LotTenderCollection;
 use App\Modules\Tender\Domain\Models\AgreementDocumentTender;
 use App\Modules\Tender\App\Data\DTO\CreateLotTenderServiceDTO;
+use App\Modules\Tender\Domain\Models\Response\AgreementTender;
 use App\Modules\Tender\Domain\Requests\CreateLotTenderRequest;
 use App\Modules\Tender\Domain\Requests\AddInfoOrderByTenderRequest;
 use App\Modules\OrderUnit\App\Data\DTO\OrderUnit\OrderUnitAddressDTO;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitResource;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitCollection;
-
+use App\Modules\Tender\Domain\Resources\Response\AgreementTenderResource;
+use App\Modules\Tender\Domain\Resources\Response\Wrapp\WrappLotTenderCollection;
 use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderResource;
 use App\Modules\Tender\Domain\Resources\Filter\ContractorComporeLotTenderCollection;
-use App\Modules\Tender\Domain\Resources\Response\Wrapp\WrappLotTenderCollection;
 
 class LotTenderController extends Controller
 {
@@ -177,6 +176,18 @@ class LotTenderController extends Controller
         );
 
         return response()->json(array_success(OrderUnitResource::make($model), 'Successful update order unit By tender.'), 200);
+    }
+
+
+    //Вернуть принятый отклик на тендер
+    public function getAgreementTenderByTender(LotTender $lotTender)
+    {
+
+        $model = AgreementTender::where('lot_tender_id',  $lotTender->id)->first();
+
+        return is_null($model)
+            ? response()->json(array_success(null, 'Запись выбранного отклика успешна возвращена.'), 200)
+            : response()->json(array_success(AgreementTenderResource::make($model), 'Запись выбранного отклика успешна возвращена.'), 200);
     }
 
 

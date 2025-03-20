@@ -4,6 +4,7 @@ namespace App\Modules\Tender\Domain\Models\Response;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Modules\Tender\Domain\Models\LotTender;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,6 +59,18 @@ class AgreementTender extends Model
     public function lot_tender_response(): BelongsTo
     {
         return $this->belongsTo(LotTenderResponse::class, 'lot_tender_response_id', 'id');
+    }
+
+    /**
+     * Прямая связь к таблице invoiceTender через промежуточную табилцу orgOrderInvoices с помощью акксесора
+     * @return Attribute
+     */
+    protected function invoiceTender(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->lot_tender_response?->invoice_lot_tender ? $this->lot_tender_response->invoice_lot_tender : 1,
+        );
+
     }
 
 }

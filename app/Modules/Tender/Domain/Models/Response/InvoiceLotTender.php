@@ -2,10 +2,11 @@
 
 namespace App\Modules\Tender\Domain\Models\Response;
 
+use App\Modules\Transport\Domain\Models\Transport;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InvoiceLotTender extends Model
 {
@@ -38,6 +39,11 @@ class InvoiceLotTender extends Model
         return [
             "lot_tender_responses" => "double",
         ];
+    }
+
+    public function transport() : BelongsTo
+    {
+        return $this->belongsTo(Transport::class, 'transport_id', 'id');
     }
 
 

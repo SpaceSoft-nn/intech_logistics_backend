@@ -18,6 +18,7 @@ class InvoceOrderResource extends JsonResource
             "price" => $this->price,
             "date" => $this->date,
             "comment" => $this->comment,
+            'created_at' => $this->created_at->format('d.m.Y'),
 
         ];
     }

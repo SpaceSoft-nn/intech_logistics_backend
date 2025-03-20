@@ -12,10 +12,10 @@ class AgreementTenderAcceptResource extends JsonResource
     {
 
         return [
-            "id_agreement_tender_accept" => $this->id,
-            "agreement_tender_id" => $this->agreement_tender_id,
-            "tender_creater_bool" => $this->tender_creater_bool,
-            "contractor_bool" => $this->contractor_bool,
+            "id" => $this->id,
+            // "agreement_tender_id" => $this->agreement_tender_id,
+            "is_customer" => $this->tender_creater_bool,
+            "is_contactor" => $this->contractor_bool,
         ];
     }
 }

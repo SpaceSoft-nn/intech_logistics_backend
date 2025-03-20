@@ -12,7 +12,7 @@ class AgreementOrderAcceptResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "agreement_order" => AgreementOrderResource::make($this->agreement)->setRelations([]),
+            // "agreement_order" => AgreementOrderResource::make($this->agreement)->setRelations([]),
             "is_customer" => $this->order_bool,
             "is_contractor" => $this->contractor_bool,
         ];

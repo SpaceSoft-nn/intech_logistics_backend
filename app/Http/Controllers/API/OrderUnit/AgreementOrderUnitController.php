@@ -122,9 +122,8 @@ class AgreementOrderUnitController extends Controller
         $model = AgreementOrder::where('order_unit_id',  $orderUnit->id)->first();
 
         return is_null($model)
-        ? response()->json(array_success(null, 'Запись выбранного отклинка успешна возвращена.'), 200)
-        : response()->json(array_success(AgreementOrderResource::make($model), 'Запись выбранного отклинка успешна возвращена.'), 200);
-
+        ? response()->json(array_success(null, 'Запись выбранного отклика успешно возвращена.'), 200)
+        : response()->json(array_success(AgreementOrderResource::make($model), 'Запись выбранного отклика успешно возвращена.'), 200);
 
     }
 

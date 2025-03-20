@@ -293,15 +293,21 @@ Route::prefix('/tenders')->middleware(['manuallyActivatedOrganization', 'auth:sa
             //Добавить к заказу дополнительную информацию - нужна будет обязательно для того что бы точно дополнить тендер к заказу
             Route::patch('/{lotTender}/orders/{orderUnit}', [LotTenderController::class, 'addInfoOrderByTender'])->whereUuid('lotTender', 'orderUnit');
         }
+
     });
 
 
     Route::get('/{lotTender}', [LotTenderController::class, 'show'])->whereUuid('lotTender');
 
+    //получение принятого отклика
+    Route::get('/{lotTender}/agreements', [LotTenderController::class, 'show'])->whereUuid('lotTender');
+
+
     {
 
         //ЭДО Подтверждения соглашения с двух сторон, о взятие тендера и работу со стороны перевозчика, и отдачи в работу со стороны создателя тендера, !создание заказов после утверждения!
-        Route::patch('/{agreementTenderAccept}/agreement-tender-accept', [ResponseTenderController::class, 'agreementTenderAccept'])->whereUuid('agreementTenderAccept');
+        Route::patch('/agreements/{agreementTenderAccept}/accept', [ResponseTenderController::class, 'agreementTenderAccept'])->whereUuid('agreementTenderAccept');
+
 
         //Получить все заказы по тендеру
         Route::get('/{lotTender}/orders', [LotTenderController::class, 'getAllOrderFromTender'])->whereUuid('lotTender');

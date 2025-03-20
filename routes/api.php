@@ -143,21 +143,21 @@ Route::prefix('/orders')->middleware('manuallyActivatedOrganization')->group(fun
 
                 //Утверждения Двух сторонний договор, о принятии в работу Заказа,
                 //P.S Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer
-                Route::patch('/{agreementOrderAccept}/agreement-order-accept', [AgreementOrderUnitController::class, 'agreementAccept'])->whereUuid('agreementOrderAccept');
+                Route::patch('/{agreementOrderAccept}/accept', [AgreementOrderUnitController::class, 'agreementAccept'])->whereUuid('agreementOrderAccept');
 
                 //вернуть agreementOrderAccept по uuid
-                Route::get('/{agreementOrderAccept}/agreement-order-accept', [AgreementOrderUnitController::class, 'getAgreementOrderAccept'])->whereUuid('agreementOrderAccept');
+                Route::get('/{agreementOrderAccept}/accept', [AgreementOrderUnitController::class, 'getAgreementOrderAccept'])->whereUuid('agreementOrderAccept');
 
-                //Вернуть agreementOrder по uuid
-                Route::get('/{agreementOrder}/agreement-order', [AgreementOrderUnitController::class, 'getAgreementOrder'])->whereUuid('agreementOrder');
+                // Вернуть agreementOrder по uuid
+                // Route::get('/{agreementOrder}/agreement-order', [AgreementOrderUnitController::class, 'getAgreementOrder'])->whereUuid('agreementOrder');
 
             });
 
             //Заказчик выбирает подрядчика (исполнителя) - *присылает agreement_order_accept с апи
-            Route::post('{orderUnit}/agreements/agreement-order', [AgreementOrderUnitController::class, 'agreementOrder'])->whereUuid('orderUnit')->middleware('isCustomerOrganization');
+            Route::post('{orderUnit}/agreements', [AgreementOrderUnitController::class, 'agreementOrder'])->whereUuid('orderUnit')->middleware('isCustomerOrganization');
 
             //Возвращаем AgreementOrder по OrderUnit - uuid (заказу)
-            Route::get('/{orderUnit}/agreements/agreement-order', [AgreementOrderUnitController::class, 'getAgreementOrderByOrder'])->whereUuid('orderUnit');
+            Route::get('/{orderUnit}/agreements', [AgreementOrderUnitController::class, 'getAgreementOrderByOrder'])->whereUuid('orderUnit');
 
         }
 

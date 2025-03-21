@@ -212,7 +212,7 @@ Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization'
 
     //Утверждения Двух сторонний договор, о принятии в работу Предложения и принятии заказа,
     //P.S Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer
-    Route::patch('/{agreementOrderContractorAccept}/agreement-offer-accept', [OfferContractorController::class, 'agreementOfferAccept'])->whereUuid('agreementOrderContractorAccept');
+    Route::patch('/{agreementOrderContractorAccept}/accept', [OfferContractorController::class, 'agreementOfferAccept'])->whereUuid('agreementOrderContractorAccept');
 
     { // отклик
 

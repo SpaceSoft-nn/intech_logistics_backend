@@ -16,7 +16,7 @@ class AgreementOrderContractorAcceptResource extends JsonResource
             'id' => $this->id,
             // 'agreement_order_contractor_id' => $this->agreement_order_contractor,
             'is_customer' => $this->order_bool,
-            'is_contactor' => $this->contractor_bool,
+            'is_contractor' => $this->contractor_bool,
             "order" => OrderUnitResource::make($this->order),
 
         ];

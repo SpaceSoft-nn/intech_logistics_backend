@@ -207,12 +207,14 @@ Route::prefix('/offer-contractors')->middleware(['manuallyActivatedOrganization'
         //Вернуть подтверждённую заявку (выбранная организация - заказчика на исполнения) по предложению (если имется)
         Route::get('/{offerContractor}/agreements', [OfferContractorController::class, 'getAgreementOffer'])->whereUuid('offerContractor')->withoutMiddleware(['isCarrierOrganization']);
 
+        //Утверждения Двух сторонний договор, о принятии в работу Предложения и принятии заказа,
+        //P.S Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer
+        Route::patch('agreements/{agreementOrderContractorAccept}/accept', [OfferContractorController::class, 'agreementOfferAccept'])->whereUuid('agreementOrderContractorAccept');
+
     });
 
 
-    //Утверждения Двух сторонний договор, о принятии в работу Предложения и принятии заказа,
-    //P.S Заказчик/Подрядчик - true/true - что бы была возможность создать Transfer
-    Route::patch('/{agreementOrderContractorAccept}/accept', [OfferContractorController::class, 'agreementOfferAccept'])->whereUuid('agreementOrderContractorAccept');
+
 
     { // отклик
 

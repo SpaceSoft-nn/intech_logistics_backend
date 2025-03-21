@@ -46,9 +46,6 @@ return new class extends Migration
             $table->uuid('transport_id')->comment('Выбранный транспорта перевозчика')->nullable()
                 ->constrained('transports')->noActionOnDelete();
 
-            $table->uuid('lot_tender_id')->comment('Ссылка на тендер, заказ создаётся от логики тендера')->nullable()
-                ->constrained('lot_tenders')->noActionOnDelete();
-
             $table->uuid('offer_contractor_id')->comment("Ссылка на предложения перевозчика, заказ создаётся от логики 'предложения перевозчика' ")->nullable()
                 ->constrained('offer_contractors')->noActionOnDelete();
 

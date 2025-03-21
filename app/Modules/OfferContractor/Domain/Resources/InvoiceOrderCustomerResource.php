@@ -22,7 +22,7 @@ class InvoiceOrderCustomerResource extends JsonResource
             "end_address_id" => AddressResource::make($this->end_address),
             "start_date" => $this->start_date,
             "end_date" => $this->end_date,
-            "cargo_good" => $this->cargo_good,
+            "goods_array" => $this->cargo_good,
             "organization_creator_id" => $this->organization_creator_id,
 
         ];

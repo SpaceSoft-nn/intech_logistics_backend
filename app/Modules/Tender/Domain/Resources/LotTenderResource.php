@@ -18,7 +18,7 @@ class LotTenderResource extends JsonResource
 
         return [
 
-            'id_lot_tender' => $this->id,
+            'id' => $this->id,
             'number_tender' => $this->number_tender,
             'general_count_transport' => $this->general_count_transport,
             'price_for_km' => $this->price_for_km,

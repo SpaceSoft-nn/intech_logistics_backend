@@ -152,6 +152,7 @@ class AgreementOfferAcceptInteractor
                         ->setOrderStatus(StatusOrderUnitEnum::in_work)
                         ->setTransportId($offerContractor->transport_id)
                         ->setOrganizationId($invoice_customer->organization_id)
+                        ->setOfferContractorId($offerContractor->id)
                         ->setContractorId($agreementOrderContractor->organization_contractor_id);
 
                     /** @var OrderUnitAddressDTO */

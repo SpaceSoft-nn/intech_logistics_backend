@@ -36,7 +36,7 @@ final class AgreementTenderAcceptInteractor
         $statusResponse = $this->run($user, $agreementTenderAccept);
 
         //проверяем что есть двух стороняя подпись и создаём заказы в зависимости от типа тендера
-        $this->checkSignature($agreementTenderAccept);
+        $this->checkSignatureAndCreateOrder($agreementTenderAccept);
 
         return $statusResponse;
     }
@@ -123,7 +123,7 @@ final class AgreementTenderAcceptInteractor
         ];
     }
 
-    private function checkSignature(AgreementTenderAccept $agreementTenderAccept) : bool
+    private function checkSignatureAndCreateOrder(AgreementTenderAccept $agreementTenderAccept) : bool
     {
 
         if($agreementTenderAccept->tender_creater_bool && $agreementTenderAccept->contractor_bool)
@@ -183,8 +183,9 @@ final class AgreementTenderAcceptInteractor
                                 description: null,
                                 user_id: null, #TODO Продумать логику при ролях, как указывать правильно
                                 contractor_id: $agreement_tender->organization_contractor_id, //указываем подрядчика на выполнения заказа
-                                lot_tender_id: $lot_tender->id,
                                 add_load_space: false, #TODO Продумать что тут указывать?
+                                offer_contractor_id: null,
+                                lot_tender_id: $lot_tender->id,
                             );
 
 
@@ -257,8 +258,9 @@ final class AgreementTenderAcceptInteractor
                             transport_id: $invoceLotTender->transport_id,
                             user_id: null, #TODO Продумать логику при ролях, как указывать правильно
                             contractor_id: $agreement_tender->organization_contractor_id, //указываем подрядчика на выполнения заказа
-                            lot_tender_id: $lot_tender->id,
                             add_load_space: false, #TODO Продумать что тут указывать?
+                            offer_contractor_id: null,
+                            lot_tender_id: $lot_tender->id,
                         );
 
                         //создаём заказы

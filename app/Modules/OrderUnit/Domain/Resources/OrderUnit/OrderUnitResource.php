@@ -69,7 +69,11 @@ class OrderUnitResource extends JsonResource
             "organization_id" => OrganizationResource::make($this->organization),
 
             //Tender
-            "lot_tender_id" => $this->lot_tender,
+                "lot_tender" => $this->lot_tender,
+            //
+
+            //Предложения перевозчика
+                "offer_contractor" => $this->offer_contractor,
             //
 
         ];

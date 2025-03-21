@@ -39,6 +39,7 @@ final readonly class OrderUnitVO implements Arrayable
         public ?bool $change_price,
         public ?bool $change_time,
         public ?string $lot_tender_id, // Если заказ создаётся по бизнес-логики Тендера
+        public ?string $offer_contractor_id, // Логика при предложении перевозчика
 
     ) {}
 
@@ -65,6 +66,7 @@ final readonly class OrderUnitVO implements Arrayable
         ?bool $change_price = null,
         ?bool $change_time = null,
         ?string $lot_tender_id = null,
+        ?string $offer_contractor_id = null,
 
     ) : self {
 
@@ -91,6 +93,7 @@ final readonly class OrderUnitVO implements Arrayable
             change_price: $change_price,
             change_time: $change_time,
             lot_tender_id: $lot_tender_id,
+            offer_contractor_id: $offer_contractor_id,
 
         );
 
@@ -125,6 +128,7 @@ final readonly class OrderUnitVO implements Arrayable
             change_price: $this->change_price,
             change_time: $this->change_time,
             lot_tender_id: $this->lot_tender_id,
+            offer_contractor_id: $this->offer_contractor_id,
         );
     }
 
@@ -156,6 +160,7 @@ final readonly class OrderUnitVO implements Arrayable
             change_price: $this->change_price,
             change_time: $this->change_time,
             lot_tender_id: $this->lot_tender_id,
+            offer_contractor_id: $this->offer_contractor_id,
         );
     }
 
@@ -188,6 +193,7 @@ final readonly class OrderUnitVO implements Arrayable
             change_price: $this->change_price,
             change_time: $this->change_time,
             lot_tender_id: $this->lot_tender_id,
+            offer_contractor_id: $this->offer_contractor_id,
         );
     }
 
@@ -216,6 +222,7 @@ final readonly class OrderUnitVO implements Arrayable
             change_price: $this->change_price,
             change_time: $this->change_time,
             lot_tender_id: $this->lot_tender_id,
+            offer_contractor_id: $this->offer_contractor_id,
         );
     }
 
@@ -243,9 +250,65 @@ final readonly class OrderUnitVO implements Arrayable
             change_price: $this->change_price,
             change_time: $this->change_time,
             lot_tender_id: $this->lot_tender_id,
+            offer_contractor_id: $this->offer_contractor_id,
         );
     }
 
+    public function setOfferContractorId(string $offerContractorId) : self
+    {
+        return new self (
+            body_volume: $this->body_volume,
+            order_total: $this->order_total,
+            description: $this->description,
+
+            //date
+            end_date_order: $this->end_date_order,
+            exemplary_date_start: $this->exemplary_date_start,
+
+            type_load_truck: $this->type_load_truck,
+            type_transport_weight: $this->type_transport_weight,
+            order_status: $this->order_status,
+
+            user_id: $this->user_id,
+            contractor_id: $this->contractor_id,
+            organization_id: $this->organization_id,
+            transport_id: $this->transport_id,
+
+            add_load_space: $this->add_load_space,
+            change_price: $this->change_price,
+            change_time: $this->change_time,
+            lot_tender_id: $this->lot_tender_id,
+            offer_contractor_id: $offerContractorId,
+        );
+    }
+
+    public function setLotTenderId(string $lotTenderId) : self
+    {
+        return new self (
+            body_volume: $this->body_volume,
+            order_total: $this->order_total,
+            description: $this->description,
+
+            //date
+            end_date_order: $this->end_date_order,
+            exemplary_date_start: $this->exemplary_date_start,
+
+            type_load_truck: $this->type_load_truck,
+            type_transport_weight: $this->type_transport_weight,
+            order_status: $this->order_status,
+
+            user_id: $this->user_id,
+            contractor_id: $this->contractor_id,
+            organization_id: $this->organization_id,
+            transport_id: $this->transport_id,
+
+            add_load_space: $this->add_load_space,
+            change_price: $this->change_price,
+            change_time: $this->change_time,
+            lot_tender_id: $lotTenderId,
+            offer_contractor_id: $this->offer_contractor_id,
+        );
+    }
 
     public function toArray() : array
     {
@@ -272,6 +335,7 @@ final readonly class OrderUnitVO implements Arrayable
             "change_price" => $this->change_price,
             "change_time" => $this->change_time,
             "lot_tender_id" => $this->lot_tender_id,
+            "offer_contractor_id" => $this->offer_contractor_id,
 
         ];
     }
@@ -300,6 +364,7 @@ final readonly class OrderUnitVO implements Arrayable
         $change_price = Arr::get($data, "change_price", null);
         $change_time = Arr::get($data, "change_time", null);
         $lot_tender_id = Arr::get($data, "lot_tender_id" , null);
+        $offer_contractor_id = Arr::get($data, "offer_contractor_id" , null);
 
         return static::make(
 
@@ -323,6 +388,7 @@ final readonly class OrderUnitVO implements Arrayable
             change_price: $change_price,
             change_time: $change_time,
             lot_tender_id: $lot_tender_id,
+            offer_contractor_id: $offer_contractor_id,
         );
     }
 
@@ -351,6 +417,7 @@ final readonly class OrderUnitVO implements Arrayable
         $change_price = Arr::get($data, "change_price", null);
         $change_time = Arr::get($data, "change_time", null);
         $lot_tender_id = Arr::get($data, "lot_tender_id" , null);
+        $offer_contractor_id = Arr::get($data, "offer_contractor_id" , null);
 
         return static::make(
 
@@ -374,6 +441,7 @@ final readonly class OrderUnitVO implements Arrayable
             change_price: $change_price,
             change_time: $change_time,
             lot_tender_id: $lot_tender_id,
+            offer_contractor_id: $offer_contractor_id,
         );
     }
 

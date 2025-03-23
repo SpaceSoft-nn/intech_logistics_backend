@@ -71,13 +71,13 @@ class LotTenderTest extends TestCase
 
         // Проверка наличия заказа в базе данных
         $this->assertDatabaseHas('lot_tenders', [
-            'id' => $response->json()['data']['id_lot_tender'],
+            'id' => $response->json()['data']['id'],
         ]);
 
         // Например, проверяем, что массив содержит конкретные ключи
         $response->assertJsonStructure([
             'data' => [
-                'id_lot_tender',
+                'id',
                 'number_tender',
                 'general_count_transport',
                 'price_for_km',

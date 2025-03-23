@@ -566,7 +566,7 @@ namespace App\Http\Controllers;
 * @OA\Schema(
 *     schema="LotTenderResource",
 *     type="object",
-*     @OA\Property(property="id_lot_tender", type="string", format="uuid", description="ID лота тендера"),
+*     @OA\Property(property="id", type="string", format="uuid", description="ID лота тендера"),
 *     @OA\Property(property="general_count_transport", type="string", format="uuid", description="Общее количество транспорта"),
 *     @OA\Property(property="price_for_km", type="number", format="float", description="Цена за км"),
 *     @OA\Property(property="body_volume_for_order", type="number", format="float", description="Объем кузова для заказа"),

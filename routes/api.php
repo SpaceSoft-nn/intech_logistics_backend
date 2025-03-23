@@ -116,7 +116,7 @@ Route::prefix('/orders')->middleware('manuallyActivatedOrganization')->group(fun
             Route::patch('/{orderUnit}', [OrderUnitController::class, 'update'])->whereUuid('orderUnit');
 
             //обновление orderUnit в том случае если находится в статусе черновик
-            Route::patch('/{orderUnit}/draft', [OrderUnitController::class, 'updateDraft'])->whereUuid('orderUnit');
+            Route::put('/{orderUnit}/draft', [OrderUnitController::class, 'updateDraft'])->whereUuid('orderUnit');
 
             {   //contractors
 

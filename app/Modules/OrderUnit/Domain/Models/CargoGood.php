@@ -49,6 +49,7 @@ class CargoGood extends Model
     {
         return [
             "type_pallet" => TypeSizePalletSpaceEnum::class,
+            "body_volume" => 'float',
         ];
     }
 

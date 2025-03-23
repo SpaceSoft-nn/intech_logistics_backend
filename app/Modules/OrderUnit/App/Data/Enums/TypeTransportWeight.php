@@ -8,11 +8,11 @@ use Exception;
 enum TypeTransportWeight : string
 {
 
-    case extraSmall = 'до 0.8 тонны';
-    case small = 'до 1.5 тонны';
-    case medium = 'до 3 тонны';
-    case large = 'до 5 тонны';
-    case extraLarge = 'до 10 тонны';
+    case extraSmall = 'до 0.8 тонн';
+    case small = 'до 1.5 тонн';
+    case medium = 'до 3 тонн';
+    case large = 'до 5 тонн';
+    case extraLarge = 'до 10 тонн';
     case superSize = 'более 10 тонн';
 
     // Пример использования
@@ -71,12 +71,12 @@ enum TypeTransportWeight : string
     public static function stringValueCaseToObject(string $value) : self
     {
         return match ($value) {
-            'до 0.8 тонны'  => TypeTransportWeight::extraSmall,
-            'до 1.5 тонны'  => TypeTransportWeight::small,
-            'до 3 тонны'  => TypeTransportWeight::medium,
-            'до 5 тонны'  => TypeTransportWeight::large,
-            'до 10 тонны'  => TypeTransportWeight::extraLarge,
-            'более 10 тонны'  => TypeTransportWeight::superSize,
+            'до 0.8 тонн'  => TypeTransportWeight::extraSmall,
+            'до 1.5 тонн'  => TypeTransportWeight::small,
+            'до 3 тонн'  => TypeTransportWeight::medium,
+            'до 5 тонн'  => TypeTransportWeight::large,
+            'до 10 тонн'  => TypeTransportWeight::extraLarge,
+            'более 10 тонн'  => TypeTransportWeight::superSize,
             default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
         };
     }

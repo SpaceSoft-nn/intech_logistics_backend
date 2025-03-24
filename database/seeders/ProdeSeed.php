@@ -216,8 +216,6 @@ class ProdeSeed extends Seeder
             $orderRep->setStatus(StatusOrderUnitEnum::published, $order->id);
 
             $order->refresh();
-
-            dd($order->addresses);
         }
 
 

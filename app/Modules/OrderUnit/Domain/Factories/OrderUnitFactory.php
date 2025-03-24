@@ -155,7 +155,7 @@ class OrderUnitFactory extends Factory
     /**
      * @param OrderUnit $orderUnit
      * @param CargoGood $cargoGood
-     * @param Mgx $mgx
+     * @param ?Mgx[] $mgx
      *
      */
     private function createCargoGoodToOrder(OrderUnit $orderUnit, ?array $cargoGood = null, ?array $mgx = null)

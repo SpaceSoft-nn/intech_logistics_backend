@@ -172,9 +172,7 @@ class ProdeSeed extends Seeder
                 'body_volume' => '8.5',
             ];
 
-            $order = OrderUnit::factory(
-
-            )
+            $order = OrderUnit::factory()
             ->withAddressSet()
             ->withCargoGood($arrayCargoGood)
             ->create([

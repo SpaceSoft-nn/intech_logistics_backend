@@ -4,6 +4,7 @@ namespace App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitStatus;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class OrderUnitStatusResource extends JsonResource
 {
@@ -13,9 +14,9 @@ class OrderUnitStatusResource extends JsonResource
 
         return [
 
-            "id" => $this->id,
+            // "id" => $this->id,
             "status" => $this->status,
-            "created_at" => $this->status,
+            "created_at" => Carbon::parse($this->created_at)->format('d-m-Y H:i:s'),
 
         ];
     }

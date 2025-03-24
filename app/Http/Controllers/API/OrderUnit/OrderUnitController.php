@@ -39,6 +39,8 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\Organiz
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
+use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitStatus\OrderUnitStatusResource;
+use Illuminate\Database\Eloquent\Collection;
 
 class OrderUnitController extends Controller
 {
@@ -272,6 +274,18 @@ class OrderUnitController extends Controller
 
         return response()->json(array_success(OrderUnitResource::make($order), 'Update Order Unit Successfully.'), 200);
 
+    }
+
+    //вернуть все статусы у заказа
+    public function statuses(OrderUnit $orderUnit)
+    {
+
+        /** @var Collection */
+        $statuses = $orderUnit->order_unit_statuses;
+
+        return ($statuses->isNotEmpty())
+            ? response()->json(array_success(OrderUnitStatusResource::make($statuses), 'Вернули лог статусов для заказа.'), 20)
+            : response()->json(array_error(null, 'Вернули лог статусов для заказа.'), 404);
     }
 
     /**

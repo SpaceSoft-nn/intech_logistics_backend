@@ -80,6 +80,42 @@ use App\Http\Controllers\Controller;
  *
  * ),
  *
+ * @OA\Get(
+ *
+ *      path="/api/orders/{OrderUnit::uuid}/statuses",
+ *      summary="Получить заказ по uuid.",
+ *      tags={"Order Unit"},
+ *      @OA\Parameter(
+ *          name="OrderUnit::uuid",
+ *          in="path",
+ *          required=true,
+ *          description="UUID заказа",
+ *          @OA\Schema(
+ *              type="string",
+ *              format="uuid"
+ *          )
+ *      ),
+ *
+ *       @OA\Response(
+ *           response=200,
+ *           description="Успешный возврат заказа",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="data", ref="#/components/schemas/OrderUnitStatusResource", nullable=true),
+ *               @OA\Property(property="message", type="string", example="Return Order."),
+ *           ),
+ *       ),
+ *
+ *       @OA\Response(
+ *           response=500,
+ *           description="Общая ошибка сервера.",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message_error", type="string", example="Error server"),
+ *               @OA\Property(property="code", type="integer", example="500"),
+ *           ),
+ *       ),
+ *
+ * ),
+ *
  * @OA\Post(
  *
  *      path="/api/orders/get-schem",

@@ -2621,6 +2621,73 @@
                 }
             }
         },
+        "/api/orders/{OrderUnit::uuid}/statuses": {
+            "get": {
+                "tags": [
+                    "Order Unit"
+                ],
+                "summary": "Получить заказ по uuid.",
+                "operationId": "bb49c2c3ce1e699ec64014e0a4969bbb",
+                "parameters": [
+                    {
+                        "name": "OrderUnit::uuid",
+                        "in": "path",
+                        "description": "UUID заказа",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный возврат заказа",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "oneOf": [
+                                                {
+                                                    "$ref": "#/components/schemas/OrderUnitStatusResource"
+                                                }
+                                            ],
+                                            "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return Order."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/orders/get-schem": {
             "post": {
                 "tags": [
@@ -7998,9 +8065,26 @@
                 },
                 "type": "object"
             },
+            "OrderUnitStatusResource": {
+                "properties": {
+                    "id": {
+                        "description": "ID специфической даты периода",
+                        "type": "integer"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/OrderUnitStatusEnum"
+                    },
+                    "created_at": {
+                        "description": "Дата создание статуса",
+                        "type": "string",
+                        "format": "date"
+                    }
+                },
+                "type": "object"
+            },
             "LotTenderResource": {
                 "properties": {
-                    "id_lot_tender": {
+                    "id": {
                         "description": "ID лота тендера",
                         "type": "string",
                         "format": "uuid"
@@ -8362,6 +8446,21 @@
                     "more_load"
                 ],
                 "example": "more_load"
+            },
+            "OrderUnitStatusEnum": {
+                "description": "Статусы у заказа",
+                "type": "string",
+                "enum": [
+                    "draft",
+                    "published",
+                    "accepted",
+                    "in_work",
+                    "pre_order",
+                    "completed_and_wait_payment",
+                    "cancelled",
+                    "private"
+                ],
+                "example": "published"
             },
             "BearerToken": {
                 "title": "Bearer Token Object",

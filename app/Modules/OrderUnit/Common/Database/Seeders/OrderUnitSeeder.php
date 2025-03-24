@@ -51,7 +51,12 @@ class OrderUnitSeeder extends Seeder
         {
 
             //Заказ 1
-            $order = OrderUnit::factory()->withCargoGood()->withCargoGood()->withStatusSet(StatusOrderUnitEnum::draft)->create([
+            $order = OrderUnit::factory()
+                ->withCargoGood()
+                ->withCargoGood()
+                ->withAddressSet()
+                ->withStatusSet(StatusOrderUnitEnum::draft
+            )->create([
 
                 'end_date_order' => $end_date_order,
                 "body_volume" => 10,
@@ -60,7 +65,6 @@ class OrderUnitSeeder extends Seeder
                 "user_id" => $organization->owner_id,
                 "organization_id" => $organization->id,
                 "address_is_array" => false,
-
 
             ]);
 

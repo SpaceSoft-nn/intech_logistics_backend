@@ -100,7 +100,7 @@ Route::prefix('/orders')->middleware('manuallyActivatedOrganization')->group(fun
         Route::get('/', [OrderUnitController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum', 'isActiveUser']);
 
         #TODO Возможно в будущем нужна фильтрация
-        // Route::get('/{status?}', [OrderUnitController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum']);
+        Route::get('/{orderUnit}/statuses', [OrderUnitController::class, 'statuses']);
 
         //Вернуть 1 запись по uuid
         Route::get('/{orderUnit}', [OrderUnitController::class, 'show'])->whereUuid('orderUnit');

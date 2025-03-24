@@ -172,7 +172,12 @@ class ProdeSeed extends Seeder
                 'body_volume' => '8.5',
             ];
 
-            $order = OrderUnit::factory()->withCargoGood($arrayCargoGood)->create([
+            $order = OrderUnit::factory(
+
+            )
+            ->withAddressSet()
+            ->withCargoGood($arrayCargoGood)
+            ->create([
                 "order_total" => "180000",
                 "description" => 'Нужно доставить заказ по данными адресам',
                 "body_volume" => '8.5',
@@ -199,15 +204,22 @@ class ProdeSeed extends Seeder
                 "weight" => '700',
             ];
 
-            $order = OrderUnit::factory()->withCargoGood($arrayCargoGood, $mgx)->create([
+            $order = OrderUnit::factory()
+            ->withAddressSet()
+            ->withCargoGood($arrayCargoGood, $mgx)
+            ->create([
                 "order_total" => "275000",
                 "description" => 'Нужно доставить заказ по заданным Адрессам.',
                 "body_volume" => '18.75',
                 "user_id" => $user_id,
                 "organization_id" => $organization_id,
-            ]);     
+            ]);
 
             $orderRep->setStatus(StatusOrderUnitEnum::published, $order->id);
+
+            $order->refresh();
+
+            dd($order->addresses);
         }
 
 

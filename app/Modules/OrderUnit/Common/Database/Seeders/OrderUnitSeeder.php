@@ -54,7 +54,6 @@ class OrderUnitSeeder extends Seeder
             $order = OrderUnit::factory()
                 ->withCargoGood()
                 ->withCargoGood()
-                ->withAddressSet()
                 ->withStatusSet(StatusOrderUnitEnum::draft
             )->create([
 

@@ -34,6 +34,7 @@ class Address extends Model
         'json',
         'update_json',
         'nomination',
+        'point_name',
 
     ];
 

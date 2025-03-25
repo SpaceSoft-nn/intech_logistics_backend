@@ -19,6 +19,7 @@ class AddressResource extends JsonResource
             "latitude" => $this->latitude,
             "longitude" => $this->longitude,
             "nomination" => $this->nomination,
+            "point_name" => $this->point_name,
         ];
     }
 }

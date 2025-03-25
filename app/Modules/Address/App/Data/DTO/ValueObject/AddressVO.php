@@ -27,6 +27,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
         public ?string $postal_code,
         public ?array $json,
         public ?string $update_json,
+        public ?string $point_name, //пункт
 
 
     ) {}
@@ -45,6 +46,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
         ?string $postal_code = null,
         ?array $json = null,
         ?string $update_json = null,
+        ?string $point_name = null,
         // ?TypeAddressEnum $type_address = null,
 
     ) : self {
@@ -62,6 +64,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
             json: $json,
             update_json: $update_json,
             nomination: $nomination,
+            point_name: $point_name,
 
         );
 
@@ -81,6 +84,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
             "longitude" => $this->longitude,
             "json" => $this->json,
             "update_json" => $this->update_json,
+            "point_name" => $this->point_name,
         ];
     }
 
@@ -99,6 +103,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
             longitude: $this->longitude,
             json: $json,
             update_json: Arr::has($json, 'data') ? now() : null,
+            point_name: $this->point_name,
         );
     }
 
@@ -125,6 +130,7 @@ final readonly class AddressVO implements Arrayable, JsonSerializable
             longitude: Arr::get($data, 'geo_lon'),
             json: null,
             update_json: null,
+            point_name: Arr::get($data, 'point_name', null),
         );
     }
 

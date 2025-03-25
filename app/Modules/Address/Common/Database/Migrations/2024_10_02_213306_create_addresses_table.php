@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('building')->nullable();
             $table->string('postal_code')->nullable();
 
-            $table->string('nomination')->nullable()->comment('Наименование Адресса, может указать сам пользователь');
+            $table->string('nomination')->nullable()->comment('Полный Адресс');
+            $table->string('point_name')->nullable()->comment('Пункт - пользователь сам вводить наименование адресса');
 
             // $table->string('type_address')->nullable();
 

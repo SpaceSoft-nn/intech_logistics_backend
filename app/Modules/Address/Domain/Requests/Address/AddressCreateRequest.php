@@ -23,6 +23,7 @@ class AddressCreateRequest extends ApiRequest
     {
         return [
 
+            'point_name' => ['nullable', 'string', 'min:1', "max:255"], //пункты (пользователь сам указывает наименование)
             'unrestricted_value' => ['nullable', 'string'],
             'data' => ['required', 'array'],
             'data.data*' => ['required', 'array'],
@@ -36,7 +37,6 @@ class AddressCreateRequest extends ApiRequest
             // 'data.stead' => ['nullable', 'string'],
             'data.geo_lat' => ['required', 'string'],
             'data.geo_lon' => ['required', 'string'],
-
 
             'data.value' => ['nullable', 'string'],
 

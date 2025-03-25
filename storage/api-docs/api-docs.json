@@ -2648,11 +2648,10 @@
                                 "schema": {
                                     "properties": {
                                         "data": {
-                                            "oneOf": [
-                                                {
-                                                    "$ref": "#/components/schemas/OrderUnitStatusResource"
-                                                }
-                                            ],
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/OrderUnitStatusResource"
+                                            },
                                             "nullable": true
                                         },
                                         "message": {
@@ -7841,6 +7840,10 @@
                     },
                     "nomination": {
                         "description": "Наименование Адресса",
+                        "type": "string"
+                    },
+                    "point_name": {
+                        "description": "Название пункта - от пользователя",
                         "type": "string"
                     }
                 },

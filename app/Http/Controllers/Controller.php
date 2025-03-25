@@ -477,6 +477,7 @@ namespace App\Http\Controllers;
  *     @OA\Property(property="latitude", type="float", description="Широта адреса"),
  *     @OA\Property(property="longitude", type="float", description="Долгота адреса"),
  *     @OA\Property(property="nomination", type="string", description="Наименование Адресса"),
+ *     @OA\Property(property="point_name", type="string", description="Название пункта - от пользователя"),
  * ),
  *
  * @OA\Schema(

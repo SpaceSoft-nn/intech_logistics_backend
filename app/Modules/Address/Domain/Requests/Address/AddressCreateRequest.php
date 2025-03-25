@@ -46,6 +46,7 @@ class AddressCreateRequest extends ApiRequest
 
     public function getAddressVO() : AddressVO
     {
+
         return AddressVO::returnObjectFromArray($this->validated())->setJson($this->all());
     }
 

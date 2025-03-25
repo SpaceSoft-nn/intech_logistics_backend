@@ -100,7 +100,12 @@ use App\Http\Controllers\Controller;
  *           response=200,
  *           description="Успешный возврат заказа",
  *           @OA\JsonContent(
- *               @OA\Property(property="data", ref="#/components/schemas/OrderUnitStatusResource", nullable=true),
+ *                @OA\Property(
+ *                    property="data",
+ *                    type="array",
+ *                    nullable=true,
+ *                    @OA\Items(ref="#/components/schemas/OrderUnitStatusResource")
+ *           ),
  *               @OA\Property(property="message", type="string", example="Return Order."),
  *           ),
  *       ),

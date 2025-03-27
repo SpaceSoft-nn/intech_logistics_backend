@@ -58,7 +58,7 @@ enum TypeTransportWeight : string
             TypeTransportWeight::large => 'large',
             TypeTransportWeight::extraLarge => 'extraLarge',
             TypeTransportWeight::superSize => 'superSize',
-            default => throw new Exception('Ошибка приобрезование Enum TypeTransportWeight', 500),
+            default => throw new Exception('Ошибка преобрезование Enum TypeTransportWeight', 500),
         };
     }
 
@@ -70,6 +70,7 @@ enum TypeTransportWeight : string
      */
     public static function stringValueCaseToObject(string $value) : self
     {
+
         return match ($value) {
             'до 0.8 тонн'  => TypeTransportWeight::extraSmall,
             'до 1.5 тонн'  => TypeTransportWeight::small,
@@ -77,7 +78,7 @@ enum TypeTransportWeight : string
             'до 5 тонн'  => TypeTransportWeight::large,
             'до 10 тонн'  => TypeTransportWeight::extraLarge,
             'более 10 тонн'  => TypeTransportWeight::superSize,
-            default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
+            default => throw new Exception('Ошибка преобрезование Enum TypeTransportWeight', 500),
         };
     }
 

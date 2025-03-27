@@ -8,12 +8,12 @@ use Exception;
 enum TransportTypeWeight : string implements IEnumStringToObject
 {
 
-    case extraSmall = 'до 0.8 тонны';
-    case small = 'до 1.5 тонны';
-    case medium = 'до 3 тонны';
-    case large = 'до 5 тонны';
-    case extraLarge = 'до 10 тонны';
-    case superSize = 'более 10 тонны';
+    case extraSmall = 'до 0.8 тонн';
+    case small = 'до 1.5 тонн';
+    case medium = 'до 3 тонн';
+    case large = 'до 5 тонн';
+    case extraLarge = 'до 10 тонн';
+    case superSize = 'более 10 тонн';
 
     /**
     * Принять в параметр ключ как тип string, и вернуть эквивалетный объект
@@ -57,12 +57,12 @@ enum TransportTypeWeight : string implements IEnumStringToObject
     {
         return match ($value)
         {
-            "до 0.8 тонны" => "extraSmall",
-            "до 1.5 тонны" => "small",
-            "до 3 тонны" => "medium",
-            "до 5 тонны" => "large",
-            "до 10 тонны" => "extraLarge",
-            "более 10 тонны" => "superSize",
+            "до 0.8 тонн" => "extraSmall",
+            "до 1.5 тонн" => "small",
+            "до 3 тонн" => "medium",
+            "до 5 тонн" => "large",
+            "до 10 тонн" => "extraLarge",
+            "более 10 тонн" => "superSize",
             null => null,
             default => throw new Exception('Ошибка преобразование Enum TransportTypeWeight', 500),
         };

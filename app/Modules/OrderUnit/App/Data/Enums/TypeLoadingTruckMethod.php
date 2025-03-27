@@ -38,7 +38,7 @@ enum TypeLoadingTruckMethod : string
             "Частичная загрузка грузовика" => TypeLoadingTruckMethod::ltl,
             "Деловые линии" => TypeLoadingTruckMethod::business_lines,
             "Догрузы" => TypeLoadingTruckMethod::more_load,
-            default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
+            default => throw new Exception('Ошибка преобрезование Enum TypeLoadingTruckMethod 123', 500),
         };
     }
 
@@ -50,7 +50,7 @@ enum TypeLoadingTruckMethod : string
             TypeLoadingTruckMethod::ltl => 'ltl' ,
             TypeLoadingTruckMethod::business_lines => 'business_lines',
             TypeLoadingTruckMethod::more_load => 'more_load',
-            default => throw new Exception('Ошибка приобрезование Enum TypeLoadingTruckMethod', 500),
+            default => throw new Exception('Ошибка преобрезование Enum TypeLoadingTruckMethod', 500),
         };
     }
 

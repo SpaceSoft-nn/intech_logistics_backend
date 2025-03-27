@@ -28,15 +28,26 @@ class AgreementOfferAcceptInteractor
 
     public function execute(User $user, AgreementOrderContractorAccept $agreementOrderContractorAccept) : object
     {
-        if($agreementOrderContractorAccept->order_bool && $agreementOrderContractorAccept->contractor_bool) {
-            return $this->response(true, 'Заявки уже были успешна подтверждены с двух сторон.', $agreementOrderContractorAccept);
-        }
+        /**
+         * Оборачиваем всё в транзакцию, т.к если дейсвтие не выполнится, какое-либо нужно откатывать и выкидывать ошибку
+         * @var object
+        */
+        $object = DB::transaction(function () use ($user, $agreementOrderContractorAccept) {
 
-        $model = app(static::class)->run($user, $agreementOrderContractorAccept);
+            if($agreementOrderContractorAccept->order_bool && $agreementOrderContractorAccept->contractor_bool) {
+                return $this->response(true, 'Заявки уже были успешна подтверждены с двух сторон.', $agreementOrderContractorAccept);
+            }
 
-        $this->createOrderUnit($agreementOrderContractorAccept);
+            $model = app(static::class)->run($user, $agreementOrderContractorAccept);
 
-        return $model;
+            $this->createOrderUnit($agreementOrderContractorAccept);
+
+            return $model;
+
+        });
+
+        return $object;
+
     }
 
     private function run(User $user, AgreementOrderContractorAccept $agreementOrderContractorAccept) : object
@@ -48,79 +59,67 @@ class AgreementOfferAcceptInteractor
         /** @var OfferContractorCustomer */
         $offerContractorCustomer = $agreementOrderContractor->offer_contractor_invoice_order_customer;
 
-
-        $arrayObject = DB::transaction(function () use (
-            $user,
-            $agreementOrderContractor,
-            $offerContractorCustomer,
-            $agreementOrderContractorAccept,
-        ) {
-
-            //проверяем что запрос был от заказчика
-            {
-                if(!empty($offerContractorCustomer)) {
+        //проверяем что запрос был от заказчика
+        {
+            if(!empty($offerContractorCustomer)) {
 
 
-                    foreach ($user->organizations as $organization) {
+                foreach ($user->organizations as $organization) {
 
-                        if($offerContractorCustomer->organization_id == $organization->id)
-                        {
-
-
-                            $agreementOrderContractorAccept->order_bool = true;
-                            $agreementOrderContractorAccept->save();
+                    if($offerContractorCustomer->organization_id == $organization->id)
+                    {
 
 
-                            return $this->response(true, "Заказчик успешно согласовал выполнение предложения перевозчика.", $agreementOrderContractorAccept);
-                        }
+                        $agreementOrderContractorAccept->order_bool = true;
+                        $agreementOrderContractorAccept->save();
+
+
+                        return $this->response(true, "Заказчик успешно согласовал выполнение предложения перевозчика.", $agreementOrderContractorAccept);
                     }
-
                 }
-
-
-                #TODO Когда будет фнукицонал завязан на конкретном user
-                // if(!empty($order->user_id))
-                // {
-                //     if($order->user_id == $user->id)
-                //     {
-                //         $agreementOrderAccept->order_bool = true;
-                //         $agreementOrderAccept->save();
-
-                //         return $this->response( true, "Заказчик успешно согласовал выполнение заказа.", $agreementOrderAccept);
-                //     }
-                // }
 
             }
 
-            //проверяем что запрос был от подрядчика
+
+            #TODO Когда будет фнукицонал завязан на конкретном user
+            // if(!empty($order->user_id))
+            // {
+            //     if($order->user_id == $user->id)
+            //     {
+            //         $agreementOrderAccept->order_bool = true;
+            //         $agreementOrderAccept->save();
+
+            //         return $this->response( true, "Заказчик успешно согласовал выполнение заказа.", $agreementOrderAccept);
+            //     }
+            // }
+
+        }
+
+        //проверяем что запрос был от подрядчика
+        {
+
+
+            if(!empty($agreementOrderContractor))
             {
 
 
-                if(!empty($agreementOrderContractor))
-                {
+                foreach ($user->organizations as $organizations) {
 
 
-                    foreach ($user->organizations as $organizations) {
+                    if($agreementOrderContractor->organization_contractor_id == $organizations->id)
+                    {
 
+                        $agreementOrderContractorAccept->contractor_bool = true;
+                        $agreementOrderContractorAccept->save();
 
-                        if($agreementOrderContractor->organization_contractor_id == $organizations->id)
-                        {
-
-                            $agreementOrderContractorAccept->contractor_bool = true;
-                            $agreementOrderContractorAccept->save();
-
-                            return $this->response(true, 'Перевозчик успешно согласовал выполнение своего предложения.', $agreementOrderContractorAccept);
-                        }
+                        return $this->response(true, 'Перевозчик успешно согласовал выполнение своего предложения.', $agreementOrderContractorAccept);
                     }
                 }
             }
+        }
 
-            return $this->response(false, 'У данного пользователя нет прав на согласования заказа.');
+        return $this->response(false, 'У данного пользователя нет прав на согласования заказа.');
 
-        });
-
-
-        return $arrayObject;
     }
 
     private function createOrderUnit(AgreementOrderContractorAccept $agreementOrderContractorAccept) : ?OrderUnit
@@ -132,56 +131,50 @@ class AgreementOfferAcceptInteractor
         if($agreementOrderContractorAccept->order_bool && $agreementOrderContractorAccept->contractor_bool)
         {
 
-            /** @var OrderUnit */
-            $order = DB::transaction(function () use ($agreementOrderContractor) {
+            //создаём заказ
+            /** @var OfferContractorCustomer */
+            $invoice_customer = $agreementOrderContractor->offer_contractor_invoice_order_customer;
 
-                //создаём заказ
-                /** @var OfferContractorCustomer */
-                $invoice_customer = $agreementOrderContractor->offer_contractor_invoice_order_customer;
-
-                /** @var OfferContractor */
-                $offerContractor = $invoice_customer->offer_contractor;
+            /** @var OfferContractor */
+            $offerContractor = $invoice_customer->offer_contractor;
 
 
-                {   //Формируем VO для OrderUnitCreateDTO - передаём invoice_customer как массив
-                    /** @var InvoiceOrderCustomer */
-                    $invoce_order = $invoice_customer->invoice_order_customer;
+            {   //Формируем VO для OrderUnitCreateDTO - передаём invoice_customer как массив
+                /** @var InvoiceOrderCustomer */
+                $invoce_order = $invoice_customer->invoice_order_customer;
 
-                    /** @var OrderUnitVO */
-                    $orderUnitVO = OrderUnitVO::fromArrayInvoiceOrderCustomerToObject($invoce_order->toArray())
-                        ->setOrderStatus(StatusOrderUnitEnum::in_work)
-                        ->setTransportId($offerContractor->transport_id)
-                        ->setOrganizationId($invoice_customer->organization_id)
-                        ->setOfferContractorId($offerContractor->id)
-                        ->setContractorId($agreementOrderContractor->organization_contractor_id);
+                /** @var OrderUnitVO */
+                $orderUnitVO = OrderUnitVO::fromArrayInvoiceOrderCustomerToObject($invoce_order->toArray())
+                    ->setOrderStatus(StatusOrderUnitEnum::in_work)
+                    ->setTransportId($offerContractor->transport_id)
+                    ->setOrganizationId($invoice_customer->organization_id)
+                    ->setOfferContractorId($offerContractor->id)
+                    ->setContractorId($agreementOrderContractor->organization_contractor_id);
 
-                    /** @var OrderUnitAddressDTO */
-                    $orderUnitAddressDTO = OrderUnitAddressDTO::fromArrayInvoiceOrderCustomerToObject($invoce_order->toArray());
-                }
+                /** @var OrderUnitAddressDTO */
+                $orderUnitAddressDTO = OrderUnitAddressDTO::fromArrayInvoiceOrderCustomerToObject($invoce_order->toArray());
+            }
 
-                /** @var CargoGoodVO[] */
-                $cargoGoodVO = CargoGoodVO::fromArrayInvoiceOrderCustomerToObject($invoce_order->toArray());
+            /** @var CargoGoodVO[] */
+            $cargoGoodVO = CargoGoodVO::fromArrayInvoiceOrderCustomerToObject($invoce_order->toArray());
 
 
-                /** @var OrderUnitCreateDTO */
-                $orderUnitCreateDTO = OrderUnitCreateDTO::make(
-                    orderUnitVO: $orderUnitVO,
-                    cargoGoodVO : $cargoGoodVO,
-                    orderUnitAddressDTO: $orderUnitAddressDTO, #TODO Нужно будет потом добавлять логику при множественных Адрессах
-                );
+            /** @var OrderUnitCreateDTO */
+            $orderUnitCreateDTO = OrderUnitCreateDTO::make(
+                orderUnitVO: $orderUnitVO,
+                cargoGoodVO : $cargoGoodVO,
+                orderUnitAddressDTO: $orderUnitAddressDTO, #TODO Нужно будет потом добавлять логику при множественных Адрессах
+            );
 
-                $order = $this->orderService->createOrderUnit($orderUnitCreateDTO);
+            $order = $this->orderService->createOrderUnit($orderUnitCreateDTO);
 
-                //устанавливаем значения что бы у предложения перевозчика, было понятно к какому заказу относится
-                $agreementOrderContractor->order_unit_id = $order->id;
-                $agreementOrderContractor->save();
+            //устанавливаем значения что бы у предложения перевозчика, было понятно к какому заказу относится
+            $agreementOrderContractor->order_unit_id = $order->id;
+            $agreementOrderContractor->save();
 
-                $offerContractor->status = OfferContractorStatusEnum::in_work;
-                $offerContractor->save();
+            $offerContractor->status = OfferContractorStatusEnum::in_work;
+            $offerContractor->save();
 
-                return $order;
-
-            });
 
             return $order;
         }

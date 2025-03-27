@@ -72,6 +72,7 @@ final readonly class OrderUnitVO implements Arrayable
 
         return new self(
 
+
             body_volume: $body_volume,
             order_total: $order_total,
             description: $description,
@@ -403,10 +404,9 @@ final readonly class OrderUnitVO implements Arrayable
         $order_total = Arr::get($data, "order_total");
         $description = Arr::get($data, "description", null);
 
-        // dd(TypeLoadingTruckMethod::stringValueCaseToObject(Arr::get($data, "type_load_truck")));
-
         $type_load_truck = TypeLoadingTruckMethod::stringValueCaseToObject(Arr::get($data, "type_load_truck"));
         $type_transport_weight = TypeTransportWeight::stringValueCaseToObject(Arr::get($data, "type_transport_weight"));
+
         $order_status = Arr::get($data, "order_status", null);
 
         $user_id = Arr::get($data, "user_id", null);
@@ -419,6 +419,8 @@ final readonly class OrderUnitVO implements Arrayable
         $lot_tender_id = Arr::get($data, "lot_tender_id" , null);
         $offer_contractor_id = Arr::get($data, "offer_contractor_id" , null);
 
+
+
         return static::make(
 
             end_date_order: $end_date_order,
@@ -428,8 +430,8 @@ final readonly class OrderUnitVO implements Arrayable
             order_total: $order_total,
             description: $description,
 
-            type_load_truck: $type_load_truck->value,
-            type_transport_weight: $type_transport_weight->value,
+            type_load_truck: $type_load_truck->name,
+            type_transport_weight: $type_transport_weight->name,
             order_status: $order_status,
 
             user_id: $user_id,
@@ -437,7 +439,7 @@ final readonly class OrderUnitVO implements Arrayable
             organization_id: $organization_id,
             transport_id: $transport_id,
 
-            add_load_space: self::filterEnumTypeLoad($type_load_truck->value),
+            add_load_space: self::filterEnumTypeLoad($type_load_truck->name),
             change_price: $change_price,
             change_time: $change_time,
             lot_tender_id: $lot_tender_id,

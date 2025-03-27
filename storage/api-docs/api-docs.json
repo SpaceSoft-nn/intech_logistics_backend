@@ -1446,12 +1446,6 @@
                                         "format": "uuid",
                                         "example": "123e4567-e89b-12d3-a456-426614174000"
                                     },
-                                    "user_id": {
-                                        "description": "UUID пользователя, должен существовать в таблице users",
-                                        "type": "string",
-                                        "format": "uuid",
-                                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                                    },
                                     "organization_id": {
                                         "description": "UUID организации, должен существовать в таблице organizations",
                                         "type": "string",
@@ -1482,6 +1476,9 @@
                                         "maxLength": 1000,
                                         "example": "Описание маршрута",
                                         "nullable": true
+                                    },
+                                    "status": {
+                                        "$ref": "#/components/schemas/OfferContractorStatusEnum"
                                     }
                                 },
                                 "type": "object"
@@ -1998,6 +1995,145 @@
                         }
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "Успешное подтверждение с двух сторон.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/AgreementOrderContractorAcceptResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Успешное подтверждение с двух сторон."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/offer-contractors/{offerContractor}": {
+            "patch": {
+                "tags": [
+                    "Offer Contractor"
+                ],
+                "summary": "Обновление предложения перевозчика.",
+                "operationId": "f3e310baf053018da6a1584487070021",
+                "parameters": [
+                    {
+                        "name": "agreementOrderContractorAccept",
+                        "in": "path",
+                        "description": "ID принятия соглашения заказа подрядчика",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "city_name_start": {
+                                        "description": "Название начального города",
+                                        "type": "string",
+                                        "minLength": 2,
+                                        "example": "Москва"
+                                    },
+                                    "city_name_end": {
+                                        "description": "Название конечного города",
+                                        "type": "string",
+                                        "minLength": 2,
+                                        "example": "Санкт-Петербург"
+                                    },
+                                    "price_for_distance": {
+                                        "description": "Цена за расстояние",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 1500.5
+                                    },
+                                    "transport_id": {
+                                        "description": "UUID транспорта, должен существовать в таблице transports",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "user_id": {
+                                        "description": "UUID пользователя, должен существовать в таблице users",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "organization_id": {
+                                        "description": "UUID организации, должен существовать в таблице organizations",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "add_load_space": {
+                                        "description": "Дополнительное место для загрузки",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "road_back": {
+                                        "description": "Обратная дорога",
+                                        "type": "boolean",
+                                        "example": false,
+                                        "nullable": true
+                                    },
+                                    "directly_road": {
+                                        "description": "Прямая дорога",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "description": {
+                                        "description": "Описание",
+                                        "type": "string",
+                                        "maxLength": 1000,
+                                        "example": "Описание маршрута",
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "$ref": "#/components/schemas/OfferContractorStatusEnum"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Успешное подтверждение с двух сторон.",
@@ -8314,6 +8450,17 @@
                     }
                 },
                 "type": "object"
+            },
+            "OfferContractorStatusEnum": {
+                "description": "Статусы для предложения перевозчика",
+                "type": "string",
+                "enum": [
+                    "draft",
+                    "published",
+                    "accepted",
+                    "in_work"
+                ],
+                "example": "in_work"
             },
             "TransportBodyTypeEnum": {
                 "description": "Тип кузова транспорта",

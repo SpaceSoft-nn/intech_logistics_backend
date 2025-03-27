@@ -766,6 +766,18 @@ namespace App\Http\Controllers;
  * ///////////Enums
  *
  *
+ * @OA\Schema(
+ *     schema="OfferContractorStatusEnum",
+ *     type="string",
+ *     description="Статусы для предложения перевозчика",
+ *     enum={
+ *         "draft",
+ *         "published",
+ *         "accepted",
+ *         "in_work",
+ *     },
+ *     example="in_work"
+ * ),
  *
  * @OA\Schema(
  *     schema="TransportBodyTypeEnum",

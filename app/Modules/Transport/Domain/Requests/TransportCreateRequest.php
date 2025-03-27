@@ -42,7 +42,7 @@ class TransportCreateRequest extends ApiRequest
             "type_status" => ['required', Rule::in($type_status) ],
 
             "organization_id" => ['required', 'uuid', "exists:organizations,id"],
-            "driver_id" => ['nullable', 'uuid'],
+            "driver_id" => ['required', 'uuid', 'exists:driver_peoples,id'],
             "description" => ['nullable', 'string', 'max:255'],
 
         ];

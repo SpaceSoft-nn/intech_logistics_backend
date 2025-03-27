@@ -2,6 +2,7 @@
 
 namespace App\Modules\Transport\Domain\Requests;
 
+use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use Illuminate\Validation\Rule;
 use App\Modules\Base\Requests\ApiRequest;
 use App\Modules\Transport\App\Data\Enums\TransportBodyType;
@@ -9,12 +10,18 @@ use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
 use App\Modules\Transport\App\Data\Enums\TransportTypeWeight;
 use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
 use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
+use App\Modules\Transport\Domain\Models\Transport;
 
 class TransportUpdateRequest extends ApiRequest
 {
 
-    public function authorize(): bool
-    {
+    public function authorize(
+        GetTypeCabinetByOrganization $action
+    ): bool {
+        $status = $action->isCustomer();
+
+        abort_if($status['status'], 401 ,'Данная организация не является перевозчиком');
+
         return true;
     }
 
@@ -29,20 +36,20 @@ class TransportUpdateRequest extends ApiRequest
 
         return [
 
-            "brand_model" => ['sometimes', 'string', 'max:100'],
-            "year" => ['sometimes', 'numeric'],
-            "transport_number" => ['sometimes', 'string', 'max:9'],
-            "body_volume" => ['sometimes', 'numeric', 'min:1'],
-            "body_weight" => ['sometimes', 'numeric', 'min:0'],
+            "brand_model" => ['sometimes', 'nullable', 'string', 'max:100'],
+            "year" => ['sometimes', 'nullable', 'numeric'],
+            "transport_number" => ['sometimes', 'nullable', 'string', 'max:9'],
+            "body_volume" => ['sometimes', 'nullable', 'numeric', 'min:1'],
+            "body_weight" => ['sometimes', 'nullable', 'numeric', 'min:0'],
 
 
-            "type_loading" => ['sometimes', Rule::in($type_loading) ],
-            "type_weight" => ['sometimes', Rule::in($type_weight) ],
-            "type_body" => ['sometimes', Rule::in($type_body) ],
-            "type_status" => ['sometimes', Rule::in($type_status) ],
+            "type_loading" => ['sometimes', 'nullable', Rule::in($type_loading) ],
+            "type_weight" => ['sometimes', 'nullable', Rule::in($type_weight) ],
+            "type_body" => ['sometimes', 'nullable', Rule::in($type_body) ],
+            "type_status" => ['sometimes', 'nullable', Rule::in($type_status) ],
 
-            "driver_id" => ['sometimes', 'uuid'],
-            "description" => ['sometimes', 'string', 'max:255'],
+            "driver_id" => ['sometimes', 'nullable', 'uuid', 'exists:driver_peoples,id'],
+            "description" => ['sometimes', 'nullable', 'string', 'max:255'],
 
         ];
     }
@@ -53,5 +60,14 @@ class TransportUpdateRequest extends ApiRequest
     public function createTransportVO(): TransportVO
     {
         return TransportVO::fromArrayToObject($this->validated());
+    }
+
+    /**
+    * Получаем TransportVO для обновления
+    * @return TransportVO
+    */
+    public function updateTransportVO(Transport $transport): TransportVO
+    {
+        return TransportVO::mappingForUpdate($transport, $this->validated());
     }
 }

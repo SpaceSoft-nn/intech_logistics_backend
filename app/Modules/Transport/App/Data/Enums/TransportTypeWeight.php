@@ -53,4 +53,19 @@ enum TransportTypeWeight : string implements IEnumStringToObject
         };
     }
 
+    public static function stringValueCaseToStringEng(string $value) : string
+    {
+        return match ($value)
+        {
+            "до 0.8 тонны" => "extraSmall",
+            "до 1.5 тонны" => "small",
+            "до 3 тонны" => "medium",
+            "до 5 тонны" => "large",
+            "до 10 тонны" => "extraLarge",
+            "более 10 тонны" => "superSize",
+            null => null,
+            default => throw new Exception('Ошибка преобразование Enum TransportTypeWeight', 500),
+        };
+    }
+
 }

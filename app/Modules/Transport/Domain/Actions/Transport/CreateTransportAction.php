@@ -18,14 +18,18 @@ class CreateTransportAction
     private function run(TransportVO $vo) : Transport
     {
 
+        $transport = Transport::create($vo->toArrayNotNull());
+
         try {
 
-            $transport = Transport::create($vo->toArrayNotNull());
+
 
         } catch (\Throwable $th) {
 
-            Mylog('Ошибка при создании Transport в CreateTransportAction: ' . $th);
-            throw new Exception('Ошибка при создании Transport в CreateTransportAction', 500);
+            $nameClass = self::class;
+
+            Mylog("Ошибка в {$nameClass} при создании записи: " . $th);
+            throw new Exception('Ошибка в классе: ' . $nameClass, 500);
 
         }
 

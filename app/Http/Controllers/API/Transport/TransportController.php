@@ -13,6 +13,7 @@ use App\Modules\Transport\Domain\Resources\TransportCollection;
 
 use App\Modules\Transport\Domain\Requests\TransportCreateRequest;
 use App\Modules\Transport\Domain\Actions\Transport\CreateTransportAction;
+use App\Modules\Transport\Domain\Actions\Transport\UpdateTransportAction;
 use App\Modules\Transport\Domain\Requests\TransportUpdateRequest;
 
 class TransportController
@@ -57,18 +58,16 @@ class TransportController
         TransportUpdateRequest $request
     ) {
 
-
         /**
          * @var TransportVO
          */
-        $transportVO = $request->createTransportVO();
-
+        $transportVO = $request->updateTransportVO($transport);
 
         /**
         * @var Transport
         */
-        $transport = CreateTransportAction::make($transportVO);
+        $transport = UpdateTransportAction::make($transportVO, $transport);
 
-        return response()->json(array_success(TransportResource::make($transport), 'Return create transports'), 201);
+        return response()->json(array_success(TransportResource::make($transport), 'Successfully updated transport'), 200);
     }
 }

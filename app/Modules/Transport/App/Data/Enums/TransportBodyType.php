@@ -63,4 +63,34 @@ enum TransportBodyType : string implements IEnumStringToObject
             default => throw new Exception('Ошибка преобразование Enum TransportLoadingType', 500),
         };
     }
+
+    public static function stringValueCaseToStringEng(string $value) : string
+    {
+        return match ($value)
+        {
+            "бортовой" => "flatbed",
+            "тентованный" => "curtainside",
+            "фургон" => "box",
+            "рефрижератор" => "refrigerated",
+            "цистерна" => "tanker",
+            "самосвал" => "dump",
+            "автовоз" => "car_carrier",
+            "лесовоз" => "logging",
+            "кран манипулятор" => "crane",
+            "бетономешалка" => "concrete_mixer",
+            "эвакуатор" => "tow",
+            "изотермический" => "insulated",
+            "контейнеровоз" => "container",
+            "мусоровоз" => "garbage",
+            "животновоз" => "livestock",
+            "низкорамник" => "lowboy",
+            "ломовоз" => "scrap_metal",
+            "крытый бортовой" => "covered_flatbed",
+            "автоцистерна для сыпучих материалов" => "bulk_powder_tanker",
+            "шторный полуприцеп" => "side_curtain",
+
+            null => null,
+            default => throw new Exception('Ошибка преобразование Enum TransportBodyType', 500),
+        };
+    }
 }

@@ -26,4 +26,16 @@ enum TransportStatusEnum : string implements IEnumStringToObject
             default => throw new Exception('Ошибка преобразование Enum TransportStatusEnum', 500),
         };
     }
+
+    public static function stringValueCaseToStringEng(string $value) : string
+    {
+        return match ($value)
+        {
+            "свободен" => "free",
+            "в работе" => "work",
+            "на ремонте" => "repair",
+            null => null,
+            default => throw new Exception('Ошибка преобразование Enum TransportStatusEnum', 500),
+        };
+    }
 }

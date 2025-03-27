@@ -29,7 +29,20 @@ enum TransportLoadingType : string implements IEnumStringToObject
             "rear" => TransportLoadingType::rear,
             "liquid_bulk" => TransportLoadingType::liquid_bulk,
             "dry_bulk" => TransportLoadingType::dry_bulk,
+            default => throw new Exception('Ошибка преобразование Enum TransportLoadingType', 500),
+        };
+    }
 
+    public static function stringValueCaseToStringEng(string $value) : string
+    {
+        return match ($value)
+        {
+            "верхняя" => "top",
+            "боковая" => "side",
+            "задняя" => "rear",
+            "наливная" => "liquid_bulk",
+            "насыпная" => "dry_bulk",
+            null => null,
             default => throw new Exception('Ошибка преобразование Enum TransportLoadingType', 500),
         };
     }

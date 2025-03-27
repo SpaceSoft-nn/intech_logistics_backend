@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\API\Transport;
 
-use App\Modules\Organization\Domain\Models\Organization;
-use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
-use App\Modules\Transport\Domain\Actions\Transport\CreateTransportAction;
-use App\Modules\Transport\Domain\Models\Transport;
-use App\Modules\Transport\Domain\Requests\TransportCreateRequest;
-use App\Modules\Transport\Domain\Resources\TransportCollection;
-use App\Modules\Transport\Domain\Resources\TransportResource;
 use Illuminate\Http\Request;
-
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use App\Modules\Transport\Domain\Models\Transport;
+use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Transport\Domain\Resources\TransportResource;
+use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
+use App\Modules\Transport\Domain\Resources\TransportCollection;
+
+use App\Modules\Transport\Domain\Requests\TransportCreateRequest;
+use App\Modules\Transport\Domain\Actions\Transport\CreateTransportAction;
+use App\Modules\Transport\Domain\Requests\TransportUpdateRequest;
 
 class TransportController
 {
@@ -51,8 +52,10 @@ class TransportController
         return response()->json(array_success(TransportResource::make($transport), 'Return create transports'), 201);
     }
 
-    public function update(TransportCreateRequest $request)
-    {
+    public function update(
+        Transport $transport,
+        TransportUpdateRequest $request
+    ) {
 
 
         /**

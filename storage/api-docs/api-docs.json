@@ -202,6 +202,93 @@
                         }
                     }
                 }
+            },
+            "put": {
+                "tags": [
+                    "Address"
+                ],
+                "summary": "Обновить адресс полностью (не меняя id)",
+                "operationId": "9f6502a59fd2263fc21f826cb05bc96f",
+                "parameters": [
+                    {
+                        "name": "address::uuid",
+                        "in": "path",
+                        "description": "UUID Адресса",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Основной JSON-объект, ожидаемый в параметре data - с сервеса Dadata",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "point_name": {
+                                        "description": "Название пункта - вводит сам пользователь",
+                                        "type": "string"
+                                    },
+                                    "unrestricted_value": {
+                                        "description": "Полное название - может автоматически формируется из массива dadata",
+                                        "type": "string"
+                                    },
+                                    "data": {
+                                        "description": "Объект с JSON-структурой, которая приходит с dadata",
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "Ошибка обновление адресса.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Update address error."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/individual-peoples/drivers": {
@@ -2049,7 +2136,7 @@
                     {
                         "name": "agreementOrderContractorAccept",
                         "in": "path",
-                        "description": "ID принятия соглашения заказа подрядчика",
+                        "description": "ID Предложения перевозчика",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -2084,18 +2171,6 @@
                                     },
                                     "transport_id": {
                                         "description": "UUID транспорта, должен существовать в таблице transports",
-                                        "type": "string",
-                                        "format": "uuid",
-                                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                                    },
-                                    "user_id": {
-                                        "description": "UUID пользователя, должен существовать в таблице users",
-                                        "type": "string",
-                                        "format": "uuid",
-                                        "example": "123e4567-e89b-12d3-a456-426614174000"
-                                    },
-                                    "organization_id": {
-                                        "description": "UUID организации, должен существовать в таблице organizations",
                                         "type": "string",
                                         "format": "uuid",
                                         "example": "123e4567-e89b-12d3-a456-426614174000"

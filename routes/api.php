@@ -86,8 +86,7 @@ Route::prefix('/addresses')->middleware('manuallyActivatedOrganization')->contro
     Route::post('/', [AddressController::class, 'store'])->middleware('auth:sanctum');
 
     Route::get('/{address}', [AddressController:: class, 'show'])->whereUuid('address');
-
-    Route::patch('/{address}', [AddressController::class, 'update'])->whereUuid('orderUnit');
+    Route::put('/{address}', [AddressController::class, 'update'])->whereUuid('orderUnit');
 });
 
 
@@ -166,7 +165,6 @@ Route::prefix('/orders')->middleware('manuallyActivatedOrganization')->group(fun
 });
 
 
-
     //transfer
 Route::prefix('/transfer')->middleware('manuallyActivatedOrganization')->group(function () {
 
@@ -239,7 +237,7 @@ Route::prefix('/transports')->middleware('manuallyActivatedOrganization')->group
     Route::get('/', [TransportController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum', 'isActiveUser']);
     Route::get('/{transport}', [TransportController::class, 'show'])->whereUuid('transport');
     Route::post('/', [TransportController::class, 'store'])->middleware('isCarrierOrganization');
-    Route::patch('/', [TransportController::class, 'update'])->middleware('isCarrierOrganization');
+    Route::patch('/{transport}', [TransportController::class, 'update'])->middleware('isCarrierOrganization')->whereUuid('transport');
 
 });
 

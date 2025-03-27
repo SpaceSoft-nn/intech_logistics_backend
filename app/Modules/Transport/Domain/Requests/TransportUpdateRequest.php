@@ -2,15 +2,15 @@
 
 namespace App\Modules\Transport\Domain\Requests;
 
-use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use Illuminate\Validation\Rule;
 use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\Transport\Domain\Models\Transport;
+use App\Modules\Base\Actions\GetTypeCabinetByOrganization;
 use App\Modules\Transport\App\Data\Enums\TransportBodyType;
 use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
 use App\Modules\Transport\App\Data\Enums\TransportTypeWeight;
 use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
 use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
-use App\Modules\Transport\Domain\Models\Transport;
 
 class TransportUpdateRequest extends ApiRequest
 {
@@ -23,6 +23,12 @@ class TransportUpdateRequest extends ApiRequest
         abort_if($status['status'], 401 ,'Данная организация не является перевозчиком');
 
         return true;
+    }
+
+    public function passes($attribute, $value): bool
+    {
+        // Проверка, что хотя бы одно поле было передано
+        return !empty(array_filter($value));
     }
 
 

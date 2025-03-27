@@ -253,6 +253,7 @@ Route::prefix('/individual-peoples')->middleware('manuallyActivatedOrganization'
         Route::get('/', [DriverPeopleController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum', 'isActiveUser']);
         Route::get('/{driverPeople}', [DriverPeopleController::class, 'show'])->whereUuid('driverPeople')->middleware('isCarrierOrganization');
         Route::post('/', [DriverPeopleController::class, 'store']);
+        Route::patch('/{driverPeople}', [DriverPeopleController::class, 'update'])->whereUuid('driverPeople')->middleware('isCarrierOrganization');
 
     });
 

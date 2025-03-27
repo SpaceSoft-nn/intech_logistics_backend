@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API\IndividualPeople\TypePeople;
 
 use App\Http\Controllers\Controller;
 use App\Modules\IndividualPeople\App\Data\DTO\CreateDriverPeopleDTO;
+use App\Modules\IndividualPeople\App\Data\ValueObject\DriverPeopleVO;
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Requests\TypePeoples\CreateDriverPeopleRequest;
+use App\Modules\IndividualPeople\Domain\Requests\TypePeoples\UpdateDriverPeopleRequest;
 use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleCollection;
 use App\Modules\IndividualPeople\Domain\Resources\TypePeople\DriverPeopleResource;
 use App\Modules\IndividualPeople\Domain\Services\TypePeople\DriverPeopleService;
@@ -55,6 +57,25 @@ class DriverPeopleController extends Controller
             response()->json(array_success(DriverPeopleResource::make($model), 'Create driver people.'), 201)
             :
             response()->json(array_error(DriverPeopleResource::make($model), 'Faild create driver people.'), 404);
+    }
+
+    public function update(
+        DriverPeople $driverPeople,
+        UpdateDriverPeopleRequest $request,
+        DriverPeopleService $service,
+    ) {
+        /** @var DriverPeopleVO */
+        $driverPeopleVO = $request->updateDriverPeopleVO($driverPeople);
+
+        /**
+         * @var CreateDriverPeopleDTO
+         */
+        $createDriverPeopleDTO = $request->createDriverPeopleDTO($driverPeopleVO, $driverPeople);
+
+        $model = $service->updateDriverPeople($createDriverPeopleDTO, $driverPeople);
+
+        return response()->json(array_success(DriverPeopleResource::make($model), 'Успешное обновление водителя.'), 200);
+
     }
 
 

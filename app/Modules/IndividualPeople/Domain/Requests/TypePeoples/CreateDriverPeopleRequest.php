@@ -35,6 +35,7 @@ class CreateDriverPeopleRequest extends ApiRequest
         return DriverPeopleVO::fromArrayToObject($this->validated());
     }
 
+
     public function createDriverPeopleDTO() : CreateDriverPeopleDTO
     {
 

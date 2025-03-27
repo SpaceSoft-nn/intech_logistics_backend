@@ -18,12 +18,6 @@ final class UpdateTransportAction
     private function run(TransportVO $vo, Transport $transport) : Transport
     {
 
-        $transport = $transport->fill($vo->toArrayNotNull());
-
-
-        //проверяем данные на 'грязь' - если данные отличаются от старого состояние модели, то обновляем сущность
-        if ($transport->isDirty()) { $transport->save(); $transport->refresh(); }
-
         try {
 
             $transport = $transport->fill($vo->toArrayNotNull());

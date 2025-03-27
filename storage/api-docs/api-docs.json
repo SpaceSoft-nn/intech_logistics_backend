@@ -538,6 +538,103 @@
                         }
                     }
                 }
+            },
+            "patch": {
+                "tags": [
+                    "DriverPeople"
+                ],
+                "summary": "Создать новый транспорт.",
+                "operationId": "2ca4117fabf9afa4d01e2a887b5c0542",
+                "parameters": [
+                    {
+                        "name": "driverPeople",
+                        "in": "path",
+                        "description": "UUID водителя",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "personal_area_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "individual_people_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                                    },
+                                    "series": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "####"
+                                    },
+                                    "number": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "######"
+                                    },
+                                    "date_get": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "01.01.2025"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное обновление водителя.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/DriverPeopleResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Успешное обновление водителя."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/individual-peoples": {
@@ -2146,7 +2243,7 @@
                     }
                 ],
                 "requestBody": {
-                    "required": true,
+                    "required": false,
                     "content": {
                         "application/json": {
                             "schema": {
@@ -6722,7 +6819,7 @@
                     }
                 ],
                 "requestBody": {
-                    "required": true,
+                    "required": false,
                     "content": {
                         "application/json": {
                             "schema": {

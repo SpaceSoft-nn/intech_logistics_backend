@@ -301,7 +301,7 @@ namespace App\Http\Controllers\Swagger\API;
 *          @OA\Schema(type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000")
 *      ),
 *      @OA\RequestBody(
-*          required=true,
+*          required=false,
 *          @OA\JsonContent(
 *              @OA\Property(property="city_name_start", type="string", description="Название начального города", example="Москва", minLength=2),
 *              @OA\Property(property="city_name_end", type="string", description="Название конечного города", example="Санкт-Петербург", minLength=2),

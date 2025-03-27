@@ -117,7 +117,7 @@ class TransportVO implements Arrayable
 
     }
 
-    public static function mappingForTransport(Transport $transport) : self
+    public static function mappingForModel(Transport $transport) : self
     {
 
         return self::make(
@@ -139,7 +139,7 @@ class TransportVO implements Arrayable
     //Делаем TransportVO под Обновления
     public static function mappingForUpdate(Transport $transport, array $data) : self
     {
-        $transportVO = self::mappingForTransport($transport);
+        $transportVO = self::mappingForModel($transport);
 
         $brand_model = Arr::get($data, "brand_model", $transportVO->brand_model);
         $year = Arr::get($data, "year", $transportVO->year);

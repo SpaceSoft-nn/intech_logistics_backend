@@ -8,6 +8,7 @@ use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 use App\Modules\IndividualPeople\App\Data\DTO\CreateDriverPeopleDTO;
 use App\Modules\IndividualPeople\App\Repositories\DriverPeopleRepository;
+use App\Modules\IndividualPeople\Domain\Actions\TypePeople\DriverPeople\UpdateDriverPeopleAction;
 
 class DriverPeopleService
 {
@@ -41,6 +42,44 @@ class DriverPeopleService
             $driverPeople->individual_people()->save($individual_people);
 
             return $driverPeople;
+
+        });
+
+        return $model;
+    }
+
+    public function updateDriverPeople(CreateDriverPeopleDTO $dto, DriverPeople $driverPeople) : DriverPeople
+    {
+        /** @var DriverPeople */
+        $model = DB::transaction(function ($pdo) use ($dto, $driverPeople) {
+
+            /** @var DriverPeople */
+            $model = UpdateDriverPeopleAction::make($dto->vo, $driverPeople);
+
+            if($driverPeople->individual_people->id !== $dto->individual_people_id)
+            {
+
+                { // очищаем запись
+                    $related = $driverPeople->individual_people;
+                    $related->individualable_id = null;
+                    $related->individualable_type = null;
+                    $related->save();
+                }
+
+                {
+                    //устанавливаем новую связь
+                    $indPeople = IndividualPeople::find($dto->individual_people_id);
+                    $indPeople->individualable()->associate($driverPeople);
+                    $indPeople->save();
+
+                }
+
+            }
+
+            //что бы фронт получил актуальные данные
+            $model->refresh()->load('individual_people');
+
+            return $model;
 
         });
 

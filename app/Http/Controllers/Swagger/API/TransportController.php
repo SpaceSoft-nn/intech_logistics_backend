@@ -125,7 +125,7 @@ namespace App\Http\Controllers\Swagger\API;
  *       ),
  *
  *       @OA\RequestBody(
- *           required=true,
+ *           required=false,
  *           @OA\JsonContent(
  *               @OA\Property(property="brand_model", type="string", description="Марка и модель", example="Volvo FH"),
  *               @OA\Property(property="year", type="integer", description="Год выпуска транспорта", example=2020),
@@ -158,7 +158,7 @@ namespace App\Http\Controllers\Swagger\API;
  *           ),
  *       ),
  * ),
-  *
+ *
  *
  *
 */

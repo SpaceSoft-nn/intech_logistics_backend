@@ -2,14 +2,13 @@
 
 namespace App\Modules\Transport\Domain\Requests;
 
-use App\Modules\Base\Requests\ApiRequest;
-use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
-use App\Modules\Transport\App\Data\Enums\TransportBodyType;
-use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
-use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
-use App\Modules\Transport\App\Data\Enums\TransportTypeEnum;
-use App\Modules\Transport\App\Data\Enums\TransportTypeWeight;
 use Illuminate\Validation\Rule;
+use App\Modules\Base\Requests\ApiRequest;
+use App\Modules\Transport\App\Data\Enums\TransportBodyType;
+use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
+use App\Modules\Transport\App\Data\Enums\TransportTypeWeight;
+use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
+use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
 
 class TransportCreateRequest extends ApiRequest
 {

@@ -51,7 +51,6 @@ class isCarrierOrganization
         // Проверяем, есть ли organization_id в заголовках
         abort_unless( (bool) $organizationId, 422, 'Для доступа к этому endpoint в header должено быть значение :{organization_id}');
 
-
         /** @var Organization */
         $organization = $user->organizations->firstWhere('id', $organizationId);
 

@@ -83,7 +83,7 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 Route::prefix('/addresses')->middleware('manuallyActivatedOrganization')->controller(AuthController::class)->group(function () {
 
     Route::get('/', [AddressController::class, 'index']);
-    Route::post('/', [AddressController::class, 'store']);
+    Route::post('/', [AddressController::class, 'store'])->middleware('auth:sanctum');
 
     Route::get('/{address}', [AddressController:: class, 'show'])->whereUuid('address');
 
@@ -239,6 +239,7 @@ Route::prefix('/transports')->middleware('manuallyActivatedOrganization')->group
     Route::get('/', [TransportController::class, 'index'])->middleware(['hasOrgHeader', 'auth:sanctum', 'isActiveUser']);
     Route::get('/{transport}', [TransportController::class, 'show'])->whereUuid('transport');
     Route::post('/', [TransportController::class, 'store'])->middleware('isCarrierOrganization');
+    Route::patch('/', [TransportController::class, 'update'])->middleware('isCarrierOrganization');
 
 });
 

@@ -50,4 +50,22 @@ class TransportController
 
         return response()->json(array_success(TransportResource::make($transport), 'Return create transports'), 201);
     }
+
+    public function update(TransportCreateRequest $request)
+    {
+
+
+        /**
+         * @var TransportVO
+         */
+        $transportVO = $request->createTransportVO();
+
+
+        /**
+        * @var Transport
+        */
+        $transport = CreateTransportAction::make($transportVO);
+
+        return response()->json(array_success(TransportResource::make($transport), 'Return create transports'), 201);
+    }
 }

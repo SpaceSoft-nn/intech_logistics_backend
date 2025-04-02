@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('region_economic_factors', function (Blueprint $table) {
 
             $table->uuid('id')->primary();
-            
+
             $table->uuid('region_start_gar_id')->nullable()->comment('Значение Гар для области отправления');
             $table->uuid('region_end_gar_id')->nullable()->comment('Значение Гар для области прибытия');;
 
@@ -21,6 +21,11 @@ return new class extends Migration
 
             $table->float('factor')->comment('коэффициент');
             $table->decimal('price', 10, 2)->comment('цена за 1 км');
+
+            $table->string('type')->nullable()->comment('тип перевозки пример: ftl, ltl, деловые линии');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
+
 
             $table->timestamps();
 

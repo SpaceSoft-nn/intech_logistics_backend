@@ -2,10 +2,12 @@
 
 namespace App\Modules\Matrix\Domain\Models;
 
-use App\Modules\Matrix\Domain\Factories\RegionEconomicFactorFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Modules\Base\Casts\RuDateTimeCast;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
+use App\Modules\Matrix\Domain\Factories\RegionEconomicFactorFactory;
 
 class RegionEconomicFactor extends Model
 {
@@ -29,6 +31,12 @@ class RegionEconomicFactor extends Model
         'factor',
         'price',
 
+        'type',
+        'start_date',
+        'end_date',
+
+
+
     ];
 
     protected $guarded = [
@@ -44,6 +52,9 @@ class RegionEconomicFactor extends Model
     protected function casts(): array
     {
         return [
+            'type' => TypeLoadingTruckMethod::class,
+            'start_date' => RuDateTimeCast::class,
+            'end_date' => RuDateTimeCast::class,
 
         ];
     }

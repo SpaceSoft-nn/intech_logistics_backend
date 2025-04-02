@@ -82,9 +82,9 @@ class GARService
 
     }
 
-    private function getGarInfoByAddress(string $Address) : array
+    private function getGarInfoByAddress(string $address) : array
     {
-        $result = $this->client->clean("address", $Address);
+        $result = $this->client->clean("address", $address);
 
         return $result;
     }

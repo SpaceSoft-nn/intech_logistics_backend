@@ -37,19 +37,19 @@ class RegionEconomicFactorSeed extends Seeder
             /**
             * @var Address
             */
-            $Address_start = $order->Address_start;
+            $address_start = $order->address_start;
 
             /**
             * @var Address
             */
-            $Address_end = $order->Address_end;
+            $address_end = $order->address_end;
 
             //TODO Может быть проблема, что в зависимости от order - у нас будут повторяться записи Где Стар:Нижний Конец:Нижний - их нужно фильтровать и убирать из бд
             RegionEconomicFactor::factory()->create([
-                "region_start_gar_id" => $this->getFiasId($Address_start->region),
-                "region_end_gar_id" => $this->getFiasId($Address_end->region),
-                "region_name_start" => $Address_start->region,
-                "region_name_end" => $Address_end->region,
+                "region_start_gar_id" => $this->getFiasId($address_start->region),
+                "region_end_gar_id" => $this->getFiasId($address_end->region),
+                "region_name_start" => $address_start->region,
+                "region_name_end" => $address_end->region,
                 "factor" => 1,
             ]);
 

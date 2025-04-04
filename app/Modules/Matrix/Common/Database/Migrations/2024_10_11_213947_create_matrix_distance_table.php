@@ -22,13 +22,13 @@ return new class extends Migration
             $table->string('city_name_start')->comment('Название города отправки');
             $table->string('city_name_end')->comment('Название города прибытия');
 
-            $table->float('distance')->comment('Дистанция');
+            $table->integer('distance')->comment('Дистанция');
 
             $table->timestamps();
 
             // Добавляем уникальный составной индекс
-            $table->unique(['city_name_start', 'city_name_end'], 'unique_city_gar');
-            $table->unique(['city_start_gar_id', 'city_end_gar_id'], 'unique_city');
+            $table->unique(['city_name_start', 'city_name_end'], ' unique_city');
+            $table->unique(['city_start_gar_id', 'city_end_gar_id'], 'unique_city_gar');
 
         });
     }

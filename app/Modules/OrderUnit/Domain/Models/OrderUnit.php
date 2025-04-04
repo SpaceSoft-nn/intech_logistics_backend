@@ -2,24 +2,24 @@
 
 namespace App\Modules\OrderUnit\Domain\Models;
 
+use Illuminate\Database\Eloquent\Model;
+use App\Modules\User\Domain\Models\User;
 use App\Modules\Address\Domain\Models\Address;
-use App\Modules\InteractorModules\AddressOrder\Domain\Models\OrderUnitAddress;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
-use App\Modules\OfferContractor\Domain\Models\OfferContractor;
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
-use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
-use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Tender\Domain\Models\LotTender;
 use App\Modules\Transport\Domain\Models\Transport;
-use App\Modules\User\Domain\Models\User;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Modules\Organization\Domain\Models\Organization;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Modules\OrderUnit\Domain\Factories\OrderUnitFactory;
+use App\Modules\OrderUnit\App\Data\Enums\TypeTransportWeight;
+use App\Modules\OfferContractor\Domain\Models\OfferContractor;
+use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
+use App\Modules\InteractorModules\AddressOrder\Domain\Models\OrderUnitAddress;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\OrganizationOrderUnitInvoice;
 
 class OrderUnit extends Model
 {

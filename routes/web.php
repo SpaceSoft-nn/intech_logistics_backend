@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Http\Controllers\API\Avizo\AvizoEmailController;
+use App\Modules\Matrix\Domain\Models\MatrixDistance;
 
 Route::get('/', function (Request $request) {
 
@@ -87,6 +88,46 @@ Route::get('/', function (Request $request) {
 
 
     dd('done');
+
+    return 'ИВАН ПРИВЕТ';
+
+});
+
+Route::get('/set-gar', function (Request $request) {
+
+    $token = "509217298d01a514519d602904fb30f8660c2dfb";
+    $secret = "098d522baa0250a084bf4e644e05830b7f3e0d24";
+    $dadata = new \Dadata\DadataClient($token, $secret);
+
+    // $result = $dadata->clean("address", "Москва");
+    // dd($result['region_fias_id']);
+
+    MatrixDistance::orderBy('id')
+    ->chunk(1000, function ($addresses) use ($dadata) {
+
+        foreach ($addresses as $address) {
+
+            if(!empty($address->city_end_gar_id) && !empty($address->city_start_gar_id))
+            {
+                continue;
+            }
+
+            // $city_name_start = $address->city_name_start;
+            // $city_name_end = $address->city_name_end;
+
+
+            // $result_name_start = $dadata->clean("address", $city_name_start);
+            // $result_name_end = $dadata->clean("address", $city_name_end);
+
+            // $address->city_start_gar_id = $result_name_start['region_fias_id'];
+            // $address->city_end_gar_id = $result_name_end['region_fias_id'];
+
+            // $address->save();
+        }
+
+        sleep(1);
+
+    });
 
     return 'ИВАН ПРИВЕТ';
 

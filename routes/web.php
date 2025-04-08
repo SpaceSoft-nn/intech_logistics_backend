@@ -3,10 +3,11 @@
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use App\Http\Controllers\API\Avizo\AvizoEmailController;
 use App\Modules\Matrix\Domain\Models\MatrixDistance;
+use App\Http\Controllers\API\Avizo\AvizoEmailController;
 
 Route::get('/', function (Request $request) {
 
@@ -95,37 +96,93 @@ Route::get('/', function (Request $request) {
 
 Route::get('/set-gar', function (Request $request) {
 
-    $token = "509217298d01a514519d602904fb30f8660c2dfb";
-    $secret = "098d522baa0250a084bf4e644e05830b7f3e0d24";
-    $dadata = new \Dadata\DadataClient($token, $secret);
-
-    // $result = $dadata->clean("address", "Москва");
-    // dd($result['region_fias_id']);
 
     MatrixDistance::orderBy('id')
-    ->chunk(1000, function ($addresses) use ($dadata) {
+    ->chunk(195, function ($addresses)  {
 
-        foreach ($addresses as $address) {
+        try {
 
-            if(!empty($address->city_end_gar_id) && !empty($address->city_start_gar_id))
-            {
-                continue;
+
+            foreach ($addresses as $address) {
+
+                $model_start = MatrixDistance::where('city_name_start', $address->city_name_start)->whereNotNull('city_start_gar_id')->first();
+                $model_end = MatrixDistance::where('city_name_end', $address->city_name_end)->whereNotNull('city_end_gar_id')->first();
+
+
+                if(!empty($address->city_end_gar_id) && !empty($address->city_start_gar_id))
+                {
+                    continue;
+                }
+
+                $city_name_start = $address->city_name_start;
+                $city_name_end = $address->city_name_end;
+
+                $city_name_end = "Город " . $city_name_end;
+                $city_name_start = "Город " . $city_name_start;
+
+                if(!empty($model_start)) {
+
+                    if(!empty($model_end))
+                    {
+
+                        $address->city_start_gar_id = $model_start->city_start_gar_id;
+                        $address->city_end_gar_id = $model_end->city_end_gar_id;
+
+
+                    } else {
+
+                        $response = Http::get('https://data.pbprog.ru/api/address/full-address/parse?token=71e0e0018c2f49b09258a0fac9e3055dcb03befd&addressText=' . $city_name_end);
+
+                        if ($response->successful()) {
+
+                            $result_name_end = $response->json()[0];
+
+                        } else {
+
+                            dd('Ошибка запроса', $response->status());
+
+                        }
+
+                        $address->city_start_gar_id = $model_start->city_start_gar_id;
+                        $address->city_end_gar_id = $result_name_end['objectGuid'];
+
+                    }
+
+
+                } else {
+
+                    $response_name_start = Http::get('https://data.pbprog.ru/api/address/full-address/parse?token=71e0e0018c2f49b09258a0fac9e3055dcb03befd&addressText=' . $city_name_start);
+                    $response_name_end = Http::get('https://data.pbprog.ru/api/address/full-address/parse?token=71e0e0018c2f49b09258a0fac9e3055dcb03befd&addressText=' . $city_name_end);
+
+                    if ($response_name_start->successful() || $response_name_end->successful())
+                    {
+
+                        $result_name_start = $response_name_start->json()[0];
+                        $result_name_end = $response_name_end->json()[0];
+
+                    } else {
+
+                        dd('Ошибка запроса', $response_name_start->status(), $response_name_end->status());
+
+                    }
+
+                    $address->city_start_gar_id = $result_name_start['objectGuid'];
+                    $address->city_end_gar_id = $result_name_end['objectGuid'];
+
+                }
+
+
+                $address->save();
+
+                // usleep(5000);
             }
 
-            // $city_name_start = $address->city_name_start;
-            // $city_name_end = $address->city_name_end;
+            // usleep(20000);
 
-
-            // $result_name_start = $dadata->clean("address", $city_name_start);
-            // $result_name_end = $dadata->clean("address", $city_name_end);
-
-            // $address->city_start_gar_id = $result_name_start['region_fias_id'];
-            // $address->city_end_gar_id = $result_name_end['region_fias_id'];
-
-            // $address->save();
+        } catch (\Throwable $th) {
+            dd($th, $address);
         }
 
-        sleep(1);
 
     });
 

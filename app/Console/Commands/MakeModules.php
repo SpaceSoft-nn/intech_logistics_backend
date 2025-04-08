@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use Str;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
-use Str;
 
 class MakeModules extends Command
 {

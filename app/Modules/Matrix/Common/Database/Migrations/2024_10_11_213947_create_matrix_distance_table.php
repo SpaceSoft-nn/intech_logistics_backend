@@ -28,7 +28,7 @@ return new class extends Migration
 
             // Добавляем уникальный составной индекс
             $table->unique(['city_name_start', 'city_name_end'], ' unique_city');
-            $table->unique(['city_start_gar_id', 'city_end_gar_id'], 'unique_city_gar');
+            // $table->unique(['city_start_gar_id', 'city_end_gar_id'], 'unique_city_gar'); //должно быть, но fias по городам могут повторяться из-за того что fias отсчитывается от области
 
         });
     }

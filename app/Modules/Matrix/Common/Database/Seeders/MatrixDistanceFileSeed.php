@@ -25,21 +25,31 @@ class MatrixDistanceFileSeed extends Seeder
         // Извлечем заголовки из первой строки массива (файла)
         $headers = array_shift($data);
 
+        $bulkData = [];
+
         // Вставим данные в базу
         foreach ($data as $row) {
+
             //Комбинируем head => и значение массивов (создаёт массив один для ключей другой для значений)
             $rowData = array_combine($headers, $row);
 
-            // Вставляем данные в таблицу, region_economic_factors
-            DB::table('matrix_distance')->insert([
+            $bulkData[] = [
                 'id' => $rowData['id'],
-                'city_start_gar_id' => $rowData['city_start_gar_id'],
+                'city_start_gar_id'=> $rowData['city_start_gar_id'],
                 'city_end_gar_id' => $rowData['city_end_gar_id'],
                 'city_name_start' => $rowData['city_name_start'],
                 'city_name_end' => $rowData['city_name_end'],
                 'distance' => $rowData['distance'],
-            ]);
+            ];
+
         }
+
+        $chunkedData = array_chunk($bulkData, 5000);
+        foreach ($chunkedData as $chunk) {
+            // Вставляем данные в таблицу, region_economic_factors
+            DB::table('matrix_distance')->insert($chunk);
+        }
+
     }
 }
 

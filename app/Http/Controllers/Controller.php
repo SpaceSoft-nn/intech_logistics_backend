@@ -761,6 +761,139 @@ namespace App\Http\Controllers;
  * ),
  *
  *
+ * @OA\Schema(
+ *   schema="PalletEur",
+ *   type="object",
+ *   description="Палета типа eur",
+ *   required={"type", "dimensions"},
+ *   @OA\Property(
+ *     property="type",
+ *     type="string",
+ *     description="Тип палеты",
+ *     enum={"eur"},
+ *     example="eur"
+ *   ),
+ *   @OA\Property(
+ *     property="dimensions",
+ *     type="object",
+ *     description="Габариты палеты типа eur",
+ *     required={"length", "width", "height"},
+ *     @OA\Property(
+ *       property="length",
+ *       type="number",
+ *       format="float",
+ *       description="Длина в метрах",
+ *       example=1.2,
+ *       default=1.2
+ *     ),
+ *     @OA\Property(
+ *       property="width",
+ *       type="number",
+ *       format="float",
+ *       description="Ширина в метрах",
+ *       example=0.8,
+ *       default=0.8
+ *     ),
+ *     @OA\Property(
+ *       property="height",
+ *       type="number",
+ *       format="float",
+ *       description="Высота в метрах",
+ *       example=1.8,
+ *       default=1.8
+ *     )
+ *   )
+ * ),
+ *
+ *
+ * @OA\Schema(
+ *   schema="PalletFin",
+ *   type="object",
+ *   description="Палета типа fin",
+ *   required={"type", "dimensions"},
+ *   @OA\Property(
+ *     property="type",
+ *     type="string",
+ *     description="Тип палеты",
+ *     enum={"fin"},
+ *     example="fin"
+ *   ),
+ *   @OA\Property(
+ *     property="dimensions",
+ *     type="object",
+ *     description="Габариты палеты типа fin",
+ *     required={"length", "width", "height"},
+ *     @OA\Property(
+ *       property="length",
+ *       type="number",
+ *       format="float",
+ *       description="Длина в метрах",
+ *       example=1.2,
+ *       default=1.2
+ *     ),
+ *     @OA\Property(
+ *       property="width",
+ *       type="number",
+ *       format="float",
+ *       description="Ширина в метрах",
+ *       example=0.8,
+ *       default=0.8
+ *     ),
+ *     @OA\Property(
+ *       property="height",
+ *       type="number",
+ *       format="float",
+ *       description="Высота в метрах",
+ *       example=1.8,
+ *       default=1.8
+ *     )
+ *   )
+ * ),
+ *
+ *
+ * @OA\Schema(
+ *   schema="PalletEcom",
+ *   type="object",
+ *   description="Палета типа ecom",
+ *   required={"type", "dimensions"},
+ *   @OA\Property(
+ *     property="type",
+ *     type="string",
+ *     description="Тип палеты",
+ *     enum={"ecom"},
+ *     example="ecom"
+ *   ),
+ *   @OA\Property(
+ *     property="dimensions",
+ *     type="object",
+ *     description="Габариты палеты типа ecom",
+ *     required={"length", "width", "height"},
+ *     @OA\Property(
+ *       property="length",
+ *       type="number",
+ *       format="float",
+ *       description="Длина в метрах",
+ *       example=1.2,
+ *       default=1.2
+ *     ),
+ *     @OA\Property(
+ *       property="width",
+ *       type="number",
+ *       format="float",
+ *       description="Ширина в метрах",
+ *       example=0.8,
+ *       default=0.8
+ *     ),
+ *     @OA\Property(
+ *       property="height",
+ *       type="number",
+ *       format="float",
+ *       description="Высота в метрах",
+ *       example=1.5,
+ *       default=1.5
+ *     )
+ *   )
+ * ),
  *
  *
  * ///////////Enums

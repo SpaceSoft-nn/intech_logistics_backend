@@ -8834,6 +8834,156 @@
                 },
                 "type": "object"
             },
+            "PalletEur": {
+                "description": "Палета типа eur",
+                "required": [
+                    "type",
+                    "dimensions"
+                ],
+                "properties": {
+                    "type": {
+                        "description": "Тип палеты",
+                        "type": "string",
+                        "enum": [
+                            "eur"
+                        ],
+                        "example": "eur"
+                    },
+                    "dimensions": {
+                        "description": "Габариты палеты типа eur",
+                        "required": [
+                            "length",
+                            "width",
+                            "height"
+                        ],
+                        "properties": {
+                            "length": {
+                                "description": "Длина в метрах",
+                                "type": "number",
+                                "format": "float",
+                                "default": 1.2,
+                                "example": 1.2
+                            },
+                            "width": {
+                                "description": "Ширина в метрах",
+                                "type": "number",
+                                "format": "float",
+                                "default": 0.8,
+                                "example": 0.8
+                            },
+                            "height": {
+                                "description": "Высота в метрах",
+                                "type": "number",
+                                "format": "float",
+                                "default": 1.8,
+                                "example": 1.8
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "PalletFin": {
+                "description": "Палета типа fin",
+                "required": [
+                    "type",
+                    "dimensions"
+                ],
+                "properties": {
+                    "type": {
+                        "description": "Тип палеты",
+                        "type": "string",
+                        "enum": [
+                            "fin"
+                        ],
+                        "example": "fin"
+                    },
+                    "dimensions": {
+                        "description": "Габариты палеты типа fin",
+                        "required": [
+                            "length",
+                            "width",
+                            "height"
+                        ],
+                        "properties": {
+                            "length": {
+                                "description": "Длина в метрах",
+                                "type": "number",
+                                "format": "float",
+                                "default": 1.2,
+                                "example": 1.2
+                            },
+                            "width": {
+                                "description": "Ширина в метрах",
+                                "type": "number",
+                                "format": "float",
+                                "default": 0.8,
+                                "example": 0.8
+                            },
+                            "height": {
+                                "description": "Высота в метрах",
+                                "type": "number",
+                                "format": "float",
+                                "default": 1.8,
+                                "example": 1.8
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "PalletEcom": {
+                "description": "Палета типа ecom",
+                "required": [
+                    "type",
+                    "dimensions"
+                ],
+                "properties": {
+                    "type": {
+                        "description": "Тип палеты",
+                        "type": "string",
+                        "enum": [
+                            "ecom"
+                        ],
+                        "example": "ecom"
+                    },
+                    "dimensions": {
+                        "description": "Габариты палеты типа ecom",
+                        "required": [
+                            "length",
+                            "width",
+                            "height"
+                        ],
+                        "properties": {
+                            "length": {
+                                "description": "Длина в метрах",
+                                "type": "number",
+                                "format": "float",
+                                "default": 1.2,
+                                "example": 1.2
+                            },
+                            "width": {
+                                "description": "Ширина в метрах",
+                                "type": "number",
+                                "format": "float",
+                                "default": 0.8,
+                                "example": 0.8
+                            },
+                            "height": {
+                                "description": "Высота в метрах",
+                                "type": "number",
+                                "format": "float",
+                                "default": 1.5,
+                                "example": 1.5
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
             "OfferContractorStatusEnum": {
                 "description": "Статусы для предложения перевозчика",
                 "type": "string",

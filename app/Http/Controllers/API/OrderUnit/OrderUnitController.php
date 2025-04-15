@@ -139,6 +139,12 @@ class OrderUnitController extends Controller
             */
             $end_address = Address::find($validated['end_address_id']);
 
+            $count_cargo_unit = $validated['goods_array']['cargo_units_count'];
+            $typePallet = $validated['goods_array']['type_pallet'];
+
+            dd($count_cargo_unit, $typePallet);
+
+            // TypeSizePalletSpaceEnum
 
             $data = [
 

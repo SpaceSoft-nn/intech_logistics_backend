@@ -308,9 +308,26 @@ use App\Http\Controllers\Controller;
  *           @OA\JsonContent(
  *               allOf={
  *                  @OA\Schema(
- *                     @OA\Property(property="start_address_id", type="string", format="uuid", description="UUID адреса начала (обязательное поле, должен существовать в таблице addresses).", example="123e4567-e89b-12d3-a456-426614174000"),
- *                     @OA\Property(property="end_address_id", type="string", format="uuid", description="UUID адреса окончания (обязательное поле, должен существовать в таблице addresses).", example="123e4567-e89b-12d3-a456-426614174000")
- *
+ *                      @OA\Property(property="start_address_id", type="string", format="uuid", description="UUID адреса начала (обязательное поле, должен существовать в таблице addresses).", example="123e4567-e89b-12d3-a456-426614174000"),
+ *                      @OA\Property(property="end_address_id", type="string", format="uuid", description="UUID адреса окончания (обязательное поле, должен существовать в таблице addresses).", example="123e4567-e89b-12d3-a456-426614174000"),
+ *                      @OA\Property(property="start_date_delivery", type="string", format="date", description="**Дата начала заказа. Обязательное поле.**", example="2023-10-01"),
+ *                      @OA\Property(property="end_date_delivery", type="string", format="date", description="**Дата окончания заказа. Обязательное поле.**", example="2023-10-10"),
+ *                      @OA\Property(
+ *                          property="goods_array",
+ *                          type="array",
+ *                          description="Массив объектов, представляющих грузы. Обязательное поле. Минимум 1+ груз",
+ *                          @OA\Items(
+ *                              type="object",
+ *                              @OA\Property(property="product_type", type="string", description="**Тип продукта. Обязательное поле.**", example="Тип 1"),
+ *                              @OA\Property(property="type_pallet", type="string", description="**Тип поддона. Обязательное поле. Возможные значения: 'eur', 'ecom', 'fin' **", enum={"eur", "ecom", "fin"}, example="eur"),
+ *                              @OA\Property(property="cargo_units_count", type="integer", description="**Количество паллетов. Обязательное поле. Минимум 1.**", minimum=1, example=5),
+ *                              @OA\Property(property="body_volume", type="number", format="float", description="**Объем кузова. Обязательное поле. Минимум 0.**", minimum=0, example=12.5),
+ *                              @OA\Property(property="name_value", type="string", nullable=true, description="**Название. Необязательное поле. Максимум 100 символов.**", maxLength=100, example="Название груза"),
+ *                              @OA\Property(property="description", type="string", nullable=true, description="**Описание. Необязательное поле. Максимум 500 символов.**", maxLength=500, example="Описание груза"),
+ *                              @OA\Property(property="weight_general", type="number", format="float", description="**Общий вес груза**", example="Общий вес груза"),
+ *                              @OA\Property(property="mgx", type="object", nullable=true, description="**Массогабаритные Характеристики - поле не обязательное, если указано, то будет валидироватья относительно количество паллетов**", ref="#/components/schemas/MgxObject" ),
+ *                          ),
+ *                      ),
  *                  ),
  *               },
  *           ),
@@ -881,6 +898,7 @@ use App\Http\Controllers\Controller;
  *                                    @OA\Property(property="body_volume", type="number", format="float", description="**Объем кузова. Обязательное поле. Минимум 0.**", minimum=0, example=12.5),
  *                                    @OA\Property(property="name_value", type="string", nullable=true, description="**Название. Необязательное поле. Максимум 100 символов.**", maxLength=100, example="Название груза"),
  *                                    @OA\Property(property="description", type="string", nullable=true, description="**Описание. Необязательное поле. Максимум 500 символов.**", maxLength=500, example="Описание груза"),
+ *                                    @OA\Property(property="weight_general", type="number", format="float", nullable=false, description="**Общий вес груза**", example="Общий вес груза"),
  *                                    @OA\Property(property="mgx", type="object", nullable=true, description="**Массогабаритные Характеристики - поле не обязательное, если указано, то будет валидироватья относительно количество паллетов**", ref="#/components/schemas/MgxObject" ),
  *                                ),
  *                            ),

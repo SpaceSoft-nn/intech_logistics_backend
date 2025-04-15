@@ -2,10 +2,10 @@
 
 namespace App\Modules\OrderUnit\Domain\Resources\OrderUnit;
 
-use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
-use Illuminate\Http\Request;
 use Faker\Factory as Faker;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 
 class OrderPriceResource extends JsonResource
 {
@@ -17,6 +17,7 @@ class OrderPriceResource extends JsonResource
     {
         //получаем idOrderUnit - для проверки и получение таблицы pivot при связях многие ко многим
         $this->distance = $distance;
+        $this->price_bysiness = $price_bysiness;
 
         parent::__construct($resource);
     }
@@ -27,6 +28,13 @@ class OrderPriceResource extends JsonResource
 
         $price1 = $faker->numberBetween(45000, 300000);
         $price2 = $faker->numberBetween(45000, 300000);
+
+        $epsilon = 0.00001; // задаем порог сравнения
+        // если мы будем сравнивать с 0 float, могут быть проблемы
+        if (abs($this->price_bysiness) < $epsilon) {
+            $this->price_bysiness = 0;
+            echo "Значение близко к нулю";
+        } 
 
         #TODO в load_type надо возвращать имя кейса
         return [
@@ -55,7 +63,7 @@ class OrderPriceResource extends JsonResource
             [
                 'name' => TypeLoadingTruckMethod::business_lines->value,
                 "load_type" => TypeLoadingTruckMethod::objectValueToStringCaseName(TypeLoadingTruckMethod::business_lines),
-                "price_km" => $this->price2 / $this->distance,
+                "price_km" =>  $this->price_bysiness / $this->distance,
                 "price" => $this->price_bysiness,
             ],
 

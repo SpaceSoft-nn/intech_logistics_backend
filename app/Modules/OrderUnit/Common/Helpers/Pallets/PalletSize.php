@@ -2,11 +2,11 @@
 
 namespace App\Modules\OrderUnit\Common\Helpers\Pallets;
 
-use App\Modules\OrderUnit\Domain\Models\CargoGood;
-use App\Modules\OrderUnit\Domain\Models\Mgx;
 use Exception;
-
 use function App\Helpers\Mylog;
+use App\Modules\OrderUnit\Domain\Models\Mgx;
+
+use App\Modules\OrderUnit\Domain\Models\CargoGood;
 
 class PalletSize
 {

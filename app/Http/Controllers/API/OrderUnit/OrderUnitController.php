@@ -39,10 +39,14 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\Organiz
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
+use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
+use App\Modules\OrderUnit\Common\Helpers\Pallets\PalletSize;
+use App\Modules\OrderUnit\Common\Helpers\Pallets\PalletSizeHelper;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitStatus\OrderUnitStatusCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitStatus\OrderUnitStatusResource;
 use Http;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Carbon;
 
 class OrderUnitController extends Controller
 {
@@ -139,60 +143,126 @@ class OrderUnitController extends Controller
             */
             $end_address = Address::find($validated['end_address_id']);
 
-            $count_cargo_unit = $validated['goods_array']['cargo_units_count'];
-            $typePallet = $validated['goods_array']['type_pallet'];
+            $start_date_delivery =  Carbon::createFromFormat('d.m.Y',$validated['start_date_delivery'])->format('Y-m-d');
+            $end_date_delivery =  $validated['end_date_delivery'];
 
-            dd($count_cargo_unit, $typePallet);
 
-            // TypeSizePalletSpaceEnum
+            $mgx = $validated['goods_array'][0]['mgx'] ?? null;
 
-            $data = [
 
-                'appkey' => 'FAFBCB46-D161-46E5-9CA5-1B43E0FCDC5C',
-                'delivery' => [
-                    'deliveryType' => [
-                        'type' => 'auto'
-                    ],
-                    'derival' => [
-                        'produceDate' => '2025-06-03',
-                        'variant' => 'address',
-                        'address' => [
-                            'search' => $star_address->nomination
+            /** @var int */
+            $count_cargo_unit = $validated['goods_array'][0]['cargo_units_count'];
+
+            /** @var float  */
+            $weight_general = $validated['goods_array'][0]['weight_general'];
+
+
+            /** @var TypeSizePalletSpaceEnum  */
+            $typePallet = TypeSizePalletSpaceEnum::stringByCaseToObject($validated['goods_array'][0]['type_pallet']);
+
+            /** @var PalletSize */
+            $palletSize = PalletSizeHelper::getSize($typePallet);
+
+            if(!is_null($mgx)) {
+
+                $data = [
+
+                    'appkey' => env('APP_KEY_BUSINESS_LINE'),
+                    'delivery' => [
+                        'deliveryType' => [
+                            'type' => 'auto'
                         ],
-                        "time" => [
-                            "worktimeEnd" => "19:30",
-                            "worktimeStart" => "9:00",
-                            "breakStart" => "12:00",
-                            "breakEnd" => "13:00",
-                            "exactTime" => false
-                        ]
-                    ],
-                    'arrival' => [
-                        'variant' => 'address',
-                        'address' => [
-                            'search' => $end_address->nomination
+                        'derival' => [
+                            'produceDate' => $start_date_delivery,
+                            'variant' => 'address',
+                            'address' => [
+                                'search' => $star_address->nomination
+                            ],
+                            "time" => [
+                                "worktimeEnd" => "19:30",
+                                "worktimeStart" => "9:00",
+                                "breakStart" => "12:00",
+                                "breakEnd" => "13:00",
+                                "exactTime" => false
+                            ]
                         ],
-                        "time" => [
-                            "worktimeEnd" => "19:30",
-                            "worktimeStart" => "9:00",
-                            "breakStart" => "12:00",
-                            "breakEnd" => "13:00",
-                            "exactTime" => false
-                        ]
+                        'arrival' => [
+                            'variant' => 'address',
+                            'address' => [
+                                'search' => $end_address->nomination
+                            ],
+                            "time" => [
+                                "worktimeEnd" => "19:30",
+                                "worktimeStart" => "9:00",
+                                "breakStart" => "12:00",
+                                "breakEnd" => "13:00",
+                                "exactTime" => false
+                            ]
+                        ],
                     ],
-                ],
-                'cargo' => [
-                    'quantity' => $validated['goods_array']['cargo_units_count'],
-                    'length' => 1.2,
-                    'width' => 1.0,
-                    'height' => 1.0,
-                    'weight' => 80,
-                    'totalWeight' => 400,
-                    'totalVolume' => 0.02,
-                    'oversizedWeight' => 0,
-                ]
+                    'cargo' => [
+                        'quantity' => $count_cargo_unit,
+                        'length' => $mgx['length'],
+                        'width' => $mgx['width'],
+                        'height' => $mgx['height'],
+                        'weight' => $mgx['weight'],
+                        'totalWeight' => $mgx['weight'] * $count_cargo_unit,
+                        'totalVolume' => $mgx['length'] * $mgx['width'] * $mgx['height'],
+                    ]
 
-            ];
+                ];
+
+            } else {
+
+                $data = [
+
+                    'appkey' => env('APP_KEY_BUSINESS_LINE'),
+                    'delivery' => [
+                        'deliveryType' => [
+                            'type' => 'auto'
+                        ],
+                        'derival' => [
+                            'produceDate' => $start_date_delivery,
+                            'variant' => 'address',
+                            'address' => [
+                                'search' => $star_address->nomination
+                            ],
+                            "time" => [
+                                "worktimeEnd" => "19:30",
+                                "worktimeStart" => "9:00",
+                                "breakStart" => "12:00",
+                                "breakEnd" => "13:00",
+                                "exactTime" => false
+                            ]
+                        ],
+                        'arrival' => [
+                            'variant' => 'address',
+                            'address' => [
+                                'search' => $end_address->nomination
+                            ],
+                            "time" => [
+                                "worktimeEnd" => "19:30",
+                                "worktimeStart" => "9:00",
+                                "breakStart" => "12:00",
+                                "breakEnd" => "13:00",
+                                "exactTime" => false
+                            ]
+                        ],
+                    ],
+                    'cargo' => [
+                        'quantity' => $count_cargo_unit,
+                        'length' => $palletSize->length,
+                        'width' => $palletSize->width,
+                        'height' => $palletSize->height,
+                        'weight' => $weight_general / $count_cargo_unit,
+                        'totalWeight' => $weight_general,
+                        'totalVolume' => $palletSize->length * $palletSize->width * $palletSize->height,
+                    ]
+
+                ];
+
+            }
+
 
             $response = Http::post('https://api.dellin.ru/v2/calculator', $data);
 
@@ -202,14 +272,13 @@ class OrderUnitController extends Controller
                 // Обработка успешного ответа
                 $result = $response->json();
                 // Можно, например, вывести результат
-                dd($result);
+                $price_line_business = $result['data']['price'];
 
             } else {
 
                 $responseBody = json_decode($response->body(), true);
 
-                // Обработка ошибки
-                dd($response->status(),  $responseBody);
+                $price_line_business = 0;
 
             }
         }
@@ -225,8 +294,7 @@ class OrderUnitController extends Controller
             //TODO Нужна логика высчитывание цены в зависимости от заказа
             $test = "test";
 
-
-            return response()->json(array_success(OrderPriceResource::make($test, $distance / 1000), 'Return Select Price.'), 200);
+            return response()->json(array_success(OrderPriceResource::make($test, $distance / 1000, $price_line_business), 'Return Select Price.'), 200);
 
         } catch (\Throwable $th) {
 
@@ -235,7 +303,7 @@ class OrderUnitController extends Controller
 
             $test = "test";
 
-            return response()->json(array_success(OrderPriceResource::make($test, $distance), 'Return Select Price.'), 200);
+            return response()->json(array_success(OrderPriceResource::make($test, $distance, $price_line_business), 'Return Select Price.'), 200);
 
         }
 

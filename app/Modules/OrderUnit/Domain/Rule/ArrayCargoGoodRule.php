@@ -53,7 +53,13 @@ class ArrayCargoGoodRule implements ValidationRule
                 'string' => ":attribute должен быть строкой.",
                 'max' => ":attribute не должнен превышать 500 символов." // если передан не null и превышает 500 символов
             ],
-        ];
+            'weight_general' => [
+                'required' => 'Поле :attribute обязательно для заполнения.',
+                'numeric' => 'Поле :attribute должно быть числом.',
+                'min' => 'Поле :attribute должно быть не меньше 0.',
+            ]
+
+    ];
 
         foreach($value as $key){
 
@@ -66,6 +72,7 @@ class ArrayCargoGoodRule implements ValidationRule
                     'cargo_units_count' => $key['cargo_units_count'] ?? null,
                     'body_volume' => $key['body_volume'] ?? null,
                     'description' => $key['description'] ?? null,
+                    'weight_general' => $key['weight_general'] ?? null,
                     'mgx' => $key['mgx'] ?? null,
                 ],
 
@@ -74,6 +81,7 @@ class ArrayCargoGoodRule implements ValidationRule
                     'type_pallet' => ['required', 'string', Rule::in($typePallet)],
                     'cargo_units_count' => ['required', 'integer', 'min:1'],
                     'body_volume' => ['required','numeric', 'min:0', 'max:270'],
+                    'weight_general' => ['required', 'numeric', 'min:0'],
                     'name_value' => ['nullable', 'string', 'max:100'],
                     'description' => ['nullable', 'string' , 'max:500'],
                     'mgx' => ['nullable', new ArrayCargoMgxRule()],

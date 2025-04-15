@@ -3096,6 +3096,85 @@
                                                 "type": "string",
                                                 "format": "uuid",
                                                 "example": "123e4567-e89b-12d3-a456-426614174000"
+                                            },
+                                            "start_date_delivery": {
+                                                "description": "**Дата начала заказа. Обязательное поле.**",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-10-01"
+                                            },
+                                            "end_date_delivery": {
+                                                "description": "**Дата окончания заказа. Обязательное поле.**",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-10-10"
+                                            },
+                                            "goods_array": {
+                                                "description": "Массив объектов, представляющих грузы. Обязательное поле. Минимум 1+ груз",
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "product_type": {
+                                                            "description": "**Тип продукта. Обязательное поле.**",
+                                                            "type": "string",
+                                                            "example": "Тип 1"
+                                                        },
+                                                        "type_pallet": {
+                                                            "description": "**Тип поддона. Обязательное поле. Возможные значения: 'eur', 'ecom', 'fin' **",
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "eur",
+                                                                "ecom",
+                                                                "fin"
+                                                            ],
+                                                            "example": "eur"
+                                                        },
+                                                        "cargo_units_count": {
+                                                            "description": "**Количество паллетов. Обязательное поле. Минимум 1.**",
+                                                            "type": "integer",
+                                                            "minimum": 1,
+                                                            "example": 5
+                                                        },
+                                                        "body_volume": {
+                                                            "description": "**Объем кузова. Обязательное поле. Минимум 0.**",
+                                                            "type": "number",
+                                                            "format": "float",
+                                                            "minimum": 0,
+                                                            "example": 12.5
+                                                        },
+                                                        "name_value": {
+                                                            "description": "**Название. Необязательное поле. Максимум 100 символов.**",
+                                                            "type": "string",
+                                                            "maxLength": 100,
+                                                            "example": "Название груза",
+                                                            "nullable": true
+                                                        },
+                                                        "description": {
+                                                            "description": "**Описание. Необязательное поле. Максимум 500 символов.**",
+                                                            "type": "string",
+                                                            "maxLength": 500,
+                                                            "example": "Описание груза",
+                                                            "nullable": true
+                                                        },
+                                                        "weight_general": {
+                                                            "description": "**Общий вес груза**",
+                                                            "type": "number",
+                                                            "format": "float",
+                                                            "example": "Общий вес груза"
+                                                        },
+                                                        "mgx": {
+                                                            "oneOf": [
+                                                                {
+                                                                    "$ref": "#/components/schemas/MgxObject"
+                                                                }
+                                                            ],
+                                                            "nullable": true,
+                                                            "description": "**Массогабаритные Характеристики - поле не обязательное, если указано, то будет валидироватья относительно количество паллетов**",
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
                                             }
                                         },
                                         "type": "object"
@@ -3977,6 +4056,13 @@
                                                             "example": "Описание груза",
                                                             "nullable": true
                                                         },
+                                                        "weight_general": {
+                                                            "description": "**Общий вес груза**",
+                                                            "type": "number",
+                                                            "format": "float",
+                                                            "example": "Общий вес груза",
+                                                            "nullable": false
+                                                        },
                                                         "mgx": {
                                                             "oneOf": [
                                                                 {
@@ -3992,7 +4078,7 @@
                                                 }
                                             },
                                             "type_transport_weight": {
-                                                "description": "**Тип транспортировки по габаритам. Обязательное поле.** extraSmall: до 0.8 тонны, small: до 1.5 тонны , medium: до 3 тонн, large: до 5 тонн, extraLarge: до 10 тонн, superSize: Более 10 тонн",
+                                                "description": "**Тип транспортировки по габаритам. Обязательное поле.** extraSmall: до 0.8 тонны, small: до 1.5 тонн , medium: до 3 тонн, large: до 5 тонн, extraLarge: до 10 тонн, superSize: Более 10 тонн",
                                                 "type": "string",
                                                 "enum": [
                                                     "extraSmall",

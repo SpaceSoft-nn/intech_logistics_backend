@@ -41,6 +41,7 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\Organ
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitStatus\OrderUnitStatusCollection;
 use App\Modules\OrderUnit\Domain\Resources\OrderUnit\OrderUnitStatus\OrderUnitStatusResource;
+use Http;
 use Illuminate\Database\Eloquent\Collection;
 
 class OrderUnitController extends Controller
@@ -126,9 +127,10 @@ class OrderUnitController extends Controller
     ) {
         $validated = $request->validated();
 
-        try { //временно по задачи добавляем такое условие, что цены всегда приходит даже при ошибке
+        { //API Деловые линии
+
             /**
-             * @var Address
+            * @var Address
             */
             $star_address = Address::find($validated['start_address_id']);
 
@@ -136,6 +138,78 @@ class OrderUnitController extends Controller
              * @var Address
             */
             $end_address = Address::find($validated['end_address_id']);
+
+
+            $data = [
+
+                'appkey' => 'FAFBCB46-D161-46E5-9CA5-1B43E0FCDC5C',
+                'delivery' => [
+                    'deliveryType' => [
+                        'type' => 'auto'
+                    ],
+                    'derival' => [
+                        'produceDate' => '2025-06-03',
+                        'variant' => 'address',
+                        'address' => [
+                            'search' => $star_address->nomination
+                        ],
+                        "time" => [
+                            "worktimeEnd" => "19:30",
+                            "worktimeStart" => "9:00",
+                            "breakStart" => "12:00",
+                            "breakEnd" => "13:00",
+                            "exactTime" => false
+                        ]
+                    ],
+                    'arrival' => [
+                        'variant' => 'address',
+                        'address' => [
+                            'search' => $end_address->nomination
+                        ],
+                        "time" => [
+                            "worktimeEnd" => "19:30",
+                            "worktimeStart" => "9:00",
+                            "breakStart" => "12:00",
+                            "breakEnd" => "13:00",
+                            "exactTime" => false
+                        ]
+                    ],
+                ],
+                'cargo' => [
+                    'quantity' => $validated['goods_array']['cargo_units_count'],
+                    'length' => 1.2,
+                    'width' => 1.0,
+                    'height' => 1.0,
+                    'weight' => 80,
+                    'totalWeight' => 400,
+                    'totalVolume' => 0.02,
+                    'oversizedWeight' => 0,
+                ]
+
+            ];
+
+            $response = Http::post('https://api.dellin.ru/v2/calculator', $data);
+
+            // Проверка ответа от сервера
+            if ($response->successful()) {
+
+                // Обработка успешного ответа
+                $result = $response->json();
+                // Можно, например, вывести результат
+                dd($result);
+
+            } else {
+
+                $responseBody = json_decode($response->body(), true);
+
+                // Обработка ошибки
+                dd($response->status(),  $responseBody);
+
+            }
+        }
+
+
+        try { //временно по задачи добавляем такое условие, что цены всегда приходит даже при ошибке
 
 
             //Получаем расстояние между адрессами, что бы найти цену за 1км

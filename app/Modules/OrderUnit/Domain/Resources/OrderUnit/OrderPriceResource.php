@@ -11,8 +11,9 @@ class OrderPriceResource extends JsonResource
 {
 
     protected $distance;
+    protected ?float $price_bysiness;
 
-    public function __construct($resource, $distance)
+    public function __construct($resource, $distance, ?float $price_bysiness = null)
     {
         //получаем idOrderUnit - для проверки и получение таблицы pivot при связях многие ко многим
         $this->distance = $distance;
@@ -54,8 +55,8 @@ class OrderPriceResource extends JsonResource
             [
                 'name' => TypeLoadingTruckMethod::business_lines->value,
                 "load_type" => TypeLoadingTruckMethod::objectValueToStringCaseName(TypeLoadingTruckMethod::business_lines),
-                "price_km" => $price2 / $this->distance,
-                "price" => $price2,
+                "price_km" => $this->price2 / $this->distance,
+                "price" => $this->price_bysiness,
             ],
 
         ];

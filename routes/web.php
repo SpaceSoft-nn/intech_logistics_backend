@@ -190,6 +190,76 @@ Route::get('/set-gar', function (Request $request) {
 
 });
 
+Route::get('/busnes-line', function (Request $request) {
+
+    $data = [
+        'appkey' => 'FAFBCB46-D161-46E5-9CA5-1B43E0FCDC5C',
+        'delivery' => [
+            'deliveryType' => [
+                'type' => 'auto'
+            ],
+            'derival' => [
+                'produceDate' => '2025-06-03',
+                'variant' => 'address',
+                'address' => [
+                    'search' => 'г. Архангельск, ул. Расчалка 4-я, д. 1'
+                ],
+                "time" => [
+                    "worktimeEnd" => "19:30",
+                    "worktimeStart" => "9:00",
+                    "breakStart" => "12:00",
+                    "breakEnd" => "13:00",
+                    "exactTime" => false
+                ]
+            ],
+            'arrival' => [
+                'variant' => 'address',
+                'address' => [
+                    'search' => 'г. Москва, ул. 3-я Бебеля, д. 1'
+                ],
+                "time" => [
+                    "worktimeEnd" => "19:30",
+                    "worktimeStart" => "9:00",
+                    "breakStart" => "12:00",
+                    "breakEnd" => "13:00",
+                    "exactTime" => false
+                ]
+            ],
+        ],
+        'cargo' => [
+            'quantity' => 5,
+            'length' => 1.2,
+            'width' => 1.0,
+            'height' => 1.0,
+            'weight' => 80,
+            'totalWeight' => 400,
+            'totalVolume' => 0.02,
+            'oversizedWeight' => 0,
+        ]
+    ];
+
+    $response = Http::post('https://api.dellin.ru/v2/calculator', $data);
+
+    // Проверка ответа от сервера
+    if ($response->successful()) {
+        // Обработка успешного ответа
+        $result = $response->json();
+
+        dd($result);
+        // Можно, например, вывести результат
+        dd($result['data']['price']);
+    } else {
+
+        $responseBody = json_decode($response->body(), true);
+
+        // Обработка ошибки
+        dd($response->status(),  $responseBody['price']);
+    }
+
+});
+
+
+
 
 Route::prefix('/avizos')->group(function () {
 

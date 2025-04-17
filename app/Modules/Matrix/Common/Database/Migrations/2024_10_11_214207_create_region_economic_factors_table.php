@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('region_name_start')->index()->comment('Название области отправки');
             $table->string('region_name_end')->index()->comment('Название области прибытия');
 
-            $table->float('factor')->default(1)->comment('коэффициент');
+            $table->float('factor')->nullable()->default(1)->comment('коэффициент');
 
             $table->integer('distance')->nullable()->comment('Дистанция');
 

@@ -23,32 +23,28 @@ final class SetRegionEconomicFactorInteractor
         /** @var RegionEconomicFactor */
         $model = DB::transaction(function () use ($dto) {
 
-            /** @var ?RegionEconomicFactor */
-            $regionEconomicFactor = $this->findModelRegionEconomicFactor($dto);
+            // /** @var ?RegionEconomicFactor */
+            // $regionEconomicFactor = $this->findModelRegionEconomicFactor($dto);
 
-            if( is_null($regionEconomicFactor) ){
+            /** @var ?MatrixDistance */
+            $matrixDistance = $this->findGarIdInMatrixDistance($dto);
 
-                /** @var ?MatrixDistance */
-                $matrixDistance = $this->findGarIdInMatrixDistance($dto);
-
-                /** @var RegionEconomicFactor */
-                $regionEconomicFactor = $this->createRegionEconomicFactor(
-                    RegionEconomicFactorVO::make(
-                        region_start_gar_id: $matrixDistance->city_start_gar_id ?? null,
-                        region_end_gar_id: $matrixDistance->city_end_gar_id ?? null,
-                        region_name_start: $dto->region_name_start,
-                        region_name_end: $dto->region_name_end,
-                        distance: $matrixDistance->distance ?? null,
-                        factor: $dto->factor,
-                        price: $dto->price,
-                        price_form_km: ($matrixDistance) ? $dto->price / $matrixDistance->distance : null,
-                        type:  ($dto->type?->value) ? $dto->type->value : null ,
-                        start_date: $dto->start_date,
-                        end_date: $dto->end_date,
-                    )
-                );
-
-            }
+            /** @var RegionEconomicFactor */
+            $regionEconomicFactor = $this->createRegionEconomicFactor(
+                RegionEconomicFactorVO::make(
+                    region_start_gar_id: $matrixDistance->city_start_gar_id ?? null,
+                    region_end_gar_id: $matrixDistance->city_end_gar_id ?? null,
+                    region_name_start: $dto->region_name_start,
+                    region_name_end: $dto->region_name_end,
+                    distance: $matrixDistance->distance ?? null,
+                    factor: $dto->factor,
+                    price: $dto->price,
+                    price_form_km: ($matrixDistance) ? $dto->price / $matrixDistance->distance : null,
+                    type:  ($dto->type?->value) ? $dto->type->value : null ,
+                    start_date: $dto->start_date,
+                    end_date: $dto->end_date,
+                )
+            );
 
             return $regionEconomicFactor;
         });
@@ -56,11 +52,11 @@ final class SetRegionEconomicFactorInteractor
         return $model;
     }
 
-    public function findModelRegionEconomicFactor(CreateRegionEconomicFactorDTO $dto) : ?RegionEconomicFactor
-    {
-        return RegionEconomicFactor::where('region_name_start', $dto->region_name_start)
-            ->where('region_name_end', $dto->region_name_end )->first();
-    }
+    // public function findModelRegionEconomicFactor(CreateRegionEconomicFactorDTO $dto) : ?RegionEconomicFactor
+    // {
+    //     return RegionEconomicFactor::where('region_name_start', $dto->region_name_start)
+    //         ->where('region_name_end', $dto->region_name_end )->first();
+    // }
 
     public function createRegionEconomicFactor(RegionEconomicFactorVO $vo) : RegionEconomicFactor
     {

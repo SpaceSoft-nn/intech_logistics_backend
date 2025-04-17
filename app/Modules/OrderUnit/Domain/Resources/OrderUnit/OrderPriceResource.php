@@ -10,6 +10,7 @@ use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 class OrderPriceResource extends JsonResource
 {
 
+
     protected $distance;
     protected ?float $price_bysiness;
 
@@ -35,34 +36,35 @@ class OrderPriceResource extends JsonResource
             $this->price_bysiness = 0;
         }
 
+
         #TODO в load_type надо возвращать имя кейса
         return [
 
             [
                 'name' => 'ftl',
                 "load_type" => TypeLoadingTruckMethod::objectValueToStringCaseName(TypeLoadingTruckMethod::ftl),
-                "price_km" =>  $price1 / $this->distance,
+                "price_km" =>  number_format($price1 / $this->distance, 2),
                 "price" => $price1,
             ],
 
             [
                 'name' => 'ltl',
                 "load_type" => TypeLoadingTruckMethod::objectValueToStringCaseName(TypeLoadingTruckMethod::ltl),
-                "price_km" => $price2 / $this->distance,
+                "price_km" => number_format($price2 / $this->distance, 2),
                 "price" => $price2,
             ],
 
             [
                 'name' => TypeLoadingTruckMethod::more_load->value,
                 "load_type" => TypeLoadingTruckMethod::objectValueToStringCaseName(TypeLoadingTruckMethod::more_load),
-                "price_km" => $price2 / $this->distance,
+                "price_km" => number_format($price2 / $this->distance, 2),
                 "price" => $price2,
             ],
 
             [
                 'name' => TypeLoadingTruckMethod::business_lines->value,
                 "load_type" => TypeLoadingTruckMethod::objectValueToStringCaseName(TypeLoadingTruckMethod::business_lines),
-                "price_km" =>  $this->price_bysiness / $this->distance,
+                "price_km" =>  number_format($this->price_bysiness / $this->distance, 2),
                 "price" => $this->price_bysiness,
             ],
 

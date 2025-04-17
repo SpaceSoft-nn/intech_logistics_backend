@@ -167,6 +167,18 @@ class OrderUnitController extends Controller
 
             if(!is_null($mgx)) {
 
+
+                $length = $mgx['length'];
+
+                // не габаритный груз, апи будет требовать ещё 2 поля (так же цена изменится)
+                if($length >= 3) {
+                    $oversizedWeight = $mgx['weight'];
+                    $oversizedVolume = $mgx['length'] * $mgx['width'] * $mgx['height'];
+                } else {
+                    $oversizedWeight = null;
+                    $oversizedVolume = null;
+                }
+
                 $data = [
 
                     'appkey' => env('APP_KEY_BUSINESS_LINE'),
@@ -210,6 +222,8 @@ class OrderUnitController extends Controller
                         'weight' => $mgx['weight'],
                         'totalWeight' => $mgx['weight'] * $count_cargo_unit,
                         'totalVolume' => $mgx['length'] * $mgx['width'] * $mgx['height'],
+                        ...($oversizedWeight ? ['oversizedWeight' => $oversizedWeight] : []),
+                        ...($oversizedVolume ? ['oversizedVolume' => $oversizedVolume] : []),
                     ]
 
                 ];
@@ -265,6 +279,8 @@ class OrderUnitController extends Controller
 
             }
 
+            // dd($data);
+
 
             $response = Http::post('https://api.dellin.ru/v2/calculator', $data);
 
@@ -280,6 +296,8 @@ class OrderUnitController extends Controller
 
                 $responseBody = json_decode($response->body(), true);
                 $jsonString = json_encode($responseBody, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT); // обратно получили JSON-СТРОКУ
+
+                dd($responseBody);
 
                 Mylog($jsonString);
 
@@ -311,7 +329,7 @@ class OrderUnitController extends Controller
             return response()->json(array_success(OrderPriceResource::make($test, $distance, $price_line_business), 'Return Select Price.'), 200);
 
         }
-
+        
 
     }
 

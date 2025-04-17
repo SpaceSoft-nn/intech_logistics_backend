@@ -2,12 +2,12 @@
 
 namespace App\Modules\OrderUnit\Domain\Rule;
 
-use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
 use Closure;
-use Illuminate\Contracts\Validation\ValidationRule;
-
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+
+use Illuminate\Contracts\Validation\ValidationRule;
+use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
 
 class ArrayCargoGoodRule implements ValidationRule
 {

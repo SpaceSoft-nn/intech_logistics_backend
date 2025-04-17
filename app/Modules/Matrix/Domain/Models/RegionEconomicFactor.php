@@ -35,8 +35,6 @@ class RegionEconomicFactor extends Model
         'start_date',
         'end_date',
 
-
-
     ];
 
     protected $guarded = [
@@ -52,6 +50,7 @@ class RegionEconomicFactor extends Model
     protected function casts(): array
     {
         return [
+
             'type' => TypeLoadingTruckMethod::class,
             'start_date' => RuDateTimeCast::class,
             'end_date' => RuDateTimeCast::class,

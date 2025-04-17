@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('region_name_end')->comment('Название области прибытия');
 
             $table->float('factor')->comment('коэффициент');
-            $table->decimal('price', 10, 2)->comment('цена за 1 км');
+
+            $table->decimal('price', 10, 2)->comment('Общая цена');
+            $table->decimal('price_form_km', 10, 2)->comment('цена за 1 км');
 
             $table->string('type')->nullable()->comment('тип перевозки пример: ftl, ltl, деловые линии');
             $table->dateTime('start_date')->nullable();

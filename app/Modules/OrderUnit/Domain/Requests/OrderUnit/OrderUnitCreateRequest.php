@@ -42,7 +42,6 @@ class OrderUnitCreateRequest extends ApiRequest
             "start_date_delivery" => ['required', 'date', 'date_format:d.m.Y'], // Дата начала заказа
             "end_date_delivery" => ['required', 'date', 'date_format:d.m.Y', 'after_or_equal:start_date_delivery'], // Дата окончания заказа
 
-
             //массивы
             'address_array' => ['nullable', new ArrayAddressRule()], //массив аддрессов (Главный вектор и промежуточные адресса Догрузы/Выгрузы)
             'goods_array' => ['required', new ArrayCargoGoodRule()], //массив грузов
@@ -100,6 +99,6 @@ class OrderUnitCreateRequest extends ApiRequest
         return OrderUnitAddressDTO::fromArrayToObject($this->getValidatedData());
     }
 
-    
+
 
 }

@@ -279,9 +279,6 @@ class OrderUnitController extends Controller
 
             }
 
-            // dd($data);
-
-
             $response = Http::post('https://api.dellin.ru/v2/calculator', $data);
 
             // Проверка ответа от сервера
@@ -297,15 +294,12 @@ class OrderUnitController extends Controller
                 $responseBody = json_decode($response->body(), true);
                 $jsonString = json_encode($responseBody, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT); // обратно получили JSON-СТРОКУ
 
-                dd($responseBody);
-
                 Mylog($jsonString);
 
                 $price_line_business = 0;
 
             }
         }
-
 
         try { //временно по задачи добавляем такое условие, что цены всегда приходит даже при ошибке
 
@@ -329,7 +323,7 @@ class OrderUnitController extends Controller
             return response()->json(array_success(OrderPriceResource::make($test, $distance, $price_line_business), 'Return Select Price.'), 200);
 
         }
-        
+
 
     }
 

@@ -1,16 +1,12 @@
 <?php
 
-namespace App\Modules\Matrix\App\Data\ValueObject;
+namespace App\Modules\Matrix\App\Data\DTO;
 
-use Illuminate\Contracts\Support\Arrayable;
-use App\Modules\Base\Traits\FilterArrayTrait;
+use App\Modules\Matrix\App\Data\DTO\Base\BaseDTO;
 use App\Modules\OrderUnit\App\Data\Enums\TypeLoadingTruckMethod;
 
-final readonly class RegionEconomicFactorVO implements Arrayable
+class CreateRegionEconomicFactorDTO extends BaseDTO
 {
-
-    use FilterArrayTrait;
-
     public function __construct(
 
         public ?string $region_start_gar_id,
@@ -19,7 +15,6 @@ final readonly class RegionEconomicFactorVO implements Arrayable
         public string $region_name_end,
 
         public ?float $factor = 1,
-        public ?int $distance = 0,
 
         public string $price,
         public ?string $price_form_km,
@@ -27,6 +22,7 @@ final readonly class RegionEconomicFactorVO implements Arrayable
         public ?TypeLoadingTruckMethod $type,
         public string $start_date,
         public string $end_date,
+
 
     ) { }
 
@@ -40,12 +36,11 @@ final readonly class RegionEconomicFactorVO implements Arrayable
         string $start_date,
         string $end_date,
 
-        ?string $type = null,
+        ?float $factor = 1,
         ?string $price_form_km = null,
+        ?string $type = null,
         ?string $region_start_gar_id = null,
         ?string $region_end_gar_id = null,
-        ?float $factor = 1,
-        ?int $distance = 0,
 
     ) : self {
 
@@ -55,33 +50,18 @@ final readonly class RegionEconomicFactorVO implements Arrayable
             region_end_gar_id: $region_end_gar_id,
             region_name_start: $region_name_start,
             region_name_end: $region_name_end,
-            distance: $distance,
+
             factor: $factor,
+
             price: $price,
             price_form_km: $price_form_km,
+
             type: ($type) ? TypeLoadingTruckMethod::stringByCaseToObject($type) : null,
+
             start_date: $start_date,
             end_date: $end_date,
 
         );
-    }
-
-
-    public function toArray() : array
-    {
-        return [
-            "region_start_gar_id" => $this->region_start_gar_id,
-            "region_end_gar_id" => $this->region_end_gar_id,
-            "region_name_start" => $this->region_name_start,
-            "region_name_end" => $this->region_name_end,
-            "distance" => $this->distance,
-            "factor" => $this->factor,
-            "price" => $this->price,
-            "price_form_km" => $this->price_form_km,
-            "type" => $this->type,
-            "start_date" => $this->start_date,
-            "end_date" => $this->end_date,
-        ];
     }
 
 }

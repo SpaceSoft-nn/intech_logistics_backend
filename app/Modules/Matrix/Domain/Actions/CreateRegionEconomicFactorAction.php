@@ -11,7 +11,7 @@ use App\Modules\Matrix\Domain\Models\RegionEconomicFactor;
 use Illuminate\Database\UniqueConstraintViolationException;
 use App\Modules\Matrix\App\Data\ValueObject\RegionEconomicFactorVO;
 
-class CreateRegionEconomicFactor
+class CreateRegionEconomicFactorAction
 {
 
     /**

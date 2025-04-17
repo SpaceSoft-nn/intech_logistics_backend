@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             // \App\Modules\Matrix\Common\Database\Seeders\RegionEconomicFactorSeed::class,
 
             //     //Запускаем готовый склепок бд
-            \App\Modules\Matrix\Common\Database\Seeders\RegionEconomicFactorFileSeed::class,
+            // \App\Modules\Matrix\Common\Database\Seeders\RegionEconomicFactorFileSeed::class,
             \App\Modules\Matrix\Common\Database\Seeders\MatrixDistanceFileSeed::class,
 
             //     //Запуск seed - здесь будут создаваться: invoice_order, organization_order_units_invoce, agreement_order_accept, agreement_order - так же будут выбираться случаные OrderUnit из бд

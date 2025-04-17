@@ -41,6 +41,8 @@ use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\Organiz
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Resources\OrgOrderInvoiceCollection;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Services\OrganizationOrderInvoiceService;
 use App\Modules\InteractorModules\OrganizationOrderInvoice\App\Data\ValueObject\OrderInvoice\InvoiceOrderVO;
+use App\Modules\Matrix\App\Data\DTO\CreateRegionEconomicFactorDTO;
+use App\Modules\Matrix\Domain\Services\MatrixService;
 use App\Modules\OrderUnit\App\Data\Enums\PalletType\TypeSizePalletSpaceEnum;
 use App\Modules\OrderUnit\Common\Helpers\Pallets\PalletSize;
 use App\Modules\OrderUnit\Common\Helpers\Pallets\PalletSizeHelper;
@@ -128,8 +130,8 @@ class OrderUnitController extends Controller
      */
     public function selectPrice(
         OrderUnitSelectPriceRequest $request,
-        CoordinateCheckerInteractor $interactor
-        //Request $request
+        CoordinateCheckerInteractor $interactor,
+        MatrixService $matrixService,
     ) {
         $validated = $request->validated();
 
@@ -286,7 +288,20 @@ class OrderUnitController extends Controller
 
                 // Обработка успешного ответа
                 $result = $response->json();
-                // Можно, например, вывести результат
+
+                $matrixService->createRegionEconomicFactor(CreateRegionEconomicFactorDTO::make(
+                    region_start_gar_id: null,
+                    region_end_gar_id: null,
+                    region_name_start: $star_address->city,
+                    region_name_end: $end_address->city,
+                    factor: null,
+                    price: $result['data']['price'],
+                    price_form_km: null,
+                    type: null,
+                    start_date: $validated['start_date_delivery'],
+                    end_date: $validated['end_date_delivery'],
+                ));
+
                 $price_line_business = $result['data']['price'];
 
             } else {

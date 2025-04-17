@@ -33,8 +33,7 @@ class OrderPriceResource extends JsonResource
         // если мы будем сравнивать с 0 float, могут быть проблемы
         if (abs($this->price_bysiness) < $epsilon) {
             $this->price_bysiness = 0;
-            echo "Значение близко к нулю";
-        } 
+        }
 
         #TODO в load_type надо возвращать имя кейса
         return [

@@ -13,6 +13,8 @@ class PalletSizeHelper
             TypeSizePalletSpaceEnum::fin => new PalletSize(1.2, 0.8, $height ?? 1.8), // Размеры в метрах
             TypeSizePalletSpaceEnum::ecom => new PalletSize(1.2, 0.8, $height ?? 1.5), // Размеры в метрах
         };
+
+        
     }
 }
 

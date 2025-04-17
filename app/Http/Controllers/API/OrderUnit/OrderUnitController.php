@@ -279,8 +279,9 @@ class OrderUnitController extends Controller
             } else {
 
                 $responseBody = json_decode($response->body(), true);
+                $jsonString = json_encode($responseBody, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT); // обратно получили JSON-СТРОКУ
 
-                Mylog($responseBody);
+                Mylog($jsonString);
 
                 $price_line_business = 0;
 

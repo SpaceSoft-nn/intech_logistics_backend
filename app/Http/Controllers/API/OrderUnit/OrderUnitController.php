@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use function App\Helpers\array_error;
 use function App\Helpers\array_success;
+use function App\Helpers\Mylog;
+
 use App\Modules\Address\Domain\Models\Address;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Organization\Domain\Models\Organization;
@@ -277,6 +279,8 @@ class OrderUnitController extends Controller
             } else {
 
                 $responseBody = json_decode($response->body(), true);
+
+                Mylog($responseBody);
 
                 $price_line_business = 0;
 

@@ -422,7 +422,7 @@ class OrderUnitController extends Controller
     ) {
 
 
-        abort_unless(StatusOrderUnitEnum::isDraft($orderUnit->actual_status->status), 403, "Статус у заказа должен быть 'Черновик'");
+        abort_unless(StatusOrderUnitEnum::isDraft($orderUnit->actual_status->status) || StatusOrderUnitEnum::isPreOrder($orderUnit->actual_status->status), 403, "Статус у заказа должен быть 'Черновик'");
 
         /**
         * @var OrderUnitVO

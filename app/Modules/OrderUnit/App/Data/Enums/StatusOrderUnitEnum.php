@@ -118,4 +118,9 @@ enum StatusOrderUnitEnum : string
         return self::draft == $enum;
     }
 
+    public static function isPreOrder(StatusOrderUnitEnum $enum) : bool
+    {
+        return self::pre_order == $enum;
+    }
+
 }

@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('type_load_truck')->comment('Тип загрузки трака: LTL, FTL, Custom...');
 
             //Связи
-            $table->uuid('user_id')->comment('Пользователь создавший заказ')
+            $table->uuid('user_id')->comment('Пользователь создавший заказ, если nullable - то заказ создался автоматически от согласования tender')
                 ->nullable()
                 ->constrained('users')->noActionOnDelete();
 

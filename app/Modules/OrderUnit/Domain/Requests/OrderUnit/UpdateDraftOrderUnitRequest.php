@@ -61,6 +61,8 @@ class OrderUnitCreateRequest extends ApiRequest
 
             "order_total" => ['required', 'numeric'], //Цена #TODO цена может быть в копейках предусмотреть работу с ценой в laravel
 
+            "lot_tender_id" => ['nullable', "exists:lot_tenders,id"],
+
             "description" => ['nullable', 'string', 'max:1000'], //Описание
 
         ];

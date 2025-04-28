@@ -19,12 +19,13 @@ class TransportService implements ITransportService
 
     /**
      * Получаем коллекцию статусов "на погрузке, на разгрузке, в пути" у транспорта (по персональному лицу)
-     * @param string $email
+     * @param ?string $email
+     * @param ?string $phone
      *
      * @return Collection<TransportationStatusСalendar>
     */
-    public function createTransportationStatusCalendar(string $email) : Collection
+    public function createTransportationStatusCalendar(?string $email = null, ?string $phone = null) : Collection
     {
-        return $this->parseDataForTransportationStatusCalendar->execute($email);
+        return $this->parseDataForTransportationStatusCalendar->execute($email, $phone);
     }
 }

@@ -68,6 +68,15 @@ namespace App\Http\Controllers;
  * ),
  *
  * @OA\Schema(
+ *    schema="TransportStatusCalendarResource",
+ *    title="Ресурс для календаря",
+ *    @OA\Property(property="length", type="number", format="float", description="Длина, в метрах"),
+ *    @OA\Property(property="transport", ref="#/components/schemas/TransportResource", description="Ресурс транспорта"),
+ *    @OA\Property(property="order", ref="#/components/schemas/OrderUnitResource", description="Ресурс заказа"),
+ *    @OA\Property(property="enum_transportation_status",  enum={"loading", "transit", "unloading"}, description="Статус транспортировки, возможные значения: loading, transit, unloading"),
+ * ),
+ *
+ * @OA\Schema(
  *     schema="InvoiceOrderCustomerResource",
  *     type="object",
  *     title="Invoice Order Customer Resource",

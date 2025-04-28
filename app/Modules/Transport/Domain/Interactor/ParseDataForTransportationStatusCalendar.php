@@ -2,18 +2,18 @@
 
 namespace App\Modules\Transport\Domain\Interactor;
 
-
+use App\Modules\Base\Error\BusinessException;
+use Illuminate\Support\Collection;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\Transport\Domain\Models\Transport;
 use function App\Helpers\isNullToBusinessException;
 use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
-use App\Modules\OrderUnit\Domain\Models\Status\TransporationStatus;
 
+use App\Modules\OrderUnit\Domain\Models\Status\TransporationStatus;
 use App\Modules\Transport\Domain\Models\TransportationStatusСalendar;
 use App\Modules\IndividualPeople\App\Repositories\IndividualPeopleRepository;
-use Illuminate\Support\Collection;
 
 class ParseDataForTransportationStatusCalendar
 {
@@ -29,9 +29,9 @@ class ParseDataForTransportationStatusCalendar
      *
      * @return Collection<TransportationStatusСalendar>
      */
-    public function execute(string $email) : Collection
+    public function execute(?string $email = null, ?string $phone = null) : Collection
     {
-        return $this->run($email);
+        return $this->run($email, $phone);
     }
 
     /**
@@ -39,7 +39,7 @@ class ParseDataForTransportationStatusCalendar
      *
      * @return Collection<TransportationStatusСalendar>
      */
-    private function run(string $email) : Collection
+    private function run(?string $email = null, ?string $phone = null) : Collection
     {
         #TODO Пересмотреть логику получение заказа + работу сервеса отправлять в очередь
 
@@ -47,7 +47,7 @@ class ParseDataForTransportationStatusCalendar
             /**
              * @var ?IndividualPeople
              */
-            $individualPeople = $this->getIndividualPeopleForEmail($email);
+            $individualPeople = $this->getIndividualPeopleForEmail($email, $phone);
 
 
             /**
@@ -75,15 +75,28 @@ class ParseDataForTransportationStatusCalendar
 
     }
 
-    private function getIndividualPeopleForEmail(string $email) : ?IndividualPeople
+    private function getIndividualPeopleForEmail(?string $email = null, ?string $phone = null) : ?IndividualPeople
     {
 
-        $model = $this->individualPeopleRepository->findByEmail($email);
+        if($email)
+        {
 
-        isNullToBusinessException($model, "Не найден Individual People по значению email: {$email}", 404);
+            $model = $this->individualPeopleRepository->findByEmail($email);
+
+            isNullToBusinessException($model, "Не найден Individual People по значению email: {$email}", 404);
+
+        } else if ($phone){
+
+            $model = $this->individualPeopleRepository->findByPhone($phone);
+
+            isNullToBusinessException($model, "Не найден Individual People по значению email: {$email}", 404);
+
+        } else {
+            //если не найден водитель
+            isNullToBusinessException(null, "Не найден Individual People по значению email/phone", 404);
+        }
 
         return $model;
-
     }
 
     private function getDriverPeopleForIndividualPeople(IndividualPeople $individualPeople) : DriverPeople
@@ -112,7 +125,7 @@ class ParseDataForTransportationStatusCalendar
         //проверка
         $model = $this->orderUnitRepository->getOrderUnitAndStatusInWork($transport->id);
 
-        isNullToBusinessException($model, "Не найден Order Unit по значению связи с Transport, с условие, что заказ должен быть в Работе: {$transport}", 404);
+        if(is_null($model)) { throw new BusinessException('Не найден Order Unit по значению связи с Transport, с условие, что заказ должен быть в Работе: {$transport}', 404); }
 
         return $model;
     }

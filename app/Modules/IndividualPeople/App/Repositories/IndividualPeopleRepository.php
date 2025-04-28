@@ -41,4 +41,9 @@ class IndividualPeopleRepository extends CoreRepository implements IRepository
         return $this->query()->where('email', $email)->first();
     }
 
+    public function findByPhone(string $phone) : ?Model
+    {
+        return $this->query()->where('phone', $phone)->first();
+    }
+
 }

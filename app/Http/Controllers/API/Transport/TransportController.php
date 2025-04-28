@@ -85,9 +85,9 @@ class TransportController
         $validated = $request->validated();
 
         /** @var TransportationStatusСalendar[] */
-        $statuses = $service->createTransportationStatusCalendar($validated['email']);
+        $statuses = $service->createTransportationStatusCalendar($validated['email'] ?? null, $validated['phone'] ?? null);
 
 
-        return response()->json(array_success(TransportStatusCalendarResource::collection($statuses), 'Return create transports'), 201);
+        return response()->json(array_success(TransportStatusCalendarResource::collection($statuses), 'Return statuses Kalendar'), 201);
     }
 }

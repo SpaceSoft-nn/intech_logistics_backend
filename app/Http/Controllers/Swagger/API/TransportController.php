@@ -75,6 +75,35 @@ namespace App\Http\Controllers\Swagger\API;
  *       ),
  * ),
  *
+ * @OA\Post(
+ *       path="/api/transports/statuses",
+ *       summary="Получить статусы, по email водителя.",
+ *       tags={"Transports"},
+ *       @OA\RequestBody(
+ *           required=true,
+ *           @OA\JsonContent(
+ *               @OA\Property(property="email", type="string", description="Email - водителя (Individual people)", example="email@test.com"),
+ *           )
+ *       ),
+ *
+ *       @OA\Response(
+ *           response=201,
+ *           description="Return statuses Kalendar.",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="data", ref="#/components/schemas/TransportStatusCalendarResource", description="Ресурс транспорта"),
+ *               @OA\Property(property="message", type="string", example="Return create transports."),
+ *           ),
+ *       ),
+ *       @OA\Response(
+ *           response=500,
+ *           description="Общая ошибка сервера.",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message_error", type="string", example="Error server"),
+ *               @OA\Property(property="code", type="integer", example="500"),
+ *           ),
+ *       ),
+ * ),
+ *
  * @OA\Get(
  *      path="/api/transports/{transport}",
  *      summary="Получить транспорт по UUID.",

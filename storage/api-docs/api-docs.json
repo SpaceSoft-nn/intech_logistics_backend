@@ -6803,6 +6803,73 @@
                 }
             }
         },
+        "/api/transports/statuses": {
+            "post": {
+                "tags": [
+                    "Transports"
+                ],
+                "summary": "Получить статусы, по email водителя .",
+                "operationId": "019a14304d732cadbbcce91da4637f8d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "Email - водителя (Individual people)",
+                                        "type": "string",
+                                        "example": "email@test.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Return statuses Kalendar.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/TransportStatusCalendarResource"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Return create transports."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Общая ошибка сервера.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message_error": {
+                                            "type": "string",
+                                            "example": "Error server"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/transports/{transport}": {
             "get": {
                 "tags": [
@@ -7430,6 +7497,31 @@
                         "description": "Вес, в килограммах",
                         "type": "number",
                         "format": "float"
+                    }
+                },
+                "type": "object"
+            },
+            "TransportStatusCalendarResource": {
+                "title": "Ресурс для календаря",
+                "properties": {
+                    "length": {
+                        "description": "Длина, в метрах",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "transport": {
+                        "$ref": "#/components/schemas/TransportResource"
+                    },
+                    "order": {
+                        "$ref": "#/components/schemas/OrderUnitResource"
+                    },
+                    "enum_transportation_status": {
+                        "description": "Статус транспортировки, возможные значения: loading, transit, unloading",
+                        "enum": [
+                            "loading",
+                            "transit",
+                            "unloading"
+                        ]
                     }
                 },
                 "type": "object"

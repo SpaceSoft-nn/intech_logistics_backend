@@ -77,12 +77,13 @@ namespace App\Http\Controllers\Swagger\API;
  *
  * @OA\Post(
  *       path="/api/transports/statuses",
- *       summary="Получить статусы, по email водителя.",
+ *       summary="Получить статусы, по email или phone водителя.",
  *       tags={"Transports"},
  *       @OA\RequestBody(
  *           required=true,
  *           @OA\JsonContent(
  *               @OA\Property(property="email", type="string", description="Email - водителя (Individual people)", example="email@test.com"),
+ *               @OA\Property(property="phone", type="string", description="Phone - водителя (Individual people)", example="email@test.com"),
  *           )
  *       ),
  *

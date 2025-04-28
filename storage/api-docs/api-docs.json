@@ -6808,7 +6808,7 @@
                 "tags": [
                     "Transports"
                 ],
-                "summary": "Получить статусы, по email водителя .",
+                "summary": "Получить статусы, по email или phone водителя.",
                 "operationId": "019a14304d732cadbbcce91da4637f8d",
                 "requestBody": {
                     "required": true,
@@ -6818,6 +6818,11 @@
                                 "properties": {
                                     "email": {
                                         "description": "Email - водителя (Individual people)",
+                                        "type": "string",
+                                        "example": "email@test.com"
+                                    },
+                                    "phone": {
+                                        "description": "Phone - водителя (Individual people)",
                                         "type": "string",
                                         "example": "email@test.com"
                                     }

@@ -2,8 +2,8 @@
 
 namespace App\Modules\OrderUnit\Domain\Services;
 
-use App\Modules\OrderUnit\Domain\Interactor\Status\ParseEmailAndChangeTransportStatusInteractor;
 use App\Modules\OrderUnit\Domain\Models\Status\TransporationStatus;
+use App\Modules\OrderUnit\Domain\Interactor\Status\ParseEmailAndChangeTransportStatusInteractor;
 
 class ParseEmailService
 {
@@ -17,10 +17,11 @@ class ParseEmailService
      * @param string $email
      *
      * @return ?TransporationStatus
-     */
+    */
     public function parseEmailAndChangeTransportStatus(string $email) : ?TransporationStatus
     {
         return $this->parseEmailAndChangeTransportStatusInteractor->execute($email);
     }
+
 
 }

@@ -7,14 +7,20 @@ use function App\Helpers\array_error;
 use function App\Helpers\array_success;
 use App\Modules\Transport\Domain\Models\Transport;
 use App\Modules\Organization\Domain\Models\Organization;
+use App\Modules\Transport\Domain\Service\TransportService;
 use App\Modules\Transport\Domain\Resources\TransportResource;
 use App\Modules\Transport\App\Data\DTO\ValueObject\TransportVO;
 use App\Modules\Transport\Domain\Resources\TransportCollection;
 
 use App\Modules\Transport\Domain\Requests\TransportCreateRequest;
+use App\Modules\Transport\Domain\Requests\TransportUpdateRequest;
+use App\Modules\OrderUnit\Domain\Models\Status\TransporationStatus;
+use App\Modules\Transport\Domain\Models\TransportationStatusСalendar;
 use App\Modules\Transport\Domain\Actions\Transport\CreateTransportAction;
 use App\Modules\Transport\Domain\Actions\Transport\UpdateTransportAction;
-use App\Modules\Transport\Domain\Requests\TransportUpdateRequest;
+use App\Modules\Transport\Domain\Requests\Status\GetStatusesTransportRequest;
+use App\Modules\Transport\Domain\Resources\TransportStatus\TransportStatusResource;
+use App\Modules\Transport\Domain\Resources\TransportStatus\TransportStatusCalendarResource;
 
 class TransportController
 {
@@ -69,5 +75,19 @@ class TransportController
         $transport = UpdateTransportAction::make($transportVO, $transport);
 
         return response()->json(array_success(TransportResource::make($transport), 'Successfully updated transport'), 200);
+    }
+
+    public function status(
+        GetStatusesTransportRequest $request,
+        TransportService $service,
+    ) { //возвращаем статусы для транспорта: В начальном пункте, на разгруке, на выгрузке, на разгруке, в конечном пункте.
+
+        $validated = $request->validated();
+
+        /** @var TransportationStatusСalendar[] */
+        $statuses = $service->createTransportationStatusCalendar($validated['email']);
+
+
+        return response()->json(array_success(TransportStatusCalendarResource::collection($statuses), 'Return create transports'), 201);
     }
 }

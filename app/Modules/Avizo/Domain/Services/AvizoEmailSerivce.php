@@ -3,12 +3,11 @@
 namespace App\Modules\Avizo\Domain\Services;
 
 use DB;
+use Carbon\Carbon;
+use App\Modules\Base\Error\BusinessException;
 use App\Modules\Avizo\Domain\Models\AvizoEmail;
 use App\Modules\Avizo\App\Data\ValueObject\AvizoEmailVO;
 use App\Modules\Avizo\Domain\Actions\CreateAvizoEmailAction;
-use App\Modules\Avizo\Domain\Async\jobs\SendAvizoEmailJob;
-use App\Modules\Base\Error\BusinessException;
-use Carbon\Carbon;
 
 class AvizoEmailSerivce
 {

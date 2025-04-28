@@ -239,6 +239,15 @@ Route::prefix('/transports')->middleware('manuallyActivatedOrganization')->group
     Route::post('/', [TransportController::class, 'store'])->middleware('isCarrierOrganization');
     Route::patch('/{transport}', [TransportController::class, 'update'])->middleware('isCarrierOrganization')->whereUuid('transport');
 
+    Route::prefix('/statuses')->group(function () {
+
+        //вернуть статусы avizo
+        Route::post('/', [TransportController::class, 'status']);
+
+    });
+
+
+
 });
 
 Route::prefix('/individual-peoples')->middleware('manuallyActivatedOrganization')->group(function () {
@@ -343,6 +352,8 @@ Route::prefix('/avizos')->middleware('manuallyActivatedOrganization')->group(fun
     });
 
 });
+
+
 
 
 

@@ -2,11 +2,12 @@
 
 namespace App\Modules\OrderUnit\Domain\Models\Status;
 
-use App\Modules\OrderUnit\Domain\Factories\TransporationStatusFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Modules\OrderUnit\Domain\Factories\TransporationStatusFactory;
 
 class TransporationStatus extends Model
 {
@@ -47,6 +48,11 @@ class TransporationStatus extends Model
     public function enum_transporatrion_status() : BelongsTo
     {
         return $this->belongsTo(EnumTransportationStatus::class, 'enum_transporatrion_status_id', 'id');
+    }
+
+    public function order_unit() : BelongsTo
+    {
+        return $this->belongsTo(OrderUnit::class, 'order_unit_id', 'id');
     }
 
 }

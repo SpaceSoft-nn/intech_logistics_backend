@@ -2,14 +2,14 @@
 
 namespace App\Modules\User\Domain\Interactor;
 
-use App\Modules\Organization\App\Data\DTO\User\LinkUserToOrganizationDTO;
-use App\Modules\Organization\Domain\Actions\LinkUserToOrganizationAction;
-use App\Modules\User\App\Data\DTO\User\UserManagerCreateDTO;
+use DB;
+use App\Modules\User\Domain\Models\User;
 use App\Modules\User\App\Repositories\UserRepository;
 use App\Modules\User\App\Data\DTO\User\ValueObject\UserVO;
+use App\Modules\User\App\Data\DTO\User\UserManagerCreateDTO;
 use App\Modules\User\Domain\Actions\LinkUserToPersonalAreaAction;
-use App\Modules\User\Domain\Models\User;
-use DB;
+use App\Modules\Organization\App\Data\DTO\User\LinkUserToOrganizationDTO;
+use App\Modules\Organization\Domain\Actions\LinkUserToOrganizationAction;
 
 // Бизнес логика для создание заказа, когда заказ создатёся от Тендера
 class UserManagerCreateInteractor
@@ -49,7 +49,7 @@ class UserManagerCreateInteractor
             ));
 
             return $user;
-            
+
         });
 
         return $user;

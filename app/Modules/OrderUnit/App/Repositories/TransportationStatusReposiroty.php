@@ -2,13 +2,12 @@
 
 namespace App\Modules\OrderUnit\App\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
 use App\Modules\Base\Repositories\CoreRepository;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use App\Modules\OrderUnit\App\Data\Enums\TransportationStatusEnum;
 use App\Modules\OrderUnit\Domain\Models\Status\EnumTransportationStatus;
 use App\Modules\OrderUnit\Domain\Models\Status\TransporationStatus as Model;
-use Exception;
-use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 
 class TransportationStatusReposiroty extends CoreRepository
 {

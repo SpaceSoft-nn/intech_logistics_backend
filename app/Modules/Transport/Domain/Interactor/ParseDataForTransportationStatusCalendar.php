@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\OrderUnit\Domain\Interactor\Status;
+namespace App\Modules\Transport\Domain\Interactor;
 
 
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
@@ -10,25 +10,36 @@ use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
 use App\Modules\OrderUnit\App\Repositories\OrderUnitRepository;
 use App\Modules\IndividualPeople\Domain\Models\IndividualPeople;
 use App\Modules\OrderUnit\Domain\Models\Status\TransporationStatus;
-use App\Modules\OrderUnit\Domain\Services\TransportationStatusService;
 
+use App\Modules\Transport\Domain\Models\TransportationStatusСalendar;
 use App\Modules\IndividualPeople\App\Repositories\IndividualPeopleRepository;
+use Illuminate\Support\Collection;
 
-class ParseEmailAndChangeTransportStatusInteractor
+class ParseDataForTransportationStatusCalendar
 {
 
     public function __construct(
         private OrderUnitRepository $orderUnitRepository,
         private IndividualPeopleRepository $individualPeopleRepository,
-        private TransportationStatusService $transportationStatusService,
+        private CreateTransportationStatusCalendar $createTransportationStatusCalendar,
     ) {}
 
-    public function execute(string $email) : ?TransporationStatus
+    /**
+     * @param string $email
+     *
+     * @return Collection<TransportationStatusСalendar>
+     */
+    public function execute(string $email) : Collection
     {
         return $this->run($email);
     }
 
-    private function run(string $email) : ?TransporationStatus
+    /**
+     * @param string $email
+     *
+     * @return Collection<TransportationStatusСalendar>
+     */
+    private function run(string $email) : Collection
     {
         #TODO Пересмотреть логику получение заказа + работу сервеса отправлять в очередь
 
@@ -54,15 +65,13 @@ class ParseEmailAndChangeTransportStatusInteractor
              */
             $order = $this->getOrderUnitAndInWorkForTransport($transport);
 
-
             /**
-             * @var ?TransporationStatus
+            * @var Collection
             */
-            $status = $this->transportationStatusService->setTransportationStatus($order->id);
-
+            $statuses = $this->createTransportationStatusCalendar->execute($order->id);
         }
 
-        return $status;
+        return $statuses;
 
     }
 

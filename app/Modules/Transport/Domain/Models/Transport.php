@@ -2,20 +2,20 @@
 
 namespace App\Modules\Transport\Domain\Models;
 
-use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
-use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
+use Illuminate\Database\Eloquent\Model;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Modules\Organization\Domain\Models\Organization;
 use App\Modules\Transport\App\Data\Enums\TransportBodyType;
-use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
+use App\Modules\IndividualPeople\Domain\Models\DriverPeople;
+use App\Modules\Transport\Domain\Factories\TransportFactory;
 use App\Modules\Transport\App\Data\Enums\TransportStatusEnum;
 use App\Modules\Transport\App\Data\Enums\TransportTypeWeight;
-use App\Modules\Transport\Domain\Factories\TransportFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Modules\Transport\App\Data\Enums\TransportLoadingType;
+use App\Modules\InteractorModules\OrganizationOrderInvoice\Domain\Models\InvoiceOrder;
 
 class Transport extends Model
 {

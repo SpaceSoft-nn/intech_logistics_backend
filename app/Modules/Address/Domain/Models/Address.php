@@ -2,14 +2,14 @@
 
 namespace App\Modules\Address\Domain\Models;
 
-use App\Modules\Address\App\Data\Enums\TypeAddressEnum;
-use App\Modules\Address\Domain\Factories\AddressFactory;
-use App\Modules\InteractorModules\AddressOrder\Domain\Models\OrderUnitAddress;
+use Illuminate\Database\Eloquent\Model;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Modules\Address\App\Data\Enums\TypeAddressEnum;
+use App\Modules\Address\Domain\Factories\AddressFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Modules\InteractorModules\AddressOrder\Domain\Models\OrderUnitAddress;
 
 class Address extends Model
 {

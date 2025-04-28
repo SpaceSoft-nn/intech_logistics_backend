@@ -31,9 +31,11 @@ return new class extends Migration
             $table->text('description')->nullable()->comment('Описание/Заметка');
 
             $table->foreignUuid('organization_id')
+                ->index()
                 ->constrained('organizations', 'id')->noActionOnDelete();
 
             $table->foreignUuid('driver_id') //1 ко многим у одной машины может быть несколько водителей.
+                ->index()
                 ->nullable()
                 ->constrained('driver_peoples', 'id')->noActionOnDelete();
 

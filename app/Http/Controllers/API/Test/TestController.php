@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\API\Test;
 
+use Webklex\IMAP\Facades\Client;
 use App\Http\Controllers\Controller;
 use App\Modules\OrderUnit\Domain\Services\ParseEmailService;
-use Webklex\IMAP\Facades\Client;
 
 class TestController extends Controller
 {
     public function index(
         ParseEmailService $service,
-    ) {
+    ) { //нужно подключать апи смс или отправку на почту.
 
         /** @var \Webklex\PHPIMAP\Client $client */
         $client = Client::account('default');
@@ -23,7 +23,6 @@ class TestController extends Controller
             // Выбор папки "Входящие"
             $folder = $client->getFolder('INBOX');
 
-
             // Получение непрочитанных писем
             $messages = $folder->query()->unseen()->get();
 
@@ -35,7 +34,6 @@ class TestController extends Controller
                 $email = $from->mail;
 
                 $service->parseEmailAndChangeTransportStatus($email);
-
 
             }
 

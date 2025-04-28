@@ -2,7 +2,6 @@
 
 namespace App\Modules\OrderUnit\Domain\Factories;
 
-use App\Modules\OrderUnit\App\Data\DTO\ValueObject\OrderUnit\Status\ChainTransportationStatusVO;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use App\Modules\OrderUnit\Domain\Models\Status\ChainTransportationStatus;
 use App\Modules\OrderUnit\Domain\Models\Status\EnumTransportationStatus;

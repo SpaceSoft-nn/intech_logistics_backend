@@ -49,7 +49,7 @@ class DriverPeople extends Model
 
     public function transport() : HasOne
     {
-        return $this->hasOne(Transport::class ,'driver_id');
+        return $this->hasOne(Transport::class , 'driver_id');
     }
 
     public function individual_people(): MorphOne

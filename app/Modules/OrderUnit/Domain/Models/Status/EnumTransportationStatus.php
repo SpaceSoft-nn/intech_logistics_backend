@@ -2,9 +2,9 @@
 
 namespace App\Modules\OrderUnit\Domain\Models\Status;
 
-use App\Modules\OrderUnit\App\Data\Enums\TransportationStatusEnum;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Modules\OrderUnit\App\Data\Enums\TransportationStatusEnum;
 
 class EnumTransportationStatus extends Model
 {

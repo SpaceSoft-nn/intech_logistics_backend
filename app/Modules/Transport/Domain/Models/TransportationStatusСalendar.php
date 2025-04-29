@@ -2,8 +2,9 @@
 
 namespace App\Modules\Transport\Domain\Models;
 
-use App\Modules\Base\Casts\RuDateTimeCast;
 use Illuminate\Database\Eloquent\Model;
+use App\Modules\Base\Casts\RuDateTimeCast;
+use App\Modules\Address\Domain\Models\Address;
 use App\Modules\OrderUnit\Domain\Models\OrderUnit;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,6 +29,7 @@ class TransportationStatusСalendar extends Model
         "enum_transportation_id",
         "date",
         "transport_id",
+        "address_id",
 
     ];
 
@@ -61,6 +63,11 @@ class TransportationStatusСalendar extends Model
     public function transport() : BelongsTo
     {
         return $this->belongsTo(Transport::class, 'transport_id', 'id');
+    }
+
+    public function address() : BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'address_id', 'id');
     }
 
 }

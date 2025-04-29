@@ -14,13 +14,11 @@ use App\Modules\Transport\Domain\Resources\TransportCollection;
 
 use App\Modules\Transport\Domain\Requests\TransportCreateRequest;
 use App\Modules\Transport\Domain\Requests\TransportUpdateRequest;
-use App\Modules\OrderUnit\Domain\Models\Status\TransporationStatus;
 use App\Modules\Transport\Domain\Models\TransportationStatusСalendar;
 use App\Modules\Transport\Domain\Actions\Transport\CreateTransportAction;
 use App\Modules\Transport\Domain\Actions\Transport\UpdateTransportAction;
 use App\Modules\Transport\Domain\Requests\Status\GetStatusesTransportRequest;
-use App\Modules\Transport\Domain\Resources\TransportStatus\TransportStatusResource;
-use App\Modules\Transport\Domain\Resources\TransportStatus\TransportStatusCalendarResource;
+use App\Modules\Transport\Domain\Resources\TransportStatus\TransportationStatusCalendarResource;
 
 class TransportController
 {
@@ -88,6 +86,6 @@ class TransportController
         $statuses = $service->createTransportationStatusCalendar($validated['email'] ?? null, $validated['phone'] ?? null);
 
 
-        return response()->json(array_success(TransportStatusCalendarResource::collection($statuses), 'Return statuses Kalendar'), 201);
+        return response()->json(array_success(TransportationStatusCalendarResource::collection($statuses), 'Return statuses Kalendar'), 201);
     }
 }

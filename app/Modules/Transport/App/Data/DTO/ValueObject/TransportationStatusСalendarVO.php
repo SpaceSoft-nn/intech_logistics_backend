@@ -16,6 +16,7 @@ class TransportationStatusСalendarVO implements Arrayable
         public string $date,
         public string $enum_transportation_id,
         public string $transport_id,
+        public string $address_id,
 
     ) {}
 
@@ -25,6 +26,7 @@ class TransportationStatusСalendarVO implements Arrayable
         string $date,
         string $enum_transportation_id,
         string $transport_id,
+        string $address_id,
 
 
     ) : self{
@@ -35,6 +37,7 @@ class TransportationStatusСalendarVO implements Arrayable
             date: $date,
             enum_transportation_id: $enum_transportation_id,
             transport_id: $transport_id,
+            address_id: $address_id,
 
         );
     }
@@ -47,6 +50,7 @@ class TransportationStatusСalendarVO implements Arrayable
             "date" => $this->date,
             "enum_transportation_id" => $this->enum_transportation_id,
             "transport_id" => $this->transport_id,
+            "address_id" => $this->address_id,
 
         ];
 

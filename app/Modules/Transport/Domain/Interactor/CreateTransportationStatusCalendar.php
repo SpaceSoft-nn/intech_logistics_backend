@@ -61,6 +61,7 @@ class CreateTransportationStatusCalendar
             foreach ($orderUnit->addresses as $address) {
                 $chains[$i]['type'] = $address->pivot->type;
                 $chains[$i]['date'] = $address->pivot->data_time;
+                $chains[$i]['address'] = $address->id;
                 $i++;
             }
 
@@ -81,6 +82,7 @@ class CreateTransportationStatusCalendar
                         order: $orderUnit,
                         enum: $enumStatus,
                         date: $chain['date'],
+                        addressId: $chain['address'],
                     );
 
                 }
@@ -121,7 +123,7 @@ class CreateTransportationStatusCalendar
         return TransportationStatusСalendar::where('order_unit_id', $order->id)->where('transport_id', $order->transport->id)->get()->count() == 0 ? true : false;
     }
 
-    private function createTransporationStatusEvent(OrderUnit $order, TransportationStatusEnum $enum, string $date): TransportationStatusСalendar
+    private function createTransporationStatusEvent(OrderUnit $order, TransportationStatusEnum $enum, string $date, string $addressId): TransportationStatusСalendar
     {
 
         $enumTransportationStatus = $this->getFindEnum($enum);
@@ -132,6 +134,7 @@ class CreateTransportationStatusCalendar
                 date: $date,
                 enum_transportation_id: $enumTransportationStatus->id,
                 transport_id: $order->transport->id,
+                address_id: $addressId,
             )
         );
     }

@@ -27,6 +27,10 @@ return new class extends Migration
                 ->index()
                 ->constrained('transports', 'id')->noActionOnDelete();
 
+            $table->foreignUuid('address_id')
+                ->index()
+                ->constrained('addresses', 'id')->noActionOnDelete();
+
             $table->timestamps();
 
         });

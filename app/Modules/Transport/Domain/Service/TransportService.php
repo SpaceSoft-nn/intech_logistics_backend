@@ -22,9 +22,9 @@ class TransportService implements ITransportService
      * @param ?string $email
      * @param ?string $phone
      *
-     * @return Collection<TransportationStatusСalendar>
+     * @return ?Collection<TransportationStatusСalendar>
     */
-    public function createTransportationStatusCalendar(?string $email = null, ?string $phone = null) : Collection
+    public function createTransportationStatusCalendar(?string $email = null, ?string $phone = null) : ?Collection
     {
         return $this->parseDataForTransportationStatusCalendar->execute($email, $phone);
     }

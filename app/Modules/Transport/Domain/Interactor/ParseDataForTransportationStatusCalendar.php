@@ -37,11 +37,11 @@ class ParseDataForTransportationStatusCalendar
     /**
      * @param string $email
      *
-     * @return Collection<TransportationStatusСalendar>
+     * @return ?Collection<TransportationStatusСalendar>
      */
-    private function run(?string $email = null, ?string $phone = null) : Collection
+    private function run(?string $email = null, ?string $phone = null) : ?Collection
     {
-        #TODO Пересмотреть логику получение заказа + работу сервеса отправлять в очередь
+        #TODO Пересмотреть логику получение заказа + работу сервиса отправлять в очередь
 
         {
             /**
@@ -49,21 +49,33 @@ class ParseDataForTransportationStatusCalendar
              */
             $individualPeople = $this->getIndividualPeopleForEmail($email, $phone);
 
+            //если значение на найдено возвращаем пустую коллекцию
+            if(is_null($individualPeople)) { return collect([]); }
+
 
             /**
              * @var ?DriverPeople
              */
             $driverPeople = $this->getDriverPeopleForIndividualPeople($individualPeople);
 
+            //если значение на найдено возвращаем пустую коллекцию
+            if(is_null($driverPeople)) { return collect([]); }
+
             /**
              * @var Transport
              */
             $transport = $this->getTransportForDriverPeople($driverPeople);
 
+            //если значение на найдено возвращаем пустую коллекцию
+            if(is_null($transport)) { return collect([]); }
+
             /**
              * @var OrderUnit
              */
             $order = $this->getOrderUnitAndInWorkForTransport($transport);
+
+            //если значение на найдено возвращаем пустую коллекцию
+            if(is_null($order)) { return collect([]); }
 
             /**
             * @var Collection
@@ -80,31 +92,29 @@ class ParseDataForTransportationStatusCalendar
 
         if($email)
         {
-
             $model = $this->individualPeopleRepository->findByEmail($email);
 
-            isNullToBusinessException($model, "Не найден Individual People по значению email: {$email}", 404);
 
         } else if ($phone){
 
             $model = $this->individualPeopleRepository->findByPhone($phone);
 
-            isNullToBusinessException($model, "Не найден Individual People по значению email: {$email}", 404);
-
         } else {
             //если не найден водитель
-            isNullToBusinessException(null, "Не найден Individual People по значению email/phone", 404);
+            return null;
         }
 
         return $model;
     }
 
-    private function getDriverPeopleForIndividualPeople(IndividualPeople $individualPeople) : DriverPeople
+    private function getDriverPeopleForIndividualPeople(IndividualPeople $individualPeople) : ?DriverPeople
     {
 
         $model = $individualPeople->individualable;
 
-        isNullToBusinessException($model, "Не найден Driver People по значению связи individual People : {$individualPeople}, либо он не является нужным типом по morph", 404);
+        if(is_null($model)) { return null; }
+
+        // isNullToBusinessException($model, "Не найден Driver People по значению связи individual People : {$individualPeople}, либо он не является нужным типом по morph", 404);
 
         return $model;
     }
@@ -115,7 +125,9 @@ class ParseDataForTransportationStatusCalendar
         //проверка
         $model = $driverPeople->transport;
 
-        isNullToBusinessException($model, "Не найден Transport по значению связи с Driver People: {$driverPeople}", 404);
+        // isNullToBusinessException($model, "Не найден Transport по значению связи с Driver People: {$driverPeople}", 404);
+
+        if(is_null($model)) { return null; }
 
         return $model;
     }
@@ -125,7 +137,9 @@ class ParseDataForTransportationStatusCalendar
         //проверка
         $model = $this->orderUnitRepository->getOrderUnitAndStatusInWork($transport->id);
 
-        if(is_null($model)) { throw new BusinessException('Не найден Order Unit по значению связи с Transport, с условие, что заказ должен быть в Работе: {$transport}', 404); }
+        if(is_null($model)) { return null; }
+
+        // if(is_null($model)) { throw new BusinessException('Не найден Order Unit по значению связи с Transport, с условие, что заказ должен быть в Работе: {$transport}', 404); }
 
         return $model;
     }
